@@ -1,0 +1,17 @@
+{
+  "sw.customer.detail.base": {
+    "customer": [
+      "salutationId",
+      "name",
+      "email",
+      "groupId",
+      "salesChannelId",
+      "customerNumber",
+      "password",
+      "vatIds",
+      "company",
+      "passwordNew",
+      "passwordConfirm"
+    ]
+  }
+}
