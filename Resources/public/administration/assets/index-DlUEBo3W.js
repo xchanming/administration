@@ -1,0 +1,2 @@
+const a=`{% block sw_wizard_dot_navigation %} <ul class="sw-wizard-dot-navigation"> {% block sw_wizard_dot_navigation_item %} <li v-for="(page, index) in pages" :key="index" class="sw-wizard-dot-navigation__item" :class="{ 'is--active': index === activePage }" ></li> {% endblock %} </ul> {% endblock %}`,{Component:i}=Cicada;i.register("sw-wizard-dot-navigation",{template:a,compatConfig:Cicada.compatConfig,props:{pages:{type:Array,required:!0},activePage:{type:Number,required:!0}}});
+//# sourceMappingURL=index-DlUEBo3W.js.map

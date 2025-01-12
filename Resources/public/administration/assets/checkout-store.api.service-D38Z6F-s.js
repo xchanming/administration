@@ -1,0 +1,2 @@
+import{A as i}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class a extends i{constructor(e,t,o="checkout"){super(e,t,o),this.name="checkoutStoreService"}checkout(e,t,o={},r={}){const c=`_proxy-order/${e}`,s={...this.getBasicHeaders(r),"sw-context-token":t};return this.httpClient.post(c,{},{...o,headers:s})}}export{a as default};
+//# sourceMappingURL=checkout-store.api.service-D38Z6F-s.js.map

@@ -1,0 +1,2 @@
+const e="{% block sw_settings_tax_rule_type_zip_code_range_cell %} <span> {{ taxRule.type.typeName }}: {{ taxRule.data.fromZipCode }} - {{ taxRule.data.toZipCode }} </span> {% endblock %}",t={template:e,compatConfig:Cicada.compatConfig,props:{taxRule:{type:Object,required:!0}},created(){this.createdComponent()},methods:{createdComponent(){this.taxRule.data||(this.taxRule.data={fromZipCode:"",toZipCode:""})}}};export{t as default};
+//# sourceMappingURL=index-B2Ww8loB.js.map

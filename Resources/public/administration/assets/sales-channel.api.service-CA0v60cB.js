@@ -1,0 +1,2 @@
+import{A as a}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class o extends a{constructor(e,s,t="sales-channel"){super(e,s,t),this.name="salesChannelService"}generateKey(e={},s={}){const t=e,n=this.getBasicHeaders(s);return this.httpClient.get("/_action/access-key/sales-channel",{params:t,headers:n}).then(r=>a.handleResponse(r))}}export{o as default};
+//# sourceMappingURL=sales-channel.api.service-CA0v60cB.js.map

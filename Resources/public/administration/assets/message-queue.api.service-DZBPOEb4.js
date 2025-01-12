@@ -1,0 +1,2 @@
+import{A as i}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class u extends i{constructor(e,s,t="message-queue"){super(e,s,t),this.name="messageQueueService"}consume(e,s){const t=this.getBasicHeaders();return this.httpClient.post(`/_action/${this.getApiBasePath()}/consume`,{receiver:e},{headers:t,cancelToken:s}).then(i.handleResponse.bind(this))}}export{u as default};
+//# sourceMappingURL=message-queue.api.service-DZBPOEb4.js.map

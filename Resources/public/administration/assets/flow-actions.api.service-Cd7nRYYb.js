@@ -1,0 +1,2 @@
+import{A as o}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class h extends o{constructor(t,e,s="actions"){super(t,e,s),this.name="flowActionService"}getActions(t={},e={}){const s=t,i=this.getBasicHeaders(e);return this.httpClient.get("/_info/flow-actions.json",{params:s,headers:i}).then(n=>o.handleResponse(n))}}export{h as default};
+//# sourceMappingURL=flow-actions.api.service-Cd7nRYYb.js.map

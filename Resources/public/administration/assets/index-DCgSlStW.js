@@ -1,0 +1,2 @@
+const t=`{% block sw_cms_block_image_two_column_preview %} <div class="sw-cms-preview-image-two-column"> <img :src="assetFilter('/administration/static/img/cms/preview_camera_small.jpg')" alt="" > <img :src="assetFilter('/administration/static/img/cms/preview_plant_small.jpg')" alt="" > </div> {% endblock %}`,a={template:t,compatConfig:Cicada.compatConfig,computed:{assetFilter(){return Cicada.Filter.getByName("asset")}}};export{a as default};
+//# sourceMappingURL=index-DCgSlStW.js.map

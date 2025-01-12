@@ -1,0 +1,2 @@
+import{A as r}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class h extends r{constructor(e,t,i="check-customer-email-valid"){super(e,t,i),this.name="customerValidationService"}checkCustomerEmail(e,t={},i={}){const a=t,o=this.getBasicHeaders(i);return this.httpClient.post(`/_admin/${this.apiEndpoint}`,e,{params:a,headers:o}).then(s=>r.handleResponse(s)).catch(s=>{throw s})}}export{h as default};
+//# sourceMappingURL=customer-validation.api.service-CcWgT5iB.js.map

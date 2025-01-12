@@ -1,0 +1,2 @@
+const h={compatConfig:Cicada.compatConfig,emits:["check-item"],data(){return{selection:{}}},methods:{checkItem(e){this.$super("checkItem",e),e.checked?this.selection[e.id]=e:delete this.selection[e.id],this.$emit("check-item",this.selection)},getTreeItems(e){const i=Object.keys(this.checkedElements),t=this.$super("getTreeItems",e);return t.forEach(c=>{const s=i.includes(c.id);s&&(c.checked=s)}),t}}};export{h as default};
+//# sourceMappingURL=index--QmW1cNQ.js.map

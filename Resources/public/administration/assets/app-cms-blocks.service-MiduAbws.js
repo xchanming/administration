@@ -1,0 +1,2 @@
+import{A as t}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class i extends t{constructor(s,e){super(s,e,null,"application/json"),this.name="appCmsBlocks"}fetchAppBlocks(){return this.httpClient.get("app-system/cms/blocks",{headers:this.getBasicHeaders()}).then(({data:s})=>s.blocks)}}export{i as default};
+//# sourceMappingURL=app-cms-blocks.service-MiduAbws.js.map

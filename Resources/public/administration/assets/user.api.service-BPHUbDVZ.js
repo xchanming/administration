@@ -1,0 +1,2 @@
+import{A as a}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class c extends a{constructor(e,t,s="user"){super(e,t,s),this.name="userService"}getUser(e={},t={}){const s=e,r=this.getBasicHeaders(t);return this.httpClient.get("/_info/me",{params:s,headers:r}).then(n=>a.handleResponse(n))}updateUser(e={},t={}){const s=e,r=this.getBasicHeaders(t);return this.httpClient.patch("/_info/me",s,{headers:r}).then(n=>a.handleResponse(n))}}export{c as default};
+//# sourceMappingURL=user.api.service-BPHUbDVZ.js.map

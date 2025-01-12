@@ -1,0 +1,2 @@
+const o='<div class="sw-app-topbar-button"> <sw-button v-for="button in topBarButtons" :key="button.label" size="default" @click="runAction(button)" > <sw-icon v-if="button.icon" :name="button.icon" size="14px" /> {{ button.label }} </sw-button> </div>',{Component:n}=Cicada;n.register("sw-app-topbar-button",{template:o,computed:{topBarButtons(){return Cicada.Store.get("topBarButton").buttons}},methods:{async runAction(t){typeof t.callback=="function"&&t.callback()}}});
+//# sourceMappingURL=index-vy5E0OaV.js.map

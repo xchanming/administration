@@ -1,0 +1,2 @@
+const e=`<a href="#main" tabindex="0" class="sw-skip-link" :class="{ 'sw-skip-link__focussed': focussed }" @click.prevent="focusElement" @focus="setFocus(true)" @blur="setFocus(false)" > {{ $t('global.sw-skip-link.label') }} </a>`;Cicada.Component.register("sw-skip-link",{template:e,data(){return{focussed:!1}},methods:{setFocus(s){this.focussed=s},focusElement(){const s=window.document.getElementById("main");s&&s.focus()}}});
+//# sourceMappingURL=index-DV-e2Rdz.js.map

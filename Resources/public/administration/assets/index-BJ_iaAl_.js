@@ -1,0 +1,2 @@
+const n=`<sw-system-config ref="systemConfig" domain="core.userPermission" class="sw-users-permissions-configuration" :class="{ 'is--disabled': !acl.can('users_and_permissions.editor') }" @loading-changed="onChangeLoading" />`,i={template:n,compatConfig:Cicada.compatConfig,inject:["acl"],emits:["loading-change"],methods:{onChangeLoading(s){this.$emit("loading-change",s)}}};export{i as default};
+//# sourceMappingURL=index-BJ_iaAl_.js.map

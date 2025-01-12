@@ -1,0 +1,2 @@
+import{A as a}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class u extends a{constructor(e,r,t="reset-excluded-search-term"){super(e,r,t),this.name="excludedSearchTermService"}resetExcludedSearchTerm(){const e="/_admin/reset-excluded-search-term",r=this._getHeader();return this.httpClient.post(e,{},{headers:r})}_getHeader(){return{...super.getBasicHeaders(),"sw-language-id":Cicada.Context.api.languageId}}}export{u as default};
+//# sourceMappingURL=excludedSearchTerm.api.service-puUvEywP.js.map

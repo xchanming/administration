@@ -1,0 +1,2 @@
+const e='<div class="sw-cms-block-app-renderer" :style="blockStyle" > <slot v-for="slot in slots" :name="slot.slot" ></slot> </div>',l=Cicada.Component.wrapComponentConfig({template:e,compatConfig:Cicada.compatConfig,props:{block:{type:Object,required:!1,default(){return{}}}},computed:{slots(){return this.block.slots??[]},blockStyle(){var t,o,s;return{display:"grid",grid:((s=(o=(t=this.block)==null?void 0:t.customFields)==null?void 0:o.slotLayout)==null?void 0:s.grid)??"auto / auto"}}}});export{l as default};
+//# sourceMappingURL=index-BJs8Ax8A.js.map

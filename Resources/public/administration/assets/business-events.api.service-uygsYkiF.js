@@ -1,0 +1,2 @@
+import{A as n}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class u extends n{constructor(e,s,t="business-events"){super(e,s,t),this.name="businessEventService"}getBusinessEvents(e={},s={}){const t=e,i=this.getBasicHeaders(s);return this.httpClient.get("/_info/events.json",{params:t,headers:i}).then(r=>n.handleResponse(r))}}export{u as default};
+//# sourceMappingURL=business-events.api.service-uygsYkiF.js.map

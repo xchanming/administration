@@ -1,0 +1,2 @@
+import{A as n}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class o extends n{constructor(e,t,s="sync"){super(e,t,s),this.name="syncService"}sync(e,t={},s={}){const i=t,r=this.getBasicHeaders(s);return this.httpClient.post(`/_action/${this.apiEndpoint}`,e,{params:i,headers:r}).then(c=>n.handleResponse(c))}}const m=o;export{m as default};
+//# sourceMappingURL=sync.api.service-CuyZdWXU.js.map

@@ -1,0 +1,2 @@
+import{h as s}from"./channel-oRk5-XZJ.js";const n={PERCENTAGE:"percentage",ABSOLUTE:"absolute",FIXED:"fixed",FIXED_UNIT:"fixed_unit"},o={CART:"cart",DELIVERY:"delivery",SET:"set",SETGROUP:"setgroup"},i={isEditingAllowed:r};function r(e){if(e===null||e===void 0)return!1;if(!s(e,"hasOrders"))throw new Error("Promotion Property hasOrders does not exist. Please use the Hydrator before!");return!e.hasOrders}export{o as D,i as P,n as a};
+//# sourceMappingURL=promotion.helper-n_Vux_0s.js.map

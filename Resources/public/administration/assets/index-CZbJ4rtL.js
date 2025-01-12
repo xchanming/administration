@@ -1,0 +1,2 @@
+const t='{% block sw_cms_block_center_text %} <div class="sw-cms-block-center-text"> <div class="sw-cms-block-center-text__image-left"> <slot name="left"></slot> </div> <div class="sw-cms-block-center-text__text"> <slot name="center"></slot> </div> <div class="sw-cms-block-center-text__image-right"> <slot name="right"></slot> </div> </div> {% endblock %}',e={template:t,compatConfig:Cicada.compatConfig};export{e as default};
+//# sourceMappingURL=index-CZbJ4rtL.js.map

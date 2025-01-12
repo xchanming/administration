@@ -1,0 +1,2 @@
+import{A as s}from"./api.service-C76VAMec.js";import"./channel-oRk5-XZJ.js";import"./administration-DCOj2uiN.js";class g extends s{constructor(e,i,t="config"){super(e,i,t),this.name="configService"}getConfig(e={},i={}){const t=e,o=this.getBasicHeaders(i);return new Promise(n=>{this.httpClient.get("/_info/config",{params:t,headers:o}).then(r=>{n(s.handleResponse(r))})})}}export{g as default};
+//# sourceMappingURL=config.api.service-CZSeAG4T.js.map

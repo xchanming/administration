@@ -1,0 +1,2 @@
+const e=`{% block sw_cms_element_sidebar_filter_config %} <div class="sw-cms-el-config-sidebar-filter"> {% block sw_cms_element_sidebar_filter_config_info %} <sw-alert variant="info"> {{ $tc('sw-cms.elements.general.config.infoText.listingElement') }} </sw-alert> {% endblock %} </div> {% endblock %}`,i={template:e,compatConfig:Cicada.compatConfig};export{i as default};
+//# sourceMappingURL=index-Dzp9rhVp.js.map

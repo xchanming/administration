@@ -1,0 +1,2 @@
+const e=`{% block sw_cms_block_youtube_video_preview %} <div class="sw-cms-preview-youtube-video"> <img class="sw-cms-preview-youtube-video__img" :src="assetFilter('/administration/static/img/cms/preview_youtube.jpg')" alt="" > <img class="sw-cms-preview-youtube-video__icon" :src="assetFilter('/administration/static/img/cms/youtube-icon.png')" alt="" > </div> {% endblock %}`,i={template:e,compatConfig:Cicada.compatConfig,computed:{assetFilter(){return Cicada.Filter.getByName("asset")}}};export{i as default};
+//# sourceMappingURL=index-CjakmF7c.js.map
