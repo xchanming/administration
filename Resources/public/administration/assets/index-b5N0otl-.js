@@ -1,0 +1,2 @@
+import{m as e}from"./administration-BlrHhDOI.js";const d={functional:!0,compatConfig:Cicada.compatConfig,render(r,a){const t=e("dt",{class:[a.data.class,{"sw-media-quickinfo-metadata-item__term":!0}]},`${a.props.labelName}:`),i=e("dd",{class:[a.data.class,{"sw-media-quickinfo-metadata-item__description":!0}]},a.children.default());return[t,i]},props:{labelName:{required:!0,type:String}}};export{d as default};
+//# sourceMappingURL=index-b5N0otl-.js.map

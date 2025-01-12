@@ -1,0 +1,2 @@
+const t='{% block sw_status %} <span class="sw-status" :class="statusClass" v-bind="$attrs" > <sw-color-badge :rounded="true" /> <slot></slot> </span> {% endblock %}',{Component:a}=Cicada;a.register("sw-status",{template:t,compatConfig:Cicada.compatConfig,props:{color:{type:String,required:!1,default:"green",validator(s){return["gray","blue","red","orange","green"].includes(s)}}},computed:{statusClass(){return{[`sw-status--${this.color}`]:!0}}}});
+//# sourceMappingURL=index-DULZzs1W.js.map

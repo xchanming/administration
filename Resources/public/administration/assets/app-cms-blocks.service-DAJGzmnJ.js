@@ -1,0 +1,2 @@
+import{A as t}from"./api.service-BUA61cyq.js";import"./channel-DxwX5hMG.js";import"./administration-BlrHhDOI.js";class i extends t{constructor(s,e){super(s,e,null,"application/json"),this.name="appCmsBlocks"}fetchAppBlocks(){return this.httpClient.get("app-system/cms/blocks",{headers:this.getBasicHeaders()}).then(({data:s})=>s.blocks)}}export{i as default};
+//# sourceMappingURL=app-cms-blocks.service-DAJGzmnJ.js.map

@@ -1,0 +1,2 @@
+import{A as t}from"./api.service-BUA61cyq.js";import"./channel-DxwX5hMG.js";import"./administration-BlrHhDOI.js";class r extends t{constructor(e,s){super(e,s,"","application/json"),this.name="appModulesService"}async fetchAppModules(){const{data:e}=await this.httpClient.get("app-system/modules",{headers:this.getBasicHeaders()});return e.modules}}export{r as default};
+//# sourceMappingURL=app-modules.service-i0MgKkmI.js.map

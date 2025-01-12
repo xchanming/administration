@@ -1,0 +1,2 @@
+const o='{% block sw_card_view %} <div class="sw-card-view"> {% block sw_card_view_content %} <div class="sw-card-view__content"> <sw-error-summary v-if="showErrorSummary" /> <slot> {% block sw_card_view_slot_default %}{% endblock %} </slot> </div> {% endblock %} </div> {% endblock %}',{Component:e}=Cicada;e.register("sw-card-view",{template:o,compatConfig:Cicada.compatConfig,props:{showErrorSummary:{type:Boolean,require:!1,default:!0}}});
+//# sourceMappingURL=index-orj50Uue.js.map

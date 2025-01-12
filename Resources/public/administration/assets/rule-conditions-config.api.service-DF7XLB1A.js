@@ -1,0 +1,2 @@
+import{A as i}from"./api.service-BUA61cyq.js";import"./channel-DxwX5hMG.js";import"./administration-BlrHhDOI.js";class a extends i{constructor(e,t){super(e,t,null,"application/json"),this.name="ruleConditionsConfigApiService"}load(){return Cicada.State.getters["ruleConditionsConfig/getConfig"]()!==null?Promise.resolve():this.httpClient.get("_info/rule-config",{headers:this.getBasicHeaders()}).then(e=>{Cicada.State.commit("ruleConditionsConfig/setConfig",i.handleResponse(e))})}}export{a as default};
+//# sourceMappingURL=rule-conditions-config.api.service-DF7XLB1A.js.map

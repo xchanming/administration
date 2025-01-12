@@ -1,0 +1,2 @@
+import{A as n}from"./api.service-BUA61cyq.js";import"./channel-DxwX5hMG.js";import"./administration-BlrHhDOI.js";class a extends n{constructor(e,t,s="known-ips"){super(e,t,s),this.name="knownIpsService"}getKnownIps(){const e=this.getBasicHeaders();return this.httpClient.get("/_admin/known-ips",{headers:e}).then(t=>t.data.ips)}}export{a as default};
+//# sourceMappingURL=known-ips.api.service-Cxs08CR8.js.map

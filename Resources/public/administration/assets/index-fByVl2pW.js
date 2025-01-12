@@ -1,0 +1,3 @@
+const __vite__fileDeps=["assets/index-D52uIPYE.js","assets/index-Ct0BXoDQ.css"],__vite__mapDeps=i=>i.map(i=>__vite__fileDeps[i]);
+import{_ as e}from"./administration-BlrHhDOI.js";Cicada.Component.register("sw-privilege-error",()=>e(()=>import("./index-D52uIPYE.js"),__vite__mapDeps([0,1])));Cicada.Module.register("sw-privilege-error",{type:"core",name:"privilege",title:"sw-privilege-error.general.mainMenuItemGeneral",description:"sw-privilege-error.general.descriptionTextModule",version:"1.0.0",targetVersion:"1.0.0",routes:{index:{components:{default:"sw-privilege-error"},path:"index"}}});
+//# sourceMappingURL=index-fByVl2pW.js.map

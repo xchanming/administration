@@ -1,0 +1,2 @@
+import"./channel-DxwX5hMG.js";import"./administration-BlrHhDOI.js";const e="sw-main-hidden",n='<div class="sw-hidden-iframes" style="display: none;" > <sw-iframe-renderer v-for="extension in extensions" :key="`${extension.type}-${extension.name}`" :src="extension.baseUrl" :location-id="MAIN_HIDDEN" /> </div>',{Component:i}=Cicada;i.register("sw-hidden-iframes",{template:n,compatConfig:Cicada.compatConfig,computed:{extensions(){return Cicada.State.getters["extensions/privilegedExtensions"]},MAIN_HIDDEN(){return e}}});
+//# sourceMappingURL=index-Cb2cZ3nu.js.map

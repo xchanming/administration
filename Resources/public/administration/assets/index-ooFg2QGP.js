@@ -1,0 +1,2 @@
+const a=`{# Information: the text should be harcoded and non translatable #} <div class="sw-ai-copilot-badge"> <sw-icon v-tooltip="{ message: 'AI Copilot', disabled: label, width: 98 }" name="solid-sparkles" size="12px" /> <div v-if="label" class="sw-ai-copilot-badge__label" > <span class="disambiguation"> AI </span> <span> Copilot </span> </div> </div>`,o=Cicada.Component.wrapComponentConfig({template:a,compatConfig:Cicada.compatConfig,props:{label:{type:Boolean,required:!1,default:!0}}});export{o as default};
+//# sourceMappingURL=index-ooFg2QGP.js.map

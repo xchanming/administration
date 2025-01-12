@@ -1,0 +1,2 @@
+const e='<div class="sw-cms-el-html"> <sw-code-editor v-model:value="element.config.content.value" :disabled="true" :editor-config="editorConfig" /> </div>',{Mixin:t}=Cicada,i={template:e,compatConfig:Cicada.compatConfig,mixins:[t.getByName("cms-element")],data(){return{editorConfig:{highlightActiveLine:!1,cursorStyle:"slim",highlightGutterLine:!1,showFoldWidgets:!1}}},created(){this.createdComponent()},methods:{createdComponent(){this.initElementConfig("html")}}};export{i as default};
+//# sourceMappingURL=index-8u6HMCJY.js.map
