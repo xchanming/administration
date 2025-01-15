@@ -1,0 +1,65 @@
+{
+  "sw-login": {
+    "general": {
+      "mainMenuItemIndex": "登录",
+      "description": "蝉鸣平台登录"
+    },
+    "index": {
+      "headlineMain": "你好!",
+      "subheadlineMain": "欢迎回来.",
+      "headlineForm": "登录",
+      "labelUsername": "用户名",
+      "labelPassword": "密码",
+      "labelKeepLoggedIn": "保持登录",
+      "placeholderUsername": "用户名...",
+      "placeholderPassword": "密码...",
+      "buttonLogin": "登录",
+      "messageUnsupportedGrantType": "授权类型不被授权服务器支持。",
+      "messageInvalidRequest": "无效请求。",
+      "messageInvalidClient": "客户端认证失败。",
+      "messageInvalidScope": "无效的请求域。",
+      "messageInvalidCredentials": "用户名或密码错误。",
+      "messageServerError": "授权服务器异常。",
+      "messageInvalidRefreshToken": "无效的刷新令牌。",
+      "messageAccessDenied": "请求被授权服务器拒绝。",
+      "messageGeneralRequestError": "请求异常 \"{url}\".",
+      "messageAuthThrottled": "尝试登录次数过多。请等待 {seconds} 秒后再尝试登录。",
+      "forgottenPasswordLink": "忘记密码?"
+    },
+    "recovery" : {
+      "info": {
+        "headline": "返回登录",
+        "info": "如果输入的电子邮件地址有效，您将在几分钟内收到密码恢复邮件。",
+        "warning": "请注意，恢复链接仅在2小时内有效。"
+      },
+      "recovery": {
+        "headline": "恢复密码",
+        "newPasswordField": {
+          "label": "新密码..."
+        },
+        "passwordConfirmField": {
+          "label": "再次输入新密码..."
+        },
+        "submit": {
+          "label": "修改密码"
+        },
+        "errorMessage": "密码恢复链接已过期或无效！"
+      },
+      "headline": "找回密码",
+      "text": "输入账号邮箱地址",
+      "email": {
+        "label": "邮箱地址:",
+        "placeholder": "shop{'@'}example.com"
+      },
+      "submit": "发送恢复链接"
+    }
+  },
+  "global": {
+    "sw-admin-menu": {
+      "textCicadaAdmin": "蝉鸣平台管理后台"
+    },
+    "default": {
+      "error": "错误"
+    }
+  }
+}
