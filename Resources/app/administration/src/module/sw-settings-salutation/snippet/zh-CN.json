@@ -1,0 +1,39 @@
+{
+  "global": {
+    "error-codes": {
+      "DUPLICATED_SALUTATION_KEY": "技术名称已被使用。请选择一个不同的名称。"
+    }
+  },
+  "sw-settings-salutation": {
+    "general": {
+      "mainMenuItemGeneral": "称呼",
+      "buttonCreate": "添加称呼",
+      "buttonSave": "保存",
+      "placeholderSearchBar": "搜索称呼..."
+    },
+    "list": {
+      "columnSalutationKey": "技术名称",
+      "columnDisplayName": "称呼",
+      "columnLetterName": "信件称呼"
+    },
+    "detail": {
+      "cardTitle": "称呼",
+      "fieldDisplayNameLabel": "称呼",
+      "fieldDisplayNamePlaceholder": "输入称呼...",
+      "fieldLetterNameLabel": "信件称呼",
+      "fieldLetterNamePlaceholder": "输入信件称呼...",
+      "fieldSalutationKeyTooltip": "选择一个唯一的技术名称，e.g. 在电子邮件模板中包含称呼时需要。",
+      "fieldSalutationKeyLabel": "技术名称",
+      "fieldSalutationKeyPlaceholder": "输入技术名称...",
+      "placeholderNewSalutation": "新称呼...",
+      "notificationErrorMessage": "保存称呼时出错。"
+    }
+  },
+  "sw-privileges": {
+    "permissions": {
+      "salutation": {
+        "label": "称呼"
+      }
+    }
+  }
+}
