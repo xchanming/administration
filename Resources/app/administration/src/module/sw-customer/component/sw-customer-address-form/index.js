@@ -182,19 +182,19 @@ export default {
             },
         },
 
-        'address.countryStateId'(oldId){
-            if (typeof oldId !== 'undefined') {
-                this.address.cityId = null;
-                this.address.districtId = null;
-            }
-        },
-
         'address.company'(newVal) {
             if (!newVal) {
                 return;
             }
 
             this.customer.company = newVal;
+        },
+
+        'address.countryStateId'(newVal,oldId) {
+            if (typeof oldId !== 'undefined') {
+                this.address.districtId = null;
+                this.address.cityId = null;
+            }
         },
 
         'country.forceStateInRegistration'(newVal) {

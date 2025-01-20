@@ -381,7 +381,6 @@ export default {
                 );
             }
 
-
             // To fix receiving `time_24hr` as a string
             if (typeof newConfig.time_24hr === 'string') {
                 newConfig.time_24hr = newConfig.time_24hr === 'true';
@@ -575,7 +574,7 @@ export default {
         },
 
         getDateStringFormat(options) {
-            const locale = Shopware.State.get('session').currentLocale;
+            const locale = Cicada.State.get('session').currentLocale;
             const formatter = new Intl.DateTimeFormat(locale, options);
             const parts = formatter.formatToParts(new Date(2000, 0, 1, 0, 0, 0));
             const mergedConfig = this.getMergedConfig(this.config);
