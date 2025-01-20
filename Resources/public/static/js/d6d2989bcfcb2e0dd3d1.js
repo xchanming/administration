@@ -1,1 +1,0 @@
-"use strict";(window.webpackJsonpAdministration=window.webpackJsonpAdministration||[]).push([[46369],{46369:function(t,e,o){o.r(e);let{State:n}=Cicada;e.default={compatConfig:Cicada.compatConfig,computed:{generateData:{get(){return n.get("swBulkEdit")?.orderDocuments?.storno?.value},set(t){n.commit("swBulkEdit/setOrderDocumentsValue",{type:"storno",value:t})}}}}}}]);

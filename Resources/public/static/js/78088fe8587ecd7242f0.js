@@ -1,1 +1,0 @@
-"use strict";(window.webpackJsonpAdministration=window.webpackJsonpAdministration||[]).push([[59324],{959324:function(n,t,o){o.r(t),o.d(t,{default:function(){return i}});var i={template:'\n{% block sw_cms_block_product_listing %}\n<div class="sw-cms-block-product-listing">\n    <slot name="content"></slot>\n</div>\n{% endblock %}\n',compatConfig:Cicada.compatConfig}}}]);
