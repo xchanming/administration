@@ -125,6 +125,20 @@ export default {
             return criteria;
         },
 
+        stateDistrictCriteria() {
+            if (!this.countryId || !this.address.countryStateId || !this.address.cityId) {
+                return null;
+            }
+
+            const criteria = new Criteria(1, 25);
+            criteria
+                .addFilter(Criteria.equals('countryId', this.countryId))
+                .addFilter(Criteria.equals('parentId', this.address.cityId))
+                .addSorting(Criteria.sort('position', 'ASC', true))
+                .addSorting(Criteria.sort('name', 'ASC'));
+            return criteria;
+        },
+
         salutationCriteria() {
             const criteria = new Criteria(1, 25);
 
@@ -166,6 +180,13 @@ export default {
                     this.getCountryStates();
                 });
             },
+        },
+
+        'address.countryStateId'(oldId){
+            if (typeof oldId !== 'undefined') {
+                this.address.cityId = null;
+                this.address.districtId = null;
+            }
         },
 
         'address.company'(newVal) {
