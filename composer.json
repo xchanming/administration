@@ -29,9 +29,9 @@
     },
     "require": {
         "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
+        "cicada-ag/core": "v6.6.8.0",
         "doctrine/dbal": "^3.9",
         "pentatrion/vite-bundle": "^7.0",
-        "cicada-ag/core": "*",
         "symfony/framework-bundle": "~7.2.0",
         "symfony/http-foundation": "~7.2.0",
         "symfony/mime": "~7.2.0",
