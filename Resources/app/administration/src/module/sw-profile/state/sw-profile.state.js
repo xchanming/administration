@@ -1,5 +1,5 @@
 /**
- * @package fundamentals@framework
+ * @sw-package fundamentals@framework
  * @deprecated tag:v6.7.0 - Will be replaced with Pinia store
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations

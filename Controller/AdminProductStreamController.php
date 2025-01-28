@@ -3,6 +3,7 @@
 namespace Cicada\Administration\Controller;
 
 use Cicada\Core\Content\Product\Aggregate\ProductVisibility\ProductVisibilityDefinition;
+use Cicada\Core\Content\Product\ProductCollection;
 use Cicada\Core\Content\Product\ProductDefinition;
 use Cicada\Core\Content\Product\SalesChannel\ProductAvailableFilter;
 use Cicada\Core\Framework\Context;
@@ -24,6 +25,8 @@ class AdminProductStreamController extends AbstractController
 {
     /**
      * @internal
+     *
+     * @param SalesChannelRepository<ProductCollection> $salesChannelProductRepository
      */
     public function __construct(
         private readonly ProductDefinition $productDefinition,

@@ -11,6 +11,7 @@ use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Cicada\Core\Framework\Log\Package;
 use Cicada\Core\Framework\Uuid\Uuid;
+use Cicada\Core\System\Locale\LocaleCollection;
 use Cicada\Core\System\Locale\LocaleException;
 
 /**
@@ -19,6 +20,10 @@ use Cicada\Core\System\Locale\LocaleException;
 #[Package('discovery')]
 class AppAdministrationSnippetPersister
 {
+    /**
+     * @param EntityRepository<AppAdministrationSnippetCollection> $appAdministrationSnippetRepository
+     * @param EntityRepository<LocaleCollection> $localeRepository
+     */
     public function __construct(
         private readonly EntityRepository $appAdministrationSnippetRepository,
         private readonly EntityRepository $localeRepository,
@@ -95,10 +100,7 @@ class AppAdministrationSnippetPersister
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('appId', $appId));
 
-        /** @var AppAdministrationSnippetCollection $collection */
-        $collection = $this->appAdministrationSnippetRepository->search($criteria, $context)->getEntities();
-
-        return $collection;
+        return $this->appAdministrationSnippetRepository->search($criteria, $context)->getEntities();
     }
 
     /**

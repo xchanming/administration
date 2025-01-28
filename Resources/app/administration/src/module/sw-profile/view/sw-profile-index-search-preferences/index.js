@@ -1,5 +1,5 @@
 /**
- * @package fundamentals@framework
+ * @sw-package fundamentals@framework
  */
 import template from './sw-profile-index-search-preferences.html.twig';
 import './sw-profile-index-search-preferences.scss';

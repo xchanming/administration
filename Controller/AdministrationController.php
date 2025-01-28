@@ -5,6 +5,7 @@ namespace Cicada\Administration\Controller;
 use Cicada\Administration\Events\PreResetExcludedSearchTermEvent;
 use Cicada\Administration\Framework\Routing\KnownIps\KnownIpsCollectorInterface;
 use Cicada\Administration\Snippet\SnippetFinderInterface;
+use Cicada\Core\Checkout\Customer\CustomerCollection;
 use Cicada\Core\Checkout\Customer\CustomerEntity;
 use Cicada\Core\Defaults;
 use Cicada\Core\DevOps\Environment\EnvironmentHelper;
@@ -25,7 +26,7 @@ use Cicada\Core\Framework\Util\HtmlSanitizer;
 use Cicada\Core\Framework\Uuid\Uuid;
 use Cicada\Core\Framework\Validation\Exception\ConstraintViolationException;
 use Cicada\Core\PlatformRequest;
-use Cicada\Core\System\Currency\CurrencyEntity;
+use Cicada\Core\System\Currency\CurrencyCollection;
 use Cicada\Core\System\SystemConfig\SystemConfigService;
 use Doctrine\DBAL\Connection;
 use League\Flysystem\FilesystemException;
@@ -52,6 +53,8 @@ class AdministrationController extends AbstractController
      * @internal
      *
      * @param array<int, int> $supportedApiVersions
+     * @param EntityRepository<CustomerCollection> $customerRepository
+     * @param EntityRepository<CurrencyCollection> $currencyRepository
      */
     public function __construct(
         private readonly TemplateFinder $finder,
@@ -62,7 +65,7 @@ class AdministrationController extends AbstractController
         private readonly Connection $connection,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly string $cicadaCoreDir,
-        private readonly EntityRepository $customerRepo,
+        private readonly EntityRepository $customerRepository,
         private readonly EntityRepository $currencyRepository,
         private readonly HtmlSanitizer $htmlSanitizer,
         private readonly DefinitionInstanceRegistry $definitionInstanceRegistry,
@@ -85,8 +88,7 @@ class AdministrationController extends AbstractController
     {
         $template = $this->finder->find('@Administration/administration/index.html.twig');
 
-        /** @var CurrencyEntity $defaultCurrency */
-        $defaultCurrency = $this->currencyRepository->search(new Criteria([Defaults::CURRENCY]), $context)->first();
+        $defaultCurrency = $this->currencyRepository->search(new Criteria([Defaults::CURRENCY]), $context)->getEntities()->first();
 
         $refreshTokenInterval = new \DateInterval($this->refreshTokenTtl);
         $refreshTokenTtl = $refreshTokenInterval->s + $refreshTokenInterval->i * 60 + $refreshTokenInterval->h * 3600 + $refreshTokenInterval->d * 86400;
@@ -98,7 +100,7 @@ class AdministrationController extends AbstractController
             'systemCurrencyId' => Defaults::CURRENCY,
             // @deprecated tag:v6.7.0 - remove as read-only extension manager is a better solution
             'disableExtensions' => EnvironmentHelper::getVariable('DISABLE_EXTENSIONS', false),
-            'systemCurrencyISOCode' => $defaultCurrency->getIsoCode(),
+            'systemCurrencyISOCode' => $defaultCurrency?->getIsoCode(),
             'liveVersionId' => Defaults::LIVE_VERSION,
             'firstRunWizard' => $this->firstRunWizardService->frwShouldRun(),
             'apiVersion' => $this->getLatestApiVersion(),
@@ -332,9 +334,6 @@ class AdministrationController extends AbstractController
             new EqualsFilter('boundSalesChannelId', $boundSalesChannelId),
         ]));
 
-        /** @var ?CustomerEntity $customer */
-        $customer = $this->customerRepo->search($criteria, $context)->first();
-
-        return $customer;
+        return $this->customerRepository->search($criteria, $context)->getEntities()->first();
     }
 }
