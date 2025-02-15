@@ -31,10 +31,10 @@
         "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
         "doctrine/dbal": "^4.2",
         "pentatrion/vite-bundle": "^7.0",
-        "xchanming/core": "*",
         "symfony/framework-bundle": "~7.2.0",
         "symfony/http-foundation": "~7.2.0",
         "symfony/mime": "~7.2.0",
-        "symfony/routing": "~7.2.0"
+        "symfony/routing": "~7.2.0",
+        "xchanming/core": "dev-trunk"
     }
 }
