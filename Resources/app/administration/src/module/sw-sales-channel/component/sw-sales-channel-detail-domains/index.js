@@ -5,15 +5,13 @@
 import template from './sw-sales-channel-detail-domains.html.twig';
 import './sw-sales-channel-detail-domains.scss';
 
-const { Mixin, Context } = Cicada;
-const { Criteria } = Cicada.Data;
-const { CicadaError } = Cicada.Classes;
+const { Mixin, Context } = Shopware;
+const { Criteria } = Shopware.Data;
+const { ShopwareError } = Shopware.Classes;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -142,7 +140,7 @@ export default {
         },
 
         unicodeUriFilter(uri) {
-            const unicodeUriFilter = Cicada.Filter.getByName('unicodeUri');
+            const unicodeUriFilter = Shopware.Filter.getByName('unicodeUri');
             return unicodeUriFilter(uri);
         },
 
@@ -276,7 +274,7 @@ export default {
             }
 
             if (!(await this.verifyUrl(this.currentDomain))) {
-                this.error = new CicadaError({
+                this.error = new ShopwareError({
                     code: 'DUPLICATED_URL',
                 });
 
@@ -314,9 +312,13 @@ export default {
         onConfirmDeleteDomain(domain) {
             if (domain.productExports.length > 0) {
                 this.createNotificationError({
-                    message: this.$tc('sw-sales-channel.detail.messageDeleteDomainError', 0, {
-                        url: this.unicodeUriFilter(domain.url),
-                    }),
+                    message: this.$tc(
+                        'sw-sales-channel.detail.messageDeleteDomainError',
+                        {
+                            url: this.unicodeUriFilter(domain.url),
+                        },
+                        0,
+                    ),
                 });
 
                 this.deleteDomain = null;

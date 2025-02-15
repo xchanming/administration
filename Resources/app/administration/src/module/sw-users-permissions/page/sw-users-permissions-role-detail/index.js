@@ -3,13 +3,11 @@
  */
 import template from './sw-users-permissions-role-detail.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -63,7 +61,7 @@ export default {
         },
 
         languageId() {
-            return Cicada.State.get('session').languageId;
+            return Shopware.Store.get('session').languageId;
         },
 
         roleRepository() {
@@ -87,12 +85,12 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-users-permissions-role-detail__detailedPrivileges',
                 path: 'detailedPrivileges',
                 scope: this,
             });
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-users-permissions-role-detail__role',
                 path: 'role',
                 scope: this,
@@ -173,9 +171,13 @@ export default {
                 })
                 .catch(() => {
                     this.createNotificationError({
-                        message: this.$tc('global.notification.notificationSaveErrorMessage', 0, {
-                            entityName: this.role.name,
-                        }),
+                        message: this.$tc(
+                            'global.notification.notificationSaveErrorMessage',
+                            {
+                                entityName: this.role.name,
+                            },
+                            0,
+                        ),
                     });
 
                     this.role.privileges = this.privileges.filterPrivilegesRoles(this.role.privileges);
@@ -190,7 +192,7 @@ export default {
                 const data = response.data;
                 delete data.password;
 
-                return Cicada.State.commit('setCurrentUser', data);
+                return Shopware.Store.get('session').setCurrentUser(data);
             });
         },
 

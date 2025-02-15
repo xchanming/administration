@@ -8,8 +8,6 @@ import './sw-extension-ratings-summary.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         summary: {
             type: Object,

@@ -5,7 +5,7 @@
 import template from './sw-rating-stars.html.twig';
 import './sw-rating-stars.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -17,8 +17,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-rating-stars', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         value: {
@@ -51,10 +49,14 @@ Component.register('sw-rating-stars', {
     computed: {
         ratingTooltip() {
             return {
-                message: this.$tc('sw-rating-stars.ratingTooltipText', 0, {
-                    actual: this.cappedValue,
-                    max: this.maxStars,
-                }),
+                message: this.$tc(
+                    'sw-rating-stars.ratingTooltipText',
+                    {
+                        actual: this.cappedValue,
+                        max: this.maxStars,
+                    },
+                    0,
+                ),
             };
         },
 

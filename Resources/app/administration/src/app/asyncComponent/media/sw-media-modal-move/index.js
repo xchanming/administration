@@ -5,7 +5,7 @@ const {
     Mixin,
     Context,
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 
 /**
  * @status ready
@@ -18,8 +18,6 @@ const {
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -94,7 +92,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -178,18 +176,26 @@ export default {
 
                 this.createNotificationSuccess({
                     title: this.$root.$tc('global.default.success'),
-                    message: this.$root.$tc('global.sw-media-modal-move.notification.successSingle.message', 1, {
-                        mediaName: this.mediaNameFilter(item),
-                    }),
+                    message: this.$root.$tc(
+                        'global.sw-media-modal-move.notification.successSingle.message',
+                        {
+                            mediaName: this.mediaNameFilter(item),
+                        },
+                        1,
+                    ),
                 });
 
                 return item.id;
             } catch {
                 this.createNotificationError({
                     title: this.$root.$tc('global.default.error'),
-                    message: this.$root.$tc('global.sw-media-modal-move.notification.errorSingle.message', 1, {
-                        mediaName: this.mediaNameFilter(item),
-                    }),
+                    message: this.$root.$tc(
+                        'global.sw-media-modal-move.notification.errorSingle.message',
+                        {
+                            mediaName: this.mediaNameFilter(item),
+                        },
+                        1,
+                    ),
                 });
 
                 return null;

@@ -1,7 +1,7 @@
 import template from './sw-empty-state.html.twig';
 import './sw-empty-state.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -10,8 +10,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-empty-state', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         title: {

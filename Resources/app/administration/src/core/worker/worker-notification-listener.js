@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-const { Application, WorkerNotification } = Cicada;
+const { Application, WorkerNotification } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export const POLL_BACKGROUND_INTERVAL = 30000;
@@ -23,7 +23,7 @@ class WorkerNotificationListener {
     }
 
     start() {
-        if (!Cicada.Context.app.config.adminWorker.enableQueueStatsWorker) {
+        if (!Shopware.Context.app.config.adminWorker.enableQueueStatsWorker) {
             return;
         }
 
@@ -46,19 +46,20 @@ class WorkerNotificationListener {
             return;
         }
 
-        Cicada.State.watch((state) => {
-            return state.notification.workerProcessPollInterval;
-        }, this._onPollIntervalChanged.bind(this));
+        Shopware.Vue.watch(
+            Shopware.Store.get('notification').workerProcessPollInterval,
+            this._onPollIntervalChanged.bind(this),
+        );
 
         this._isIntervalWatcherSetup = true;
     }
 
     _checkQueue() {
         this._isRequestRunning = true;
-        const client = Cicada.Application.getContainer('init').httpClient;
+        const client = Shopware.Application.getContainer('init').httpClient;
         const headers = {
             headers: {
-                Authorization: `Bearer ${Cicada.Service('loginService').getToken()}`,
+                Authorization: `Bearer ${Shopware.Service('loginService').getToken()}`,
             },
         };
 
@@ -70,7 +71,7 @@ class WorkerNotificationListener {
             this.runNotificationMiddleware(res.data);
 
             if (this._isRunning) {
-                this._interval = Cicada.State.get('notification').workerProcessPollInterval;
+                this._interval = Shopware.Store.get('notification').workerProcessPollInterval;
                 this._timeoutId = setTimeout(this._checkQueue.bind(this), this._interval);
             }
         });
@@ -103,10 +104,10 @@ class WorkerNotificationListener {
             $root: appRoot,
             notification: {
                 create: (notification) => {
-                    return Cicada.State.dispatch('notification/createNotification', notification);
+                    return Shopware.Store.get('notification').createNotification(notification);
                 },
                 update: (notification) => {
-                    return Cicada.State.dispatch('notification/updateNotification', notification);
+                    return Shopware.Store.get('notification').updateNotification(notification);
                 },
             },
             queue,

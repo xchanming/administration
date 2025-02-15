@@ -5,15 +5,13 @@
 import template from './sw-list-price-field.html.twig';
 import './sw-list-price-field.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-list-price-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -175,12 +173,8 @@ Component.register('sw-list-price-field', {
                 const price = this.priceForCurrency;
 
                 if (price) {
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(price, 'listPrice', newValue);
-                    } else {
-                        // eslint-disable-next-line vue/no-mutating-props
-                        price.listPrice = newValue;
-                    }
+                    // eslint-disable-next-line vue/no-mutating-props
+                    price.listPrice = newValue;
                 }
             },
         },

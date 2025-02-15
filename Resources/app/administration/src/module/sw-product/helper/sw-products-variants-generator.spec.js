@@ -12,7 +12,7 @@ describe('/src/module/sw-product/helper/sw-products-variants-generator.spec.js',
     let variantsGenerator;
 
     beforeAll(() => {
-        Cicada.Service().register('syncService', () => {
+        Shopware.Service().register('syncService', () => {
             return {
                 httpClient: {
                     get() {
@@ -27,7 +27,7 @@ describe('/src/module/sw-product/helper/sw-products-variants-generator.spec.js',
                 },
             };
         });
-        Cicada.Service().register('cacheApiService', () => {
+        Shopware.Service().register('cacheApiService', () => {
             return {
                 indexProducts() {},
             };

@@ -1,14 +1,14 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
 import './acl';
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-language-list', () => import('./page/sw-settings-language-list'));
-Cicada.Component.register('sw-settings-language-detail', () => import('./page/sw-settings-language-detail'));
+Shopware.Component.register('sw-settings-language-list', () => import('./page/sw-settings-language-list'));
+Shopware.Component.register('sw-settings-language-detail', () => import('./page/sw-settings-language-detail'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module, Feature } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-language', {
@@ -51,10 +51,17 @@ Module.register('sw-settings-language', {
         },
     },
 
-    // settingsItem: {
-    //     group: 'shop',
-    //     to: 'sw.settings.language.index',
-    //     icon: 'regular-flag',
-    //     privilege: 'language.viewer',
-    // },
+    settingsItem: {
+        group: function () {
+            // @deprecated tag:v6.7.0 - Remove condition and function callback
+            if (!Feature.isActive('v6.7.0.0')) {
+                return 'shop';
+            }
+
+            return 'general';
+        },
+        to: 'sw.settings.language.index',
+        icon: 'regular-flag',
+        privilege: 'language.viewer',
+    },
 });

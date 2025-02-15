@@ -1,7 +1,7 @@
 import type Bottle from 'bottlejs';
 import type { App } from 'vue';
 import { reactive } from 'vue';
-import type { ContextState } from '../app/state/context.store';
+import type { ContextStore } from '../app/store/context.store';
 import type VueAdapter from '../app/adapter/view/vue.adapter';
 /**
  * @sw-package framework
@@ -56,11 +56,8 @@ class ApplicationBootstrapper {
         this.$container.service('service', noop);
         this.$container.service('init', noop);
         this.$container.service('factory', noop);
-
-        if (window._features_.ADMIN_VITE) {
-            this.$container.service('init-post', noop);
-            this.$container.service('init-pre', noop);
-        }
+        this.$container.service('init-pre', noop);
+        this.$container.service('init-post', noop);
     }
 
     /**
@@ -81,7 +78,7 @@ class ApplicationBootstrapper {
      * The factory will be registered in a nested DI container.
      *
      * @example
-     * Cicada.Application.addFactory('module', (container) => {
+     * Shopware.Application.addFactory('module', (container) => {
      *    return ModuleFactory();
      * });
      */
@@ -98,13 +95,13 @@ class ApplicationBootstrapper {
      * Registers a factory middleware for either every factory in the container or a defined one.
      *
      * @example
-     * Cicada.Application.addFactoryMiddleware((container, next) => {
+     * Shopware.Application.addFactoryMiddleware((container, next) => {
      *    // Do something with the container
      *    next();
      * });
      *
      * @example
-     * Cicada.Application.addFactoryMiddleware('module', (service, next) => {
+     * Shopware.Application.addFactoryMiddleware('module', (service, next) => {
      *    // Do something with the service
      *    next();
      * });
@@ -120,13 +117,13 @@ class ApplicationBootstrapper {
      * Registers a decorator for either every factory in the container or a defined one.
      *
      * @example
-     * Cicada.Application.addFactoryDecorator((container, next) => {
+     * Shopware.Application.addFactoryDecorator((container, next) => {
      *    // Do something with the container
      *    next();
      * });
      *
      * @example
-     * Cicada.Application.addFactoryDecorator('module', (service, next) => {
+     * Shopware.Application.addFactoryDecorator('module', (service, next) => {
      *    // Do something with the service
      *    next();
      * });
@@ -145,20 +142,11 @@ class ApplicationBootstrapper {
      * The initializer will be registered in a nested DI container.
      *
      * @example
-     * Cicada.Application.addInitializer('httpClient', (container) => {
+     * Shopware.Application.addInitializer('httpClient', (container) => {
      *    return HttpFactory(container.apiContext);
      * });
      */
-    addInitializer<I extends keyof InitContainer>(name: I, initializer: () => InitContainer[I]): ApplicationBootstrapper {
-        this.$container.factory(`init.${name}`, initializer.bind(this));
-        return this;
-    }
-
-    /**
-     * Adds an initializer to the Vite application.
-     */
-    // eslint-disable-next-line max-len
-    addInitializerVite<I extends keyof InitContainer>(
+    addInitializer<I extends keyof InitContainer>(
         name: I,
         initializer: () => InitContainer[I],
         suffix: string = '',
@@ -174,7 +162,7 @@ class ApplicationBootstrapper {
      * The service will be added to a nested DI container.
      *
      * @example
-     * Cicada.Application.addServiceProvider('productService', (container) => {
+     * Shopware.Application.addServiceProvider('productService', (container) => {
      *    return new ProductApiService(container.mediaService);
      * });
      */
@@ -187,7 +175,7 @@ class ApplicationBootstrapper {
         return this;
     }
 
-    registerConfig(config: { apiContext?: ContextState['api']; appContext?: ContextState['app'] }): ApplicationBootstrapper {
+    registerConfig(config: { apiContext?: ContextStore['api']; appContext?: ContextStore['app'] }): ApplicationBootstrapper {
         if (config.apiContext) {
             this.registerApiContext(config.apiContext);
         }
@@ -201,8 +189,8 @@ class ApplicationBootstrapper {
     /**
      * Registers the api context (api path, path to resources etc.)
      */
-    registerApiContext(context: ContextState['api']): ApplicationBootstrapper {
-        Cicada.Context.api = Cicada.Classes._private.ApiContextFactory(context);
+    registerApiContext(context: ContextStore['api']): ApplicationBootstrapper {
+        Shopware.Context.api = Shopware.Classes._private.ApiContextFactory(context);
 
         return this;
     }
@@ -210,8 +198,8 @@ class ApplicationBootstrapper {
     /**
      * Registers the app context (firstRunWizard, etc.)
      */
-    registerAppContext(context: ContextState['app']): ApplicationBootstrapper {
-        Cicada.Context.app = Cicada.Classes._private.AppContextFactory(context);
+    registerAppContext(context: ContextStore['app']): ApplicationBootstrapper {
+        Shopware.Context.app = Shopware.Classes._private.AppContextFactory(context);
 
         return this;
     }
@@ -220,13 +208,13 @@ class ApplicationBootstrapper {
      * Registers a service provider middleware for either every service provider in the container or a defined one.
      *
      * @example
-     * Cicada.Application.addServiceProviderMiddleware((container, next) => {
+     * Shopware.Application.addServiceProviderMiddleware((container, next) => {
      *    // Do something with the container
      *    next();
      * });
      *
      * @example
-     * Cicada.Application.addServiceProviderMiddleware('productService', (service, next) => {
+     * Shopware.Application.addServiceProviderMiddleware('productService', (service, next) => {
      *    // Do something with the service
      *    next();
      * });
@@ -261,7 +249,7 @@ class ApplicationBootstrapper {
      * Initializes the feature flags from context settings
      */
     initializeFeatureFlags(): ApplicationBootstrapper {
-        const features = Cicada.Context.app.features;
+        const features = Shopware.Context.app.features;
 
         if (!features) {
             throw new Error(`
@@ -270,7 +258,7 @@ class ApplicationBootstrapper {
             `);
         }
 
-        Cicada.Feature.init(features);
+        Shopware.Feature.init(features);
 
         return this;
     }
@@ -279,13 +267,13 @@ class ApplicationBootstrapper {
      * Registers a service provider decorator for either every service provider in the container or a defined one.
      *
      * @example
-     * Cicada.Application.addServiceProviderDecorator((container, next) => {
+     * Shopware.Application.addServiceProviderDecorator((container, next) => {
      *    // Do something with the container
      *    next();
      * });
      *
      * @example
-     * Cicada.Application.addServiceProviderDecorator('productService', (service, next) => {
+     * Shopware.Application.addServiceProviderDecorator('productService', (service, next) => {
      *    // Do something with the service
      *    next();
      * });
@@ -327,15 +315,8 @@ class ApplicationBootstrapper {
      * Get the global state
      */
     initState(): ApplicationBootstrapper {
-        let initaliziation;
-
-        if (window._features_.ADMIN_VITE) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            initaliziation = this.getContainer('init-pre').state;
-        } else {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            initaliziation = this.getContainer('init').state;
-        }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const initaliziation = this.getContainer('init-pre').state;
 
         if (initaliziation) {
             return this;
@@ -387,10 +368,6 @@ class ApplicationBootstrapper {
             loginService.restartAutoTokenRefresh(expiry);
         }
 
-        if (window._features_.ADMIN_VITE) {
-            return this.bootFullApplicationVite();
-        }
-
         return this.bootFullApplication();
     }
 
@@ -422,24 +399,18 @@ class ApplicationBootstrapper {
     }
 
     /**
-     * Boot the whole webpack application.
+     * Boot the whole vite application.
      */
     bootFullApplication(): Promise<void | ApplicationBootstrapper> {
+        const initPreContainer = this.getContainer('init-pre');
         const initContainer = this.getContainer('init');
+        const initPostContainer = this.getContainer('init-post');
 
-        /**
-         * Normal Application Booting:
-         *
-         * 1. Initialize all initializer
-         * 2. Load plugins
-         * 3. Wait until plugin promises are resolved
-         * 4. Initialize the conversion of dependencies in view adapter
-         * 5. Create the application root
-         */
-
-        return this.initializeInitializers(initContainer)
+        return this.initializeInitializers(initPreContainer, '-pre')
+            .then(() => this.initializeInitializers(initContainer))
+            .then(() => this.initializeInitializers(initPostContainer, '-post'))
             .then(() => this.loadPlugins())
-            .then(() => Promise.all(Cicada.Plugin.getBootPromises()))
+            .then(() => Promise.all(Shopware.Plugin.getBootPromises()))
             .then(() => {
                 if (!this.view) {
                     return Promise.reject();
@@ -449,30 +420,6 @@ class ApplicationBootstrapper {
             })
             .then(() => this.createApplicationRoot())
             .catch((error) => this.createApplicationRootError(error));
-    }
-
-    /**
-     * Boot the whole vite application.
-     */
-    bootFullApplicationVite(): Promise<void | ApplicationBootstrapper> {
-        const initPreContainer = this.getContainer('init-pre');
-        const initContainer = this.getContainer('init');
-        const initPostContainer = this.getContainer('init-post');
-
-        return this.initializeInitializersVite(initPreContainer, '-pre')
-            .then(() => this.initializeInitializersVite(initContainer))
-            .then(() => this.initializeInitializersVite(initPostContainer, '-post'))
-            .then(() => this.loadPlugins())
-            .then(() => Promise.all(Cicada.Plugin.getBootPromises()))
-            .then(() => {
-                if (!this.view) {
-                    return Promise.reject();
-                }
-
-                return this.view.initDependencies();
-            })
-            .then(() => this.createApplicationRoot());
-        // .catch((error) => this.createApplicationRootError(error));
     }
 
     /**
@@ -487,7 +434,7 @@ class ApplicationBootstrapper {
 
         // We're in a test environment, we're not needing an application root
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (Cicada.Context.app.environment === 'testing') {
+        if (Shopware.Context.app.environment === 'testing') {
             return Promise.resolve(this);
         }
 
@@ -504,7 +451,7 @@ class ApplicationBootstrapper {
         );
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-        const firstRunWizard = Cicada.Context.app.firstRunWizard;
+        const firstRunWizard = Shopware.Context.app.firstRunWizard;
 
         const loginService = this.getContainer('service').loginService;
         if (
@@ -567,24 +514,10 @@ class ApplicationBootstrapper {
     }
 
     /**
-     * Initialize the initializers right away cause these are the mandatory services for the application
-     * to boot successfully.
-     */
-    private initializeInitializers(container: InitContainer, prefix = 'init'): Promise<unknown[]> {
-        const services = container.$list().map((serviceName) => {
-            return `${prefix}.${serviceName}`;
-        });
-        this.$container.digest(services);
-
-        const asyncInitializers = this.getAsyncInitializers(container);
-        return Promise.all(asyncInitializers);
-    }
-
-    /**
      * Initialize the initializers for Vite.
      */
     // eslint-disable-next-line max-len
-    private initializeInitializersVite(
+    private initializeInitializers(
         container: InitContainer | InitPreContainer | InitPostContainer,
         suffix: '' | '-pre' | '-post' = '',
     ): Promise<unknown[]> {
@@ -595,7 +528,7 @@ class ApplicationBootstrapper {
 
         this.$container.digest(services);
 
-        const asyncInitializers = this.getAsyncInitializersVite(container, suffix);
+        const asyncInitializers = this.getAsyncInitializers(container, suffix);
         return Promise.all(asyncInitializers);
     }
 
@@ -608,52 +541,46 @@ class ApplicationBootstrapper {
             'login',
             'baseComponents',
             'locale',
-            'apiServices',
             'coreDirectives',
+            'apiServices',
+            'store',
         ];
 
         const initContainer = this.getContainer('init');
+        const initPreContainer = this.getContainer('init-pre');
+        const initPostContainer = this.getContainer('init-post');
+        const pre = [] as string[];
+        const init = [] as string[];
+        const post = [] as string[];
+
         loginInitializer.forEach((key) => {
-            const exists = initContainer.hasOwnProperty(key);
-
-            if (!exists) {
-                console.error(`The initializer "${key}" does not exists`);
+            if (initPreContainer.hasOwnProperty(key)) {
+                pre.push(`init-pre.${key}`);
+                return;
             }
+
+            if (initContainer.hasOwnProperty(key)) {
+                init.push(`init.${key}`);
+                return;
+            }
+
+            if (initPostContainer.hasOwnProperty(key)) {
+                post.push(`init-post.${key}`);
+                return;
+            }
+
+            console.error(`The login initializer "${key}" does not exist`);
         });
 
-        this.$container.digest(loginInitializer.map((key) => `init.${key}`));
+        this.$container.digest(pre);
+        this.$container.digest(init);
+        this.$container.digest(post);
 
-        let asyncInitializers = [];
-        if (window._features_.ADMIN_VITE) {
-            asyncInitializers = this.getAsyncInitializersVite(loginInitializer);
-        } else {
-            asyncInitializers = this.getAsyncInitializers(loginInitializer);
-        }
-
-        return Promise.all(asyncInitializers);
-    }
-
-    getAsyncInitializers(initializer: InitContainer | string[]): unknown[] {
-        const initContainer = this.getContainer('init');
-        const asyncInitializers: unknown[] = [];
-
-        Object.keys(initializer).forEach((serviceKey) => {
-            // @ts-expect-error
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            const service = initContainer[serviceKey];
-
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            if (service?.constructor?.name === 'Promise') {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                asyncInitializers.push(service);
-            }
-        });
-
-        return asyncInitializers;
+        return Promise.all(this.getAsyncInitializers(loginInitializer));
     }
 
     // eslint-disable-next-line max-len
-    getAsyncInitializersVite(
+    getAsyncInitializers(
         initializer: InitContainer | InitPostContainer | InitPreContainer | string[],
         suffix: '' | '-pre' | '-post' = '',
     ): unknown[] {
@@ -696,12 +623,12 @@ class ApplicationBootstrapper {
             plugins = (await response.json()) as bundlesPluginResponse;
 
             // Added via webpack.config.js@193 || plugins.vite.ts@123
-            if (Cicada.Utils.object.hasOwnProperty(plugins, 'metadata')) {
+            if (Shopware.Utils.object.hasOwnProperty(plugins, 'metadata')) {
                 delete plugins.metadata;
             }
         } else {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            plugins = Cicada.Context.app.config.bundles as bundlesPluginResponse;
+            plugins = Shopware.Context.app.config.bundles as bundlesPluginResponse;
         }
 
         // prioritize main swag-commercial plugin because other plugins depend on the license handling
@@ -715,17 +642,12 @@ class ApplicationBootstrapper {
 
         const injectAllPlugins = Object.entries(plugins)
             .filter(([pluginName]) => {
-                // Filter the swag-commercial plugin because it was loaded beforehand
-                if (window._features_.ADMIN_VITE) {
-                    return ![
-                        'swag-commercial',
-                        'SwagCommercial',
-                        'Administration',
-                    ].includes(pluginName);
-                }
+                // Filter the swag-commercial bundle because it was loaded beforehand
+                // Filter the Administration bundle because it is the main application
                 return ![
                     'swag-commercial',
                     'SwagCommercial',
+                    'Administration',
                 ].includes(pluginName);
             })
             .map(
@@ -737,16 +659,12 @@ class ApplicationBootstrapper {
 
         // inject iFrames of plugins
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        const bundles = Cicada.Context.app.config.bundles as bundlesPluginResponse;
+        const bundles = Shopware.Context.app.config.bundles as bundlesPluginResponse;
         Object.entries(bundles).forEach(
             ([
                 bundleName,
                 bundle,
             ]) => {
-                if (!bundle.baseUrl) {
-                    return;
-                }
-
                 if (isDevelopmentMode) {
                     // replace the baseUrl with the webpack url of the html file
                     Object.entries(plugins).forEach(
@@ -754,7 +672,7 @@ class ApplicationBootstrapper {
                             pluginName,
                             entryFiles,
                         ]) => {
-                            const stringUtils = Cicada.Utils.string;
+                            const stringUtils = Shopware.Utils.string;
                             const camelCasePluginName = stringUtils.upperFirst(stringUtils.camelCase(pluginName));
 
                             if (bundleName === camelCasePluginName && !!entryFiles.html) {
@@ -769,6 +687,10 @@ class ApplicationBootstrapper {
                     );
                 }
 
+                if (!bundle.baseUrl) {
+                    return;
+                }
+
                 this.injectIframe({
                     active: bundle.active,
                     integrationId: bundle.integrationId,
@@ -780,29 +702,6 @@ class ApplicationBootstrapper {
             },
         );
 
-        if (isDevelopmentMode) {
-            // inject iFrames of plugins which aren't detected yet from the config (no files in public folder)
-            Object.entries(plugins).forEach(
-                ([
-                    pluginName,
-                    entryFiles,
-                ]) => {
-                    const stringUtils = Cicada.Utils.string;
-                    const camelCasePluginName = stringUtils.upperFirst(stringUtils.camelCase(pluginName));
-
-                    if (Object.keys(bundles).includes(camelCasePluginName) || !entryFiles.html) {
-                        return;
-                    }
-
-                    this.injectIframe({
-                        bundleVersion: undefined,
-                        bundleName: camelCasePluginName,
-                        iframeSrc: entryFiles.html,
-                    });
-                },
-            );
-        }
-
         return Promise.all(injectAllPlugins);
     }
 
@@ -812,8 +711,9 @@ class ApplicationBootstrapper {
     private async injectPlugin(plugin: bundlesSinglePluginResponse): Promise<unknown[] | null> {
         let allScripts = [];
         let allStyles = [];
-        // if dev and vite feature flag
-        if (window._features_.ADMIN_VITE && process.env.NODE_ENV === 'development' && plugin.hmrSrc && plugin.js) {
+
+        // If we are in development mode and the plugin has a hmrSrc, we load the hmrSrc first
+        if (process.env.NODE_ENV === 'development' && plugin.hmrSrc && plugin.js) {
             allScripts.push(this.injectJs(plugin.hmrSrc));
             allScripts.push(this.injectJs(plugin.js as string));
 
@@ -827,6 +727,7 @@ class ApplicationBootstrapper {
                 return null;
             }
         }
+
         // load multiple js scripts
         if (plugin.js && Array.isArray(plugin.js)) {
             allScripts = plugin.js.map((src) => this.injectJs(src));
@@ -862,10 +763,9 @@ class ApplicationBootstrapper {
             const script = document.createElement('script');
             script.src = scriptSrc;
             script.async = true;
-            if (window._features_.ADMIN_VITE) {
-                script.type = 'module';
-            }
-            // resolve when script was loaded succcessfully
+            script.type = 'module';
+
+            // resolve when script was loaded successfully
             script.onload = (): void => {
                 resolve();
             };
@@ -923,7 +823,7 @@ class ApplicationBootstrapper {
         bundleVersion?: string;
         bundleType?: 'app' | 'plugin';
     }): void {
-        const bundles = Cicada.Context.app.config.bundles;
+        const bundles = Shopware.Context.app.config.bundles;
         let permissions = null;
 
         if (bundles && bundles.hasOwnProperty(bundleName)) {
@@ -936,22 +836,22 @@ class ApplicationBootstrapper {
             name: string;
             baseUrl: string;
             version?: string;
-            type?: 'app' | 'plugin';
-            permissions?: Record<string, unknown>;
+            type: 'app' | 'plugin';
+            permissions: Record<string, unknown>;
         } = {
             active,
             integrationId,
             name: bundleName,
             baseUrl: iframeSrc,
             version: bundleVersion,
-            type: bundleType,
-            permissions: undefined,
+            type: bundleType ?? 'plugin',
+            permissions: {},
         };
 
         // To keep permissions reactive no matter if empty or not
         extension.permissions = permissions ?? reactive({});
 
-        Cicada.State.commit('extensions/addExtension', extension);
+        Shopware.Store.get('extensions').addExtension(extension);
     }
 }
 

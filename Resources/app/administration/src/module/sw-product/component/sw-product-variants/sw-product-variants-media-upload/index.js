@@ -5,14 +5,12 @@
 import template from './sw-product-variants-media-upload.html.twig';
 import './sw-product-variants-media-upload.scss';
 
-const { Mixin, Context } = Cicada;
-const { isEmpty } = Cicada.Utils.types;
+const { Mixin, Context } = Shopware;
+const { isEmpty } = Shopware.Utils.types;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -147,7 +145,7 @@ export default {
             media.forEach((item) => {
                 this.addMedia(item).catch(({ fileName }) => {
                     this.createNotificationError({
-                        message: this.$tc('sw-product.mediaForm.errorMediaItemDuplicated', 0, { fileName }),
+                        message: this.$tc('sw-product.mediaForm.errorMediaItemDuplicated', { fileName }, 0),
                     });
                 });
             });

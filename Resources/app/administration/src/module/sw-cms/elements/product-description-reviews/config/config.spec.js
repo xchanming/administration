@@ -69,7 +69,7 @@ async function createWrapper() {
 
 describe('src/module/sw-cms/elements/product-description-reviews/config', () => {
     beforeAll(() => {
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
             state() {
                 return {
@@ -84,7 +84,7 @@ describe('src/module/sw-cms/elements/product-description-reviews/config', () => 
     });
 
     beforeEach(() => {
-        Cicada.Store.get('cmsPage').$reset();
+        Shopware.Store.get('cmsPage').$reset();
     });
 
     it('should show product selector if page type is not product detail', async () => {
@@ -100,7 +100,7 @@ describe('src/module/sw-cms/elements/product-description-reviews/config', () => 
     it('should show alert information if page type is product detail', async () => {
         const wrapper = await createWrapper();
 
-        Cicada.Store.get('cmsPage').currentPage.type = 'product_detail';
+        Shopware.Store.get('cmsPage').currentPage.type = 'product_detail';
         await flushPromises();
 
         const productSelector = wrapper.find('sw-entity-single-select-stub');

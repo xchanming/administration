@@ -1,7 +1,7 @@
 import template from './sw-mail-template-list.html.twig';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package after-sales
@@ -9,8 +9,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -52,7 +50,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

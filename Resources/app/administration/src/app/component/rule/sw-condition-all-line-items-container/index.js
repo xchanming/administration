@@ -1,7 +1,7 @@
 import template from './sw-condition-all-line-items-container.html.twig';
 
-const { Component, Mixin } = Cicada;
-const { EntityCollection } = Cicada.Data;
+const { Component, Mixin } = Shopware;
+const { EntityCollection } = Shopware.Data;
 
 /**
  * @private
@@ -15,8 +15,6 @@ const { EntityCollection } = Cicada.Data;
  */
 Component.register('sw-condition-all-line-items-container', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     provide() {
         return {

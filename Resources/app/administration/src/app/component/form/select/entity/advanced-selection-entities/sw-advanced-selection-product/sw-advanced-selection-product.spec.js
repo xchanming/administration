@@ -11,20 +11,20 @@ const CURRENCY_ID = {
 
 function mockContext() {
     return {
-        apiPath: 'http://cicada.local/api',
-        apiResourcePath: 'http://cicada.local/api/v2',
-        assetsPath: 'http://cicada.local/bundles/',
+        apiPath: 'http://shopware.local/api',
+        apiResourcePath: 'http://shopware.local/api/v2',
+        assetsPath: 'http://shopware.local/bundles/',
         basePath: '',
-        host: 'cicada.local',
+        host: 'shopware.local',
         inheritance: false,
-        installationPath: 'http://cicada.local',
+        installationPath: 'http://shopware.local',
         languageId: '2fbb5fe2e29a4d70aa5854ce7ce3e20b',
         liveVersionId: '0fa91ce3e96a4bc2be4bd9ce752c3425',
         pathInfo: '/admin',
         port: 80,
         scheme: 'http',
-        schemeAndHttpHost: 'http://cicada.local',
-        uri: 'http://cicada.local/admin',
+        schemeAndHttpHost: 'http://shopware.local',
+        uri: 'http://shopware.local/admin',
     };
 }
 

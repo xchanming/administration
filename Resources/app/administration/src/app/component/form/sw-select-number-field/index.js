@@ -1,4 +1,4 @@
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework

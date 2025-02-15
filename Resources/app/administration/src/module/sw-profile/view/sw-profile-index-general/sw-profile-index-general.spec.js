@@ -1,5 +1,5 @@
 /**
- * @package fundamentals@framework
+ * @sw-package framework
  */
 import { mount } from '@vue/test-utils';
 
@@ -106,11 +106,11 @@ describe('src/module/sw-profile/view/sw-profile-index-general', () => {
         await flushPromises();
 
         const changeNewPasswordField = wrapper.find('.sw-password-field:nth-of-type(1)');
-        await changeNewPasswordField.setValue('Cicada');
+        await changeNewPasswordField.setValue('Shopware');
         await changeNewPasswordField.trigger('input');
         await flushPromises();
 
-        expect(wrapper.emitted('new-password-change')[0][0]).toBe('Cicada');
+        expect(wrapper.emitted('new-password-change')[0][0]).toBe('Shopware');
     });
 
     it('should be able to change new password confirm', async () => {
@@ -118,11 +118,11 @@ describe('src/module/sw-profile/view/sw-profile-index-general', () => {
         await flushPromises();
 
         const changeNewPasswordConfirmField = wrapper.find('.sw-password-field:nth-of-type(2)');
-        await changeNewPasswordConfirmField.setValue('Cicada');
+        await changeNewPasswordConfirmField.setValue('Shopware');
         await changeNewPasswordConfirmField.trigger('input');
         await flushPromises();
 
-        expect(wrapper.emitted('new-password-confirm-change')[0][0]).toBe('Cicada');
+        expect(wrapper.emitted('new-password-confirm-change')[0][0]).toBe('Shopware');
     });
 
     it('should be able to upload media', async () => {

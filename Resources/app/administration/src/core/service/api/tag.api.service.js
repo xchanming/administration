@@ -3,8 +3,8 @@
  */
 import ApiService from '../api.service';
 
-const { Service } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Service } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default class TagApiService extends ApiService {
@@ -71,7 +71,7 @@ export default class TagApiService extends ApiService {
                 criteria.addFilter(Criteria.equalsAny('tags.id', ids));
 
                 // eslint-disable-next-line
-                const { data, total } = await repository.searchIds(criteria, Cicada.Context.api);
+                const { data, total } = await repository.searchIds(criteria, Shopware.Context.api);
                 tag[propertyName] = data.map((id) => {
                     return { id };
                 });
@@ -92,7 +92,7 @@ export default class TagApiService extends ApiService {
             return;
         }
 
-        await tagRepository.syncDeleted(ids, Cicada.Context.api);
+        await tagRepository.syncDeleted(ids, Shopware.Context.api);
     }
 
     getRepository(entity) {

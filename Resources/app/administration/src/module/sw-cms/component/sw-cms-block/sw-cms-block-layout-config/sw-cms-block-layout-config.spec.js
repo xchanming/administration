@@ -29,7 +29,7 @@ async function createWrapper() {
             },
             global: {
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
                 stubs: {
                     'sw-text-field': {
@@ -49,7 +49,7 @@ describe('module/sw-cms/component/sw-cms-block-layout-config', () => {
     });
 
     beforeEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('should be a Vue.js component', async () => {

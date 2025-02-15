@@ -13,7 +13,7 @@ const createWrapper = async (privileges = []) => {
                             return Promise.resolve([
                                 {
                                     id: '123',
-                                    description: 'Cicada Default Template',
+                                    description: 'Shopware Default Template',
                                     mailTemplateType: {
                                         id: '1',
                                         name: 'Enter delivery state: Returned',

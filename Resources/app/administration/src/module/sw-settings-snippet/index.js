@@ -3,19 +3,19 @@
  */
 import './acl';
 
-const { Module } = Cicada;
+const { Module, Feature } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-snippet-set-list', () => import('./page/sw-settings-snippet-set-list'));
-Cicada.Component.register('sw-settings-snippet-list', () => import('./page/sw-settings-snippet-list'));
-Cicada.Component.register('sw-settings-snippet-detail', () => import('./page/sw-settings-snippet-detail'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-settings-snippet-set-list', () => import('./page/sw-settings-snippet-set-list'));
+Shopware.Component.register('sw-settings-snippet-list', () => import('./page/sw-settings-snippet-list'));
+Shopware.Component.register('sw-settings-snippet-detail', () => import('./page/sw-settings-snippet-detail'));
+Shopware.Component.extend(
     'sw-settings-snippet-create',
     'sw-settings-snippet-detail',
     () => import('./page/sw-settings-snippet-create'),
 );
-Cicada.Component.register('sw-settings-snippet-sidebar', () => import('./component/sidebar/sw-settings-snippet-sidebar'));
-Cicada.Component.register(
+Shopware.Component.register('sw-settings-snippet-sidebar', () => import('./component/sidebar/sw-settings-snippet-sidebar'));
+Shopware.Component.register(
     'sw-settings-snippet-filter-switch',
     () => import('./component/sidebar/sw-settings-snippet-filter-switch'),
 );
@@ -70,7 +70,14 @@ Module.register('sw-settings-snippet', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: function () {
+            // @deprecated tag:v6.7.0 - Remove condition and function callback
+            if (!Feature.isActive('v6.7.0.0')) {
+                return 'shop';
+            }
+
+            return 'localization';
+        },
         to: 'sw.settings.snippet.index',
         icon: 'regular-globe-stand',
         privilege: 'snippet.viewer',

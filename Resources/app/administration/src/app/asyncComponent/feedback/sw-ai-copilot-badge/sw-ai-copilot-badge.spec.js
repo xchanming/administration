@@ -15,7 +15,7 @@ async function createWrapper() {
                 'sw-icon': true,
             },
             directives: {
-                tooltip: Cicada.Directive.getByName('tooltip'),
+                tooltip: Shopware.Directive.getByName('tooltip'),
             },
         },
     });

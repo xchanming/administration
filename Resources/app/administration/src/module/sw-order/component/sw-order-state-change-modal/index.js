@@ -9,8 +9,6 @@ import './sw-order-state-change-modal.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'page-leave',
         'page-leave-confirm',
@@ -37,13 +35,12 @@ export default {
         return {
             showModal: false,
             userCanConfirm: false,
-            stateRemark: null,
         };
     },
 
     computed: {
         modalTitle() {
-            return this.$tc('sw-order.changeStateCard.cardTitle');
+            return this.$tc('sw-order.assignMailTemplateCard.cardTitle');
         },
     },
 
@@ -51,8 +48,9 @@ export default {
         onCancel() {
             this.$emit('page-leave');
         },
-        onConfirm() {
-            this.$emit('page-leave-confirm');
+
+        onDocsConfirm(docIds, sendMail = true) {
+            this.$emit('page-leave-confirm', docIds, sendMail);
         },
     },
 };

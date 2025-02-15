@@ -5,15 +5,13 @@
 import template from './sw-skeleton.html.twig';
 import './sw-skeleton.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-skeleton', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         variant: {

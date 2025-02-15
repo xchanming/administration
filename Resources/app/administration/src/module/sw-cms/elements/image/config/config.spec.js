@@ -3,7 +3,7 @@
  */
 import { mount } from '@vue/test-utils';
 import { setupCmsEnvironment } from 'src/module/sw-cms/test-utils';
-import { MtSwitch } from '@cicada-ag/meteor-component-library';
+import { MtSwitch } from '@shopware-ag/meteor-component-library';
 
 async function createWrapper() {
     return mount(
@@ -13,7 +13,7 @@ async function createWrapper() {
         {
             global: {
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                     repositoryFactory: {
                         create: () => {
                             return {

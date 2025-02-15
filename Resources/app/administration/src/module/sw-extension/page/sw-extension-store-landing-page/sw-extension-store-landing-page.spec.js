@@ -40,13 +40,13 @@ describe('src/module/sw-extension/page/sw-extension-store-landing-page', () => {
     beforeAll(() => {
         delete window.location;
         window.location = { reload: jest.fn() };
-        Cicada.Utils.debug.error = jest.fn();
+        Shopware.Utils.debug.error = jest.fn();
     });
 
     beforeEach(async () => {
         successfulActivation = true;
         window.location.reload.mockClear();
-        Cicada.Utils.debug.error.mockClear();
+        Shopware.Utils.debug.error.mockClear();
     });
 
     it('should show the activate button', async () => {

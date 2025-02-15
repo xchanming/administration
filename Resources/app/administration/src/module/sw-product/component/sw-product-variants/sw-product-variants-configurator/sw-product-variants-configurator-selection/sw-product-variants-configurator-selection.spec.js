@@ -56,7 +56,7 @@ async function createWrapper(additionalProps = {}) {
 }
 
 function getPropertyCollection() {
-    return new EntityCollection('/test-entity', 'testEntity', Cicada.Context.api, null, [
+    return new EntityCollection('/test-entity', 'testEntity', Shopware.Context.api, null, [
         {
             id: '1',
             optionId: '1',

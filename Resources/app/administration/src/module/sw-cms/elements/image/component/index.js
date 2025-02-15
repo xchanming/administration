@@ -2,7 +2,7 @@ import CMS from '../../../constant/sw-cms.constant';
 import template from './sw-cms-el-image.html.twig';
 import './sw-cms-el-image.scss';
 
-const { Mixin, Filter } = Cicada;
+const { Mixin, Filter } = Shopware;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Mixin, Filter } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

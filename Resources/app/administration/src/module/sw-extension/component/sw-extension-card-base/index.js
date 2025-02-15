@@ -1,7 +1,7 @@
 import template from './sw-extension-card-base.html.twig';
 import './sw-extension-card-base.scss';
 
-const { Utils, Filter } = Cicada;
+const { Utils, Filter } = Shopware;
 
 /**
  * @sw-package checkout
@@ -10,12 +10,10 @@ const { Utils, Filter } = Cicada;
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inheritAttrs: false,
 
     inject: [
-        'cicadaExtensionService',
+        'shopwareExtensionService',
         'extensionStoreActionService',
         'cacheApiService',
     ],
@@ -48,7 +46,7 @@ export default {
 
     computed: {
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         defaultThemeAsset() {
@@ -149,7 +147,7 @@ export default {
         },
 
         extensionMainModule() {
-            return Cicada.State.get('extensionMainModules').mainModules.find(
+            return Shopware.Store.get('extensionMainModules').mainModules.find(
                 (mainModule) => mainModule.extensionName === this.extension.name,
             );
         },
@@ -180,19 +178,27 @@ export default {
         },
 
         consentAffirmationModalTitle() {
-            return this.$tc('sw-extension-store.component.sw-extension-permissions-modal.titleNewPermissions', 1, {
-                extensionLabel: this.extension.label,
-            });
+            return this.$tc(
+                'sw-extension-store.component.sw-extension-permissions-modal.titleNewPermissions',
+                {
+                    extensionLabel: this.extension.label,
+                },
+                1,
+            );
         },
 
         consentAffirmationModalDescription() {
-            return this.$tc('sw-extension-store.component.sw-extension-permissions-modal.descriptionNewPermissions', 1, {
-                extensionLabel: this.extension.label,
-            });
+            return this.$tc(
+                'sw-extension-store.component.sw-extension-permissions-modal.descriptionNewPermissions',
+                {
+                    extensionLabel: this.extension.label,
+                },
+                1,
+            );
         },
 
         extensionManagementDisabled() {
-            return Cicada.State.get('context').app.config.settings.disableExtensionManagement;
+            return Shopware.Store.get('context').app.config.settings.disableExtensionManagement;
         },
 
         showContextMenu() {
@@ -247,7 +253,7 @@ export default {
 
     methods: {
         async createdComponent() {
-            this.openLink = await this.cicadaExtensionService.getOpenLink(this.extension);
+            this.openLink = await this.shopwareExtensionService.getOpenLink(this.extension);
         },
 
         emitUpdateList() {
@@ -283,7 +289,7 @@ export default {
             this.isLoading = true;
 
             try {
-                await this.cicadaExtensionService.uninstallExtension(this.extension.name, this.extension.type, removeData);
+                await this.shopwareExtensionService.uninstallExtension(this.extension.name, this.extension.type, removeData);
                 this.clearCacheAndReloadPage();
             } catch (e) {
                 this.showExtensionErrors(e);
@@ -301,7 +307,7 @@ export default {
                 }
 
                 if (this.extension.installedAt) {
-                    await this.cicadaExtensionService.updateExtension(
+                    await this.shopwareExtensionService.updateExtension(
                         this.extension.name,
                         this.extension.type,
                         allowNewPermissions,
@@ -392,7 +398,7 @@ export default {
                 this.showRemovalModal = false;
                 this.isLoading = true;
 
-                await this.cicadaExtensionService.removeExtension(this.extension.name, this.extension.type, removeData);
+                await this.shopwareExtensionService.removeExtension(this.extension.name, this.extension.type, removeData);
                 this.extension.active = false;
             } catch (e) {
                 this.showStoreError(e);

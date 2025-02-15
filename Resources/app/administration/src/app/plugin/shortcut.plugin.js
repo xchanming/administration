@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-const util = Cicada.Utils;
+const util = Shopware.Utils;
 
 /**
  * @private

@@ -10,8 +10,6 @@ import './sw-media-list-selection-item-v2.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'click',
         'item-remove',

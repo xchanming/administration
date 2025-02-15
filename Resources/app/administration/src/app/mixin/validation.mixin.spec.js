@@ -13,7 +13,7 @@ async function createWrapper() {
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('validation'),
+                Shopware.Mixin.getByName('validation'),
             ],
             data() {
                 return {

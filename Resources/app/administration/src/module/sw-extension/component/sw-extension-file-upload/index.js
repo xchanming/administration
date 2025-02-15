@@ -2,8 +2,8 @@ import template from './sw-extension-file-upload.html.twig';
 import './sw-extension-file-upload.scss';
 import pluginErrorHandler from '../../service/extension-error-handler.service';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 const USER_CONFIG_KEY = 'extension.plugin_upload';
 
@@ -13,8 +13,6 @@ const USER_CONFIG_KEY = 'extension.plugin_upload';
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'extensionStoreActionService',
@@ -40,7 +38,7 @@ export default {
         },
 
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         userConfigCriteria() {
@@ -81,7 +79,7 @@ export default {
             return this.extensionStoreActionService
                 .upload(formData)
                 .then(() => {
-                    Cicada.Service('cicadaExtensionService')
+                    Shopware.Service('shopwareExtensionService')
                         .updateExtensionData()
                         .then(() => {
                             return this.createNotificationSuccess({
@@ -120,7 +118,7 @@ export default {
         },
 
         showStoreError(error) {
-            const docLink = this.$tc('sw-extension.errors.messageToTheCicadaDocumentation', 0, error.parameters);
+            const docLink = this.$tc('sw-extension.errors.messageToTheShopwareDocumentation', error.parameters, 0);
             this.createNotificationError({
                 message: `${error.message} ${docLink}`,
                 autoClose: false,
@@ -141,11 +139,11 @@ export default {
         },
 
         getUserConfig() {
-            return this.userConfigRepository.search(this.userConfigCriteria, Cicada.Context.api).then((response) => {
+            return this.userConfigRepository.search(this.userConfigCriteria, Shopware.Context.api).then((response) => {
                 if (response.length) {
                     this.pluginUploadUserConfig = response.first();
                 } else {
-                    this.pluginUploadUserConfig = this.userConfigRepository.create(Cicada.Context.api);
+                    this.pluginUploadUserConfig = this.userConfigRepository.create(Shopware.Context.api);
                     this.pluginUploadUserConfig.key = USER_CONFIG_KEY;
                     this.pluginUploadUserConfig.userId = this.currentUser?.id;
                     this.pluginUploadUserConfig.value = {
@@ -160,7 +158,7 @@ export default {
                 hide_upload_warning: value,
             };
 
-            this.userConfigRepository.save(this.pluginUploadUserConfig, Cicada.Context.api).then(() => {
+            this.userConfigRepository.save(this.pluginUploadUserConfig, Shopware.Context.api).then(() => {
                 this.getUserConfig();
             });
         },

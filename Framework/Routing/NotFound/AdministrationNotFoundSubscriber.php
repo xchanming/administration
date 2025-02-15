@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Framework\Routing\NotFound;
+namespace Shopware\Administration\Framework\Routing\NotFound;
 
-use Cicada\Core\Framework\Log\Package;
 use Psr\Container\ContainerInterface;
+use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;

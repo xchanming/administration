@@ -8,8 +8,6 @@ import './sw-first-run-wizard-plugins.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['recommendationsService'],
 
     emits: [
@@ -86,7 +84,7 @@ export default {
                     label: this.$tc('sw-first-run-wizard.general.buttonNext'),
                     position: 'right',
                     variant: 'primary',
-                    action: 'sw.first.run.wizard.index.cicada.account',
+                    action: 'sw.first.run.wizard.index.shopware.account',
                     disabled: false,
                 },
             ];

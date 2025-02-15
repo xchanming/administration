@@ -4,7 +4,7 @@
 import { shallowMount } from '@vue/test-utils';
 
 // Mock Component
-Cicada.Component.register('sw-mock', {
+Shopware.Component.register('sw-mock', {
     template: '<div class="sw-mock"><slot></slot></div>',
 });
 
@@ -38,10 +38,10 @@ describe('app/mixin/generic-condition', () => {
     let wrapper;
 
     beforeEach(async () => {
-        wrapper = shallowMount(await Cicada.Component.build('sw-mock'), {
+        wrapper = shallowMount(await Shopware.Component.build('sw-mock'), {
             global: {
                 mixins: [
-                    Cicada.Mixin.getByName('generic-condition'),
+                    Shopware.Mixin.getByName('generic-condition'),
                 ],
                 mocks: {
                     condition: {
@@ -54,7 +54,7 @@ describe('app/mixin/generic-condition', () => {
             },
         });
 
-        Cicada.State.commit('ruleConditionsConfig/setConfig', config);
+        Shopware.Store.get('ruleConditionsConfig').config = config;
     });
 
     it('should update and convert the field value', () => {

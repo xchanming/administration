@@ -5,9 +5,8 @@ const {
     Mixin,
     Data: { Criteria },
     Context,
-} = Cicada;
-const { cloneDeep } = Cicada.Utils.object;
-const { mapState, mapGetters } = Cicada.Component.getComponentHelper();
+} = Shopware;
+const { cloneDeep } = Shopware.Utils.object;
 
 /**
  * @sw-package checkout
@@ -16,12 +15,9 @@ const { mapState, mapGetters } = Cicada.Component.getComponentHelper();
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'ruleConditionDataProviderService',
-        'feature',
     ],
 
     mixins: [
@@ -38,16 +34,25 @@ export default {
     },
 
     computed: {
-        ...mapState('swShippingDetail', [
-            'shippingMethod',
-        ]),
+        shippingMethod() {
+            return Shopware.Store.get('swShippingDetail').shippingMethod;
+        },
 
-        ...mapGetters('swShippingDetail', [
-            'shippingPriceGroups',
-            'usedRules',
-            'unrestrictedPriceMatrixExists',
-            'newPriceMatrixExists',
-        ]),
+        shippingPriceGroups() {
+            return Shopware.Store.get('swShippingDetail').shippingPriceGroups;
+        },
+
+        usedRules() {
+            return Shopware.Store.get('swShippingDetail').usedRules;
+        },
+
+        unrestrictedPriceMatrixExists() {
+            return Shopware.Store.get('swShippingDetail').unrestrictedPriceMatrixExists;
+        },
+
+        newPriceMatrixExists() {
+            return Shopware.Store.get('swShippingDetail').newPriceMatrixExists;
+        },
 
         ruleRepository() {
             return this.repositoryFactory.create('rule');

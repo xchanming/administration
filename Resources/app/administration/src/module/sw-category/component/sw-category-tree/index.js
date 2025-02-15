@@ -1,8 +1,7 @@
 import template from './sw-category-tree.html.twig';
 import './sw-category-tree.scss';
 
-const { Criteria } = Cicada.Data;
-const { mapState } = Cicada.Component.getComponentHelper();
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package discovery
@@ -10,8 +9,6 @@ const { mapState } = Cicada.Component.getComponentHelper();
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -71,16 +68,16 @@ export default {
     },
 
     computed: {
-        ...mapState('swCategoryDetail', [
-            'categoriesToDelete',
-        ]),
+        categoriesToDelete() {
+            return Shopware.Store.get('swCategoryDetail').categoriesToDelete;
+        },
 
         categoryRepository() {
             return this.repositoryFactory.create('category');
         },
 
         category() {
-            return Cicada.State.get('swCategoryDetail').category;
+            return Shopware.Store.get('swCategoryDetail').category;
         },
 
         categories() {
@@ -92,7 +89,7 @@ export default {
                 return true;
             }
 
-            return this.currentLanguageId !== Cicada.Context.api.systemLanguageId;
+            return this.currentLanguageId !== Shopware.Context.api.systemLanguageId;
         },
 
         contextMenuTooltipText() {
@@ -137,9 +134,7 @@ export default {
 
             this.$refs.categoryTree.onDeleteElements(value);
 
-            Cicada.State.commit('swCategoryDetail/setCategoriesToDelete', {
-                categoriesToDelete: undefined,
-            });
+            Shopware.Store.get('swCategoryDetail').categoriesToDelete = undefined;
         },
 
         allowEdit(value) {
@@ -217,7 +212,7 @@ export default {
 
                 parentIds.forEach((id) => {
                     const promise = this.categoryRepository
-                        .get(id, Cicada.Context.api, this.criteriaWithChildren)
+                        .get(id, Shopware.Context.api, this.criteriaWithChildren)
                         .then((result) => {
                             this.addCategories([
                                 result,
@@ -233,7 +228,7 @@ export default {
             });
         },
 
-        onUpdatePositions: Cicada.Utils.debounce(function onUpdatePositions({ draggedItem, oldParentId, newParentId }) {
+        onUpdatePositions: Shopware.Utils.debounce(function onUpdatePositions({ draggedItem, oldParentId, newParentId }) {
             if (draggedItem.children.length > 0) {
                 draggedItem.children.forEach((child) => {
                     this.removeFromStore(child.id);
@@ -267,7 +262,7 @@ export default {
         indexProducts(ids) {
             const headers = this.productRepository.buildHeaders();
 
-            const initContainer = Cicada.Application.getContainer('init');
+            const initContainer = Shopware.Application.getContainer('init');
             const httpClient = initContainer.httpClient;
 
             return httpClient.post('/_action/index-products', { ids }, { headers });
@@ -298,11 +293,7 @@ export default {
 
                 // reload to remove selection
                 ids.forEach((deleted) => {
-                    if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                        this.$delete(this.loadedCategories, deleted);
-                    } else {
-                        delete this.loadedCategories[deleted];
-                    }
+                    delete this.loadedCategories[deleted];
                 });
                 this.$nextTick(() => {
                     this.addCategories(categories);
@@ -311,7 +302,7 @@ export default {
                 return;
             }
 
-            await this.categoryRepository.syncDeleted(ids, Cicada.Context.api);
+            await this.categoryRepository.syncDeleted(ids, Shopware.Context.api);
 
             const categories = ids.map((id) => this.loadedCategories[id]);
 
@@ -324,11 +315,7 @@ export default {
 
         onDeleteCategory({ data: category, children, checked }) {
             if (category.isNew()) {
-                if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                    this.$delete(this.loadedCategories, category.id);
-                } else {
-                    delete this.loadedCategories[category.id];
-                }
+                delete this.loadedCategories[category.id];
                 return Promise.resolve();
             }
 
@@ -364,7 +351,7 @@ export default {
                 if (category.parentId !== null) {
                     const updatedParent = await this.categoryRepository.get(
                         category.parentId,
-                        Cicada.Context.api,
+                        Shopware.Context.api,
                         this.criteria,
                     );
                     this.addCategory(updatedParent);
@@ -505,7 +492,7 @@ export default {
                     return this.getChildrenFromParent(parentId);
                 })
                 .then(() => {
-                    this.categoryRepository.get(parentId, Cicada.Context.api, this.criteria).then((parent) => {
+                    this.categoryRepository.get(parentId, Shopware.Context.api, this.criteria).then((parent) => {
                         this.addCategory(parent);
                     });
                 });
@@ -516,20 +503,12 @@ export default {
                 return;
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.loadedCategories, category.id, category);
-            } else {
-                this.loadedCategories[category.id] = category;
-            }
+            this.loadedCategories[category.id] = category;
         },
 
         addCategories(categories) {
             categories.forEach((category) => {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.loadedCategories, category.id, category);
-                } else {
-                    this.loadedCategories[category.id] = category;
-                }
+                this.loadedCategories[category.id] = category;
             });
         },
 
@@ -540,11 +519,7 @@ export default {
             });
 
             deletedIds.forEach((deleted) => {
-                if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                    this.$delete(this.loadedCategories, deleted);
-                } else {
-                    delete this.loadedCategories[deleted];
-                }
+                delete this.loadedCategories[deleted];
             });
         },
 
@@ -588,20 +563,32 @@ export default {
             const { serviceSalesChannels, footerSalesChannels } = category;
 
             if (serviceSalesChannels !== null && serviceSalesChannels?.length > 0) {
-                return this.$tc('sw-category.general.errorNavigationEntryPoint', 0, {
-                    entryPointLabel: this.$tc('sw-category.base.entry-point-card.types.labelServiceNavigation'),
-                });
+                return this.$tc(
+                    'sw-category.general.errorNavigationEntryPoint',
+                    {
+                        entryPointLabel: this.$tc('sw-category.base.entry-point-card.types.labelServiceNavigation'),
+                    },
+                    0,
+                );
             }
 
             if (footerSalesChannels !== null && footerSalesChannels?.length > 0) {
-                return this.$tc('sw-category.general.errorNavigationEntryPoint', 0, {
-                    entryPointLabel: this.$tc('sw-category.base.entry-point-card.types.labelFooterNavigation'),
-                });
+                return this.$tc(
+                    'sw-category.general.errorNavigationEntryPoint',
+                    {
+                        entryPointLabel: this.$tc('sw-category.base.entry-point-card.types.labelFooterNavigation'),
+                    },
+                    0,
+                );
             }
 
-            return this.$tc('sw-category.general.errorNavigationEntryPoint', 0, {
-                entryPointLabel: this.$tc('sw-category.base.entry-point-card.types.labelMainNavigation'),
-            });
+            return this.$tc(
+                'sw-category.general.errorNavigationEntryPoint',
+                {
+                    entryPointLabel: this.$tc('sw-category.base.entry-point-card.types.labelMainNavigation'),
+                },
+                0,
+            );
         },
     },
 };

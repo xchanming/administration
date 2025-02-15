@@ -10,8 +10,6 @@ import './sw-order-nested-line-items-row.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         lineItem: {
             type: Object,
@@ -35,7 +33,7 @@ export default {
 
     computed: {
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
 

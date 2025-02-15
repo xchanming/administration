@@ -1,27 +1,19 @@
 /**
  * @sw-package framework
  */
-import { ui } from '@cicada-ag/meteor-admin-sdk';
+import { ui } from '@shopware-ag/meteor-admin-sdk';
 import initMainModules from 'src/app/init/main-module.init';
-
-let stateDispatchBackup = null;
 
 describe('src/app/init/main-module.init.ts', () => {
     beforeAll(() => {
         initMainModules();
-        stateDispatchBackup = Cicada.State.dispatch;
     });
 
     beforeEach(() => {
-        Object.defineProperty(Cicada.State, 'dispatch', {
-            value: stateDispatchBackup,
-            writable: true,
-            configurable: true,
-        });
-        Cicada.State.get('extensionSdkModules').modules = [];
+        Shopware.Store.get('extensionSdkModules').modules = [];
 
-        Cicada.State._store.state.extensions = {};
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').extensionsState = {};
+        Shopware.Store.get('extensions').addExtension({
             name: 'jestapp',
             baseUrl: '',
             permissions: [],
@@ -30,6 +22,9 @@ describe('src/app/init/main-module.init.ts', () => {
             integrationId: '123',
             active: true,
         });
+
+        // Clear mocks
+        jest.clearAllMocks();
     });
 
     it('should init the main module handler', async () => {
@@ -39,8 +34,8 @@ describe('src/app/init/main-module.init.ts', () => {
             displaySearchBar: true,
         });
 
-        expect(Cicada.State.get('extensionSdkModules').modules).toHaveLength(1);
-        expect(Cicada.State.get('extensionSdkModules').modules[0]).toEqual({
+        expect(Shopware.Store.get('extensionSdkModules').modules).toHaveLength(1);
+        expect(Shopware.Store.get('extensionSdkModules').modules[0]).toEqual({
             id: expect.any(String),
             baseUrl: '',
             heading: 'My awesome module',
@@ -50,7 +45,7 @@ describe('src/app/init/main-module.init.ts', () => {
     });
 
     it('should not handle requests when extension is not valid', async () => {
-        Cicada.State._store.state.extensions = {};
+        Shopware.Store.get('extensions').extensionsState = {};
 
         await expect(async () => {
             await ui.mainModule.addMainModule({
@@ -60,11 +55,11 @@ describe('src/app/init/main-module.init.ts', () => {
             });
         }).rejects.toThrow(new Error('Extension with the origin "" not found.'));
 
-        expect(Cicada.State.get('extensionSdkModules').modules).toHaveLength(0);
+        expect(Shopware.Store.get('extensionSdkModules').modules).toHaveLength(0);
     });
 
     it('should not commit the extension when moduleID could not be generated', async () => {
-        jest.spyOn(Cicada.State, 'dispatch').mockImplementationOnce(() => {
+        jest.spyOn(Shopware.Store.get('extensionSdkModules'), 'addModule').mockImplementationOnce(() => {
             return Promise.resolve(null);
         });
 
@@ -74,12 +69,12 @@ describe('src/app/init/main-module.init.ts', () => {
             displaySearchBar: true,
         });
 
-        expect(Cicada.State.get('extensionSdkModules').modules).toHaveLength(0);
+        expect(Shopware.Store.get('extensionSdkModules').modules).toHaveLength(0);
     });
 
     it('should be able to update the hidden smart bars', async () => {
         await ui.mainModule.hideSmartBar({ locationId: 'my-awesome-module' });
 
-        expect(Cicada.State.get('extensionSdkModules').hiddenSmartBars).toEqual(['my-awesome-module']);
+        expect(Shopware.Store.get('extensionSdkModules').hiddenSmartBars).toEqual(['my-awesome-module']);
     });
 });

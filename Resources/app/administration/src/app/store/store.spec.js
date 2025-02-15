@@ -6,13 +6,13 @@ import { reactive } from 'vue';
 
 describe('src/app/store/index.ts', () => {
     beforeAll(() => {
-        Cicada.Store.clear();
+        Shopware.Store.clear();
     });
 
     it('should be a Singleton', () => {
         const aStore = Store.instance;
 
-        expect(aStore).toBe(Cicada.Store);
+        expect(aStore).toBe(Shopware.Store);
     });
 
     it('should return empty list without registered stores', () => {
@@ -56,7 +56,7 @@ describe('src/app/store/index.ts', () => {
             }),
             actions: {
                 randomizeId() {
-                    this.id = Cicada.Utils.createId();
+                    this.id = Shopware.Utils.createId();
                 },
             },
             getters: {

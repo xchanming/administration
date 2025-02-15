@@ -2,23 +2,23 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-youtube-video', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-youtube-video', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-youtube-video', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-youtube-video', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-youtube-video', () => import('./component'));
+Shopware.Component.register('sw-cms-el-youtube-video', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'youtube-video',
     label: 'sw-cms.elements.youtubeVideo.label',
     component: 'sw-cms-el-youtube-video',

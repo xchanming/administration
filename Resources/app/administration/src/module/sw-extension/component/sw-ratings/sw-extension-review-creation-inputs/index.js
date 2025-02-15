@@ -8,8 +8,6 @@ import './sw-extension-review-creation-inputs.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['changed'],
 
     props: {

@@ -44,7 +44,7 @@ async function createWrapper() {
 
 describe('src/module/sw-cms/elements/product-description-reviews/component', () => {
     beforeAll(() => {
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
             state() {
                 return {
@@ -59,7 +59,7 @@ describe('src/module/sw-cms/elements/product-description-reviews/component', () 
     });
 
     beforeEach(() => {
-        Cicada.Store.get('cmsPage').$reset();
+        Shopware.Store.get('cmsPage').$reset();
     });
 
     it('should display placeholder when page type is not product page and no product is selected', async () => {
@@ -70,7 +70,7 @@ describe('src/module/sw-cms/elements/product-description-reviews/component', () 
     it('should display skeleton when page type is product page and no product is selected', async () => {
         const wrapper = await createWrapper();
 
-        Cicada.Store.get('cmsPage').currentPage.type = 'product_detail';
+        Shopware.Store.get('cmsPage').currentPage.type = 'product_detail';
         await flushPromises();
 
         expect(wrapper.find('.sw-cms-el-product-description-reviews__placeholder').exists()).toBeTruthy();
@@ -96,7 +96,7 @@ describe('src/module/sw-cms/elements/product-description-reviews/component', () 
     it('should show current demo data if mapping entity is product', async () => {
         const wrapper = await createWrapper();
 
-        const cmsPageState = Cicada.Store.get('cmsPage');
+        const cmsPageState = Shopware.Store.get('cmsPage');
         cmsPageState.currentPage.type = 'product_detail';
         cmsPageState.currentMappingEntity = 'product';
         cmsPageState.currentDemoEntity = productMock;

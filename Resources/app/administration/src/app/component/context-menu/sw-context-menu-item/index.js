@@ -1,7 +1,7 @@
 import template from './sw-context-menu-item.html.twig';
 import './sw-context-menu-item.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -61,14 +61,6 @@ Component.register('sw-context-menu-item', {
                 'is--disabled': this.disabled && this.variant !== 'headline',
                 'sw-context-menu-item--icon': this.icon,
             };
-        },
-
-        contextListeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.disabled || this.variant === 'headline' ? {} : this.$listeners;
-            }
-
-            return {};
         },
     },
 });

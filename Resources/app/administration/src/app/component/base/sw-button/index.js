@@ -1,6 +1,6 @@
 import template from './sw-button.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -11,12 +11,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-button', {
     template,
-
-    compatConfig: {
-        ...Cicada.compatConfig,
-        // Needed so that Button classes are bound correctly via `v-bind="$attrs"`
-        INSTANCE_ATTRS_CLASS_STYLE: false,
-    },
 
     props: {
         routerLink: {
@@ -32,27 +26,18 @@ Component.register('sw-button', {
     computed: {
         useMeteorComponent() {
             // Use new meteor component in major
-            if (Cicada.Feature.isActive('v6.7.0.0')) {
+            if (Shopware.Feature.isActive('ENABLE_METEOR_COMPONENTS')) {
                 return true;
             }
 
             // Throw warning when deprecated component is used
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'sw-button',
                 // eslint-disable-next-line max-len
                 'The old usage of "sw-button" is deprecated and will be removed in v6.7.0.0. Please use "mt-button" instead.',
             );
 
             return false;
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

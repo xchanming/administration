@@ -3,7 +3,7 @@
  */
 
 import { mount } from '@vue/test-utils';
-import orderDetailStore from 'src/module/sw-order/state/order-detail.store';
+import { createPinia, setActivePinia } from 'pinia';
 
 const orderMock = {
     orderCustomer: {
@@ -23,9 +23,9 @@ const orderMock = {
         totalPrice: 10,
     },
     currency: {
-        isoCode: 'CNY',
+        isoCode: 'EUR',
         translated: {
-            isoCode: 'CNY',
+            isoCode: 'EUR',
         },
     },
     deliveries: [
@@ -108,7 +108,7 @@ async function createWrapper() {
                 'sw-loader': true,
             },
             mocks: {
-                $tc: (key, number, value) => {
+                $tc: (key, value) => {
                     if (!value) {
                         return key;
                     }
@@ -140,14 +140,8 @@ describe('src/module/sw-order/view/sw-order-detail-details', () => {
     let wrapper;
 
     beforeAll(() => {
-        Cicada.State.registerModule('swOrderDetail', {
-            ...orderDetailStore,
-            state: {
-                ...orderDetailStore.state,
-                order: orderMock,
-                orderAddressIds: [],
-            },
-        });
+        setActivePinia(createPinia());
+        Shopware.Store.get('swOrderDetail').order = orderMock;
     });
 
     it('should be a Vue.js component', async () => {
@@ -162,7 +156,7 @@ describe('src/module/sw-order/view/sw-order-detail-details', () => {
 
         const shippingCostField = wrapper.find('.sw-order-detail__summary div[role="button"]');
         expect(shippingCostField.attributes()['tooltip-message']).toBe(
-            'sw-order.detailBase.tax<br>sw-order.detailBase.shippingCostsTax{"taxRate":10,"tax":"¥1.00"}<br>sw-order.detailBase.shippingCostsTax{"taxRate":19,"tax":"¥1.90"}',
+            'sw-order.detailBase.tax<br>sw-order.detailBase.shippingCostsTax{"taxRate":10,"tax":"€1.00"}<br>sw-order.detailBase.shippingCostsTax{"taxRate":19,"tax":"€1.90"}',
         );
     });
 
@@ -173,10 +167,10 @@ describe('src/module/sw-order/view/sw-order-detail-details', () => {
         const descriptionInfos = wrapper.findAll('dd');
 
         expect(descriptionTitles[3].text()).toBe('sw-order.detailBase.summaryLabelTaxes{"taxRate":10}');
-        expect(descriptionInfos[3].text()).toBe('¥10.00');
+        expect(descriptionInfos[3].text()).toBe('€10.00');
 
         expect(descriptionTitles[4].text()).toBe('sw-order.detailBase.summaryLabelTaxes{"taxRate":19}');
-        expect(descriptionInfos[4].text()).toBe('¥19.00');
+        expect(descriptionInfos[4].text()).toBe('€19.00');
     });
 
     it('should able to edit shipping cost', async () => {

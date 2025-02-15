@@ -15,39 +15,45 @@ import './acl';
 
 import defaultSearchConfiguration from './default-search-configuration';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-sales-channel-defaults-select', () => import('./component/sw-sales-channel-defaults-select'));
-Cicada.Component.register('sw-sales-channel-modal', () => import('./component/sw-sales-channel-modal'));
-Cicada.Component.register('sw-sales-channel-modal-grid', () => import('./component/sw-sales-channel-modal-grid'));
-Cicada.Component.register('sw-sales-channel-modal-detail', () => import('./component/sw-sales-channel-modal-detail'));
-Cicada.Component.register('sw-sales-channel-detail-domains', () => import('./component/sw-sales-channel-detail-domains'));
-Cicada.Component.register('sw-sales-channel-detail-hreflang', () => import('./component/sw-sales-channel-detail-hreflang'));
-Cicada.Component.register('sw-sales-channel-detail', () => import('./page/sw-sales-channel-detail'));
-Cicada.Component.extend(
+Shopware.Component.register(
+    'sw-sales-channel-defaults-select',
+    () => import('./component/sw-sales-channel-defaults-select'),
+);
+Shopware.Component.register('sw-sales-channel-modal', () => import('./component/sw-sales-channel-modal'));
+Shopware.Component.register('sw-sales-channel-modal-grid', () => import('./component/sw-sales-channel-modal-grid'));
+Shopware.Component.register('sw-sales-channel-modal-detail', () => import('./component/sw-sales-channel-modal-detail'));
+Shopware.Component.register('sw-sales-channel-detail-domains', () => import('./component/sw-sales-channel-detail-domains'));
+Shopware.Component.register(
+    'sw-sales-channel-detail-hreflang',
+    () => import('./component/sw-sales-channel-detail-hreflang'),
+);
+Shopware.Component.register('sw-sales-channel-detail', () => import('./page/sw-sales-channel-detail'));
+Shopware.Component.extend(
     'sw-sales-channel-create',
     'sw-sales-channel-detail',
     () => import('./page/sw-sales-channel-create'),
 );
-Cicada.Component.register('sw-sales-channel-list', () => import('./page/sw-sales-channel-list'));
-Cicada.Component.register('sw-sales-channel-detail-base', () => import('./view/sw-sales-channel-detail-base'));
-Cicada.Component.register('sw-sales-channel-detail-products', () => import('./view/sw-sales-channel-detail-products'));
-Cicada.Component.register('sw-sales-channel-detail-analytics', () => import('./view/sw-sales-channel-detail-analytics'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-sales-channel-list', () => import('./page/sw-sales-channel-list'));
+Shopware.Component.register('sw-sales-channel-detail-base', () => import('./view/sw-sales-channel-detail-base'));
+Shopware.Component.register('sw-sales-channel-detail-products', () => import('./view/sw-sales-channel-detail-products'));
+Shopware.Component.register('sw-sales-channel-detail-analytics', () => import('./view/sw-sales-channel-detail-analytics'));
+Shopware.Component.extend(
     'sw-sales-channel-create-base',
     'sw-sales-channel-detail-base',
     () => import('./view/sw-sales-channel-create-base'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-sales-channel-detail-product-comparison',
     () => import('./view/sw-sales-channel-detail-product-comparison'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-sales-channel-detail-product-comparison-preview',
     () => import('./view/sw-sales-channel-detail-product-comparison-preview'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-sales-channel-products-assignment-modal',
     () => import('./component/sw-sales-channel-products-assignment-modal'),
 );

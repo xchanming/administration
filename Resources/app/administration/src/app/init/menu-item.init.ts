@@ -4,8 +4,8 @@
  * @private
  */
 export default function initMenuItems(): void {
-    Cicada.ExtensionAPI.handle('menuItemAdd', async (menuItemConfig, additionalInformation) => {
-        const extension = Object.values(Cicada.State.get('extensions')).find((ext) =>
+    Shopware.ExtensionAPI.handle('menuItemAdd', async (menuItemConfig, additionalInformation) => {
+        const extension = Object.values(Shopware.Store.get('extensions').extensionsState).find((ext) =>
             ext.baseUrl.startsWith(additionalInformation._event_.origin),
         );
 
@@ -13,29 +13,31 @@ export default function initMenuItems(): void {
             throw new Error(`Extension with the origin "${additionalInformation._event_.origin}" not found.`);
         }
 
-        await Cicada.State.dispatch('extensionSdkModules/addModule', {
-            heading: menuItemConfig.label,
-            locationId: menuItemConfig.locationId,
-            displaySearchBar: menuItemConfig.displaySearchBar,
-            displaySmartBar: menuItemConfig.displaySmartBar,
-            baseUrl: extension.baseUrl,
-        }).then((moduleId) => {
-            if (typeof moduleId !== 'string') {
-                return;
-            }
+        await Shopware.Store.get('extensionSdkModules')
+            .addModule({
+                heading: menuItemConfig.label,
+                locationId: menuItemConfig.locationId,
+                displaySearchBar: menuItemConfig.displaySearchBar!,
+                displaySmartBar: menuItemConfig.displaySmartBar,
+                baseUrl: extension.baseUrl,
+            })
+            .then((moduleId) => {
+                if (typeof moduleId !== 'string') {
+                    return;
+                }
 
-            Cicada.State.commit('menuItem/addMenuItem', {
-                ...menuItemConfig,
-                moduleId,
+                Shopware.Store.get('menuItem').addMenuItem({
+                    ...menuItemConfig,
+                    moduleId,
+                });
             });
-        });
     });
 
-    Cicada.ExtensionAPI.handle('menuCollapse', () => {
-        Cicada.Store.get('adminMenu').collapseSidebar();
+    Shopware.ExtensionAPI.handle('menuCollapse', () => {
+        Shopware.Store.get('adminMenu').collapseSidebar();
     });
 
-    Cicada.ExtensionAPI.handle('menuExpand', () => {
-        Cicada.Store.get('adminMenu').expandSidebar();
+    Shopware.ExtensionAPI.handle('menuExpand', () => {
+        Shopware.Store.get('adminMenu').expandSidebar();
     });
 }

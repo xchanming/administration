@@ -100,7 +100,7 @@ function createConfig() {
         {
             title: {
                 'en-GB': 'Newsletter configuration',
-                'zh-CN': 'Newsletter-Konfiguration',
+                'de-DE': 'Newsletter-Konfiguration',
             },
             name: null,
             elements: [
@@ -111,7 +111,7 @@ function createConfig() {
                     config: {
                         label: {
                             'en-GB': 'Subscription url',
-                            'zh-CN': 'Anmelde-Url',
+                            'de-DE': 'Anmelde-Url',
                         },
                         placeholder: {
                             'en-GB': '/newsletter-subscribe?em=%%HASHEDEMAIL%%&hash=%%SUBSCRIBEHASH%%',
@@ -119,7 +119,7 @@ function createConfig() {
                         helpText: {
                             'en-GB':
                                 'Url to confirm the subscription to the newsletter.<br/>Available placeholders: <br/>%%HASHEDEMAIL%%<br/>%%SUBSCRIBEHASH%%',
-                            'zh-CN':
+                            'de-DE':
                                 'Url um die Newsletteranmeldung zu bestätigen.<br/>Verfügbare Platzhalter: <br/>%%HASHEDEMAIL%%<br/>%%SUBSCRIBEHASH%%',
                         },
                     },
@@ -131,7 +131,7 @@ function createConfig() {
                         label: { 'en-GB': 'Double Opt-in' },
                         helpText: {
                             'en-GB': 'Use Double Opt-in for newsletter subscriptions',
-                            'zh-CN': 'Nutze das Double Opt-In Verfahren für Newsletter Anmeldungen.',
+                            'de-DE': 'Nutze das Double Opt-In Verfahren für Newsletter Anmeldungen.',
                         },
                     },
                 },

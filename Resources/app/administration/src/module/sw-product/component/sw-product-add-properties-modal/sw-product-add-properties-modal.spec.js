@@ -50,7 +50,7 @@ async function createWrapper() {
                         create: () => ({
                             search: () => {
                                 return Promise.resolve(
-                                    new EntityCollection('jest', 'jest', Cicada.Context.api, new Criteria(1), [], 0, []),
+                                    new EntityCollection('jest', 'jest', Shopware.Context.api, new Criteria(1), [], 0, []),
                                 );
                             },
                         }),

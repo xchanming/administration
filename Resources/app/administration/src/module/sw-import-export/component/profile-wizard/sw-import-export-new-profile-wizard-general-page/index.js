@@ -9,8 +9,6 @@ import './sw-import-export-new-profile-wizard-general-page.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'next-allow',
         'next-disable',

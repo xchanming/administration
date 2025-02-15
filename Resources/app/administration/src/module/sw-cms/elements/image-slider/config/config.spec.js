@@ -4,7 +4,7 @@
 /* eslint-disable max-len */
 import { mount } from '@vue/test-utils';
 import { setupCmsEnvironment } from 'src/module/sw-cms/test-utils';
-import { MtSwitch } from '@cicada-ag/meteor-component-library';
+import { MtSwitch } from '@shopware-ag/meteor-component-library';
 
 async function createWrapper(activeTab = 'content', sliderItems = []) {
     return mount(
@@ -15,7 +15,7 @@ async function createWrapper(activeTab = 'content', sliderItems = []) {
             global: {
                 renderStubDefaultSlot: true,
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                     repositoryFactory: {
                         create: () => {
                             return {
@@ -188,12 +188,6 @@ describe('src/module/sw-cms/elements/image-slider/config', () => {
         expect(wrapper.vm.element.config.minHeight.value).toBe('300px');
     });
 
-    it.skip('should be able to show auto slide switch', async () => {
-        const wrapper = await createWrapper('settings');
-        const autoSlideOption = wrapper.find('.sw-cms-el-config-image-slider__setting-auto-slide');
-        expect(autoSlideOption.exists()).toBeTruthy();
-    });
-
     it('should change the isDecorative value', async () => {
         const wrapper = await createWrapper('settings');
         const isDecorativeSwitch = wrapper.find('.sw-cms-el-config-image-slider__is-decorative input');
@@ -207,6 +201,20 @@ describe('src/module/sw-cms/elements/image-slider/config', () => {
         expect(wrapper.vm.element.config.isDecorative.value).toBe(false);
     });
 
+    /**
+     * Re-implement after properly implementing/fixing auto slide.
+     * This feature is currently unusable, since it's unstyled and re-enables itself, while creating broken states.
+     */
+    it.skip('should be able to show auto slide switch', async () => {
+        const wrapper = await createWrapper('settings');
+        const autoSlideOption = wrapper.find('.sw-cms-el-config-image-slider__setting-auto-slide');
+        expect(autoSlideOption.exists()).toBeTruthy();
+    });
+
+    /**
+     * Re-implement after properly implementing/fixing auto slide.
+     * This feature is currently unusable, since it's unstyled and re-enables itself, while creating broken states.
+     */
     it.skip('should disable delay element and speed element when auto slide switch is falsy', async () => {
         const wrapper = await createWrapper('settings');
         const delaySlide = wrapper.find('.sw-cms-el-config-image-slider__setting-delay-slide');
@@ -215,6 +223,10 @@ describe('src/module/sw-cms/elements/image-slider/config', () => {
         expect(speedSlide.attributes().disabled).toBe('true');
     });
 
+    /**
+     * Re-implement after properly implementing/fixing auto slide.
+     * This feature is currently unusable, since it's unstyled and re-enables itself, while creating broken states.
+     */
     it.skip('should not disable delay element and speed element when auto slide switch is truthy', async () => {
         const wrapper = await createWrapper('settings');
         await flushPromises();

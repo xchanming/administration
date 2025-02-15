@@ -5,25 +5,25 @@
 import './acl';
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-product-feature-sets-list',
     () => import('./page/sw-settings-product-feature-sets-list'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-product-feature-sets-detail',
     () => import('./page/sw-settings-product-feature-sets-detail'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-product-feature-sets-values-card',
     () => import('./component/sw-settings-product-feature-sets-values-card'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-product-feature-sets-modal',
     () => import('./component/sw-settings-product-feature-sets-modal'),
 );
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-product-feature-sets', {
@@ -73,7 +73,7 @@ Module.register('sw-settings-product-feature-sets', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'commerce',
         to: 'sw.settings.product.feature.sets.index',
         icon: 'regular-check-square',
         privilege: 'product_feature_sets.viewer',

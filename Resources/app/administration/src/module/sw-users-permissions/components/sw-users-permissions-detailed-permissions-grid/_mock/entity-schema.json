@@ -85,7 +85,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -100,7 +100,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -114,7 +114,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -127,7 +127,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -152,7 +152,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -377,7 +377,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -389,7 +389,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -404,7 +404,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -419,7 +419,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -434,7 +434,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -449,7 +449,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -464,7 +464,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -479,7 +479,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -494,7 +494,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -509,7 +509,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -524,7 +524,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -539,7 +539,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -554,7 +554,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -569,7 +569,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -584,7 +584,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -599,7 +599,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -614,7 +614,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -629,7 +629,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -644,7 +644,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -659,7 +659,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -674,7 +674,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -689,7 +689,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -704,7 +704,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -719,7 +719,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -734,7 +734,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -749,7 +749,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -764,7 +764,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -779,7 +779,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -794,7 +794,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -809,7 +809,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -824,7 +824,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -839,7 +839,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -854,7 +854,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -869,7 +869,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -884,7 +884,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -899,7 +899,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -914,7 +914,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -929,7 +929,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -944,7 +944,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -959,7 +959,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -974,7 +974,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -989,7 +989,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -1004,7 +1004,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -1019,7 +1019,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -1034,7 +1034,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -1049,7 +1049,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -1147,7 +1147,7 @@
           "restrict_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -1532,7 +1532,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -1881,7 +1881,7 @@
           "search_ranking": 0.5,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -1897,7 +1897,7 @@
         "referenceField": "id"
       },
       "remoteAddress": {
-        "type": "Cicada\\Core\\Framework\\DataAbstractionLayer\\Field\\RemoteAddressField",
+        "type": "Shopware\\Core\\Framework\\DataAbstractionLayer\\Field\\RemoteAddressField",
         "flags": []
       },
       "createdAt": {
@@ -2780,7 +2780,7 @@
           "required": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -2854,7 +2854,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ],
           "inherited": true
@@ -2872,7 +2872,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -3029,7 +3029,7 @@
           "inherited": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -3049,7 +3049,7 @@
           "inherited": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -3061,7 +3061,7 @@
           "inherited": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -3209,7 +3209,7 @@
           "inherited": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -3256,7 +3256,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -3272,7 +3272,7 @@
           "inherited": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -3287,7 +3287,7 @@
           "cascade_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -3330,7 +3330,7 @@
           "set_null_on_delete": true,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -3720,7 +3720,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -4588,7 +4588,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -4697,7 +4697,7 @@
           "search_ranking": 250,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -4708,7 +4708,7 @@
           "search_ranking": 250,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         }
@@ -4768,7 +4768,7 @@
           "search_ranking": 250,
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -4782,7 +4782,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },
@@ -4796,7 +4796,7 @@
         "flags": {
           "read_protected": [
             [
-              "Cicada\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
+              "Shopware\\Core\\Framework\\Api\\Context\\SalesChannelApiSource"
             ]
           ]
         },

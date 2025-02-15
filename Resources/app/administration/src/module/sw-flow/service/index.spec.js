@@ -5,7 +5,7 @@
 import './index';
 import FlowBuilderService from './flow-builder.service';
 
-const { Service } = Cicada;
+const { Service } = Shopware;
 
 describe('src/module/sw-flow/service/index.ts', () => {
     it('should register flowBuilderService', () => {

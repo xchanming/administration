@@ -8,8 +8,6 @@ import template from './sw-order-customer-comment.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         customerComment: {
             type: String,

@@ -8,14 +8,14 @@ function getStoreApiService(client = null, loginService = null) {
     }
 
     if (loginService === null) {
-        loginService = createLoginService(client, Cicada.Context.api);
+        loginService = createLoginService(client, Shopware.Context.api);
     }
 
     return new StoreApiService(client, loginService);
 }
 
 /**
- * @sw-package fundamentals@after-sales
+ * @sw-package framework
  */
 describe('storeService', () => {
     it('is registered correctly', async () => {

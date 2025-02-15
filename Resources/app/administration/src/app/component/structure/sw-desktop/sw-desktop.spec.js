@@ -144,16 +144,16 @@ async function createWrapper() {
 
 describe('src/app/component/structure/sw-desktop', () => {
     beforeAll(() => {
-        Cicada.State.get('context').app.config.settings = {
+        Shopware.Store.get('context').app.config.settings = {
             appsRequireAppUrl: true,
             appUrlReachable: true,
         };
     });
 
     beforeEach(async () => {
-        Cicada.State.get('session').currentUser = {
+        Shopware.Store.get('session').setCurrentUser({
             id: 'id',
-        };
+        });
     });
 
     it('should be a Vue.js component', async () => {
@@ -221,7 +221,7 @@ describe('src/app/component/structure/sw-desktop', () => {
     });
 
     it('should call not urlDiffService when appUrlReachable is false', async () => {
-        Cicada.State.get('context').app.config.settings.appsRequireAppUrl = false;
+        Shopware.Store.get('context').app.config.settings.appsRequireAppUrl = false;
 
         const wrapper = await createWrapper();
 
@@ -234,7 +234,7 @@ describe('src/app/component/structure/sw-desktop', () => {
     });
 
     it('should show the staging bar, when enabled', async () => {
-        Cicada.State.get('context').app.config.settings.enableStagingMode = true;
+        Shopware.Store.get('context').app.config.settings.enableStagingMode = true;
 
         const wrapper = await createWrapper();
         expect(wrapper.vm).toBeTruthy();
@@ -242,7 +242,7 @@ describe('src/app/component/structure/sw-desktop', () => {
     });
 
     it('should not show the staging bar, when disabled', async () => {
-        Cicada.State.get('context').app.config.settings.enableStagingMode = false;
+        Shopware.Store.get('context').app.config.settings.enableStagingMode = false;
 
         const wrapper = await createWrapper();
         expect(wrapper.vm).toBeTruthy();

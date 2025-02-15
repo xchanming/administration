@@ -1,7 +1,7 @@
 import template from './sw-form-field-renderer.html.twig';
 
-const { Component, Mixin } = Cicada;
-const { types } = Cicada.Utils;
+const { Component, Mixin } = Shopware;
+const { types } = Shopware.Utils;
 /**
  * @sw-package framework
  *
@@ -48,7 +48,7 @@ const { types } = Cicada.Utils;
  *         options: [
  *             { value: 'option1', label: { 'en-GB': 'One' } },
  *             { value: 'option2', label: 'Two' },
- *             { value: 'option3', label: { 'en-GB': 'Three', 'zh-CN': 'Drei' } }
+ *             { value: 'option3', label: { 'en-GB': 'Three', 'de-DE': 'Drei' } }
  *         ]
  *     }">
  * </sw-form-field-renderer>
@@ -62,7 +62,7 @@ const { types } = Cicada.Utils;
  *         options: [
  *             { value: 'option1', label: { 'en-GB': 'One' } },
  *             { value: 'option2', label: 'Two' },
- *             { value: 'option3', label: { 'en-GB': 'Three', 'zh-CN': 'Drei' } }
+ *             { value: 'option3', label: { 'en-GB': 'Three', 'de-DE': 'Drei' } }
  *         ]
  *     }">
  * </sw-form-field-renderer>
@@ -71,8 +71,6 @@ Component.register('sw-form-field-renderer', {
     template,
 
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -109,7 +107,7 @@ Component.register('sw-form-field-renderer', {
 
     data() {
         return {
-            currency: { id: Cicada.Context.app.systemCurrencyId, factor: 1 },
+            currency: { id: Shopware.Context.app.systemCurrencyId, factor: 1 },
             currentComponentName: '',
             swFieldConfig: {},
             currentValue: this.value,
@@ -120,18 +118,12 @@ Component.register('sw-form-field-renderer', {
         bind() {
             let bind = {};
 
-            if (!this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                // Filter all listeners from the $attrs object
-                Object.keys(this.$attrs).forEach((key) => {
-                    if (!['onUpdate:value'].includes(key)) {
-                        bind[key] = this.$attrs[key];
-                    }
-                });
-            } else {
-                bind = {
-                    ...this.$attrs,
-                };
-            }
+            // Filter all listeners from the $attrs object
+            Object.keys(this.$attrs).forEach((key) => {
+                if (!['onUpdate:value'].includes(key)) {
+                    bind[key] = this.$attrs[key];
+                }
+            });
 
             bind = {
                 ...bind,
@@ -280,7 +272,7 @@ Component.register('sw-form-field-renderer', {
             if (this.type === 'price' && !Array.isArray(this.currentValue)) {
                 this.currentValue = [
                     {
-                        currencyId: Cicada.Context.app.systemCurrencyId,
+                        currencyId: Shopware.Context.app.systemCurrencyId,
                         gross: null,
                         net: null,
                         linked: true,
@@ -358,7 +350,7 @@ Component.register('sw-form-field-renderer', {
         },
 
         fetchSystemCurrency() {
-            const systemCurrencyId = Cicada.Context.app.systemCurrencyId;
+            const systemCurrencyId = Shopware.Context.app.systemCurrencyId;
 
             this.createRepository('currency')
                 .get(systemCurrencyId)
@@ -368,12 +360,6 @@ Component.register('sw-form-field-renderer', {
         },
 
         getScopedSlots() {
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                return {
-                    ...this.$scopedSlots,
-                };
-            }
-
             return this.$slots;
         },
     },

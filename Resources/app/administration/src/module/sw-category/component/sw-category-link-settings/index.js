@@ -1,7 +1,7 @@
 import template from './sw-category-link-settings.html.twig';
 import './sw-category-link-settings.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package discovery
@@ -9,8 +9,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -147,7 +145,7 @@ export default {
         },
 
         createCategoryCollection() {
-            this.categoryRepository.search(this.internalLinkCriteria, Cicada.Context.api).then((result) => {
+            this.categoryRepository.search(this.internalLinkCriteria, Shopware.Context.api).then((result) => {
                 this.categoriesCollection = result;
             });
         },

@@ -3,13 +3,11 @@
  */
 import template from './sw-users-permissions.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'feature',

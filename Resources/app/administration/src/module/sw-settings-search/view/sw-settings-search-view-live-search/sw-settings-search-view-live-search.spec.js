@@ -72,7 +72,7 @@ describe('module/sw-settings-search/view/sw-settings-search-view-live-search', (
     });
 
     it('should return storefrontEsEnable value', async () => {
-        Cicada.Context.app.storefrontEsEnable = true;
+        Shopware.Context.app.storefrontEsEnable = true;
         const wrapper = await createWrapper();
 
         expect(wrapper.vm.storefrontEsEnable).toBeTruthy();
@@ -84,7 +84,7 @@ describe('module/sw-settings-search/view/sw-settings-search-view-live-search', (
     });
 
     it('should display rebuild search index button when user enable elasticsearch for their shop', async () => {
-        Cicada.Context.app.storefrontEsEnable = false;
+        Shopware.Context.app.storefrontEsEnable = false;
         const wrapper = await createWrapper();
         await flushPromises();
         const rebuildSearchIndexButton = wrapper.find('.sw-settings-search__search-index-rebuild-button');

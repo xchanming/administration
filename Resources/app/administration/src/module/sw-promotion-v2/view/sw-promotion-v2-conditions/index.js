@@ -3,19 +3,16 @@
  */
 import template from './sw-promotion-v2-conditions.html.twig';
 
-const { Criteria, EntityCollection } = Cicada.Data;
-const types = Cicada.Utils.types;
+const { Criteria, EntityCollection } = Shopware.Data;
+const types = Shopware.Utils.types;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'acl',
-        'feature',
         'ruleConditionDataProviderService',
     ],
 
@@ -102,7 +99,7 @@ export default {
         },
 
         createPromotionCollection() {
-            return new EntityCollection('/promotion', 'promotion', Cicada.Context.api, new Criteria(1, 25));
+            return new EntityCollection('/promotion', 'promotion', Shopware.Context.api, new Criteria(1, 25));
         },
     },
 };

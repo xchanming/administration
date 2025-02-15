@@ -27,8 +27,8 @@ describe('/core/service/api.service.ts', () => {
     }
 
     it('should return the basic headers', async () => {
-        const languageId = Cicada.Context?.api?.languageId;
-        Cicada.Context.api.languageId = null;
+        const languageId = Shopware.Context?.api?.languageId;
+        Shopware.Context.api.languageId = null;
 
         const apiService = createApiService(createDefaultConfig());
         const headers = apiService.getBasicHeaders();
@@ -39,12 +39,12 @@ describe('/core/service/api.service.ts', () => {
             Authorization: 'Bearer verySecureToken',
         });
 
-        Cicada.Context.api.languageId = languageId;
+        Shopware.Context.api.languageId = languageId;
     });
 
     it('should return the basic headers with languageId', async () => {
-        const languageId = Cicada.Context?.api?.languageId;
-        Cicada.Context.api.languageId = '123456789';
+        const languageId = Shopware.Context?.api?.languageId;
+        Shopware.Context.api.languageId = '123456789';
 
         const apiService = createApiService(createDefaultConfig());
         const headers = apiService.getBasicHeaders();
@@ -56,6 +56,6 @@ describe('/core/service/api.service.ts', () => {
             'sw-language-id': '123456789',
         });
 
-        Cicada.Context.api.languageId = languageId;
+        Shopware.Context.api.languageId = languageId;
     });
 });

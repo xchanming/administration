@@ -1,7 +1,7 @@
 /**
  * @sw-package fundamentals@after-sales
  */
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'settings',
     key: 'rule',

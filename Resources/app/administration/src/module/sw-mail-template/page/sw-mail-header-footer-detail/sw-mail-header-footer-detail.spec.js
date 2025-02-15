@@ -6,7 +6,7 @@ import { mount } from '@vue/test-utils';
 
 const mailHeaderFooterMock = {
     id: '123',
-    description: 'Cicada Default Template',
+    description: 'Shopware Default Template',
     name: 'Order Header',
     salesChannels: [
         {
@@ -54,7 +54,7 @@ const createWrapper = async (privileges = []) => {
                 },
             },
             mocks: {
-                $route: { params: { id: Cicada.Utils.createId() } },
+                $route: { params: { id: Shopware.Utils.createId() } },
             },
             stubs: {
                 'sw-page': {

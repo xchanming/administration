@@ -3,6 +3,6 @@
  */
 describe('directives/click-outside', () => {
     it('should register the directive', () => {
-        expect(Cicada.Directive.getByName('click-outside')).toBeDefined();
+        expect(Shopware.Directive.getByName('click-outside')).toBeDefined();
     });
 });

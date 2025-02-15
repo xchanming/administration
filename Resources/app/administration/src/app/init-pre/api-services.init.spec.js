@@ -4,181 +4,197 @@
 import initializeApiServices from 'src/app/init-pre/api-services.init';
 
 describe('src/app/init-pre/api-services.init.ts', () => {
-    /**
-     * [
-     *         'aclApiService',
-     *         'appActionButtonService',
-     *         'appCmsBlocks',
-     *         'appModulesService',
-     *         'appUrlChangeService',
-     *         'businessEventService',
-     *         'cacheApiService',
-     *         'calculate-price',
-     *         'cartStoreService',
-     *         'checkoutStoreService',
-     *         'configService',
-     *         'customSnippetApiService',
-     *         'customerGroupRegistrationService',
-     *         'customerValidationService',
-     *         'excludedSearchTermService',
-     *         'extensionSdkService',
-     *         'firstRunWizardService',
-     *         'flowActionService',
-     *         'importExportService',
-     *         'integrationService',
-     *         'knownIpsService',
-     *         'languagePluginService',
-     *         'mailService',
-     *         'mediaFolderService',
-     *         'mediaService',
-     *         'messageQueueService',
-     *         'notificationsService',
-     *         'numberRangeService',
-     *         'orderDocumentApiService',
-     *         'orderStateMachineService',
-     *         'orderService',
-     *         'productExportService',
-     *         'productStreamPreviewService',
-     *         'promotionSyncService',
-     *         'recommendationsService',
-     *         'ruleConditionsConfigApiService',
-     *         'salesChannelService',
-     *         'scheduledTaskService',
-     *         'searchService',
-     *         'seoUrlTemplateService',
-     *         'seoUrlService',
-     *         'snippetSetService',
-     *         'snippetService',
-     *         'stateMachineService',
-     *         'contextStoreService',
-     *         'storeService',
-     *         'syncService',
-     *         'systemConfigApiService',
-     *         'tagApiService',
-     *         'updateService',
-     *         'userActivityApiService',
-     *         'userConfigService',
-     *         'userInputSanitizeService',
-     *         'userRecoveryService',
-     *         'userValidationService',
-     *         'userService'
-     *       ]
-     */
+    beforeEach(() => {
+        Shopware._private.ApiServices = jest.fn(() => {
+            const services = [];
+            const serviceNames = [
+                'aclApiService',
+                'appActionButtonService',
+                'appCmsBlocks',
+                'appModulesService',
+                'appUrlChangeService',
+                'businessEventService',
+                'cacheApiService',
+                'calculate-price',
+                'cartStoreService',
+                'checkoutStoreService',
+                'configService',
+                'customSnippetApiService',
+                'customerGroupRegistrationService',
+                'customerValidationService',
+                'documentService',
+                'excludedSearchTermService',
+                'extensionSdkService',
+                'firstRunWizardService',
+                'flowActionService',
+                'importExportService',
+                'integrationService',
+                'knownIpsService',
+                'languagePluginService',
+                'mailService',
+                'mediaFolderService',
+                'mediaService',
+                'messageQueueService',
+                'notificationsService',
+                'numberRangeService',
+                'orderDocumentApiService',
+                'orderStateMachineService',
+                'orderService',
+                'productExportService',
+                'productStreamPreviewService',
+                'promotionSyncService',
+                'recommendationsService',
+                'ruleConditionsConfigApiService',
+                'salesChannelService',
+                'scheduledTaskService',
+                'searchService',
+                'seoUrlTemplateService',
+                'seoUrlService',
+                'snippetSetService',
+                'snippetService',
+                'stateMachineService',
+                'contextStoreService',
+                'storeService',
+                'syncService',
+                'systemConfigApiService',
+                'tagApiService',
+                'updateService',
+                'userActivityApiService',
+                'userConfigService',
+                'userInputSanitizeService',
+                'userRecoveryService',
+                'userValidationService',
+                'userService',
+            ];
 
-    it('should initialize the api services', () => {
-        expect(Cicada.Service('aclApiService')).toBeUndefined();
-        expect(Cicada.Service('appActionButtonService')).toBeUndefined();
-        expect(Cicada.Service('appCmsBlocks')).toBeUndefined();
-        expect(Cicada.Service('appModulesService')).toBeUndefined();
-        expect(Cicada.Service('appUrlChangeService')).toBeUndefined();
-        expect(Cicada.Service('businessEventService')).toBeUndefined();
-        expect(Cicada.Service('cacheApiService')).toBeUndefined();
-        expect(Cicada.Service('calculate-price')).toBeUndefined();
-        expect(Cicada.Service('cartStoreService')).toBeUndefined();
-        expect(Cicada.Service('checkoutStoreService')).toBeUndefined();
-        expect(Cicada.Service('configService')).toBeUndefined();
-        expect(Cicada.Service('customSnippetApiService')).toBeUndefined();
-        expect(Cicada.Service('customerGroupRegistrationService')).toBeUndefined();
-        expect(Cicada.Service('customerValidationService')).toBeUndefined();
-        expect(Cicada.Service('excludedSearchTermService')).toBeUndefined();
-        expect(Cicada.Service('extensionSdkService')).toBeUndefined();
-        expect(Cicada.Service('firstRunWizardService')).toBeUndefined();
-        expect(Cicada.Service('flowActionService')).toBeUndefined();
-        expect(Cicada.Service('importExportService')).toBeUndefined();
-        expect(Cicada.Service('integrationService')).toBeUndefined();
-        expect(Cicada.Service('knownIpsService')).toBeUndefined();
-        expect(Cicada.Service('languagePluginService')).toBeUndefined();
-        expect(Cicada.Service('mailService')).toBeUndefined();
-        expect(Cicada.Service('mediaFolderService')).toBeUndefined();
-        expect(Cicada.Service('mediaService')).toBeUndefined();
-        expect(Cicada.Service('messageQueueService')).toBeUndefined();
-        expect(Cicada.Service('notificationsService')).toBeUndefined();
-        expect(Cicada.Service('numberRangeService')).toBeUndefined();
-        expect(Cicada.Service('orderDocumentApiService')).toBeUndefined();
-        expect(Cicada.Service('orderStateMachineService')).toBeUndefined();
-        expect(Cicada.Service('orderService')).toBeUndefined();
-        expect(Cicada.Service('productExportService')).toBeUndefined();
-        expect(Cicada.Service('productStreamPreviewService')).toBeUndefined();
-        expect(Cicada.Service('promotionSyncService')).toBeUndefined();
-        expect(Cicada.Service('recommendationsService')).toBeUndefined();
-        expect(Cicada.Service('ruleConditionsConfigApiService')).toBeUndefined();
-        expect(Cicada.Service('salesChannelService')).toBeUndefined();
-        expect(Cicada.Service('scheduledTaskService')).toBeUndefined();
-        expect(Cicada.Service('searchService')).toBeUndefined();
-        expect(Cicada.Service('seoUrlTemplateService')).toBeUndefined();
-        expect(Cicada.Service('seoUrlService')).toBeUndefined();
-        expect(Cicada.Service('snippetSetService')).toBeUndefined();
-        expect(Cicada.Service('snippetService')).toBeUndefined();
-        expect(Cicada.Service('stateMachineService')).toBeUndefined();
-        expect(Cicada.Service('contextStoreService')).toBeUndefined();
-        expect(Cicada.Service('storeService')).toBeUndefined();
-        expect(Cicada.Service('syncService')).toBeUndefined();
-        expect(Cicada.Service('systemConfigApiService')).toBeUndefined();
-        expect(Cicada.Service('tagApiService')).toBeUndefined();
-        expect(Cicada.Service('updateService')).toBeUndefined();
-        expect(Cicada.Service('userActivityApiService')).toBeUndefined();
-        expect(Cicada.Service('userConfigService')).toBeUndefined();
-        expect(Cicada.Service('userInputSanitizeService')).toBeUndefined();
-        expect(Cicada.Service('userRecoveryService')).toBeUndefined();
-        expect(Cicada.Service('userValidationService')).toBeUndefined();
-        expect(Cicada.Service('userService')).toBeUndefined();
+            serviceNames.forEach((serviceName) => {
+                const MockApiService = jest.fn().mockImplementation(function () {
+                    this.name = serviceName;
+                });
+                services.push(() => Promise.resolve({ default: MockApiService }));
+            });
 
-        initializeApiServices();
+            return services;
+        });
+    });
 
-        expect(Cicada.Service('aclApiService')).toBeDefined();
-        expect(Cicada.Service('appActionButtonService')).toBeDefined();
-        expect(Cicada.Service('appCmsBlocks')).toBeDefined();
-        expect(Cicada.Service('appModulesService')).toBeDefined();
-        expect(Cicada.Service('appUrlChangeService')).toBeDefined();
-        expect(Cicada.Service('businessEventService')).toBeDefined();
-        expect(Cicada.Service('cacheApiService')).toBeDefined();
-        expect(Cicada.Service('calculate-price')).toBeDefined();
-        expect(Cicada.Service('cartStoreService')).toBeDefined();
-        expect(Cicada.Service('checkoutStoreService')).toBeDefined();
-        expect(Cicada.Service('configService')).toBeDefined();
-        expect(Cicada.Service('customSnippetApiService')).toBeDefined();
-        expect(Cicada.Service('customerGroupRegistrationService')).toBeDefined();
-        expect(Cicada.Service('customerValidationService')).toBeDefined();
-        expect(Cicada.Service('excludedSearchTermService')).toBeDefined();
-        expect(Cicada.Service('extensionSdkService')).toBeDefined();
-        expect(Cicada.Service('firstRunWizardService')).toBeDefined();
-        expect(Cicada.Service('flowActionService')).toBeDefined();
-        expect(Cicada.Service('importExportService')).toBeDefined();
-        expect(Cicada.Service('integrationService')).toBeDefined();
-        expect(Cicada.Service('knownIpsService')).toBeDefined();
-        expect(Cicada.Service('languagePluginService')).toBeDefined();
-        expect(Cicada.Service('mailService')).toBeDefined();
-        expect(Cicada.Service('mediaFolderService')).toBeDefined();
-        expect(Cicada.Service('mediaService')).toBeDefined();
-        expect(Cicada.Service('messageQueueService')).toBeDefined();
-        expect(Cicada.Service('notificationsService')).toBeDefined();
-        expect(Cicada.Service('numberRangeService')).toBeDefined();
-        expect(Cicada.Service('orderStateMachineService')).toBeDefined();
-        expect(Cicada.Service('orderService')).toBeDefined();
-        expect(Cicada.Service('productExportService')).toBeDefined();
-        expect(Cicada.Service('productStreamPreviewService')).toBeDefined();
-        expect(Cicada.Service('promotionSyncService')).toBeDefined();
-        expect(Cicada.Service('recommendationsService')).toBeDefined();
-        expect(Cicada.Service('ruleConditionsConfigApiService')).toBeDefined();
-        expect(Cicada.Service('salesChannelService')).toBeDefined();
-        expect(Cicada.Service('scheduledTaskService')).toBeDefined();
-        expect(Cicada.Service('searchService')).toBeDefined();
-        expect(Cicada.Service('seoUrlTemplateService')).toBeDefined();
-        expect(Cicada.Service('seoUrlService')).toBeDefined();
-        expect(Cicada.Service('snippetSetService')).toBeDefined();
-        expect(Cicada.Service('snippetService')).toBeDefined();
-        expect(Cicada.Service('stateMachineService')).toBeDefined();
-        expect(Cicada.Service('contextStoreService')).toBeDefined();
-        expect(Cicada.Service('storeService')).toBeDefined();
-        expect(Cicada.Service('syncService')).toBeDefined();
-        expect(Cicada.Service('systemConfigApiService')).toBeDefined();
-        expect(Cicada.Service('tagApiService')).toBeDefined();
-        expect(Cicada.Service('updateService')).toBeDefined();
-        expect(Cicada.Service('userActivityApiService')).toBeDefined();
-        expect(Cicada.Service('userConfigService')).toBeDefined();
-        expect(Cicada.Service('userInputSanitizeService')).toBeDefined();
-        expect(Cicada.Service('userRecoveryService')).toBeDefined();
-        expect(Cicada.Service('userValidationService')).toBeDefined();
-        expect(Cicada.Service('userService')).toBeDefined();
+    it('should initialize the api services', async () => {
+        expect(Shopware.Service('aclApiService')).toBeUndefined();
+        expect(Shopware.Service('appActionButtonService')).toBeUndefined();
+        expect(Shopware.Service('appCmsBlocks')).toBeUndefined();
+        expect(Shopware.Service('appModulesService')).toBeUndefined();
+        expect(Shopware.Service('appUrlChangeService')).toBeUndefined();
+        expect(Shopware.Service('businessEventService')).toBeUndefined();
+        expect(Shopware.Service('cacheApiService')).toBeUndefined();
+        expect(Shopware.Service('calculate-price')).toBeUndefined();
+        expect(Shopware.Service('cartStoreService')).toBeUndefined();
+        expect(Shopware.Service('checkoutStoreService')).toBeUndefined();
+        expect(Shopware.Service('configService')).toBeUndefined();
+        expect(Shopware.Service('customSnippetApiService')).toBeUndefined();
+        expect(Shopware.Service('customerGroupRegistrationService')).toBeUndefined();
+        expect(Shopware.Service('customerValidationService')).toBeUndefined();
+        expect(Shopware.Service('documentService')).toBeUndefined();
+        expect(Shopware.Service('excludedSearchTermService')).toBeUndefined();
+        expect(Shopware.Service('extensionSdkService')).toBeUndefined();
+        expect(Shopware.Service('firstRunWizardService')).toBeUndefined();
+        expect(Shopware.Service('flowActionService')).toBeUndefined();
+        expect(Shopware.Service('importExportService')).toBeUndefined();
+        expect(Shopware.Service('integrationService')).toBeUndefined();
+        expect(Shopware.Service('knownIpsService')).toBeUndefined();
+        expect(Shopware.Service('languagePluginService')).toBeUndefined();
+        expect(Shopware.Service('mailService')).toBeUndefined();
+        expect(Shopware.Service('mediaFolderService')).toBeUndefined();
+        expect(Shopware.Service('mediaService')).toBeUndefined();
+        expect(Shopware.Service('messageQueueService')).toBeUndefined();
+        expect(Shopware.Service('notificationsService')).toBeUndefined();
+        expect(Shopware.Service('numberRangeService')).toBeUndefined();
+        expect(Shopware.Service('orderDocumentApiService')).toBeUndefined();
+        expect(Shopware.Service('orderStateMachineService')).toBeUndefined();
+        expect(Shopware.Service('orderService')).toBeUndefined();
+        expect(Shopware.Service('productExportService')).toBeUndefined();
+        expect(Shopware.Service('productStreamPreviewService')).toBeUndefined();
+        expect(Shopware.Service('promotionSyncService')).toBeUndefined();
+        expect(Shopware.Service('recommendationsService')).toBeUndefined();
+        expect(Shopware.Service('ruleConditionsConfigApiService')).toBeUndefined();
+        expect(Shopware.Service('salesChannelService')).toBeUndefined();
+        expect(Shopware.Service('scheduledTaskService')).toBeUndefined();
+        expect(Shopware.Service('searchService')).toBeUndefined();
+        expect(Shopware.Service('seoUrlTemplateService')).toBeUndefined();
+        expect(Shopware.Service('seoUrlService')).toBeUndefined();
+        expect(Shopware.Service('snippetSetService')).toBeUndefined();
+        expect(Shopware.Service('snippetService')).toBeUndefined();
+        expect(Shopware.Service('stateMachineService')).toBeUndefined();
+        expect(Shopware.Service('contextStoreService')).toBeUndefined();
+        expect(Shopware.Service('storeService')).toBeUndefined();
+        expect(Shopware.Service('syncService')).toBeUndefined();
+        expect(Shopware.Service('systemConfigApiService')).toBeUndefined();
+        expect(Shopware.Service('tagApiService')).toBeUndefined();
+        expect(Shopware.Service('updateService')).toBeUndefined();
+        expect(Shopware.Service('userActivityApiService')).toBeUndefined();
+        expect(Shopware.Service('userConfigService')).toBeUndefined();
+        expect(Shopware.Service('userInputSanitizeService')).toBeUndefined();
+        expect(Shopware.Service('userRecoveryService')).toBeUndefined();
+        expect(Shopware.Service('userValidationService')).toBeUndefined();
+        expect(Shopware.Service('userService')).toBeUndefined();
+
+        await initializeApiServices();
+
+        expect(Shopware.Service('aclApiService')).toBeDefined();
+        expect(Shopware.Service('appActionButtonService')).toBeDefined();
+        expect(Shopware.Service('appCmsBlocks')).toBeDefined();
+        expect(Shopware.Service('appModulesService')).toBeDefined();
+        expect(Shopware.Service('appUrlChangeService')).toBeDefined();
+        expect(Shopware.Service('businessEventService')).toBeDefined();
+        expect(Shopware.Service('cacheApiService')).toBeDefined();
+        expect(Shopware.Service('calculate-price')).toBeDefined();
+        expect(Shopware.Service('cartStoreService')).toBeDefined();
+        expect(Shopware.Service('checkoutStoreService')).toBeDefined();
+        expect(Shopware.Service('configService')).toBeDefined();
+        expect(Shopware.Service('customSnippetApiService')).toBeDefined();
+        expect(Shopware.Service('customerGroupRegistrationService')).toBeDefined();
+        expect(Shopware.Service('customerValidationService')).toBeDefined();
+        expect(Shopware.Service('documentService')).toBeDefined();
+        expect(Shopware.Service('excludedSearchTermService')).toBeDefined();
+        expect(Shopware.Service('extensionSdkService')).toBeDefined();
+        expect(Shopware.Service('firstRunWizardService')).toBeDefined();
+        expect(Shopware.Service('flowActionService')).toBeDefined();
+        expect(Shopware.Service('importExportService')).toBeDefined();
+        expect(Shopware.Service('integrationService')).toBeDefined();
+        expect(Shopware.Service('knownIpsService')).toBeDefined();
+        expect(Shopware.Service('languagePluginService')).toBeDefined();
+        expect(Shopware.Service('mailService')).toBeDefined();
+        expect(Shopware.Service('mediaFolderService')).toBeDefined();
+        expect(Shopware.Service('mediaService')).toBeDefined();
+        expect(Shopware.Service('messageQueueService')).toBeDefined();
+        expect(Shopware.Service('notificationsService')).toBeDefined();
+        expect(Shopware.Service('numberRangeService')).toBeDefined();
+        expect(Shopware.Service('orderDocumentApiService')).toBeDefined();
+        expect(Shopware.Service('orderStateMachineService')).toBeDefined();
+        expect(Shopware.Service('orderService')).toBeDefined();
+        expect(Shopware.Service('productExportService')).toBeDefined();
+        expect(Shopware.Service('productStreamPreviewService')).toBeDefined();
+        expect(Shopware.Service('promotionSyncService')).toBeDefined();
+        expect(Shopware.Service('recommendationsService')).toBeDefined();
+        expect(Shopware.Service('ruleConditionsConfigApiService')).toBeDefined();
+        expect(Shopware.Service('salesChannelService')).toBeDefined();
+        expect(Shopware.Service('scheduledTaskService')).toBeDefined();
+        expect(Shopware.Service('searchService')).toBeDefined();
+        expect(Shopware.Service('seoUrlTemplateService')).toBeDefined();
+        expect(Shopware.Service('seoUrlService')).toBeDefined();
+        expect(Shopware.Service('snippetSetService')).toBeDefined();
+        expect(Shopware.Service('snippetService')).toBeDefined();
+        expect(Shopware.Service('stateMachineService')).toBeDefined();
+        expect(Shopware.Service('contextStoreService')).toBeDefined();
+        expect(Shopware.Service('storeService')).toBeDefined();
+        expect(Shopware.Service('syncService')).toBeDefined();
+        expect(Shopware.Service('systemConfigApiService')).toBeDefined();
+        expect(Shopware.Service('tagApiService')).toBeDefined();
+        expect(Shopware.Service('updateService')).toBeDefined();
+        expect(Shopware.Service('userActivityApiService')).toBeDefined();
+        expect(Shopware.Service('userConfigService')).toBeDefined();
+        expect(Shopware.Service('userInputSanitizeService')).toBeDefined();
+        expect(Shopware.Service('userRecoveryService')).toBeDefined();
+        expect(Shopware.Service('userValidationService')).toBeDefined();
+        expect(Shopware.Service('userService')).toBeDefined();
     });
 });

@@ -1,7 +1,7 @@
 import template from './sw-search-bar-item.html.twig';
 import './sw-search-bar-item.scss';
 
-const { Component, Application } = Cicada;
+const { Component, Application } = Shopware;
 /**
  * @sw-package framework
  *
@@ -17,8 +17,6 @@ const { Component, Application } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-search-bar-item', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: {
         searchTypeService: 'searchTypeService',
@@ -130,9 +128,13 @@ Component.register('sw-search-bar-item', {
             }
 
             return action
-                ? this.$tc('global.sw-search-bar-item.addNewEntity', 0, {
-                      entity: label?.toLowerCase() ?? this.$tc(`global.entities.${entity}`).toLowerCase(),
-                  })
+                ? this.$tc(
+                      'global.sw-search-bar-item.addNewEntity',
+                      {
+                          entity: label?.toLowerCase() ?? this.$tc(`global.entities.${entity}`).toLowerCase(),
+                      },
+                      0,
+                  )
                 : label;
         },
 
@@ -184,11 +186,11 @@ Component.register('sw-search-bar-item', {
         },
 
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         mediaNameFilter() {
-            return Cicada.Filter.getByName('mediaName');
+            return Shopware.Filter.getByName('mediaName');
         },
     },
 
@@ -214,31 +216,13 @@ Component.register('sw-search-bar-item', {
         },
 
         registerEvents() {
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                let parent = this.$parent;
-
-                parent = this.$parent.$parent;
-
-                parent.$on('active-item-index-select', this.checkActiveState);
-                parent.$on('keyup-enter', this.onEnter);
-            } else {
-                this.searchBarRegisterActiveItemIndexSelectHandler(this.checkActiveState);
-                this.searchBarRegisterKeyupEnterHandler(this.onEnter);
-            }
+            this.searchBarRegisterActiveItemIndexSelectHandler(this.checkActiveState);
+            this.searchBarRegisterKeyupEnterHandler(this.onEnter);
         },
 
         removeEvents() {
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                let parent = this.$parent;
-
-                parent = this.$parent.$parent;
-
-                parent.$off('active-item-index-select', this.checkActiveState);
-                parent.$off('keyup-enter', this.onEnter);
-            } else {
-                this.searchBarUnregisterActiveItemIndexSelectHandler(this.checkActiveState);
-                this.searchBarUnregisterKeyupEnterHandler(this.onEnter);
-            }
+            this.searchBarUnregisterActiveItemIndexSelectHandler(this.checkActiveState);
+            this.searchBarUnregisterKeyupEnterHandler(this.onEnter);
         },
 
         checkActiveState({ index, column }) {
@@ -262,23 +246,11 @@ Component.register('sw-search-bar-item', {
         },
 
         onMouseEnter(originalDomEvent) {
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                let parent = this.$parent;
-
-                parent = this.$parent.$parent;
-
-                parent.$emit('mouse-over', {
-                    originalDomEvent,
-                    index: this.index,
-                    column: this.column,
-                });
-            } else {
-                this.searchBarOnMouseOver({
-                    originalDomEvent,
-                    index: this.index,
-                    column: this.column,
-                });
-            }
+            this.searchBarOnMouseOver({
+                originalDomEvent,
+                index: this.index,
+                column: this.column,
+            });
 
             this.isActive = true;
         },

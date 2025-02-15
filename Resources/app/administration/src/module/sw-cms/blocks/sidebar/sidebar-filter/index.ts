@@ -4,17 +4,17 @@ import CMS from '../../../constant/sw-cms.constant';
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-sidebar-filter', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-sidebar-filter', () => import('./preview'));
 /**
  * @private
  */
-Cicada.Component.register('sw-cms-block-sidebar-filter', () => import('./component'));
+Shopware.Component.register('sw-cms-block-sidebar-filter', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'sidebar-filter',
     label: 'sw-cms.blocks.sidebar.sidebarFilter.label',
     category: 'sidebar',

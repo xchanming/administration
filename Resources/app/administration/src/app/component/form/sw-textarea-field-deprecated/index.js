@@ -2,7 +2,7 @@ import { inject } from 'vue';
 import template from './sw-textarea-field.html.twig';
 import './sw-textarea-field.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @sw-package framework
@@ -18,8 +18,6 @@ Component.register('sw-textarea-field-deprecated', {
     template,
 
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

@@ -8,11 +8,9 @@ import './sw-cms-el-preview-vimeo-video.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 };

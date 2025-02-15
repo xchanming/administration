@@ -1,17 +1,8 @@
-import { MtTabs } from '@cicada-ag/meteor-component-library';
+import { MtTabs } from '@shopware-ag/meteor-component-library';
 import type { PropType } from 'vue';
-import type { TabItem } from '@cicada-ag/meteor-component-library/dist/esm/components/navigation/mt-tabs/mt-tabs';
+import type { TabItem } from '@shopware-ag/meteor-component-library/dist/esm/components/navigation/mt-tabs/mt-tabs';
 import template from './mt-tabs.html.twig';
-import type { TabItemEntry } from '../../../state/tabs.store';
-
-// Use the compatConfig from the Cicada object and disable all compatibilities
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-MtTabs.compatConfig = Object.fromEntries(
-    Object.keys(Cicada.compatConfig).map((key) => [
-        key,
-        false,
-    ]),
-);
+import type { TabItemEntry } from '../../../store/tabs.store';
 
 /**
  * @sw-package framework
@@ -21,10 +12,8 @@ MtTabs.compatConfig = Object.fromEntries(
  * @description Wrapper component for mt-tabs. Adds the component sections
  *  to the slots. Need to be matched with the original mt-tabs component.
  */
-Cicada.Component.register('mt-tabs', {
+Shopware.Component.register('mt-tabs', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     components: {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -46,7 +35,7 @@ Cicada.Component.register('mt-tabs', {
 
     computed: {
         tabExtensions(): TabItemEntry[] {
-            return Cicada.State.get('tabs').tabItems[this.positionIdentifier] ?? [];
+            return Shopware.Store.get('tabs').tabItems[this.positionIdentifier] ?? [];
         },
 
         mergedItems(): TabItem[] {
@@ -65,15 +54,6 @@ Cicada.Component.register('mt-tabs', {
             ];
 
             return mergedItems;
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 });

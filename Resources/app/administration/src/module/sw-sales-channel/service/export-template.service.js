@@ -2,7 +2,7 @@
  * @sw-package discovery
  */
 
-const { Application } = Cicada;
+const { Application } = Shopware;
 
 Application.addServiceProvider('exportTemplateService', () => {
     return {

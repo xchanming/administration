@@ -3,7 +3,7 @@
  */
 
 /** Initializer */
-import initializers from 'src/app/init';
+import initializers from 'src/app/init/';
 import preInitializer from 'src/app/init-pre/';
 import postInitializer from 'src/app/init-post/';
 
@@ -31,20 +31,21 @@ import LicenseViolationsService from 'src/app/service/license-violations.service
 import ShortcutService from 'src/app/service/shortcut.service';
 import LocaleToLanguageService from 'src/app/service/locale-to-language.service';
 import addPluginUpdatesListener from 'src/core/service/plugin-updates-listener.service';
-import addCicadaUpdatesListener from 'src/core/service/cicada-updates-listener.service';
+import addShopwareUpdatesListener from 'src/core/service/shopware-updates-listener.service';
 import addCustomerGroupRegistrationListener from 'src/core/service/customer-group-registration-listener.service';
 import LocaleHelperService from 'src/app/service/locale-helper.service';
 import FilterService from 'src/app/service/filter.service';
 import AppCmsService from 'src/app/service/app-cms.service';
 import MediaDefaultFolderService from 'src/app/service/media-default-folder.service';
 import AppAclService from 'src/app/service/app-acl.service';
-import CicadaDiscountCampaignService from 'src/app/service/discount-campaign.service';
+import ShopwareDiscountCampaignService from 'src/app/service/discount-campaign.service';
 import SearchRankingService from 'src/app/service/search-ranking.service';
 import SearchPreferencesService from 'src/app/service/search-preferences.service';
 import RecentlySearchService from 'src/app/service/recently-search.service';
 import UserActivityService from 'src/app/service/user-activity.service';
 import EntityValidationService from 'src/app/service/entity-validation.service';
 import CustomEntityDefinitionService from 'src/app/service/custom-entity-definition.service';
+import addUsageDataConsentListener from 'src/core/service/usage-data-consent-listener.service';
 import FileValidationService from 'src/app/service/file-validation.service';
 
 /** Import Feature */
@@ -54,16 +55,16 @@ import Feature from 'src/core/feature';
 import 'src/app/decorator';
 
 /** Import Meteor Component Library styles */
-import '@cicada-ag/meteor-component-library/dist/style.css';
-
-/** Import global styles */
-import 'src/app/assets/scss/all.scss';
+// eslint-disable-next-line import/no-unresolved
+import '@shopware-ag/meteor-component-library/styles.css';
+// eslint-disable-next-line import/no-unresolved
+import '@shopware-ag/meteor-component-library/font.css';
 
 import ChangesetGenerator from '../core/data/changeset-generator.data';
 import ErrorResolver from '../core/data/error-resolver.data';
 
 /** Application Bootstrapper */
-const { Application } = Cicada;
+const { Application } = Shopware;
 
 const factoryContainer = Application.getContainer('factory');
 
@@ -72,23 +73,36 @@ const adapter = new VueAdapter(Application);
 
 Application.setViewAdapter(adapter);
 
-// Merge all initializer
-const allInitializers = {
-    ...preInitializer,
-    ...initializers,
-    ...postInitializer,
-};
+// Add pre-initializers to application
+Object.keys(preInitializer).forEach((key) => {
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const initializer = preInitializer[key];
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    Application.addInitializer(key, initializer, '-pre');
+});
 
 // Add initializers to application
-Object.entries(allInitializers).forEach(
-    ([
-        key,
-        initializer,
-    ]) => {
-        // @ts-expect-error
-        Application.addInitializer(key, initializer);
-    },
-);
+Object.keys(initializers).forEach((key) => {
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const initializer = initializers[key];
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    Application.addInitializer(key, initializer);
+});
+
+// Add post-initializers to application
+Object.keys(postInitializer).forEach((key) => {
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const initializer = postInitializer[key];
+
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    Application.addInitializer(key, initializer, '-post');
+});
 
 // Add service providers
 Application.addServiceProvider('feature', () => {
@@ -104,17 +118,18 @@ Application.addServiceProvider('feature', () => {
         return new PrivilegesService();
     })
     .addServiceProvider('acl', () => {
-        return new AclService(Cicada.State);
+        return new AclService();
     })
     .addServiceProvider('loginService', () => {
         const serviceContainer = Application.getContainer('service');
         const initContainer = Application.getContainer('init');
 
-        const loginService = LoginService(initContainer.httpClient, Cicada.Context.api);
+        const loginService = LoginService(initContainer.httpClient, Shopware.Context.api);
 
         addPluginUpdatesListener(loginService, serviceContainer);
-        addCicadaUpdatesListener(loginService, serviceContainer);
+        addShopwareUpdatesListener(loginService, serviceContainer);
         addCustomerGroupRegistrationListener(loginService);
+        addUsageDataConsentListener(loginService, serviceContainer);
 
         return loginService;
     })
@@ -147,7 +162,7 @@ Application.addServiceProvider('feature', () => {
     .addServiceProvider('extensionHelperService', () => {
         return new ExtensionHelperService({
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            extensionStoreActionService: Cicada.Service('extensionStoreActionService'),
+            extensionStoreActionService: Shopware.Service('extensionStoreActionService'),
         });
     })
     .addServiceProvider('languageAutoFetchingService', () => {
@@ -174,17 +189,17 @@ Application.addServiceProvider('feature', () => {
     })
     .addServiceProvider('localeHelper', () => {
         return new LocaleHelperService({
-            Cicada: Cicada,
-            localeRepository: Cicada.Service('repositoryFactory').create('locale'),
+            Shopware: Shopware,
+            localeRepository: Shopware.Service('repositoryFactory').create('locale'),
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            snippetService: Cicada.Service('snippetService'),
+            snippetService: Shopware.Service('snippetService'),
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             localeFactory: Application.getContainer('factory').locale,
         });
     })
     .addServiceProvider('filterService', () => {
         return new FilterService({
-            userConfigRepository: Cicada.Service('repositoryFactory').create('user_config'),
+            userConfigRepository: Shopware.Service('repositoryFactory').create('user_config'),
         });
     })
     .addServiceProvider('mediaDefaultFolderService', () => {
@@ -193,8 +208,8 @@ Application.addServiceProvider('feature', () => {
     .addServiceProvider('appAclService', () => {
         return new AppAclService({
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            privileges: Cicada.Service('privileges'),
-            appRepository: Cicada.Service('repositoryFactory').create('app'),
+            privileges: Shopware.Service('privileges'),
+            appRepository: Shopware.Service('repositoryFactory').create('app'),
         });
     })
     .addServiceProvider('appCmsService', (container: $TSFixMe) => {
@@ -202,8 +217,8 @@ Application.addServiceProvider('feature', () => {
         const appCmsBlocksService = container.appCmsBlocks;
         return new AppCmsService(appCmsBlocksService, adapter);
     })
-    .addServiceProvider('cicadaDiscountCampaignService', () => {
-        return new CicadaDiscountCampaignService();
+    .addServiceProvider('shopwareDiscountCampaignService', () => {
+        return new ShopwareDiscountCampaignService();
     })
     .addServiceProvider('searchRankingService', () => {
         return new SearchRankingService();
@@ -213,7 +228,7 @@ Application.addServiceProvider('feature', () => {
     })
     .addServiceProvider('searchPreferencesService', () => {
         return new SearchPreferencesService({
-            userConfigRepository: Cicada.Service('repositoryFactory').create('user_config'),
+            userConfigRepository: Shopware.Service('repositoryFactory').create('user_config'),
         });
     })
     .addServiceProvider('userActivityService', () => {

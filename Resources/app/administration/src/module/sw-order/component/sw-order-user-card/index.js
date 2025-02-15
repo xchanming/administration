@@ -5,22 +5,19 @@ import './sw-order-user-card.scss';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const ApiService = Cicada.Classes.ApiService;
-const format = Cicada.Utils.format;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const ApiService = Shopware.Classes.ApiService;
+const format = Shopware.Utils.format;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'customSnippetApiService',
         'orderService',
         'repositoryFactory',
-        'feature',
     ],
 
     emits: [
@@ -131,7 +128,7 @@ export default {
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
 
@@ -233,7 +230,7 @@ export default {
         },
 
         onAddTag(item) {
-            this.OrderTagRepository.assign(item.id, Cicada.Context.api).then(() => {
+            this.OrderTagRepository.assign(item.id, Shopware.Context.api).then(() => {
                 this.emitChange();
             });
         },

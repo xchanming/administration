@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-gallery-buybox', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-gallery-buybox', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-gallery-buybox', () => import('./component'));
+Shopware.Component.register('sw-cms-block-gallery-buybox', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'gallery-buybox',
     label: 'sw-cms.blocks.commerce.galleryBuyBox.label',
     category: 'commerce',

@@ -1,8 +1,8 @@
 import template from './sw-rule-modal.html.twig';
 import './sw-rule-modal.scss';
 
-const { Component, Mixin, Context } = Cicada;
-const { EntityCollection, Criteria } = Cicada.Data;
+const { Component, Mixin, Context } = Shopware;
+const { EntityCollection, Criteria } = Shopware.Data;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**
@@ -17,8 +17,6 @@ const { mapPropertyErrors } = Component.getComponentHelper();
  */
 Component.register('sw-rule-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -112,7 +110,7 @@ Component.register('sw-rule-modal', {
         loadConditionData() {
             const context = {
                 ...Context.api,
-                languageId: Cicada.State.get('session').languageId,
+                languageId: Shopware.Store.get('session').languageId,
             };
             const criteria = new Criteria(1, 500);
             criteria.addAssociation('appScriptCondition');
@@ -178,10 +176,10 @@ Component.register('sw-rule-modal', {
             }
 
             const titleSaveSuccess = this.$tc('global.default.success');
-            const messageSaveSuccess = this.$tc('sw-rule-modal.messageSaveSuccess', 0, { name: this.rule.name });
+            const messageSaveSuccess = this.$tc('sw-rule-modal.messageSaveSuccess', { name: this.rule.name }, 0);
 
             const titleSaveError = this.$tc('global.default.error');
-            const messageSaveError = this.$tc('sw-rule-modal.messageSaveError', 0, { name: this.rule.name });
+            const messageSaveError = this.$tc('sw-rule-modal.messageSaveError', { name: this.rule.name }, 0);
 
             this.isLoading = true;
             return this.ruleRepository

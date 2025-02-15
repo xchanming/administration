@@ -1,59 +1,64 @@
 import './service';
 import './acl';
+import './store/flow.store';
 
-import flowState from './state/flow.state';
-
-const { Module, State } = Cicada;
-State.registerModule('swFlowState', flowState);
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-flow-index', () => import('./page/sw-flow-index'));
-Cicada.Component.register('sw-flow-detail', () => import('./page/sw-flow-detail'));
-Cicada.Component.register('sw-flow-detail-flow', () => import('./view/detail/sw-flow-detail-flow'));
-Cicada.Component.register('sw-flow-sequence-modal', () => import('./component/sw-flow-sequence-modal'));
-Cicada.Component.register('sw-flow-detail-general', () => import('./view/detail/sw-flow-detail-general'));
-Cicada.Component.register('sw-flow-list', () => import('./view/listing/sw-flow-list'));
-Cicada.Component.register('sw-flow-list-flow-templates', () => import('./view/listing/sw-flow-list-flow-templates'));
-Cicada.Component.register('sw-flow-trigger', () => import('./component/sw-flow-trigger'));
-Cicada.Component.register('sw-flow-sequence', () => import('./component/sw-flow-sequence'));
-Cicada.Component.register('sw-flow-sequence-action', () => import('./component/sw-flow-sequence-action'));
-Cicada.Component.register('sw-flow-sequence-condition', () => import('./component/sw-flow-sequence-condition'));
-Cicada.Component.register('sw-flow-sequence-selector', () => import('./component/sw-flow-sequence-selector'));
-Cicada.Component.register('sw-flow-sequence-action-error', () => import('./component/sw-flow-sequence-action-error'));
-Cicada.Component.register('sw-flow-rule-modal', () => import('./component/modals/sw-flow-rule-modal'));
-Cicada.Component.register('sw-flow-tag-modal', () => import('./component/modals/sw-flow-tag-modal'));
-Cicada.Component.register('sw-flow-set-order-state-modal', () => import('./component/modals/sw-flow-set-order-state-modal'));
-Cicada.Component.register(
+Shopware.Component.register('sw-flow-index', () => import('./page/sw-flow-index'));
+Shopware.Component.register('sw-flow-detail', () => import('./page/sw-flow-detail'));
+Shopware.Component.register('sw-flow-detail-flow', () => import('./view/detail/sw-flow-detail-flow'));
+Shopware.Component.register('sw-flow-sequence-modal', () => import('./component/sw-flow-sequence-modal'));
+Shopware.Component.register('sw-flow-detail-general', () => import('./view/detail/sw-flow-detail-general'));
+Shopware.Component.register('sw-flow-list', () => import('./view/listing/sw-flow-list'));
+Shopware.Component.register('sw-flow-list-flow-templates', () => import('./view/listing/sw-flow-list-flow-templates'));
+Shopware.Component.register('sw-flow-trigger', () => import('./component/sw-flow-trigger'));
+Shopware.Component.register('sw-flow-sequence', () => import('./component/sw-flow-sequence'));
+Shopware.Component.register('sw-flow-sequence-action', () => import('./component/sw-flow-sequence-action'));
+Shopware.Component.register('sw-flow-sequence-condition', () => import('./component/sw-flow-sequence-condition'));
+Shopware.Component.register('sw-flow-sequence-selector', () => import('./component/sw-flow-sequence-selector'));
+Shopware.Component.register('sw-flow-sequence-action-error', () => import('./component/sw-flow-sequence-action-error'));
+Shopware.Component.register('sw-flow-rule-modal', () => import('./component/modals/sw-flow-rule-modal'));
+Shopware.Component.register('sw-flow-tag-modal', () => import('./component/modals/sw-flow-tag-modal'));
+Shopware.Component.register(
+    'sw-flow-set-order-state-modal',
+    () => import('./component/modals/sw-flow-set-order-state-modal'),
+);
+Shopware.Component.register(
+    'sw-flow-generate-document-modal',
+    () => import('./component/modals/sw-flow-generate-document-modal'),
+);
+Shopware.Component.register(
     'sw-flow-grant-download-access-modal',
     () => import('./component/modals/sw-flow-grant-download-access-modal'),
 );
-Cicada.Component.register('sw-flow-mail-send-modal', () => import('./component/modals/sw-flow-mail-send-modal'));
-Cicada.Component.register(
+Shopware.Component.register('sw-flow-mail-send-modal', () => import('./component/modals/sw-flow-mail-send-modal'));
+Shopware.Component.register(
     'sw-flow-create-mail-template-modal',
     () => import('./component/modals/sw-flow-create-mail-template-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-flow-event-change-confirm-modal',
     () => import('./component/modals/sw-flow-event-change-confirm-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-flow-change-customer-group-modal',
     () => import('./component/modals/sw-flow-change-customer-group-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-flow-change-customer-status-modal',
     () => import('./component/modals/sw-flow-change-customer-status-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-flow-set-entity-custom-field-modal',
     () => import('./component/modals/sw-flow-set-entity-custom-field-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-flow-affiliate-and-campaign-code-modal',
     () => import('./component/modals/sw-flow-affiliate-and-campaign-code-modal'),
 );
-Cicada.Component.register('sw-flow-app-action-modal', () => import('./component/modals/sw-flow-app-action-modal'));
-Cicada.Component.register('sw-flow-leave-page-modal', () => import('./component/modals/sw-flow-leave-page-modal'));
+Shopware.Component.register('sw-flow-app-action-modal', () => import('./component/modals/sw-flow-app-action-modal'));
+Shopware.Component.register('sw-flow-leave-page-modal', () => import('./component/modals/sw-flow-leave-page-modal'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 /**
@@ -170,7 +175,7 @@ Module.register('sw-flow', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'automation',
         to: 'sw.flow.index',
         icon: 'regular-flow',
         privilege: 'flow.viewer',

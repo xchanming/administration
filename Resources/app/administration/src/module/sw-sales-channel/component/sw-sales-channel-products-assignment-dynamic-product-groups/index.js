@@ -5,14 +5,12 @@
 import template from './sw-sales-channel-products-assignment-dynamic-product-groups.html.twig';
 import './sw-sales-channel-products-assignment-dynamic-product-groups.scss';
 
-const { Component, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-sales-channel-products-assignment-dynamic-product-groups', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -94,7 +92,7 @@ Component.register('sw-sales-channel-products-assignment-dynamic-product-groups'
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

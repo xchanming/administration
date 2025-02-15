@@ -7,8 +7,6 @@ import template from './sw-category-detail-menu.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'acl',
         'repositoryFactory',

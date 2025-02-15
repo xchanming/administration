@@ -4,8 +4,8 @@
 
 import template from './sw-one-to-many-grid.html.twig';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private

@@ -8,8 +8,6 @@ import './sw-settings-listing-delete-modal.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'cancel',
         'delete',

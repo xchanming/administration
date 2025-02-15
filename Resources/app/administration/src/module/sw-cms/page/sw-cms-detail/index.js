@@ -2,13 +2,13 @@ import template from './sw-cms-detail.html.twig';
 import CMS from '../../constant/sw-cms.constant';
 import './sw-cms-detail.scss';
 
-const { Component, Mixin, Utils } = Cicada;
+const { Component, Mixin, Utils } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { CicadaError } = Cicada.Classes;
-const { debounce } = Cicada.Utils;
-const { cloneDeep, getObjectDiff } = Cicada.Utils.object;
-const { warn } = Cicada.Utils.debug;
-const { Criteria } = Cicada.Data;
+const { ShopwareError } = Shopware.Classes;
+const { debounce } = Shopware.Utils;
+const { cloneDeep, getObjectDiff } = Shopware.Utils.object;
+const { warn } = Shopware.Utils.debug;
+const { Criteria } = Shopware.Data;
 const debounceTimeout = 800;
 
 /**
@@ -17,8 +17,6 @@ const debounceTimeout = 800;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -290,7 +288,7 @@ export default {
         },
 
         layoutVersionContext() {
-            return Cicada.Context.api;
+            return Shopware.Context.api;
         },
 
         ...mapPropertyErrors('page', [
@@ -312,14 +310,14 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-cms-detail__page',
                 path: 'page',
                 scope: this,
             });
-            Cicada.Store.get('adminMenu').collapseSidebar();
+            Shopware.Store.get('adminMenu').collapseSidebar();
 
-            const isSystemDefaultLanguage = Cicada.State.getters['context/isSystemDefaultLanguage'];
+            const isSystemDefaultLanguage = Shopware.Store.get('context').isSystemDefaultLanguage;
             this.cmsPageState.setIsSystemDefaultLanguage(isSystemDefaultLanguage);
 
             this.resetCmsPageState();
@@ -329,9 +327,9 @@ export default {
                 this.isLoading = true;
                 const defaultStorefrontId = '8A243080F92E4C719546314B577CF82B';
 
-                Cicada.State.commit('cicadaApps/setSelectedIds', [
+                Shopware.Store.get('shopwareApps').selectedIds = [
                     this.pageId,
-                ]);
+                ];
 
                 const criteria = new Criteria(1, 25);
                 criteria.addFilter(Criteria.equals('typeId', defaultStorefrontId));
@@ -385,7 +383,7 @@ export default {
             this.isLoading = true;
 
             return this.pageRepository
-                .get(pageId, Cicada.Context.api, this.loadPageCriteria)
+                .get(pageId, Shopware.Context.api, this.loadPageCriteria)
                 .then((page) => {
                     this.page = { sections: [] };
                     this.page = page;
@@ -419,7 +417,7 @@ export default {
                                 });
                             }
 
-                            Cicada.ExtensionAPI.publishData({
+                            Shopware.ExtensionAPI.publishData({
                                 id: 'sw-cms-detail__page',
                                 path: 'page',
                                 scope: this,
@@ -496,7 +494,7 @@ export default {
 
             return this.salesChannelRepository.search(new Criteria(1, 25)).then((response) => {
                 this.salesChannels = response;
-                const isSystemDefaultLanguage = Cicada.State.getters['context/isSystemDefaultLanguage'];
+                const isSystemDefaultLanguage = Shopware.Store.get('context').isSystemDefaultLanguage();
                 this.cmsPageState.setIsSystemDefaultLanguage(isSystemDefaultLanguage);
                 return this.loadPage(this.pageId);
             });
@@ -518,7 +516,7 @@ export default {
                 criteria.setIds([entityId]);
             }
 
-            const context = { ...Cicada.Context.api, inheritance: true };
+            const context = { ...Shopware.Context.api, inheritance: true };
 
             const response = await this.productRepository.search(criteria, context);
             this.cmsPageState.setCurrentDemoEntity(response[0]);
@@ -658,7 +656,7 @@ export default {
             this.deleteEntityAndRequiredConfigKey(this.page.sections);
 
             return this.pageRepository
-                .save(this.page, Cicada.Context.api, false)
+                .save(this.page, Shopware.Context.api, false)
                 .then(() => {
                     this.isLoading = false;
                     this.isSaveSuccessful = true;
@@ -678,17 +676,17 @@ export default {
 
         addError({ property = null, payload = {}, code = CMS.REQUIRED_FIELD_ERROR_CODE, message = '' } = {}) {
             const expression = `cms_page.${this.page.id}.${property}`;
-            const error = new CicadaError({
+            const error = new ShopwareError({
                 code,
                 detail: message,
                 meta: { parameters: payload },
             });
 
-            Cicada.State.commit('error/addApiError', { expression, error });
+            Shopware.Store.get('error').addApiError({ expression, error });
         },
 
         getError(property) {
-            return Cicada.State.getters['error/getApiError'](this.page, property);
+            return Shopware.Store.get('error').getApiError(this.page, property);
         },
 
         getSlotValidations() {
@@ -735,7 +733,7 @@ export default {
             }
 
             this.validationWarnings = [];
-            Cicada.State.dispatch('error/resetApiErrors');
+            Shopware.Store.get('error').resetApiErrors();
 
             const valid = [
                 this.missingFieldsValidation(),
@@ -829,9 +827,13 @@ export default {
                     const uniqueSlotString = CMS.UNIQUE_SLOTS.map((slot) => this.$tc(`sw-cms.elements.${slot}.label`)).join(
                         ', ',
                     );
-                    const message = this.$tc('sw-cms.detail.notification.messageRedundantElements', 0, {
-                        names: uniqueSlotString,
-                    });
+                    const message = this.$tc(
+                        'sw-cms.detail.notification.messageRedundantElements',
+                        {
+                            names: uniqueSlotString,
+                        },
+                        0,
+                    );
 
                     this.addError({
                         property: 'slots',
@@ -1113,7 +1115,7 @@ export default {
             const response = await this.systemConfigApiService.getValues('core.cms');
             const productDetailId = response['core.cms.default_category_cms_page'];
             const productListId = response['core.cms.default_product_cms_page'];
-            const isLiveVersion = this.page.versionId === Cicada.Context.api.liveVersionId;
+            const isLiveVersion = this.page.versionId === Shopware.Context.api.liveVersionId;
 
             if (
                 isLiveVersion &&

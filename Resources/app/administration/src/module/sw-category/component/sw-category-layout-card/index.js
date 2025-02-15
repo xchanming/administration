@@ -8,8 +8,6 @@ import './sw-category-layout-card.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'acl',
         'cmsPageTypeService',

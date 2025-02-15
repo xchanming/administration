@@ -33,7 +33,7 @@ describe('module/sw-product/component/sw-product-settings-mode', () => {
                             el.setAttribute('tooltip-message', binding.value.message);
                         },
                     },
-                    popover: Cicada.Directive.getByName('popover'),
+                    popover: Shopware.Directive.getByName('popover'),
                 },
                 mocks: {
                     $route: {

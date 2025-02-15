@@ -1,17 +1,15 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@framework
  */
 import template from './sw-settings-currency-country-modal.html.twig';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -67,7 +65,7 @@ export default {
 
     methods: {
         createdComponent() {
-            this.countryRepository.searchIds(this.assignedCountriesCriteria, Cicada.Context.api).then((res) => {
+            this.countryRepository.searchIds(this.assignedCountriesCriteria, Shopware.Context.api).then((res) => {
                 this.assignedCountryIds = res.data;
             });
         },

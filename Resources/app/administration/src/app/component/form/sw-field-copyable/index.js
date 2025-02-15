@@ -1,8 +1,8 @@
 import './sw-field-copyable.scss';
 import template from './sw-field-copyable.html.twig';
 
-const { Component, Mixin } = Cicada;
-const domUtils = Cicada.Utils.dom;
+const { Component, Mixin } = Shopware;
+const domUtils = Shopware.Utils.dom;
 
 /**
  * @sw-package framework
@@ -11,8 +11,6 @@ const domUtils = Cicada.Utils.dom;
  */
 Component.register('sw-field-copyable', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('notification'),

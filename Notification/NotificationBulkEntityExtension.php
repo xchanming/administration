@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Notification;
+namespace Shopware\Administration\Notification;
 
-use Cicada\Core\Framework\DataAbstractionLayer\BulkEntityExtension;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\System\Integration\IntegrationDefinition;
-use Cicada\Core\System\User\UserDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\BulkEntityExtension;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\System\Integration\IntegrationDefinition;
+use Shopware\Core\System\User\UserDefinition;
 
 /**
  * @internal

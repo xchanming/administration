@@ -1,8 +1,8 @@
 import template from './sw-url-field.html.twig';
 import './sw-url-field.scss';
 
-const { Component } = Cicada;
-const { CicadaError } = Cicada.Classes;
+const { Component } = Shopware;
+const { ShopwareError } = Shopware.Classes;
 
 const URL_REGEX = {
     PROTOCOL: /([a-zA-Z0-9]+\:\/\/)+/,
@@ -27,8 +27,6 @@ Component.extend('sw-url-field-deprecated', 'sw-text-field-deprecated', {
 
     inheritAttrs: false,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['feature'],
 
     emits: [
@@ -48,6 +46,10 @@ Component.extend('sw-url-field-deprecated', 'sw-text-field-deprecated', {
             default: false,
         },
         omitUrlSearch: {
+            type: Boolean,
+            default: false,
+        },
+        addTrailingSlash: {
             type: Boolean,
             default: false,
         },
@@ -93,7 +95,7 @@ Component.extend('sw-url-field-deprecated', 'sw-text-field-deprecated', {
         },
 
         unicodeUriFilter() {
-            return Cicada.Filter.getByName('unicodeUri');
+            return Shopware.Filter.getByName('unicodeUri');
         },
     },
 
@@ -166,7 +168,8 @@ Component.extend('sw-url-field-deprecated', 'sw-text-field-deprecated', {
             }
 
             // when a hash or search query is provided we want to allow trailing slash, eg a vue route `admin#/`
-            const removeTrailingSlash = url.hash === '' && url.search === '' ? URL_REGEX.TRAILING_SLASH : '';
+            const removeTrailingSlash =
+                url.hash === '' && url.search === '' && !this.addTrailingSlash ? URL_REGEX.TRAILING_SLASH : '';
 
             // build URL via native URL.toString() function instead by hand @see NEXT-15747
             return url
@@ -202,7 +205,7 @@ Component.extend('sw-url-field-deprecated', 'sw-text-field-deprecated', {
         },
 
         setInvalidUrlError() {
-            this.errorUrl = new CicadaError({
+            this.errorUrl = new ShopwareError({
                 code: 'INVALID_URL',
             });
         },

@@ -1,9 +1,10 @@
 /**
  * @sw-package framework
  */
+
 import { mount } from '@vue/test-utils';
 
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 const entities = [
     { id: 'id1', name: 'first' },
@@ -14,7 +15,7 @@ function getCollection() {
         '/test-entity',
         'testEntity',
         null,
-        { isCicadaContext: true },
+        { isShopwareContext: true },
         entities,
         entities.length,
         null,

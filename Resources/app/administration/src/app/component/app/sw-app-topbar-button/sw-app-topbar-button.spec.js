@@ -35,7 +35,7 @@ describe('sw-app-topbar-button', () => {
     });
 
     it('should render button correctly', async () => {
-        const store = Cicada.Store.get('topBarButton');
+        const store = Shopware.Store.get('topBarButton');
         store.buttons.push(topbarButton);
 
         wrapper = await createWrapper();
@@ -45,7 +45,7 @@ describe('sw-app-topbar-button', () => {
     });
 
     it('should able to click button', async () => {
-        const store = Cicada.Store.get('topBarButton');
+        const store = Shopware.Store.get('topBarButton');
         store.buttons.push(topbarButton);
 
         wrapper = await createWrapper();

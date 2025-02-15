@@ -1,7 +1,7 @@
 /**
  * @sw-package inventory
  */
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default class FeatureGridTranslationService {
@@ -58,7 +58,7 @@ export default class FeatureGridTranslationService {
 
         criteria.addFilter(Criteria.equalsAny(filterBy, identifier));
 
-        return repo.search(criteria, Cicada.Context.api).then((items) => {
+        return repo.search(criteria, Shopware.Context.api).then((items) => {
             this.entities[type] = items;
         });
     }
@@ -82,8 +82,8 @@ export default class FeatureGridTranslationService {
         }
 
         if (item.type === 'customField') {
-            const language = Cicada.State.get('session').currentLocale;
-            const fallback = Cicada.Context.app.fallbackLocale;
+            const language = Shopware.Store.get('session').currentLocale;
+            const fallback = Shopware.Context.app.fallbackLocale;
 
             return this.entities.customField
                 .filter((field) => field.name === item.name)

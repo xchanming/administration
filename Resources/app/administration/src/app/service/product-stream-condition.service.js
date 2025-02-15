@@ -1,4 +1,4 @@
-const utils = Cicada.Utils;
+const utils = Shopware.Utils;
 
 /**
  * @module app/service/product-stream-condition
@@ -6,7 +6,7 @@ const utils = Cicada.Utils;
 
 /**
  * @private
- * @sw-package framework
+ * @sw-package inventory
  * @memberOf module:app/service/product-stream-condition
  * @constructor
  * @method conditionService

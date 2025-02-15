@@ -87,7 +87,7 @@ const setup = async (propOverride) => {
 
 describe('components/form/sw-price-field', () => {
     beforeEach(() => {
-        Cicada.Application.getContainer = () => {
+        Shopware.Application.getContainer = () => {
             return {
                 apiService: {
                     getByName() {

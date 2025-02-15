@@ -1,5 +1,5 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package discovery
  */
 import { fileReader, array } from 'src/core/service/util.service';
 import UploadTask from 'src/core/helper/upload-task.helper';
@@ -12,7 +12,7 @@ const UploadEvents = {
     UPLOAD_CANCELED: 'media-upload-cancel',
 };
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * Gateway for the API end point "media"
@@ -271,7 +271,7 @@ class MediaApiService extends ApiService {
             return this.cacheDefaultFolder[entity];
         }
 
-        const defaultFolderRepository = Cicada.Service('repositoryFactory').create('media_default_folder');
+        const defaultFolderRepository = Shopware.Service('repositoryFactory').create('media_default_folder');
 
         const criteria = new Criteria(1, 1).addFilter(Criteria.equals('entity', entity));
 

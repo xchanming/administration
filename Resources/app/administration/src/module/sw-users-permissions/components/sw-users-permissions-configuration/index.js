@@ -8,8 +8,6 @@ import './sw-users-permissions-configuration.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['acl'],
 
     emits: ['loading-change'],

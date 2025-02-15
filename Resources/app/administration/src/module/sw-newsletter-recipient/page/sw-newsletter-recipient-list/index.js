@@ -8,13 +8,11 @@ import './sw-newsletter-recipient-list.scss';
 const {
     Mixin,
     Data: { Criteria, EntityCollection },
-} = Cicada;
+} = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -63,11 +61,11 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         emailIdnFilter() {
-            return Cicada.Filter.getByName('decode-idn-email');
+            return Shopware.Filter.getByName('decode-idn-email');
         },
     },
 
@@ -77,12 +75,12 @@ export default {
 
     methods: {
         createdComponent() {
-            this.tagCollection = new EntityCollection('/tag', 'tag', Cicada.Context.api, new Criteria(1, 25));
+            this.tagCollection = new EntityCollection('/tag', 'tag', Shopware.Context.api, new Criteria(1, 25));
 
             const criteria = new Criteria(1, 100);
             this.repositoryFactory
                 .create('language')
-                .search(criteria, Cicada.Context.api)
+                .search(criteria, Shopware.Context.api)
                 .then((items) => {
                     this.languageFilters = items;
                 });
@@ -203,7 +201,8 @@ export default {
                     inlineEdit: 'string',
                 },
                 {
-                    property: 'name',
+                    property: 'firstName',
+                    dataIndex: 'firstName,lastName',
                     inlineEdit: 'string',
                     label: 'sw-newsletter-recipient.list.name',
                     allowResize: true,
@@ -214,7 +213,7 @@ export default {
                     label: 'sw-newsletter-recipient.list.salesChannel',
                     allowResize: true,
                     primary: false,
-                    visible: true,
+                    visible: false,
                 },
                 {
                     property: 'status',
@@ -226,13 +225,11 @@ export default {
                     label: 'sw-newsletter-recipient.list.zipCode',
                     allowResize: true,
                     align: 'right',
-                    visible: false,
                 },
                 {
                     property: 'city',
                     label: 'sw-newsletter-recipient.list.city',
                     allowResize: true,
-                    visible: false,
                 },
                 {
                     property: 'street',
@@ -244,13 +241,13 @@ export default {
                     property: 'updatedAt',
                     label: 'sw-newsletter-recipient.list.updatedAt',
                     allowResize: true,
-                    visible: true,
+                    visible: false,
                 },
                 {
                     property: 'createdAt',
                     label: 'sw-newsletter-recipient.list.createdAt',
                     allowResize: true,
-                    visible: true,
+                    visible: false,
                 },
             ];
         },

@@ -2,7 +2,7 @@
  * @sw-package inventory
  */
 
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'catalogues',
     key: 'product',
@@ -32,7 +32,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'custom_field_set:read',
                 'custom_field:read',
                 'custom_field_set_relation:read',
-                Cicada.Service('privileges').getPrivileges('media.viewer'),
+                Shopware.Service('privileges').getPrivileges('media.viewer'),
                 'sales_channel_type:read',
                 'rule:read',
                 'property_group:read',
@@ -53,7 +53,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'user_config:update',
                 'number_range:read',
                 'number_range_type:read',
-                Cicada.Service('privileges').getPrivileges('cms.viewer'),
+                Shopware.Service('privileges').getPrivileges('cms.viewer'),
             ],
             dependencies: [],
         },
@@ -86,7 +86,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'product_property:delete',
                 'product_category:create',
                 'product_category:delete',
-                Cicada.Service('privileges').getPrivileges('media.creator'),
+                Shopware.Service('privileges').getPrivileges('media.creator'),
                 'product_media:create',
                 'product_media:delete',
                 'product_tag:create',

@@ -8,8 +8,6 @@ import './sw-media-grid.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['media-grid-selection-clear'],
 
     props: {

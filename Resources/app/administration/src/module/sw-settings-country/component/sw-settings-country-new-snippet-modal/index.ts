@@ -2,8 +2,8 @@ import type { PropType } from 'vue';
 import template from './sw-settings-country-new-snippet-modal.html.twig';
 import './sw-settings-country-new-snippet-modal.scss';
 
-const { Component } = Cicada;
-const utils = Cicada.Utils;
+const { Component } = Shopware;
+const utils = Shopware.Utils;
 
 interface Selection {
     id: string;
@@ -22,14 +22,12 @@ interface TreeItem {
 }
 
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  *
  * @private
  */
 Component.register('sw-settings-country-new-snippet-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         selections: {
@@ -78,16 +76,6 @@ Component.register('sw-settings-country-new-snippet-modal', {
     computed: {
         selection(): string[] {
             return this.addressFormat[this.currentPosition];
-        },
-
-        listeners() {
-            const listeners = {};
-
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return listeners;
         },
     },
 

@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 import 'src/app/component/filter/sw-filter-panel';
 import 'src/app/component/filter/sw-boolean-filter';
 import 'src/app/component/filter/sw-existence-filter';
@@ -85,19 +86,19 @@ async function createWrapper() {
         },
         global: {
             stubs: {
-                'sw-boolean-filter': await Cicada.Component.build('sw-boolean-filter'),
+                'sw-boolean-filter': await Shopware.Component.build('sw-boolean-filter'),
                 'sw-select-field': await wrapTestComponent('sw-select-field', {
                     sync: true,
                 }),
                 'sw-select-field-deprecated': await wrapTestComponent('sw-select-field-deprecated', { sync: true }),
-                'sw-block-field': await Cicada.Component.build('sw-block-field'),
-                'sw-base-field': await Cicada.Component.build('sw-base-field'),
-                'sw-base-filter': await Cicada.Component.build('sw-base-filter'),
+                'sw-block-field': await Shopware.Component.build('sw-block-field'),
+                'sw-base-field': await Shopware.Component.build('sw-base-field'),
+                'sw-base-filter': await Shopware.Component.build('sw-base-filter'),
                 'sw-field-error': {
                     template: '<div></div>',
                 },
                 'sw-icon': true,
-                'sw-existence-filter': await Cicada.Component.build('sw-existence-filter'),
+                'sw-existence-filter': await Shopware.Component.build('sw-existence-filter'),
                 'sw-multi-select-filter': true,
                 'sw-string-filter': true,
                 'sw-number-filter': true,
@@ -127,7 +128,7 @@ async function createWrapper() {
     });
 }
 
-Cicada.Service().register('filterService', () => {
+Shopware.Service().register('filterService', () => {
     return {
         getStoredFilters: () => Promise.resolve(savedFilterData),
         saveFilters: (storeKey, storedFilters) => Promise.resolve(storedFilters),

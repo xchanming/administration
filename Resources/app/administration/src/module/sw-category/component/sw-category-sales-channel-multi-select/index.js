@@ -1,6 +1,6 @@
 import template from './sw-category-sales-channel-multi-select.html.twig';
 
-const { EntityCollection } = Cicada.Data;
+const { EntityCollection } = Shopware.Data;
 
 /**
  * @sw-package discovery

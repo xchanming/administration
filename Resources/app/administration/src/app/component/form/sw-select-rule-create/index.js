@@ -1,8 +1,8 @@
 import template from './sw-select-rule-create.html.twig';
 import './sw-select-rule-create.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -21,8 +21,6 @@ const { Criteria } = Cicada.Data;
 Component.register('sw-select-rule-create', {
     template,
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

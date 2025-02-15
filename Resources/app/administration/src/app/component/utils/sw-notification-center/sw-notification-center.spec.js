@@ -3,7 +3,7 @@
  */
 
 import { mount } from '@vue/test-utils';
-import notificationStore from 'src/app/state/notification.store';
+import { createPinia, setActivePinia } from 'pinia';
 
 async function createWrapper() {
     return mount(await wrapTestComponent('sw-notification-center', { sync: true }), {
@@ -30,11 +30,7 @@ async function createWrapper() {
 
 describe('src/app/component/utils/sw-notification-center', () => {
     beforeEach(() => {
-        if (Cicada.State.get('notification') !== undefined) {
-            Cicada.State.unregisterModule('notification');
-        }
-
-        Cicada.State.registerModule('notification', notificationStore);
+        setActivePinia(createPinia());
     });
 
     it('should show empty state', async () => {
@@ -49,7 +45,7 @@ describe('src/app/component/utils/sw-notification-center', () => {
     });
 
     it('should show notifications', async () => {
-        Cicada.State.commit('notification/setNotifications', {
+        Shopware.Store.get('notification').setNotifications({
             '018d0c7c90f47a228894d117c9b442bc': {
                 visited: false,
                 metadata: {},
@@ -72,7 +68,7 @@ describe('src/app/component/utils/sw-notification-center', () => {
     });
 
     it('should show no notifications after clearing them', async () => {
-        Cicada.State.commit('notification/setNotifications', {
+        Shopware.Store.get('notification').setNotifications({
             '018d0c7c90f47a228894d117c9b442bc': {
                 visited: false,
                 metadata: {},

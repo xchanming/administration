@@ -3,14 +3,12 @@
  */
 import template from './sw-users-permissions-user-create.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     computed: {
         ...mapPropertyErrors('user', [

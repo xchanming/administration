@@ -5,11 +5,11 @@ import './sw-cms-sidebar.scss';
 import { type PageType } from '../../service/cms-page-type.service';
 import type MediaUploadResult from '../../shared/MediaUploadResult';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { Criteria } = Cicada.Data;
-const { cloneDeep } = Cicada.Utils.object;
-const types = Cicada.Utils.types;
+const { Criteria } = Shopware.Data;
+const { cloneDeep } = Shopware.Utils.object;
+const types = Shopware.Utils.types;
 
 type DraggableBlock = Entity<'cms_block'> & {
     isDragging?: boolean;
@@ -44,13 +44,11 @@ type DropObject = {
 };
 
 /**
- * @sw-package buyers-experience
+ * @sw-package discovery
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -134,7 +132,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         cmsBlocks() {
-            const currentPageType = Cicada.Store.get('cmsPage').currentPageType;
+            const currentPageType = Shopware.Store.get('cmsPage').currentPageType;
 
             if (!currentPageType) {
                 return {};
@@ -214,10 +212,6 @@ export default Cicada.Component.wrapComponentConfig({
                     return;
                 }
 
-                if (this.isDuplicateCategory(category)) {
-                    return;
-                }
-
                 defaultCategories.push({
                     value: category,
                     label: `apps.sw-cms.detail.label.blockCategory.${category}`,
@@ -271,10 +265,10 @@ export default Cicada.Component.wrapComponentConfig({
 
         demoContext() {
             if (this.demoEntity === 'product') {
-                return { ...Cicada.Context.api, inheritance: true };
+                return { ...Shopware.Context.api, inheritance: true };
             }
 
-            return Cicada.Context.api;
+            return Shopware.Context.api;
         },
 
         blockTypes() {
@@ -339,7 +333,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         onCloseBlockConfig() {
-            const store = Cicada.Store.get('cmsPage');
+            const store = Shopware.Store.get('cmsPage');
             store.removeSelectedBlock();
             store.removeSelectedSection();
         },
@@ -357,7 +351,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         openSectionSettings(sectionIndex: number) {
-            Cicada.Store.get('cmsPage').setSection(this.page.sections![sectionIndex]);
+            Shopware.Store.get('cmsPage').setSection(this.page.sections![sectionIndex]);
 
             const itemConfigSidebar = this.$refs.itemConfigSidebar as {
                 openContent: () => void;
@@ -633,7 +627,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         onSectionDelete(sectionId: string) {
-            Cicada.Store.get('cmsPage').removeSelectedSection();
+            Shopware.Store.get('cmsPage').removeSelectedSection();
             this.page.sections!.remove(sectionId);
             this.$emit('page-save');
         },
@@ -646,7 +640,7 @@ export default Cicada.Component.wrapComponentConfig({
             section?.blocks?.remove(block.id);
 
             if (this.selectedBlock && this.selectedBlock.id === block.id) {
-                Cicada.Store.get('cmsPage').removeSelectedBlock();
+                Shopware.Store.get('cmsPage').removeSelectedBlock();
             }
 
             this.$emit('page-save', true);
@@ -717,21 +711,6 @@ export default Cicada.Component.wrapComponentConfig({
 
         onVisibilityChange(selectedBlock: Entity<'cms_block'>, viewport: string, isVisible: boolean) {
             (selectedBlock.visibility as { [key: string]: boolean })[viewport] = isVisible;
-        },
-
-        /**
-         * @deprecated tag:v6.7.0 - Remove the duplicate category check and all usages.
-         * Use the auto-generated category label instead of the hardcoded option
-         * value inside the template.
-         */
-        isDuplicateCategory(categoryValue: string) {
-            /**
-             * This method is a unusual hack to prevent the category from being added twice.
-             * Recommended for plugin developer is to remove the hardcoded option value
-             * inside the template and use the auto-generated category label instead.
-             * */
-            const swCmsSidebarTemplate = Cicada.Template.getRenderedTemplate('sw-cms-sidebar');
-            return swCmsSidebarTemplate?.includes(`value="${categoryValue}"`);
         },
     },
 });

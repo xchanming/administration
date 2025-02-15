@@ -5,15 +5,12 @@
 import template from './sw-product-cross-selling-assignment.html.twig';
 import './sw-product-cross-selling-assignment.scss';
 
-const { mapGetters, mapState } = Cicada.Component.getComponentHelper();
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -43,13 +40,13 @@ export default {
     },
 
     computed: {
-        ...mapState('swProductDetail', [
-            'product',
-        ]),
+        product() {
+            return Shopware.Store.get('swProductDetail').product;
+        },
 
-        ...mapGetters('swProductDetail', [
-            'isLoading',
-        ]),
+        isLoading() {
+            return Shopware.Store.get('swProductDetail').isLoading;
+        },
 
         isLoadingGrid() {
             return this.isLoadingData || this.isLoading;
@@ -140,7 +137,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

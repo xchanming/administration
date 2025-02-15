@@ -2,25 +2,15 @@
  * @sw-package framework
  */
 
-import { compatUtils } from '@vue/compat';
-
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-vnode-renderer', {
     ...(() => {
-        if (compatUtils.isCompatEnabled('COMPONENT_FUNCTIONAL')) {
-            return {
-                functional: true,
-            };
-        }
-
         return {};
     })(),
-
-    compatConfig: Cicada.compatConfig,
 
     render(firstArgument, secondArgument) {
         const h = firstArgument;

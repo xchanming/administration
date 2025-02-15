@@ -28,14 +28,12 @@ interface TeaserSalesChannelConfig {
  * @component-example
  * <sw-extension-teaser-sales-channel />
  */
-Cicada.Component.register('sw-extension-teaser-sales-channel', {
+Shopware.Component.register('sw-extension-teaser-sales-channel', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     computed: {
         teaserSalesChannels(): TeaserSalesChannelConfig[] {
-            return Cicada.Store.get('teaserPopover').salesChannels || [];
+            return Shopware.Store.get('teaserPopover').salesChannels || [];
         },
     },
 });

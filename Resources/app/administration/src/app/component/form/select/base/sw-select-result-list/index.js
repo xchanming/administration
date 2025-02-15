@@ -1,7 +1,7 @@
 import template from './sw-select-result-list.html.twig';
 import './sw-select-result-list.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -13,8 +13,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-select-result-list', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     provide() {
         return {
@@ -128,14 +126,14 @@ Component.register('sw-select-result-list', {
             document.addEventListener('keydown', this.navigate);
             document.addEventListener('click', this.checkOutsideClick);
 
-            Cicada.Utils.EventBus.on('item-select', this.onItemSelect);
+            Shopware.Utils.EventBus.on('item-select', this.onItemSelect);
         },
 
         removeEventListeners() {
             document.removeEventListener('keydown', this.navigate);
             document.removeEventListener('click', this.checkOutsideClick);
 
-            Cicada.Utils.EventBus.off('item-select', this.onItemSelect);
+            Shopware.Utils.EventBus.off('item-select', this.onItemSelect);
         },
 
         onItemSelect(item) {
@@ -146,7 +144,7 @@ Component.register('sw-select-result-list', {
             this.$emit('active-item-change', this.activeItemIndex, {
                 shouldFocus,
             });
-            Cicada.Utils.EventBus.emit('active-item-change', this.activeItemIndex, {
+            Shopware.Utils.EventBus.emit('active-item-change', this.activeItemIndex, {
                 shouldFocus,
             });
         },
@@ -239,7 +237,7 @@ Component.register('sw-select-result-list', {
             // This emit is subscribed in the sw-result component. They can for example be disabled and need
             // choose on their own if they are selected
             this.$emit('item-select-by-keyboard', this.activeItemIndex);
-            Cicada.Utils.EventBus.emit('item-select-by-keyboard', this.activeItemIndex);
+            Shopware.Utils.EventBus.emit('item-select-by-keyboard', this.activeItemIndex);
         },
 
         onScroll(event) {

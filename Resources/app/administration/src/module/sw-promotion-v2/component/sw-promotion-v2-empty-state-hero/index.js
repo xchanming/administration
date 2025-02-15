@@ -8,8 +8,6 @@ import './sw-promotion-v2-empty-state-hero.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         title: {
             type: String,
@@ -45,14 +43,10 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         actionSlotsAvailable() {
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                return !!this.$slots.actions || !!this.$scopedSlots.actions;
-            }
-
             return !!this.$slots.actions;
         },
     },

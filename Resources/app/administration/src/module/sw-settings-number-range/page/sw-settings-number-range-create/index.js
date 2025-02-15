@@ -3,11 +3,11 @@
  */
 import template from './sw-settings-number-range-create.html.twig';
 
-const utils = Cicada.Utils;
+const utils = Shopware.Utils;
 
 const {
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
@@ -63,12 +63,12 @@ export default {
     methods: {
         async createdComponent() {
             await this.getProductNumberRanges();
-            if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                Cicada.State.commit('context/resetLanguageToDefault');
+            if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                Shopware.Store.get('context').resetLanguageToDefault();
             }
 
             if (this.$route.params.id) {
-                this.numberRange = this.numberRangeRepository.create(Cicada.Context.api, this.$route.params.id);
+                this.numberRange = this.numberRangeRepository.create(Shopware.Context.api, this.$route.params.id);
             } else {
                 this.numberRange = this.numberRangeRepository.create();
             }

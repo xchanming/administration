@@ -1,18 +1,16 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package discovery
  */
 import template from './sw-sales-channel-config.html.twig';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 Component.register('sw-sales-channel-config', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'systemConfigApiService',
@@ -91,7 +89,7 @@ Component.register('sw-sales-channel-config', {
     methods: {
         createdComponent() {
             if (!this.salesChannel.length) {
-                this.salesChannelRepository.search(this.criteria, Cicada.Context.api).then((res) => {
+                this.salesChannelRepository.search(this.criteria, Shopware.Context.api).then((res) => {
                     res.add({
                         id: null,
                         translated: {

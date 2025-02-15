@@ -3,7 +3,7 @@ import type Repository from 'src/core/data/repository.data';
 import template from './sw-settings-tax-provider-sorting-modal.html.twig';
 import './sw-settings-tax-provider-sorting-modal.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @sw-package checkout
@@ -12,8 +12,6 @@ const { Component, Mixin } = Cicada;
  */
 export default Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',

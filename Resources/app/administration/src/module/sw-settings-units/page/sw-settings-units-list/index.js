@@ -4,16 +4,14 @@
 import template from './sw-settings-units.html.twig';
 import './sw-settings-units.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -77,7 +75,7 @@ export default {
         },
 
         isAddingUnitsDisabled() {
-            return Cicada.Context.api.languageId !== Cicada.Context.api.systemLanguageId;
+            return Shopware.Context.api.languageId !== Shopware.Context.api.systemLanguageId;
         },
     },
 

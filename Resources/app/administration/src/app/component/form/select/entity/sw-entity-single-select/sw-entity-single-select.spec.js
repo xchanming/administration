@@ -54,7 +54,7 @@ function getCollection() {
         '/test-entity',
         'testEntity',
         null,
-        { isCicadaContext: true },
+        { isShopwareContext: true },
         fixture,
         fixture.length,
         null,
@@ -66,7 +66,7 @@ function getPropertyCollection() {
         '/property-group-option',
         'property_group_option',
         null,
-        { isCicadaContext: true },
+        { isShopwareContext: true },
         propertyFixture,
         propertyFixture.length,
         null,
@@ -731,12 +731,12 @@ describe('components/sw-entity-single-select', () => {
     });
 
     it('should recognize non-existing entity and offer entity creation', async () => {
-        const nonExistingEntityMock = new EntityCollection('', '', Cicada.Context.api, null, [], 0);
+        const nonExistingEntityMock = new EntityCollection('', '', Shopware.Context.api, null, [], 0);
 
         const existingEntityMock = new EntityCollection(
             '',
             '',
-            Cicada.Context.api,
+            Shopware.Context.api,
             null,
             [
                 {
@@ -792,7 +792,7 @@ describe('components/sw-entity-single-select', () => {
                                     return Promise.resolve(existingEntityMock);
                                 }
 
-                                return Promise.resolve(new EntityCollection('', '', Cicada.Context.api, null, [], 0));
+                                return Promise.resolve(new EntityCollection('', '', Shopware.Context.api, null, [], 0));
                             },
                             get: () =>
                                 Promise.resolve({

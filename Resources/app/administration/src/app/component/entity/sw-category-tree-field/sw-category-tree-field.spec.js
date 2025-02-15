@@ -39,7 +39,7 @@ const categoryData = [
 ];
 
 function createCategoryCollection(items = []) {
-    return new EntityCollection('/category', 'category', null, { isCicadaContext: true }, items, 2, null);
+    return new EntityCollection('/category', 'category', null, { isShopwareContext: true }, items, 2, null);
 }
 
 const responses = global.repositoryFactoryMock.responses;

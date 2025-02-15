@@ -19,7 +19,11 @@ const defaultSearchConfiguration = {
             _searchable: true,
             _score: searchRankingPoint.HIGH_SEARCH_RANKING,
         },
-        name: {
+        firstName: {
+            _searchable: true,
+            _score: searchRankingPoint.HIGH_SEARCH_RANKING,
+        },
+        lastName: {
             _searchable: true,
             _score: searchRankingPoint.HIGH_SEARCH_RANKING,
         },
@@ -33,9 +37,13 @@ const defaultSearchConfiguration = {
         },
     },
     addresses: {
-        name: {
+        firstName: {
             _searchable: true,
             _score: searchRankingPoint.LOW_SEARCH_RANKING,
+        },
+        lastName: {
+            _searchable: true,
+            _score: searchRankingPoint.HIGH_SEARCH_RANKING,
         },
         street: {
             _searchable: true,

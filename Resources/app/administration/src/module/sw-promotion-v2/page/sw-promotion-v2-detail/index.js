@@ -4,15 +4,13 @@
 import template from './sw-promotion-v2-detail.html.twig';
 import errorConfig from './error-config.json';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPageErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPageErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -131,7 +129,7 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-promotion-detail__promotion',
                 path: 'promotion',
                 scope: this,
@@ -140,8 +138,8 @@ export default {
 
             if (!this.promotionId) {
                 // set language to system language
-                if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                    Cicada.State.commit('context/resetLanguageToDefault');
+                if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                    Shopware.Store.get('context').resetLanguageToDefault();
                 }
 
                 this.promotion = this.promotionRepository.create();
@@ -159,7 +157,7 @@ export default {
             }
 
             return this.promotionRepository
-                .get(this.promotionId, Cicada.Context.api, this.promotionCriteria)
+                .get(this.promotionId, Shopware.Context.api, this.promotionCriteria)
                 .then((promotion) => {
                     if (promotion === null) {
                         return;
@@ -174,7 +172,7 @@ export default {
                     // Needed to enrich the VueX state below
                     this.promotion.hasOrders = promotion.orderCount !== null ? promotion.orderCount > 0 : false;
 
-                    Cicada.State.commit('swPromotionDetail/setPromotion', this.promotion);
+                    Shopware.Store.get('swPromotionDetail').promotion = this.promotion;
                 })
                 .finally(() => {
                     this.isLoading = false;
@@ -215,13 +213,6 @@ export default {
             this.showCodeTypeChangeModal = false;
         },
 
-        /**
-         * @deprecated tag:v6.7.0 - Will be removed. Use `savePromotion` instead
-         */
-        createPromotion() {
-            return this.savePromotion();
-        },
-
         async savePromotion() {
             this.isLoading = true;
 
@@ -249,7 +240,7 @@ export default {
                 await this.promotionRepository.save(this.promotion);
                 await this.savePromotionSetGroups();
 
-                Cicada.State.commit('swPromotionDetail/setSetGroupIdsDelete', []);
+                Shopware.Store.get('swPromotionDetail').setGroupIdsDelete = [];
                 this.isSaveSuccessful = true;
                 await this.loadEntityData();
 
@@ -262,9 +253,13 @@ export default {
             } catch (e) {
                 this.isLoading = false;
                 this.createNotificationError({
-                    message: this.$tc('global.notification.notificationSaveErrorMessage', 0, {
-                        entityName: this.promotion.name,
-                    }),
+                    message: this.$tc(
+                        'global.notification.notificationSaveErrorMessage',
+                        {
+                            entityName: this.promotion.name,
+                        },
+                        0,
+                    ),
                 });
             } finally {
                 this.cleanUpCodes(false, false);
@@ -272,7 +267,7 @@ export default {
         },
 
         savePromotionSetGroups() {
-            const setGroupIdsDelete = Cicada.State.get('swPromotionDetail').setGroupIdsDelete;
+            const setGroupIdsDelete = Shopware.Store.get('swPromotionDetail').setGroupIdsDelete;
 
             if (setGroupIdsDelete !== null) {
                 const deletePromises = setGroupIdsDelete.map((groupId) => {

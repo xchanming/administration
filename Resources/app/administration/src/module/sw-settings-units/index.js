@@ -1,16 +1,14 @@
 /**
  * @sw-package inventory
  */
-import './page/sw-settings-units-list';
-import './page/sw-settings-units-detail';
 import './acl';
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-units-list', () => import('./page/sw-settings-units-list'));
-Cicada.Component.register('sw-settings-units-detail', () => import('./page/sw-settings-units-detail'));
+Shopware.Component.register('sw-settings-units-list', () => import('./page/sw-settings-units-list'));
+Shopware.Component.register('sw-settings-units-detail', () => import('./page/sw-settings-units-detail'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-units', {
@@ -58,7 +56,7 @@ Module.register('sw-settings-units', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'general',
         to: 'sw.settings.units.index',
         icon: 'regular-balance-scale',
         privilege: 'scale_unit.viewer',

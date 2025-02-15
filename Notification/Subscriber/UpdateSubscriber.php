@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Notification\Subscriber;
+namespace Shopware\Administration\Notification\Subscriber;
 
-use Cicada\Administration\Notification\NotificationService;
-use Cicada\Core\Framework\Api\Context\AdminApiSource;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Update\Event\UpdatePostFinishEvent;
-use Cicada\Core\Framework\Uuid\Uuid;
+use Shopware\Administration\Notification\NotificationService;
+use Shopware\Core\Framework\Api\Context\AdminApiSource;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Update\Event\UpdatePostFinishEvent;
+use Shopware\Core\Framework\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

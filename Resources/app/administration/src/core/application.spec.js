@@ -3,21 +3,27 @@
  */
 
 describe('core/application.js', () => {
-    const originalInjectJs = Cicada.Application.injectJs;
+    const originalInjectJs = Shopware.Application.injectJs;
+    const originalInjectIframe = Shopware.Application.injectIframe;
+    const originalNodeEnv = process.env.NODE_ENV;
 
     beforeEach(() => {
-        Cicada.Application.injectJs = originalInjectJs;
-        Cicada.Context.app.config.bundles = {};
+        jest.clearAllMocks();
+        Shopware.Application.injectJs = originalInjectJs;
+        Shopware.Application.injectIframe = originalInjectIframe;
+        process.env.NODE_ENV = originalNodeEnv;
+        Shopware.Context.app.config.bundles = {};
+        global.fetch = jest.fn(() => Promise.resolve());
     });
 
     it("should be error tolerant if loading a plugin's files fails", async () => {
         const warningSpy = jest.spyOn(console, 'warn').mockImplementation();
 
-        Cicada.Application.injectJs = async () => {
+        Shopware.Application.injectJs = async () => {
             throw new Error('Inject js fails');
         };
 
-        const result = await Cicada.Application.injectPlugin({
+        const result = await Shopware.Application.injectPlugin({
             js: ['some.js'],
         });
 
@@ -29,7 +35,7 @@ describe('core/application.js', () => {
 
     it('should call swagCommercial before any other plugins', async () => {
         // mock plugins
-        Cicada.Context.app.config.bundles = {
+        Shopware.Context.app.config.bundles = {
             'custom-pricing': {
                 js: '/bundles/custompricing/administration/js/custom-pricing.js',
             },
@@ -76,15 +82,76 @@ describe('core/application.js', () => {
         };
 
         // mock the plugin injection
-        Cicada.Application.injectPlugin = async (plugin) => {
+        Shopware.Application.injectPlugin = async (plugin) => {
             callOrder.js.push(plugin.js);
             callOrder.css.push(plugin.css);
         };
 
         // load all plugins
-        await Cicada.Application.loadPlugins();
+        await Shopware.Application.loadPlugins();
 
         // check if swagCommercial was called first before the other plugins are loaded
         expect(callOrder.js[0]).toBe('/bundles/swagcommercial/administration/js/swag-commercial.js');
+    });
+
+    it('should load plugins correctly in prod', async () => {
+        // Mock injectIframe method
+        Shopware.Application.injectIframe = jest.fn();
+
+        // Mock plugins
+        Shopware.Context.app.config.bundles = {
+            'swag-commercial': {
+                js: '/bundles/swagcommercial/administration/js/swag-commercial.js',
+            },
+            storefront: {
+                css: '/bundles/storefront/administration/css/storefront.css',
+                js: '/bundles/storefront/administration/js/storefront.js',
+            },
+            'test-plugin': {
+                baseUrl: 'http://localhost:8000/bundles/testplugin/administration/',
+            },
+        };
+
+        // Load plugins
+        await Shopware.Application.loadPlugins();
+
+        // Check if injectIframe was called with correct parameters
+        expect(Shopware.Application.injectIframe).toHaveBeenCalledWith({
+            bundleName: 'test-plugin',
+            iframeSrc: 'http://localhost:8000/bundles/testplugin/administration/',
+        });
+    });
+
+    it('should load plugins correctly in watch', async () => {
+        process.env.NODE_ENV = 'development';
+
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                json: () => ({
+                    'test-plugin': {
+                        html: 'http://localhost:8000/bundles/testplugin/administration/',
+                    },
+                }),
+            }),
+        );
+
+        // Mock plugins
+        Shopware.Context.app.config.bundles = {
+            'test-plugin': {
+                baseUrl: 'http://localhost:8000/bundles/testplugin/administration/',
+            },
+        };
+
+        // Mock injectIframe method
+        Shopware.Application.injectIframe = jest.fn();
+
+        // Load plugins
+        await Shopware.Application.loadPlugins();
+
+        // Check if injectIframe was called with correct parameters
+        expect(Shopware.Application.injectIframe).toHaveBeenCalledWith({
+            bundleName: 'test-plugin',
+            iframeSrc: 'http://localhost:8000/bundles/testplugin/administration/',
+        });
     });
 });

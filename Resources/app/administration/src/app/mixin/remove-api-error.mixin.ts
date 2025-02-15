@@ -10,7 +10,7 @@ export {};
 /**
  * @private
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'remove-api-error',
     defineComponent({
         created() {
@@ -36,12 +36,11 @@ export default Cicada.Mixin.register(
                     // @ts-expect-error
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                     if (this.$attrs.error && this.$attrs.error.selfLink) {
-                        void Cicada.State.dispatch(
-                            'error/removeApiError',
+                        void Shopware.Store.get('error').removeApiError(
                             // @ts-expect-error
                             // eslint-disable-next-line max-len
-                            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-                            { expression: this.$attrs.error.selfLink },
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+                            this.$attrs.error.selfLink,
                         );
                     }
                 },

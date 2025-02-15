@@ -5,7 +5,7 @@
 import template from './sw-app-topbar-button.html.twig';
 import './sw-app-topbar-button.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -16,7 +16,7 @@ Component.register('sw-app-topbar-button', {
 
     computed: {
         topBarButtons() {
-            return Cicada.Store.get('topBarButton').buttons;
+            return Shopware.Store.get('topBarButton').buttons;
         },
     },
 

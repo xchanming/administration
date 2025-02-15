@@ -1,8 +1,8 @@
 import template from './sw-media-field.html.twig';
 import './sw-media-field.scss';
 
-const { Context, Utils } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context, Utils } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @status ready
@@ -15,8 +15,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

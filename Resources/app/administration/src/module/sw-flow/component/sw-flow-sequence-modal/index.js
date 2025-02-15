@@ -7,8 +7,6 @@ import template from './sw-flow-sequence-modal.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'process-finish',
         'modal-close',

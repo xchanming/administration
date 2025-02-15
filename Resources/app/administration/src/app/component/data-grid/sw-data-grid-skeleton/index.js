@@ -1,7 +1,7 @@
 import template from './sw-data-grid-skeleton.html.twig';
 import './sw-data-grid-skeleton.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -10,8 +10,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-data-grid-skeleton', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         currentColumns: {

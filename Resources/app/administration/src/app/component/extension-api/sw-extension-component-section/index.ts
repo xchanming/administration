@@ -1,4 +1,4 @@
-import type { ComponentSectionEntry } from 'src/app/state/extension-component-sections.store';
+import type { ComponentSectionEntry } from 'src/app/store/extension-component-sections.store';
 import template from './sw-extension-component-section.html.twig';
 
 /**
@@ -11,10 +11,8 @@ import template from './sw-extension-component-section.html.twig';
  * @component-example
  * <sw-extension-component-section positionId="my-special-position" />
  */
-Cicada.Component.register('sw-extension-component-section', {
+Shopware.Component.register('sw-extension-component-section', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     extensionApiDevtoolInformation: {
         property: 'ui.componentSection',
@@ -53,7 +51,7 @@ Cicada.Component.register('sw-extension-component-section', {
 
     computed: {
         componentSections(): ComponentSectionEntry[] {
-            const sections = Cicada.State.get('extensionComponentSections').identifier[this.positionIdentifier] ?? [];
+            const sections = Shopware.Store.get('extensionComponentSections').identifier[this.positionIdentifier] ?? [];
             if (sections.length && this.deprecated) {
                 sections.forEach((section) => {
                     const debugArgs = [
@@ -63,10 +61,10 @@ Cicada.Component.register('sw-extension-component-section', {
                     ];
                     // @ts-expect-error
                     if (process.env !== 'prod') {
-                        Cicada.Utils.debug.error(...debugArgs);
+                        Shopware.Utils.debug.error(...debugArgs);
                     } else {
                         // eslint-disable-next-line max-len
-                        Cicada.Utils.debug.warn(...debugArgs);
+                        Shopware.Utils.debug.warn(...debugArgs);
                     }
                 });
             }

@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-product-three-column', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-product-three-column', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-product-three-column', () => import('./component'));
+Shopware.Component.register('sw-cms-block-product-three-column', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'product-three-column',
     label: 'sw-cms.blocks.commerce.productThreeColumn.label',
     category: 'commerce',

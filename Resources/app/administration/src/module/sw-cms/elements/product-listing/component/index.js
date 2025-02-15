@@ -1,7 +1,7 @@
 import template from './sw-cms-el-product-listing.html.twig';
 import './sw-cms-el-product-listing.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -10,15 +10,13 @@ const { Mixin } = Cicada;
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     mixins: [
         Mixin.getByName('cms-element'),
     ],
 
     computed: {
         currentDemoProducts() {
-            return Cicada.Store.get('cmsPage').currentDemoProducts;
+            return Shopware.Store.get('cmsPage').currentDemoProducts;
         },
 
         demoProductCount() {

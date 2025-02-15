@@ -41,7 +41,7 @@ let entitySchema;
 
 describe('src/module/sw-users-permissions/components/sw-users-permissions-detailed-permissions-grid', () => {
     beforeAll(async () => {
-        const entityDefinitionFactory = Cicada.Application.getContainer('factory').entityDefinition;
+        const entityDefinitionFactory = Shopware.Application.getContainer('factory').entityDefinition;
         const entitySchemaMockPath = path.join(__dirname, './_mock/entity-schema.json');
 
         entitySchema = JSON.parse(fs.readFileSync(entitySchemaMockPath, 'utf8'));

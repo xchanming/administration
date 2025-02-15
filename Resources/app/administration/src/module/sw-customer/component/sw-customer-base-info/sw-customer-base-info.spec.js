@@ -82,7 +82,7 @@ describe('module/sw-customer/page/sw-customer-base-info', () => {
     let wrapper;
 
     beforeEach(async () => {
-        Cicada.Context.app.systemCurrencyISOCode = 'GBP';
+        Shopware.Context.app.systemCurrencyISOCode = 'GBP';
         wrapper = await createWrapper();
     });
 
@@ -107,7 +107,7 @@ describe('module/sw-customer/page/sw-customer-base-info', () => {
     });
 
     it('should display the last login date', async () => {
-        expect(wrapper.find('.sw-customer-base__label-last-login').text()).toBe('14 October 2021 at 19:23');
+        expect(wrapper.find('.sw-customer-base__label-last-login').text()).toBe('14 October 2021 at 11:23');
     });
 
     it('should display the last login snippet placeholder', async () => {
@@ -131,7 +131,7 @@ describe('module/sw-customer/page/sw-customer-base-info', () => {
             customer: {
                 ...wrapper.props().customer,
                 accountType: 'business',
-                company: 'Cicada',
+                company: 'Shopware',
                 vatIds: ['12345'],
                 customerNumber: '123456789',
             },
@@ -169,7 +169,7 @@ describe('module/sw-customer/page/sw-customer-base-info', () => {
             customer: {
                 ...wrapper.props().customer,
                 accountType: 'business',
-                company: 'Cicada',
+                company: 'Shopware',
                 vatIds: ['12345'],
                 customerNumber: '123456789',
             },
@@ -181,7 +181,7 @@ describe('module/sw-customer/page/sw-customer-base-info', () => {
 
         // Company
         expect(leftColumn.findAll('.sw-description-list')[0].find('dt').text()).toBe('sw-customer.baseInfo.labelCompany');
-        expect(leftColumn.findAll('.sw-description-list')[0].find('dd').text()).toBe('Cicada');
+        expect(leftColumn.findAll('.sw-description-list')[0].find('dd').text()).toBe('Shopware');
 
         // VAT
         expect(leftColumn.findAll('.sw-description-list')[1].find('dt').text()).toBe('sw-customer.baseInfo.labelVatId');
@@ -192,9 +192,6 @@ describe('module/sw-customer/page/sw-customer-base-info', () => {
             'sw-customer.baseInfo.labelCustomerGroup',
         );
         expect(leftColumn.findAll('.sw-description-list')[2].find('dd').text()).toBe('Group test');
-
-        // Default payment method
-        expect(leftColumn.findAll('.sw-description-list')[3].find('dt').text()).toBe('sw-customer.baseInfo.labelActive');
 
         // Affiliate code
         expect(leftColumn.findAll('.sw-description-list')[5].find('dt').text()).toBe(

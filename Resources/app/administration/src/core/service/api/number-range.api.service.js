@@ -1,7 +1,8 @@
 /**
  * @sw-package framework
  */
-const ApiService = Cicada.Classes.ApiService;
+
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * Gateway for the API end point "number-range"

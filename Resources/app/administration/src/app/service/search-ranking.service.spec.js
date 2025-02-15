@@ -8,13 +8,13 @@ import SearchRankingService, {
 import Criteria from 'src/core/data/criteria.data';
 import searchRankingModules from './_mocks/searchRankingModules.json';
 
-Cicada.Service().register('userConfigService', () => {
+Shopware.Service().register('userConfigService', () => {
     return {
         search: () => Promise.resolve({ data: {} }),
     };
 });
 
-Cicada.Service().register('loginService', () => {
+Shopware.Service().register('loginService', () => {
     return {
         addOnLoginListener: () => {},
     };
@@ -246,12 +246,12 @@ describe('app/service/search-ranking.service.js', () => {
     ];
 
     function clearModules() {
-        Cicada.Module.getModuleRegistry().clear();
+        Shopware.Module.getModuleRegistry().clear();
     }
 
     function createModules(modules) {
         modules.forEach((module) => {
-            Cicada.Module.register(module.name, module);
+            Shopware.Module.register(module.name, module);
         });
     }
 
@@ -260,7 +260,7 @@ describe('app/service/search-ranking.service.js', () => {
             [KEY_USER_SEARCH_PREFERENCE]: userConfigSearchs,
         };
 
-        Cicada.Service('userConfigService').search = () => Promise.resolve({ data });
+        Shopware.Service('userConfigService').search = () => Promise.resolve({ data });
     }
 
     beforeEach(async () => {

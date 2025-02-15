@@ -1,12 +1,13 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-entity-multi-select.html.twig';
 import './sw-entity-multi-select.scss';
 
-const { Component, Mixin } = Cicada;
-const { debounce, get } = Cicada.Utils;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Component, Mixin } = Shopware;
+const { debounce, get } = Shopware.Utils;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 /**
  * @private
@@ -15,8 +16,6 @@ Component.register('sw-entity-multi-select', {
     template,
 
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -107,7 +106,7 @@ Component.register('sw-entity-multi-select', {
             type: Object,
             required: false,
             default() {
-                return Cicada.Context.api;
+                return Shopware.Context.api;
             },
         },
 
@@ -180,15 +179,6 @@ Component.register('sw-entity-multi-select', {
     },
 
     computed: {
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
-
         repository() {
             return this.repositoryFactory.create(this.entityName || this.entityCollection.entity);
         },

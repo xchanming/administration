@@ -1,10 +1,10 @@
 /**
- * @sw-package inventory
+ * @sw-package framework
  */
 import { mount } from '@vue/test-utils';
 
 function createEntityCollection(entities = []) {
-    return new Cicada.Data.EntityCollection('collection', 'collection', {}, null, entities);
+    return new Shopware.Data.EntityCollection('collection', 'collection', {}, null, entities);
 }
 
 async function createWrapper(customProps = {}) {

@@ -5,7 +5,7 @@
 import template from './sw-popover.html.twig';
 import './sw-popover.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -18,8 +18,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-popover-deprecated', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         zIndex: {

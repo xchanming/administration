@@ -8,16 +8,14 @@ const {
     debounce,
     createId,
     object: { cloneDeep },
-} = Cicada.Utils;
-const Criteria = Cicada.Data.Criteria;
+} = Shopware.Utils;
+const Criteria = Shopware.Data.Criteria;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -27,7 +25,7 @@ export default {
     emits: ['update-mapping'],
 
     mixins: [
-        Cicada.Mixin.getByName('notification'),
+        Shopware.Mixin.getByName('notification'),
     ],
 
     props: {

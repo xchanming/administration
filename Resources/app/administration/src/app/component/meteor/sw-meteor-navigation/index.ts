@@ -3,7 +3,7 @@ import type { PropType } from 'vue';
 import template from './sw-meteor-navigation.html.twig';
 import './sw-meteor-navigation.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -12,8 +12,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-meteor-navigation', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         fromLink: {

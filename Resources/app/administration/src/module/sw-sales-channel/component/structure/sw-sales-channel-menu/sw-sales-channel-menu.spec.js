@@ -25,7 +25,7 @@ const headlessSalesChannel = {
     active: true,
     domains: [],
     type: {
-        id: Cicada.Defaults.apiSalesChannelTypeId,
+        id: Shopware.Defaults.apiSalesChannelTypeId,
         iconName: 'default-shopping-basket',
     },
     translated: {
@@ -42,12 +42,12 @@ const storeFrontWithStandardDomain = {
             url: 'http://shop/custom-language',
         },
         {
-            languageId: Cicada.Defaults.systemLanguageId,
+            languageId: Shopware.Defaults.systemLanguageId,
             url: 'http://shop/default-language',
         },
     ],
     type: {
-        id: Cicada.Defaults.storefrontSalesChannelTypeId,
+        id: Shopware.Defaults.storefrontSalesChannelTypeId,
         iconName: 'default-building-shop',
     },
     translated: {
@@ -69,7 +69,7 @@ const storefrontWithoutDefaultDomain = {
         },
     ],
     type: {
-        id: Cicada.Defaults.storefrontSalesChannelTypeId,
+        id: Shopware.Defaults.storefrontSalesChannelTypeId,
         iconName: 'default-building-shop',
     },
     translated: {
@@ -82,7 +82,7 @@ const storefrontWithoutDomains = {
     active: true,
     domains: [],
     type: {
-        id: Cicada.Defaults.storefrontSalesChannelTypeId,
+        id: Shopware.Defaults.storefrontSalesChannelTypeId,
         iconName: 'default-building-shop',
     },
     translated: {
@@ -104,7 +104,7 @@ const inactiveStorefront = {
         },
     ],
     type: {
-        id: Cicada.Defaults.storefrontSalesChannelTypeId,
+        id: Shopware.Defaults.storefrontSalesChannelTypeId,
         iconName: 'default-building-shop',
     },
     translated: {
@@ -112,7 +112,26 @@ const inactiveStorefront = {
     },
 };
 
+let repositoryFactoryMock;
+
 async function createWrapper(salesChannels = []) {
+    repositoryFactoryMock = {
+        search: jest.fn((criteria, context) => {
+            const salesChannelsWithLimit = salesChannels.slice(0, criteria.limit);
+
+            return Promise.resolve(
+                new EntityCollection(
+                    'sales-channel',
+                    'sales_channel',
+                    context,
+                    criteria,
+                    salesChannelsWithLimit,
+                    salesChannels.length,
+                    null,
+                ),
+            );
+        }),
+    };
     const router = createRouter({
         history: createWebHistory(),
         routes: [
@@ -166,30 +185,14 @@ async function createWrapper(salesChannels = []) {
                     getDomainLink: getDomainLink,
                 },
                 repositoryFactory: {
-                    create: () => ({
-                        search: jest.fn((criteria, context) => {
-                            const salesChannelsWithLimit = salesChannels.slice(0, criteria.limit);
-
-                            return Promise.resolve(
-                                new EntityCollection(
-                                    'sales-channel',
-                                    'sales_channel',
-                                    context,
-                                    criteria,
-                                    salesChannelsWithLimit,
-                                    salesChannels.length,
-                                    null,
-                                ),
-                            );
-                        }),
-                    }),
+                    create: () => repositoryFactoryMock,
                 },
             },
         },
     });
 }
 
-Cicada.Application.addServiceProvider('salesChannelFavorites', () => {
+Shopware.Application.addServiceProvider('salesChannelFavorites', () => {
     const favorites = [];
 
     return {
@@ -218,8 +221,8 @@ Cicada.Application.addServiceProvider('salesChannelFavorites', () => {
 
 describe('src/module/sw-sales-channel/component/structure/sw-sales-channel-menu', () => {
     beforeEach(async () => {
-        Cicada.Service('salesChannelFavorites').state.favorites = [];
-        Cicada.State.get('session').languageId = defaultAdminLanguageId;
+        Shopware.Service('salesChannelFavorites').state.favorites = [];
+        Shopware.Store.get('session').languageId = defaultAdminLanguageId;
         global.repositoryFactoryMock.showError = false;
     });
 
@@ -315,7 +318,7 @@ describe('src/module/sw-sales-channel/component/structure/sw-sales-channel-menu'
 
     it('takes first domain link if neither default language nor admin language exists', async () => {
         window.open = jest.fn();
-        Cicada.State.get('session').languageId = Cicada.Utils.createId();
+        Shopware.Store.get('session').languageId = Shopware.Utils.createId();
 
         const wrapper = await createWrapper([storefrontWithoutDefaultDomain]);
 
@@ -361,7 +364,7 @@ describe('src/module/sw-sales-channel/component/structure/sw-sales-channel-menu'
                 id: `${i}a`,
                 translated: { name: `${i}a` },
                 type: {
-                    id: Cicada.Defaults.apiSalesChannelTypeId,
+                    id: Shopware.Defaults.apiSalesChannelTypeId,
                     iconName: 'default-shopping-basket',
                 },
             });
@@ -391,13 +394,13 @@ describe('src/module/sw-sales-channel/component/structure/sw-sales-channel-menu'
                 id: `${i}a`,
                 translated: { name: `${i}a` },
                 type: {
-                    id: Cicada.Defaults.apiSalesChannelTypeId,
+                    id: Shopware.Defaults.apiSalesChannelTypeId,
                     iconName: 'default-shopping-basket',
                 },
             });
         }
 
-        Cicada.Service('salesChannelFavorites').state.favorites = salesChannels.map((el) => el.id);
+        Shopware.Service('salesChannelFavorites').state.favorites = salesChannels.map((el) => el.id);
 
         const wrapper = await createWrapper(salesChannels);
 
@@ -420,7 +423,7 @@ describe('src/module/sw-sales-channel/component/structure/sw-sales-channel-menu'
                 id: '1a',
                 translated: { name: '1a' },
                 type: {
-                    id: Cicada.Defaults.apiSalesChannelTypeId,
+                    id: Shopware.Defaults.apiSalesChannelTypeId,
                     iconName: 'default-shopping-basket',
                 },
             },
@@ -428,7 +431,7 @@ describe('src/module/sw-sales-channel/component/structure/sw-sales-channel-menu'
                 id: '2b',
                 translated: { name: '2b' },
                 type: {
-                    id: Cicada.Defaults.apiSalesChannelTypeId,
+                    id: Shopware.Defaults.apiSalesChannelTypeId,
                     iconName: 'default-shopping-basket',
                 },
             },
@@ -452,7 +455,7 @@ describe('src/module/sw-sales-channel/component/structure/sw-sales-channel-menu'
 
         const wrapper = await createWrapper(salesChannels);
 
-        Cicada.Service('salesChannelFavorites').state.favorites = salesChannels.map((el) => el.id);
+        Shopware.Service('salesChannelFavorites').state.favorites = salesChannels.map((el) => el.id);
 
         await flushPromises();
 
@@ -486,7 +489,7 @@ describe('src/module/sw-sales-channel/component/structure/sw-sales-channel-menu'
             inactiveStorefront,
         ];
 
-        Cicada.Service('salesChannelFavorites').state.favorites = salesChannels.map((el) => el.id);
+        Shopware.Service('salesChannelFavorites').state.favorites = salesChannels.map((el) => el.id);
         const wrapper = await createWrapper(salesChannels);
 
         await flushPromises();

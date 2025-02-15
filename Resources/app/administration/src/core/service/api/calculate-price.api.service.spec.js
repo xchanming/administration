@@ -9,7 +9,7 @@ import MockAdapter from 'axios-mock-adapter';
 function createCalculatePriceService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
     const calculatePriceService = new CalculatePriceService(client, loginService);
     return { calculatePriceService, clientMock };
 }
@@ -17,9 +17,9 @@ function createCalculatePriceService() {
 describe('calculatePriceService', () => {
     it('calls the correct api endpoint to calculate prices', async () => {
         const { calculatePriceService, clientMock } = createCalculatePriceService();
-        const taxId = Cicada.Utils.createId();
-        const productId = Cicada.Utils.createId();
-        const currencyId = Cicada.Utils.createId();
+        const taxId = Shopware.Utils.createId();
+        const productId = Shopware.Utils.createId();
+        const currencyId = Shopware.Utils.createId();
         const prices = {
             [productId]: [
                 {

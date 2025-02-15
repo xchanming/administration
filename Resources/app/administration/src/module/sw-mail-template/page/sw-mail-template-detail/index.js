@@ -2,10 +2,10 @@ import { dom } from 'src/core/service/util.service';
 import template from './sw-mail-template-detail.html.twig';
 import './sw-mail-template-detail.scss';
 
-const { Mixin, Context } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
-const { warn } = Cicada.Utils.debug;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Mixin, Context } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
+const { warn } = Shopware.Utils.debug;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 /**
  * @sw-package after-sales
@@ -13,8 +13,6 @@ const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'mailService',
@@ -57,7 +55,7 @@ export default {
             fileAccept: 'application/pdf, image/*',
             testMailSalesChannelId: null,
             availableVariables: {},
-            entitySchema: Object.fromEntries(Cicada.EntityDefinition.getDefinitionRegistry()),
+            entitySchema: Object.fromEntries(Shopware.EntityDefinition.getDefinitionRegistry()),
             showLanguageNotAssignedToSalesChannelWarning: false,
         };
     },
@@ -200,37 +198,37 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-mail-template-detail__mailTemplate',
                 path: 'mailTemplate',
                 scope: this,
             });
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-mail-template-detail__mailTemplateMedia',
                 path: 'mailTemplateMedia',
                 scope: this,
             });
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-mail-template-detail__mailTemplateMediaSelected',
                 path: 'mailTemplateMediaSelected',
                 scope: this,
             });
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-mail-template-detail__mailTemplateType',
                 path: 'mailTemplateType',
                 scope: this,
             });
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-mail-template-detail__availableVariables',
                 path: 'availableVariables',
                 scope: this,
             });
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-mail-template-detail__testMailSalesChannelId',
                 path: 'testMailSalesChannelId',
                 scope: this,
             });
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-mail-template-detail__testerMail',
                 path: 'testerMail',
                 scope: this,
@@ -247,7 +245,7 @@ export default {
             criteria.addAssociation('mailTemplateType');
             criteria.addAssociation('media.media');
             this.isLoading = true;
-            this.mailTemplateRepository.get(this.mailTemplateId, Cicada.Context.api, criteria).then((item) => {
+            this.mailTemplateRepository.get(this.mailTemplateId, Shopware.Context.api, criteria).then((item) => {
                 this.mailTemplate = item;
                 if (!this.mailTemplate.mailTemplateType?.id) {
                     this.isLoading = false;
@@ -274,14 +272,14 @@ export default {
         },
 
         createMediaCollection() {
-            return new EntityCollection('/media', 'media', Cicada.Context.api);
+            return new EntityCollection('/media', 'media', Shopware.Context.api);
         },
 
         getMailTemplateMedia() {
             this.mailTemplateMedia = this.createMediaCollection();
 
             this.mailTemplate.media.forEach((mediaAssoc) => {
-                if (mediaAssoc.languageId === Cicada.Context.api.languageId) {
+                if (mediaAssoc.languageId === Shopware.Context.api.languageId) {
                     this.mailTemplateMedia.push(mediaAssoc.media);
                 }
             });
@@ -296,7 +294,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
             this.loadEntityData();
         },
 
@@ -335,7 +333,7 @@ export default {
 
                         this.createNotificationError({
                             message:
-                                this.$tc('sw-mail-template.detail.messageSaveError', 0, { subject: mailTemplateSubject }) +
+                                this.$tc('sw-mail-template.detail.messageSaveError', { subject: mailTemplateSubject }, 0) +
                                 errormsg,
                         });
                     }),
@@ -366,7 +364,7 @@ export default {
             criteria.addAssociation('languages');
 
             this.salesChannelRepository.get(this.testMailSalesChannelId, Context.api, criteria).then((salesChannel) => {
-                if (!salesChannel.languages.has(Cicada.Context.api.languageId)) {
+                if (!salesChannel.languages.has(Shopware.Context.api.languageId)) {
                     this.showLanguageNotAssignedToSalesChannelWarning = true;
 
                     return;
@@ -418,9 +416,13 @@ export default {
                         });
                     } else {
                         this.createNotificationError({
-                            message: this.$tc('sw-mail-template.general.notificationSyntaxValidationErrorMessage', 0, {
-                                errorMsg: error.response?.data?.errors?.[0]?.detail,
-                            }),
+                            message: this.$tc(
+                                'sw-mail-template.general.notificationSyntaxValidationErrorMessage',
+                                {
+                                    errorMsg: error.response?.data?.errors?.[0]?.detail,
+                                },
+                                0,
+                            ),
                         });
                     }
                 })
@@ -534,7 +536,7 @@ export default {
         createMailTemplateMediaAssoc(mediaItem) {
             const mailTemplateMedia = this.mailTemplateMediaRepository.create();
             mailTemplateMedia.mailTemplateId = this.mailTemplateId;
-            mailTemplateMedia.languageId = Cicada.Context.api.languageId;
+            mailTemplateMedia.languageId = Shopware.Context.api.languageId;
             mailTemplateMedia.mediaId = mediaItem.id;
             if (this.mailTemplate.media.length <= 0) {
                 mailTemplateMedia.position = 0;
@@ -572,7 +574,7 @@ export default {
         _checkIfMediaIsAlreadyUsed(mediaId) {
             return this.mailTemplate.media.some((mailTemplateMedia) => {
                 return (
-                    mailTemplateMedia.mediaId === mediaId && mailTemplateMedia.languageId === Cicada.Context.api.languageId
+                    mailTemplateMedia.mediaId === mediaId && mailTemplateMedia.languageId === Shopware.Context.api.languageId
                 );
             });
         },
@@ -597,10 +599,10 @@ export default {
             const variablePath = variable.concat('.');
             const variableEntitySchemaPath = variableEntitySchema.concat('.');
 
-            const foundVariables = Object.keys(Cicada.Utils.get(this.mailTemplateType.templateData, variable));
+            const foundVariables = Object.keys(Shopware.Utils.get(this.mailTemplateType.templateData, variable));
 
             const keys = foundVariables.map((val) => {
-                const availableVariable = Cicada.Utils.get(this.mailTemplateType.templateData, variablePath.concat(val));
+                const availableVariable = Shopware.Utils.get(this.mailTemplateType.templateData, variablePath.concat(val));
                 const isObject = typeof availableVariable === 'object' && availableVariable !== null;
                 const length = isObject ? Object.values(availableVariable).length : 0;
 
@@ -631,7 +633,7 @@ export default {
 
             const variables = variable.split('.');
             variables.splice(1, 0, 'properties');
-            const field = Cicada.Utils.get(this.entitySchema, `${variables.join('.')}`);
+            const field = Shopware.Utils.get(this.entitySchema, `${variables.join('.')}`);
 
             return (
                 field &&
@@ -649,11 +651,7 @@ export default {
 
         addVariables(variables) {
             variables.forEach((variable) => {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.availableVariables, variable.id, variable);
-                } else {
-                    this.availableVariables[variable.id] = variable;
-                }
+                this.availableVariables[variable.id] = variable;
             });
         },
 
@@ -665,7 +663,7 @@ export default {
             }
 
             Object.keys(this.mailTemplateType.templateData).forEach((variable) => {
-                const availableVariable = Cicada.Utils.get(this.mailTemplateType.templateData, variable);
+                const availableVariable = Shopware.Utils.get(this.mailTemplateType.templateData, variable);
                 let length = 0;
                 if (typeof availableVariable === 'object' && availableVariable !== null) {
                     length = Object.values(availableVariable).length;

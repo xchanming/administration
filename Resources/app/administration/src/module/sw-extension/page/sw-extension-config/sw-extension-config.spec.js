@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { createPinia, setActivePinia } from 'pinia';
 
 /**
  * @sw-package checkout
@@ -42,16 +43,16 @@ describe('src/module/sw-extension/page/sw-extension-config.spec', () => {
                     'sw-app-topbar-button': true,
                 },
                 provide: {
-                    cicadaExtensionService: {
+                    shopwareExtensionService: {
                         updateExtensionData: jest.fn(),
                     },
                     systemConfigApiService: {
                         getValues: () => {
                             return Promise.resolve({
                                 'core.store.apiUri': 'https://api.xchanming.com',
-                                'core.store.licenseHost': 'sw6.test.cicada.in',
+                                'core.store.licenseHost': 'sw6.test.shopware.in',
                                 'core.store.shopSecret': 'very.s3cret',
-                                'core.store.cicadaId': 'max@muster.com',
+                                'core.store.shopwareId': 'max@muster.com',
                             });
                         },
                     },
@@ -76,21 +77,7 @@ describe('src/module/sw-extension/page/sw-extension-config.spec', () => {
     });
 
     beforeEach(async () => {
-        if (typeof Cicada.State.get('cicadaExtensions') !== 'undefined') {
-            Cicada.State.unregisterModule('cicadaExtensions');
-        }
-
-        Cicada.State.registerModule('cicadaExtensions', {
-            namespaced: true,
-            state: {
-                myExtensions: { data: [] },
-            },
-            mutations: {
-                setMyExtensions(state, extensions) {
-                    state.myExtensions = extensions;
-                },
-            },
-        });
+        setActivePinia(createPinia());
     });
 
     it('domain should suffix config', async () => {
@@ -102,16 +89,14 @@ describe('src/module/sw-extension/page/sw-extension-config.spec', () => {
     it('should reload extensions on createdComponent', async () => {
         const wrapper = await createWrapper();
 
-        expect(wrapper.vm.cicadaExtensionService.updateExtensionData).toHaveBeenCalledTimes(1);
+        expect(wrapper.vm.shopwareExtensionService.updateExtensionData).toHaveBeenCalledTimes(1);
     });
 
     it('should not reload extensions on createdComponent if extensions are loaded', async () => {
-        Cicada.State.commit('cicadaExtensions/setMyExtensions', {
-            data: [{ name: 'test-extension' }],
-        });
+        Shopware.Store.get('shopwareExtensions').setMyExtensions([{ name: 'test-extension' }]);
         const wrapper = await createWrapper();
 
-        expect(wrapper.vm.cicadaExtensionService.updateExtensionData).toHaveBeenCalledTimes(0);
+        expect(wrapper.vm.shopwareExtensionService.updateExtensionData).toHaveBeenCalledTimes(0);
     });
 
     it('Save click success', async () => {
@@ -161,7 +146,7 @@ describe('src/module/sw-extension/page/sw-extension-config.spec', () => {
         wrapper.vm.extension = {
             icon: 'icon.png',
             label: 'My extension label',
-            producerName: 'cicada AG',
+            producerName: 'shopware AG',
         };
 
         await wrapper.vm.$nextTick();
@@ -173,14 +158,14 @@ describe('src/module/sw-extension/page/sw-extension-config.spec', () => {
         expect(title.text()).toBe('My extension label');
 
         const meta = wrapper.get('.sw-meteor-page__smart-bar-meta');
-        expect(meta.text()).toBe('sw-extension-store.component.sw-extension-config.labelBy cicada AG');
+        expect(meta.text()).toBe('sw-extension-store.component.sw-extension-config.labelBy shopware AG');
     });
 
     it('shows header for extension details with producer website', async () => {
         const wrapper = await createWrapper();
 
         wrapper.vm.extension = {
-            producerName: 'cicada AG',
+            producerName: 'shopware AG',
             producerWebsite: 'https://www.xchanming.com/',
         };
 
@@ -190,7 +175,7 @@ describe('src/module/sw-extension/page/sw-extension-config.spec', () => {
 
         const metaLink = wrapper.get('.sw-extension-config__producer-link');
         expect(metaLink.attributes().href).toBe('https://www.xchanming.com/');
-        expect(metaLink.text()).toBe('cicada AG');
+        expect(metaLink.text()).toBe('shopware AG');
     });
 
     it('saves from route when router navigates to sw-extension-config page', async () => {

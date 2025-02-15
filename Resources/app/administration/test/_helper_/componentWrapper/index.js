@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 /* eslint-disable sw-test-rules/await-async-functions */
 import { defineAsyncComponent } from 'vue';
 // eslint-disable-next-line import/no-unresolved, import/extensions
@@ -34,12 +35,12 @@ async function importComponent(componentName) {
 
     // The component still needs registration after the import statement
     if (componentConfig.r === true) {
-        Cicada.Component.register(componentName, component);
+        Shopware.Component.register(componentName, component);
     }
 
     // The component extends another component check the extended component is registered
     if (componentConfig.en) {
-        if (!Cicada.Component.getComponentRegistry().has(componentConfig.en)) {
+        if (!Shopware.Component.getComponentRegistry().has(componentConfig.en)) {
             // The component requested to extend is not yet registered
             await importComponent(componentConfig.en);
         }
@@ -47,7 +48,7 @@ async function importComponent(componentName) {
 
     // The component still needs extension after the import statement
     if (componentConfig.e) {
-        Cicada.Component.extend(componentName, componentConfig.en, component);
+        Shopware.Component.extend(componentName, componentConfig.en, component);
     }
 
     // Cache the component
@@ -72,7 +73,7 @@ export default async function wrapTestComponent(componentName, config = {}) {
     // If the component is sync or the config has a sync flag, return the component directly
     if (syncComponents.includes(componentName) || config?.sync === true) {
         return new Promise((resolve) => {
-            Cicada.Component.build(componentName).then((res) => {
+            Shopware.Component.build(componentName).then((res) => {
                 // Workaround for vue-test-utils to not trigger endless loops
                 res.name += '__wrapped';
 
@@ -84,7 +85,7 @@ export default async function wrapTestComponent(componentName, config = {}) {
     return defineAsyncComponent({
         loader: () => {
             return new Promise((resolve) => {
-                Cicada.Component.build(componentName).then((res) => {
+                Shopware.Component.build(componentName).then((res) => {
                     // Workaround for vue-test-utils to not trigger endless loops
                     res.name += '__wrapped';
 

@@ -9,8 +9,8 @@ import {
     TAG_GROUP,
 } from '../constant/flow.constant';
 
-const { Utils, EntityDefinition } = Cicada;
-const { capitalizeString, camelCase, snakeCase } = Cicada.Utils.string;
+const { Utils, EntityDefinition } = Shopware;
+const { capitalizeString, camelCase, snakeCase } = Shopware.Utils.string;
 
 type Node = {
     id: string;
@@ -49,12 +49,13 @@ type ActionData = {
     customFields: EntityCollection<'custom_field'>;
     customFieldSets: EntityCollection<'custom_field_set'>;
     stateMachineState: EntityCollection<'state_machine_state'>;
+    documentTypes: EntityCollection<'document_type'>;
     mailTemplates: EntityCollection<'mail_template'>;
 };
 
 type ActionTranslator = {
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    $tc: I18n<{}, {}, {}, string, true>['global']['tc'];
+    $tc: I18n<{}, {}, {}, string, true>['global']['t'];
     currentLocale: string;
     getInlineSnippet(value: { [key: string]: string }): string;
 };
@@ -82,6 +83,9 @@ type ActionSequence = Entity<'flow_sequence'> & {
             upsert?: boolean;
             value?: string;
         };
+        documentTypes?: Array<{
+            documentType: string;
+        }>;
     };
 };
 
@@ -136,6 +140,7 @@ export default class FlowBuilderService {
         [this.$actionNames.MAIL_SEND]: (context: ActionContext) => this.getMailSendDescription(context),
         [this.$actionNames.STOP_FLOW]: (context: ActionContext) => this.getStopFlowActionDescription(context),
         [this.$actionNames.SET_ORDER_STATE]: (context: ActionContext) => this.getSetOrderStateDescription(context),
+        [this.$actionNames.GENERATE_DOCUMENT]: (context: ActionContext) => this.getGenerateDocumentDescription(context),
         [this.$actionNames.CHANGE_CUSTOMER_GROUP]: (context: ActionContext) => this.getCustomerGroupDescription(context),
         [this.$actionNames.GRANT_DOWNLOAD_ACCESS]: (context: ActionContext) => this.getDownloadAccessDescription(context),
         [this.$actionNames.SET_CUSTOMER_CUSTOM_FIELD]: (context: ActionContext) => this.getCustomFieldDescription(context),
@@ -503,20 +508,32 @@ export default class FlowBuilderService {
             sequence: { config },
         } = context;
 
-        let description = translator.$tc('sw-flow.actions.labelTo', 0, {
-            entity: capitalizeString(config?.entity),
-        });
+        let description = translator.$tc(
+            'sw-flow.actions.labelTo',
+            {
+                entity: capitalizeString(config?.entity),
+            },
+            0,
+        );
 
         if (config?.affiliateCode?.upsert || config?.affiliateCode?.value != null) {
-            description = `${description}<br>${translator.$tc('sw-flow.actions.labelAffiliateCode', 0, {
-                affiliateCode: config.affiliateCode.value || '',
-            })}`;
+            description = `${description}<br>${translator.$tc(
+                'sw-flow.actions.labelAffiliateCode',
+                {
+                    affiliateCode: config.affiliateCode.value || '',
+                },
+                0,
+            )}`;
         }
 
         if (config.campaignCode?.upsert || config?.campaignCode?.value != null) {
-            description = `${description}<br>${translator.$tc('sw-flow.actions.labelCampaignCode', 0, {
-                campaignCode: config?.campaignCode?.value || '',
-            })}`;
+            description = `${description}<br>${translator.$tc(
+                'sw-flow.actions.labelCampaignCode',
+                {
+                    campaignCode: config?.campaignCode?.value || '',
+                },
+                0,
+            )}`;
         }
 
         return description;
@@ -560,13 +577,25 @@ export default class FlowBuilderService {
             return '';
         }
 
-        return `${translator.$tc('sw-flow.actions.labelCustomFieldSet', 0, {
-            customFieldSet: translator.getInlineSnippet(customField.config.label) || customFieldSet.name,
-        })}<br>${translator.$tc('sw-flow.actions.labelCustomField', 0, {
-            customField: translator.getInlineSnippet(customField.config.label) || customField.name,
-        })}<br>${translator.$tc('sw-flow.actions.labelCustomFieldOption', 0, {
-            customFieldOption: config.optionLabel,
-        })}`;
+        return `${translator.$tc(
+            'sw-flow.actions.labelCustomFieldSet',
+            {
+                customFieldSet: translator.getInlineSnippet(customField.config.label) || customFieldSet.name,
+            },
+            0,
+        )}<br>${translator.$tc(
+            'sw-flow.actions.labelCustomField',
+            {
+                customField: translator.getInlineSnippet(customField.config.label) || customField.name,
+            },
+            0,
+        )}<br>${translator.$tc(
+            'sw-flow.actions.labelCustomFieldOption',
+            {
+                customFieldOption: config.optionLabel,
+            },
+            0,
+        )}`;
     }
 
     public getSetOrderStateDescription(context: ActionContext) {
@@ -616,6 +645,29 @@ export default class FlowBuilderService {
         return description.join('<br>');
     }
 
+    public getGenerateDocumentDescription(context: ActionContext) {
+        const {
+            sequence: { config },
+            data,
+        } = context;
+
+        if (config.documentType) {
+            Object.assign(config, {
+                documentType: [config],
+            });
+        }
+
+        const documentType = config.documentTypes?.map((type) => {
+            return data.documentTypes.find((item) => item.technicalName === type.documentType)?.translated?.name || '';
+        });
+
+        if (!documentType) {
+            return '';
+        }
+
+        return this.convertTagString(documentType);
+    }
+
     public convertTagString(tagsString: string[]) {
         return tagsString.toString().replace(/,/g, ', ');
     }
@@ -629,9 +681,13 @@ export default class FlowBuilderService {
 
         const mailTemplateData = data.mailTemplates.find((item) => item.id === config.mailTemplateId);
 
-        let mailSendDescription = translator.$tc('sw-flow.actions.labelTemplate', 0, {
-            template: mailTemplateData?.mailTemplateType?.name,
-        });
+        let mailSendDescription = translator.$tc(
+            'sw-flow.actions.labelTemplate',
+            {
+                template: mailTemplateData?.mailTemplateType?.name,
+            },
+            0,
+        );
 
         let mailDescription = mailTemplateData?.description;
 
@@ -639,9 +695,13 @@ export default class FlowBuilderService {
             // Truncate description string
             mailDescription = mailDescription.length > 60 ? `${mailDescription.substring(0, 60)}...` : mailDescription;
 
-            mailSendDescription = `${mailSendDescription}<br>${translator.$tc('sw-flow.actions.labelDescription', 0, {
-                description: mailDescription,
-            })}`;
+            mailSendDescription = `${mailSendDescription}<br>${translator.$tc(
+                'sw-flow.actions.labelDescription',
+                {
+                    description: mailDescription,
+                },
+                0,
+            )}`;
         }
 
         return mailSendDescription;

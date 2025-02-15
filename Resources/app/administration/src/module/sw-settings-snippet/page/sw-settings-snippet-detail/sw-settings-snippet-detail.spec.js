@@ -6,9 +6,9 @@ import { mount } from '@vue/test-utils';
 function getSnippetSets() {
     const data = [
         {
-            name: 'BASE zh-CN',
-            baseFile: 'messages.zh-CN',
-            iso: 'zh-CN',
+            name: 'BASE de-DE',
+            baseFile: 'messages.de-DE',
+            iso: 'de-DE',
             customFields: null,
             createdAt: '2020-09-09T07:46:37.407+00:00',
             updatedAt: null,
@@ -45,7 +45,7 @@ function getSnippets() {
         data: {
             'account.addressCreateBtn': [
                 {
-                    author: 'Cicada',
+                    author: 'Shopware',
                     id: null,
                     origin: 'Neue Adresse hinzufügen',
                     resetTo: 'Neue Adresse hinzufügen',
@@ -54,7 +54,7 @@ function getSnippets() {
                     value: 'Neue Adresse hinzufügen',
                 },
                 {
-                    author: 'Cicada',
+                    author: 'Shopware',
                     id: null,
                     origin: 'Add address',
                     resetTo: 'Add address',
@@ -65,7 +65,7 @@ function getSnippets() {
             ],
             test1: [
                 {
-                    author: 'Cicada',
+                    author: 'Shopware',
                     id: null,
                     origin: 'foo',
                     resetTo: 'foo',
@@ -74,7 +74,7 @@ function getSnippets() {
                     value: 'foo',
                 },
                 {
-                    author: 'Cicada',
+                    author: 'Shopware',
                     id: null,
                     origin: 'bar',
                     resetTo: 'bar',
@@ -188,7 +188,7 @@ describe('module/sw-settings-snippet/page/sw-settings-snippet-detail', () => {
     }
 
     beforeEach(() => {
-        Cicada.State.commit('setCurrentUser', { username: 'admin' });
+        Shopware.Store.get('session').setCurrentUser({ username: 'admin' });
     });
 
     it('should be a Vue.js component', async () => {
@@ -215,9 +215,9 @@ describe('module/sw-settings-snippet/page/sw-settings-snippet-detail', () => {
             'snippet.viewer, snippet.editor, snippet.deleter',
         ],
     ])('should only have disabled inputs', async (state, role) => {
-        Cicada.State.get('session').currentUser = {
+        Shopware.Store.get('session').setCurrentUser({
             username: 'testUser',
-        };
+        });
         const roles = role.split(', ');
         const wrapper = await createWrapper(roles);
         await flushPromises();

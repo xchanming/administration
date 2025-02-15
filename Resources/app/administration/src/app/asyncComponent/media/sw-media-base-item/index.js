@@ -16,8 +16,6 @@ import './sw-media-base-item.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['systemConfigApiService'],
 
     emits: [

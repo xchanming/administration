@@ -5,14 +5,12 @@
 import template from './sw-sales-channel-detail-products.html.twig';
 import './sw-sales-channel-detail-products.scss';
 
-const { Mixin, Context } = Cicada;
-const { EntityCollection, Criteria } = Cicada.Data;
+const { Mixin, Context } = Shopware;
+const { EntityCollection, Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -94,7 +92,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

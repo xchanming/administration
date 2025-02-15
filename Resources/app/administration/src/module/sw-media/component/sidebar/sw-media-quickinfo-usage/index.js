@@ -1,9 +1,9 @@
 import template from './sw-media-quickinfo-usage.html.twig';
 import './sw-media-quickinfo-usage.scss';
 
-const { Application } = Cicada;
-const types = Cicada.Utils.types;
-const { Criteria } = Cicada.Data;
+const { Application } = Shopware;
+const types = Shopware.Utils.types;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package discovery
@@ -11,8 +11,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -39,6 +37,7 @@ export default {
             categories: [],
             manufacturers: [],
             mailTemplates: [],
+            documentBaseConfigs: [],
             avatarUsers: [],
             paymentMethods: [],
             shippingMethods: [],
@@ -109,6 +108,10 @@ export default {
                 }
             });
 
+            this.documentBaseConfigs.forEach((documentBaseConfig) => {
+                usages.push(this.getDocumentBaseConfigUsage(documentBaseConfig));
+            });
+
             this.paymentMethods.forEach((paymentMethod) => {
                 usages.push(this.getPaymentMethodUsage(paymentMethod));
             });
@@ -155,6 +158,7 @@ export default {
             this.loadCategoryAssociations();
             this.loadManufacturerAssociations();
             this.loadMailTemplateAssociations();
+            this.loadDocumentBaseConfigAssociations();
             this.loadAvatarUserAssociations();
             this.loadPaymentMethodAssociations();
             this.loadShippingMethodAssociations();
@@ -214,6 +218,10 @@ export default {
 
         loadMailTemplateAssociations() {
             this.mailTemplates = this.item.mailTemplateMedia;
+        },
+
+        loadDocumentBaseConfigAssociations() {
+            this.documentBaseConfigs = this.item.documentBaseConfigs;
         },
 
         loadAvatarUserAssociations() {
@@ -309,6 +317,18 @@ export default {
                     id: mailTemplate.id,
                 },
                 icon: this.getIconForModule('sw-mail-template'),
+            };
+        },
+
+        getDocumentBaseConfigUsage(document) {
+            return {
+                name: document.name,
+                tooltip: this.$tc('sw-media.sidebar.usage.tooltipFoundInDocument'),
+                link: {
+                    name: 'sw.settings.document.detail',
+                    id: document.id,
+                },
+                icon: this.getIconForModule('sw-settings-document'),
             };
         },
 

@@ -8,8 +8,6 @@ import './sw-cms-visibility-toggle.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         text: {
             type: String,

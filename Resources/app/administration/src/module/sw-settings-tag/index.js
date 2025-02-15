@@ -3,12 +3,12 @@
  */
 import './acl';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-tag-list', () => import('./page/sw-settings-tag-list'));
-Cicada.Component.register('sw-settings-tag-detail-modal', () => import('./component/sw-settings-tag-detail-modal'));
-Cicada.Component.register(
+Shopware.Component.register('sw-settings-tag-list', () => import('./page/sw-settings-tag-list'));
+Shopware.Component.register('sw-settings-tag-detail-modal', () => import('./component/sw-settings-tag-detail-modal'));
+Shopware.Component.register(
     'sw-settings-tag-detail-assignments',
     () => import('./component/sw-settings-tag-detail-assignments'),
 );
@@ -37,7 +37,7 @@ Module.register('sw-settings-tag', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'content',
         to: 'sw.settings.tag.index',
         icon: 'regular-tag',
         privilege: 'tag.viewer',

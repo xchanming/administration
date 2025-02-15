@@ -1,7 +1,7 @@
 import template from './sw-cms-el-config-form.html.twig';
 import './sw-cms-el-config-form.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['systemConfigApiService'],
 

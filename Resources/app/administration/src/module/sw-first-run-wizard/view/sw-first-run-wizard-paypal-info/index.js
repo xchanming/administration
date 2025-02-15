@@ -8,8 +8,6 @@ import './sw-first-run-wizard-paypal-info.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['extensionStoreActionService'],
 
     emits: [
@@ -29,7 +27,7 @@ export default {
 
     computed: {
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

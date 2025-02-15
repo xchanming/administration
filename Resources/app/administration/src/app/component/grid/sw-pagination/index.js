@@ -1,7 +1,7 @@
 import './sw-pagination.scss';
 import template from './sw-pagination.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -15,8 +15,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-pagination', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['page-change'],
 

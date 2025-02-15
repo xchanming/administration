@@ -6,13 +6,12 @@ import {
     getCurrency,
     getEnvironment,
     getLocale,
-    getCicadaVersion,
+    getShopwareVersion,
     getModuleInformation,
     getAppInformation,
     getUserInformation,
     getUserTimezone,
-} from '@cicada-ag/meteor-admin-sdk/es/context';
-import extensionsStore from '../state/extensions.store';
+} from '@shopware-ag/meteor-admin-sdk/es/context';
 
 describe('src/app/init/context.init.ts', () => {
     beforeAll(() => {
@@ -20,15 +19,7 @@ describe('src/app/init/context.init.ts', () => {
     });
 
     beforeEach(() => {
-        if (Cicada.State.get('extensions')) {
-            Cicada.State.unregisterModule('extensions');
-        }
-
-        Cicada.State.registerModule('extensions', extensionsStore);
-    });
-
-    afterEach(() => {
-        Cicada.State.unregisterModule('extensions');
+        Shopware.Store.get('extensions').extensionsState = {};
     });
 
     it('should handle currency', async () => {
@@ -59,8 +50,8 @@ describe('src/app/init/context.init.ts', () => {
         });
     });
 
-    it('should handle cicada version', async () => {
-        await getCicadaVersion().then((version) => {
+    it('should handle shopware version', async () => {
+        await getShopwareVersion().then((version) => {
             expect(version).toEqual(expect.any(String));
         });
     });
@@ -88,23 +79,23 @@ describe('src/app/init/context.init.ts', () => {
     });
 
     it('should return user timezone', async () => {
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             timeZone: 'Europe/Berlin',
         });
         await getUserTimezone().then((timezone) => {
             expect(timezone).toBe('Europe/Berlin');
         });
 
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             timeZone: undefined,
         });
         await getUserTimezone().then((timezone) => {
-            expect(timezone).toBe('Asia/Shanghai');
+            expect(timezone).toBe('UTC');
         });
     });
 
     it('should return app information', async () => {
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').addExtension({
             name: 'jestapp',
             baseUrl: '',
             permissions: [],
@@ -126,7 +117,7 @@ describe('src/app/init/context.init.ts', () => {
     });
 
     it('should return user information', async () => {
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').addExtension({
             name: 'jestapp',
             baseUrl: '',
             permissions: {
@@ -140,13 +131,14 @@ describe('src/app/init/context.init.ts', () => {
             active: true,
         });
 
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             aclRoles: [],
             active: true,
             admin: true,
             email: 'john.doe@test.com',
-            name: 'John',
+            firstName: 'John',
             id: '123',
+            lastName: 'Doe',
             localeId: 'lOcAlEiD',
             title: 'Dr.',
             type: 'user',
@@ -160,8 +152,9 @@ describe('src/app/init/context.init.ts', () => {
                     active: true,
                     admin: true,
                     email: 'john.doe@test.com',
-                    name: 'John',
+                    firstName: 'John',
                     id: '123',
+                    lastName: 'Doe',
                     localeId: 'lOcAlEiD',
                     title: 'Dr.',
                     type: 'user',
@@ -172,7 +165,7 @@ describe('src/app/init/context.init.ts', () => {
     });
 
     it('should not return user information when permissions arent existing', async () => {
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').addExtension({
             name: 'jestapp',
             baseUrl: '',
             permissions: [],
@@ -182,13 +175,14 @@ describe('src/app/init/context.init.ts', () => {
             active: true,
         });
 
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             aclRoles: [],
             active: true,
             admin: true,
             email: 'john.doe@test.com',
-            name: 'John',
+            firstName: 'John',
             id: '123',
+            lastName: 'Doe',
             localeId: 'lOcAlEiD',
             title: 'Dr.',
             type: 'user',
@@ -199,13 +193,14 @@ describe('src/app/init/context.init.ts', () => {
     });
 
     it('should not return user information when extension is not existing', async () => {
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             aclRoles: [],
             active: true,
             admin: true,
             email: 'john.doe@test.com',
-            name: 'John',
+            firstName: 'John',
             id: '123',
+            lastName: 'Doe',
             localeId: 'lOcAlEiD',
             title: 'Dr.',
             type: 'user',

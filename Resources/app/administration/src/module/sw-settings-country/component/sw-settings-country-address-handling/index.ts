@@ -5,9 +5,9 @@ import type { DragConfig } from 'src/app/directive/dragdrop.directive';
 import template from './sw-settings-country-address-handling.html.twig';
 import './sw-settings-country-address-handling.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
-const { cloneDeep } = Cicada.Utils.object;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
+const { cloneDeep } = Shopware.Utils.object;
 
 interface TreeItem {
     id: string;
@@ -28,7 +28,8 @@ const DefaultAddressFormat = [
         'address/department',
     ],
     [
-        'address/name',
+        'address/first_name',
+        'address/last_name',
     ],
     ['address/street'],
     [
@@ -39,14 +40,12 @@ const DefaultAddressFormat = [
 ] as string[][];
 
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  *
  * @private
  */
 Component.register('sw-settings-country-address-handling', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -139,11 +138,7 @@ Component.register('sw-settings-country-address-handling', {
                 return;
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.country, 'checkAdvancedPostalCodePattern', false);
-            } else {
-                this.updateCountry('checkAdvancedPostalCodePattern', false);
-            }
+            this.updateCountry('checkAdvancedPostalCodePattern', false);
         },
 
         'country.checkAdvancedPostalCodePattern'(value) {
@@ -152,36 +147,20 @@ Component.register('sw-settings-country-address-handling', {
                     return;
                 }
 
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(
-                        this.country,
-                        'advancedPostalCodePattern',
-                        this.advancedPostalCodePattern || this.country.defaultPostalCodePattern,
-                    );
-                } else {
-                    this.$emit(
-                        'update:country',
-                        'advancedPostalCodePattern',
-                        this.advancedPostalCodePattern || this.country.defaultPostalCodePattern,
-                    );
-                }
+                this.$emit(
+                    'update:country',
+                    'advancedPostalCodePattern',
+                    this.advancedPostalCodePattern || this.country.defaultPostalCodePattern,
+                );
                 return;
             }
 
             if (!this.hasDefaultPostalCodePattern) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.country, 'checkPostalCodePattern', value);
-                } else {
-                    this.updateCountry('checkPostalCodePattern', value);
-                }
+                this.updateCountry('checkPostalCodePattern', value);
             }
 
             this.advancedPostalCodePattern = this.country?.advancedPostalCodePattern ?? null;
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.country, 'advancedPostalCodePattern', null);
-            } else {
-                this.updateCountry('advancedPostalCodePattern', null);
-            }
+            this.updateCountry('advancedPostalCodePattern', null);
         },
 
         'country.addressFormat'(address) {
@@ -256,73 +235,25 @@ Component.register('sw-settings-country-address-handling', {
                 typeof dragData?.linePosition === 'number' &&
                 dragData.linePosition !== dropData.linePosition
             ) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    // @ts-expect-error - value exists
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                    this.$set(this.country.addressFormat[dragData.linePosition], dragData.index, dropData.snippet);
-                } else {
-                    this.$emit(
-                        'update:country',
-                        `addressFormat[${dragData.linePosition}][${dragData.index}]`,
-                        dropData.snippet,
-                    );
-                }
+                this.$emit('update:country', `addressFormat[${dragData.linePosition}][${dragData.index}]`, dropData.snippet);
 
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    // @ts-expect-error - value exists
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                    this.$set(this.country.addressFormat[dropData.linePosition], dropData.index, dragData.snippet);
-                } else {
-                    this.$emit(
-                        'update:country',
-                        `addressFormat[${dropData.linePosition}][${dropData.index}]`,
-                        dragData.snippet,
-                    );
-                }
+                this.$emit('update:country', `addressFormat[${dropData.linePosition}][${dropData.index}]`, dragData.snippet);
                 return;
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                // move to another line
-                this.$set(
-                    // @ts-expect-error - value exists
-                    this.country.addressFormat,
-                    `${dropData.index}`,
-                    [
-                        // @ts-expect-error - value exists
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                        ...this.country.addressFormat[dropData.index],
-                        dragData.snippet,
-                    ],
-                );
-            } else {
-                this.$emit('update:country', `addressFormat[${dropData.index}]`, [
-                    // @ts-expect-error - value exists
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                    ...this.country.addressFormat[dropData.index],
-                    dragData.snippet,
-                ]);
-            }
+            this.$emit('update:country', `addressFormat[${dropData.index}]`, [
+                // @ts-expect-error - value exists
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                ...this.country.addressFormat[dropData.index],
+                dragData.snippet,
+            ]);
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                // @ts-expect-error - value exists
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-                this.country.addressFormat[dragPosition].splice(dragData.index, 1);
-                this.$set(
-                    // @ts-expect-error - value exists
-                    this.country.addressFormat,
-                    dragPosition,
-                    // @ts-expect-error - value exists
-                    this.country.addressFormat[dragPosition],
-                );
-            } else {
-                // @ts-expect-error - value exists
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-                this.country.addressFormat[dragPosition].splice(dragData.index, 1);
+            // @ts-expect-error - value exists
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+            this.country.addressFormat[dragPosition].splice(dragData.index, 1);
 
-                // @ts-expect-error - value exists
-                this.updateCountry(`addressFormat[${dragPosition}]`, this.country.addressFormat[dragPosition]);
-            }
+            // @ts-expect-error - value exists
+            this.updateCountry(`addressFormat[${dragPosition}]`, this.country.addressFormat[dragPosition]);
         },
 
         moveToNewPosition(source: number, dest: number | null): void {
@@ -335,13 +266,8 @@ Component.register('sw-settings-country-address-handling', {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const snippet = this.country.addressFormat[source];
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                this.$set(this.country, 'addressFormat', this.swapPosition(source, dest, [snippet]) ?? []);
-            } else {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                this.updateCountry('addressFormat', this.swapPosition(source, dest, [snippet]) ?? []);
-            }
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            this.updateCountry('addressFormat', this.swapPosition(source, dest, [snippet]) ?? []);
         },
 
         addNewLineAt(source: number, dest: string | null): void {
@@ -361,11 +287,7 @@ Component.register('sw-settings-country-address-handling', {
                           [],
                       ];
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.country, 'addressFormat', this.swapPosition(source, source, swag) ?? []);
-            } else {
-                this.updateCountry('addressFormat', this.swapPosition(source, source, swag) ?? []);
-            }
+            this.updateCountry('addressFormat', this.swapPosition(source, source, swag) ?? []);
         },
 
         swapPosition(source: number, dest: number, swag: Array<string[]>): Array<string[]> | null {
@@ -387,28 +309,15 @@ Component.register('sw-settings-country-address-handling', {
 
         change(index: number, newSnippet?: string): void {
             if (!newSnippet) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(
-                        this.country,
-                        'addressFormat',
-                        this.addressFormat.filter((_, key) => index !== key),
-                    );
-                } else {
-                    this.updateCountry(
-                        'addressFormat',
-                        this.addressFormat.filter((_, key) => index !== key),
-                    );
-                }
+                this.updateCountry(
+                    'addressFormat',
+                    this.addressFormat.filter((_, key) => index !== key),
+                );
 
                 return;
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                // @ts-expect-error - value exists
-                this.$set(this.country.addressFormat, index, newSnippet);
-            } else {
-                this.updateCountry(`addressFormat[${index}]`, newSnippet);
-            }
+            this.updateCountry(`addressFormat[${index}]`, newSnippet);
         },
 
         customerLabel(item: Entity<'customer'>): string {
@@ -416,7 +325,7 @@ Component.register('sw-settings-country-address-handling', {
                 return '';
             }
 
-            return `${item.name}`;
+            return `${item.firstName}, ${item.lastName}`;
         },
 
         onChangeCustomer(customerId: string, customer: Entity<'customer'>): void {
@@ -431,11 +340,7 @@ Component.register('sw-settings-country-address-handling', {
         },
 
         resetMarkup(): void {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.country, 'addressFormat', cloneDeep(DefaultAddressFormat));
-            } else {
-                this.updateCountry('addressFormat', cloneDeep(DefaultAddressFormat));
-            }
+            this.updateCountry('addressFormat', cloneDeep(DefaultAddressFormat));
         },
 
         openSnippetModal(position: number) {

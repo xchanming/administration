@@ -1,8 +1,8 @@
 import './sw-settings-rule-list.scss';
 import template from './sw-settings-rule-list.html.twig';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Criteria } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -51,7 +49,7 @@ export default {
 
     computed: {
         getRuleDefinition() {
-            return Cicada.EntityDefinition.get('rule');
+            return Shopware.EntityDefinition.get('rule');
         },
 
         ruleRepository() {
@@ -147,15 +145,9 @@ export default {
             ].includes(this.sortBy);
             const sorting = Criteria.sort(this.sortBy, this.sortDirection, naturalSort);
 
-            if (this.assignmentProperties.includes(this.sortBy)) {
-                sorting.field += '.id';
-                sorting.type = 'count';
-            }
             criteria.addSorting(sorting);
 
             criteria.addAssociation('tags');
-
-            this.setAggregations(criteria);
 
             this.filterCriteria.forEach((filter) => {
                 criteria.addFilter(filter);
@@ -182,43 +174,11 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
     methods: {
-        setAggregations(criteria) {
-            Object.keys(this.getRuleDefinition.properties).forEach((propertyName) => {
-                if (propertyName === 'conditions' || propertyName === 'tags') {
-                    return;
-                }
-
-                const property = this.getRuleDefinition.properties[propertyName];
-
-                if (property.relation === 'many_to_many' || property.relation === 'one_to_many') {
-                    criteria.addAggregation(
-                        Criteria.terms(
-                            propertyName,
-                            'id',
-                            null,
-                            null,
-                            Criteria.count(propertyName, `rule.${propertyName}.id`),
-                        ),
-                    );
-                }
-            });
-        },
-
-        getCounts(propertyName, id) {
-            const countBucket = this.rules.aggregations[propertyName].buckets.find((bucket) => bucket.key === id);
-
-            if (!countBucket || !countBucket[propertyName] || !countBucket[propertyName].count) {
-                return 0;
-            }
-
-            return countBucket[propertyName].count;
-        },
-
         async getList() {
             this.isLoading = true;
 
@@ -241,7 +201,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').api.languageId = languageId;
             this.getList();
         },
 
@@ -254,7 +214,7 @@ export default {
                 },
             };
 
-            this.ruleRepository.clone(referenceRule.id, behaviour, Cicada.Context.api).then((duplicatedData) => {
+            this.ruleRepository.clone(referenceRule.id, behaviour, Shopware.Context.api).then((duplicatedData) => {
                 this.$router.push({
                     name: 'sw.settings.rule.detail',
                     params: { id: duplicatedData.id },
@@ -270,7 +230,7 @@ export default {
                     this.isLoading = false;
 
                     this.createNotificationSuccess({
-                        message: this.$tc('sw-settings-rule.detail.messageSaveSuccess', 0, { name: rule.name }),
+                        message: this.$tc('sw-settings-rule.detail.messageSaveSuccess', { name: rule.name }, 0),
                     });
                 })
                 .catch(() => {
@@ -337,18 +297,6 @@ export default {
                     visible: false,
                 },
             ];
-
-            this.assignmentProperties.forEach((propertyName) => {
-                const labelPostfix = propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
-                columns.push({
-                    property: `${propertyName}`,
-                    label: `sw-settings-rule.list.column${labelPostfix}`,
-                    width: '250px',
-                    allowResize: true,
-                    sortable: true,
-                    visible: false,
-                });
-            });
 
             return columns;
         },

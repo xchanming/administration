@@ -1,17 +1,15 @@
 import template from './sw-cms-page-select.html.twig';
 import './sw-cms-page-select.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['update:value'],
 

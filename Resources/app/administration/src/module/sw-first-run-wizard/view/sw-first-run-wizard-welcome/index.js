@@ -1,16 +1,15 @@
 import template from './sw-first-run-wizard-welcome.html.twig';
 import './sw-first-run-wizard-welcome.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package fundamentals@after-sales
+ *
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'languagePluginService',
@@ -53,7 +52,7 @@ export default {
         },
 
         languageId() {
-            return Cicada.State.get('session').languageId;
+            return Shopware.Store.get('session').languageId;
         },
 
         languageCriteria() {
@@ -61,7 +60,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -114,7 +113,7 @@ export default {
         },
 
         updateButtons() {
-            const disabledExtensionManagement = Cicada.State.get('context').app.config.settings.disableExtensionManagement;
+            const disabledExtensionManagement = Shopware.Store.get('context').app.config.settings.disableExtensionManagement;
             const nextRoute = disabledExtensionManagement ? 'defaults' : 'data-import';
 
             const buttonConfig = [
@@ -139,7 +138,7 @@ export default {
         },
 
         getLanguagePlugins() {
-            if (Cicada.State.get('context').app.config.settings.disableExtensionManagement) {
+            if (Shopware.Store.get('context').app.config.settings.disableExtensionManagement) {
                 this.languagePlugins = [];
                 return;
             }
@@ -170,13 +169,13 @@ export default {
             this.loginService
                 .verifyUserToken(this.user.pw)
                 .then((verifiedToken) => {
-                    const context = { ...Cicada.Context.api };
+                    const context = { ...Shopware.Context.api };
                     context.authToken.access = verifiedToken;
 
                     this.userRepository
                         .save(this.user, context)
                         .then(async () => {
-                            await Cicada.Service('localeHelper').setLocaleWithId(this.user.localeId);
+                            await Shopware.Service('localeHelper').setLocaleWithId(this.user.localeId);
                         })
                         .finally(() => {
                             this.showConfirmLanguageSwitchModal = false;

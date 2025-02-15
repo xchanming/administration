@@ -7,14 +7,14 @@ describe('src/app/init/shortcut.init.ts', () => {
     let result;
 
     beforeAll(() => {
-        Cicada.Service().register('loginService', () => {
+        Shopware.Service().register('loginService', () => {
             return {
                 isLoggedIn: () => true,
                 addOnLogoutListener: jest.fn(() => true),
             };
         });
 
-        Cicada.Service().register('shortcutService', () => {
+        Shopware.Service().register('shortcutService', () => {
             return {
                 startEventListener: jest.fn(),
             };

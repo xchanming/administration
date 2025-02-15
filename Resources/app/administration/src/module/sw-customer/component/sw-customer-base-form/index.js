@@ -8,15 +8,13 @@ import CUSTOMER from '../../constant/sw-customer.constant';
  * @sw-package checkout
  */
 
-const { Defaults } = Cicada;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
-const { Criteria } = Cicada.Data;
+const { Defaults } = Shopware;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

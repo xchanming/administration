@@ -5,7 +5,8 @@ const {
     Mixin,
     Data: { Criteria },
     Component,
-} = Cicada;
+    Store,
+} = Shopware;
 const { mapState } = Component.getComponentHelper();
 
 /**
@@ -14,8 +15,6 @@ const { mapState } = Component.getComponentHelper();
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -117,10 +116,10 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
-        ...mapState('swFlowState', ['triggerEvents']),
+        ...mapState(() => Store.get('swFlow'), ['triggerEvents']),
     },
 
     watch: {
@@ -140,7 +139,7 @@ export default {
 
         getList() {
             this.isLoading = true;
-            Cicada.State.dispatch('swFlowState/fetchTriggerActions');
+            Shopware.Store.get('swFlow').fetchTriggerActions();
 
             this.flowRepository
                 .search(this.flowCriteria)
@@ -165,7 +164,7 @@ export default {
             };
 
             this.flowRepository
-                .clone(item.id, behavior, Cicada.Context.api)
+                .clone(item.id, behavior, Shopware.Context.api)
                 .then((response) => {
                     this.createNotificationSuccess({
                         message: this.$tc('sw-flow.flowNotification.messageDuplicateSuccess'),

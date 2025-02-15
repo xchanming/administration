@@ -8,15 +8,13 @@ import ApiService from '../../../../core/service/api.service';
  * @sw-package checkout
  */
 
-const { Mixin, Defaults } = Cicada;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
-const { Criteria } = Cicada.Data;
+const { Mixin, Defaults } = Shopware;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -144,11 +142,11 @@ export default {
         },
 
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         emailIdnFilter() {
-            return Cicada.Filter.getByName('decode-idn-email');
+            return Shopware.Filter.getByName('decode-idn-email');
         },
     },
 
@@ -158,9 +156,7 @@ export default {
                 return;
             }
 
-            Cicada.State.dispatch('error/removeApiError', {
-                expression: `customer.${this.customer.id}.company`,
-            });
+            Shopware.Store.get('error').removeApiError(`customer.${this.customer.id}.company`);
         },
     },
 

@@ -1,18 +1,16 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
 import template from './sw-settings-language-detail.html.twig';
 import './sw-settings-language-detail.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -128,7 +126,7 @@ export default {
         },
 
         isSystemDefaultLanguageId() {
-            return this.language.id === Cicada.Context.api.systemLanguageId;
+            return this.language.id === Shopware.Context.api.systemLanguageId;
         },
 
         inheritanceTooltipText() {
@@ -165,7 +163,7 @@ export default {
     methods: {
         createdComponent() {
             if (!this.languageId) {
-                Cicada.State.commit('context/resetLanguageToDefault');
+                Shopware.Store.get('context').resetLanguageToDefault();
                 this.language = this.languageRepository.create();
 
                 return;
@@ -210,7 +208,7 @@ export default {
         },
 
         setParentTranslationCodeId(parentId) {
-            this.languageRepository.get(parentId, Cicada.Context.api).then((parentLanguage) => {
+            this.languageRepository.get(parentId, Shopware.Context.api).then((parentLanguage) => {
                 this.parentTranslationCodeId = parentLanguage.translationCodeId;
             });
         },

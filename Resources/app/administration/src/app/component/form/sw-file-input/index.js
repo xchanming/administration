@@ -2,9 +2,9 @@
 import template from './sw-file-input.html.twig';
 import './sw-file-input.scss';
 
-const { Component, Mixin } = Cicada;
-const { fileSize } = Cicada.Utils.format;
-const utils = Cicada.Utils;
+const { Component, Mixin } = Shopware;
+const { fileSize } = Shopware.Utils.format;
+const utils = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -24,8 +24,6 @@ Component.register('sw-file-input', {
     template,
 
     inject: ['feature'],
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['update:value'],
 
@@ -137,10 +135,14 @@ Component.register('sw-file-input', {
 
             this.createNotificationError({
                 title: this.$tc('global.default.error'),
-                message: this.$tc('global.sw-file-input.notification.invalidFileSize.message', 0, {
-                    name: file.name,
-                    limit: fileSize(this.maxFileSize),
-                }),
+                message: this.$tc(
+                    'global.sw-file-input.notification.invalidFileSize.message',
+                    {
+                        name: file.name,
+                        limit: fileSize(this.maxFileSize),
+                    },
+                    0,
+                ),
             });
             return false;
         },
@@ -152,10 +154,14 @@ Component.register('sw-file-input', {
 
             this.createNotificationError({
                 title: this.$tc('global.default.error'),
-                message: this.$tc('global.sw-file-input.notification.invalidFileType.message', 0, {
-                    name: file.name,
-                    supportedTypes: this.allowedMimeTypes.join(', '),
-                }),
+                message: this.$tc(
+                    'global.sw-file-input.notification.invalidFileType.message',
+                    {
+                        name: file.name,
+                        supportedTypes: this.allowedMimeTypes.join(', '),
+                    },
+                    0,
+                ),
             });
             return false;
         },

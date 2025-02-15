@@ -64,7 +64,7 @@ describe('src/app/component/form/select/base/sw-select-result', () => {
             methods: {
                 emitSelectItemByKeyboard() {
                     this.$emit('item-select-by-keyboard', [0]);
-                    Cicada.Utils.EventBus.emit('item-select-by-keyboard', [
+                    Shopware.Utils.EventBus.emit('item-select-by-keyboard', [
                         0,
                     ]);
                 },
@@ -88,7 +88,7 @@ describe('src/app/component/form/select/base/sw-select-result', () => {
     }
 
     beforeAll(async () => {
-        swSelectResult = await Cicada.Component.build('sw-select-result');
+        swSelectResult = await Shopware.Component.build('sw-select-result');
         swSelectResult.methods.checkIfSelected = jest.fn();
     });
 

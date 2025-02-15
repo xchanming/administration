@@ -77,7 +77,7 @@ export default class FilterFactory {
      * @returns {Object}
      */
     getFilterProperties(entityName, accessor) {
-        const { properties } = Cicada.EntityDefinition.get(entityName);
+        const { properties } = Shopware.EntityDefinition.get(entityName);
 
         const parts = accessor.split('.');
 

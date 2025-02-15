@@ -1,7 +1,7 @@
 import template from './sw-select-field-deprecated.html.twig';
 import './sw-select-field.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @sw-package framework
@@ -21,8 +21,6 @@ const { Component, Mixin } = Cicada;
  */
 Component.register('sw-select-field-deprecated', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 

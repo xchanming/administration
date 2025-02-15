@@ -68,23 +68,23 @@ export function createRouter() {
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export const actionButtonData = [
     {
-        id: Cicada.Utils.createId(),
+        id: Shopware.Utils.createId(),
         action: 'addProduct',
         app: 'TestApp',
         icon: 'someBase64Icon',
         label: {
-            'zh-CN': 'Product hinzufügen',
+            'de-DE': 'Product hinzufügen',
             'en-GB': 'Add product',
         },
         url: 'http://test-url/actions/product/add',
     },
     {
-        id: Cicada.Utils.createId(),
+        id: Shopware.Utils.createId(),
         action: 'renameProduct',
         app: 'TestApp',
         icon: 'someBase64Icon',
         label: {
-            'zh-CN': 'Product umbenennen',
+            'de-DE': 'Product umbenennen',
             'en-GB': 'Rename product',
         },
         url: 'http://test-url/actions/product/rename',

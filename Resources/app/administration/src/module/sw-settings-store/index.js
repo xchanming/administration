@@ -1,7 +1,7 @@
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Component.register('sw-settings-store', () => import('./page/sw-settings-store'));
+Shopware.Component.register('sw-settings-store', () => import('./page/sw-settings-store'));
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /**
  * @sw-package checkout

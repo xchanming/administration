@@ -1,10 +1,10 @@
 import template from './sw-entity-advanced-selection-modal-grid.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
- * @sw-package buyers-experience
+ * @sw-package framework
  * @status prototype
  */
 Component.extend('sw-entity-advanced-selection-modal-grid', 'sw-entity-listing', {

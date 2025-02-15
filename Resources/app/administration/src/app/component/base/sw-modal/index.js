@@ -1,8 +1,8 @@
 import template from './sw-modal.html.twig';
 import './sw-modal.scss';
 
-const { Component } = Cicada;
-const utils = Cicada.Utils;
+const { Component } = Shopware;
+const utils = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -18,8 +18,6 @@ const utils = Cicada.Utils;
  */
 Component.register('sw-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -133,7 +131,7 @@ Component.register('sw-modal', {
         },
 
         showHelpSidebar() {
-            return Cicada.State.get('adminHelpCenter').showHelpSidebar;
+            return Shopware.Store.get('adminHelpCenter').showHelpSidebar;
         },
     },
 

@@ -1,18 +1,19 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-settings-index.html.twig';
 import './sw-settings-index.scss';
 
-const { hasOwnProperty } = Cicada.Utils.object;
+const { hasOwnProperty } = Shopware.Utils.object;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
-    inject: ['acl'],
+    inject: [
+        'acl',
+        'feature',
+    ],
 
     metaInfo() {
         return {
@@ -22,7 +23,7 @@ export default {
 
     computed: {
         settingsGroups() {
-            const settingsGroups = Object.entries(Cicada.State.get('settingsItems').settingsGroups);
+            const settingsGroups = Object.entries(Shopware.Store.get('settingsItems').settingsGroups);
             return settingsGroups.reduce(
                 (
                     acc,
@@ -104,6 +105,11 @@ export default {
             }
 
             return this.$tc(settingsItem.label.label);
+        },
+
+        getGroupLabel(settingsGroup) {
+            const upper = settingsGroup.charAt(0).toUpperCase() + settingsGroup.slice(1);
+            return this.$tc(`sw-settings.index.tab${upper}`);
         },
     },
 };

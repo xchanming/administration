@@ -3,16 +3,14 @@ import template from './sw-cms-section-config.html.twig';
 import './sw-cms-section-config.scss';
 import type MediaUploadResult from '../../../shared/MediaUploadResult';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @sw-package discovery
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -44,7 +42,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         cmsPageState() {
-            return Cicada.Store.get('cmsPage');
+            return Shopware.Store.get('cmsPage');
         },
 
         quickactionsDisabled() {

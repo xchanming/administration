@@ -8,29 +8,29 @@ function getRepository(
     entityName: keyof EntitySchema.Entities,
     additionalInformation: { _event_: MessageEvent<string> },
 ): Repository<keyof EntitySchema.Entities> | null {
-    const extensionName = Object.keys(Cicada.State.get('extensions')).find((key) =>
-        Cicada.State.get('extensions')[key].baseUrl.startsWith(additionalInformation._event_.origin),
+    const extensionName = Object.keys(Shopware.Store.get('extensions').extensionsState).find((key) =>
+        Shopware.Store.get('extensions').extensionsState[key].baseUrl.startsWith(additionalInformation._event_.origin),
     );
 
     if (!extensionName) {
         throw new Error(`Could not find a extension with the given event origin "${additionalInformation._event_.origin}"`);
     }
 
-    const extension = Cicada.State.get('extensions')?.[extensionName];
+    const extension = Shopware.Store.get('extensions').extensionsState?.[extensionName];
     if (!extension) {
         throw new Error(
             // eslint-disable-next-line max-len
-            `Could not find an extension with the given name "${extensionName}" in the extension store (Cicada.State.get('extensions'))`,
+            `Could not find an extension with the given name "${extensionName}" in the extension store (Shopware.Store.get('extensions').extensionsState)`,
         );
     }
 
     if (extension.integrationId) {
-        return Cicada.Service('repositoryFactory').create(entityName, '', {
+        return Shopware.Service('repositoryFactory').create(entityName, '', {
             'sw-app-integration-id': extension.integrationId,
         });
     }
 
-    return Cicada.Service('repositoryFactory').create(entityName);
+    return Shopware.Service('repositoryFactory').create(entityName);
 }
 
 function rejectRepositoryCreation(entityName: string): unknown {
@@ -72,9 +72,9 @@ function filterContext(result: any, customContext: any) {
  * @private
  */
 export default function initializeExtensionDataLoader(): void {
-    Cicada.ExtensionAPI.handle(
+    Shopware.ExtensionAPI.handle(
         'repositorySearch',
-        async ({ entityName, criteria = new Cicada.Data.Criteria(), context }, additionalInformation) => {
+        async ({ entityName, criteria = new Shopware.Data.Criteria(), context }, additionalInformation) => {
             try {
                 const repository = getRepository(entityName as keyof EntitySchema.Entities, additionalInformation);
 
@@ -84,7 +84,7 @@ export default function initializeExtensionDataLoader(): void {
                     >;
                 }
 
-                const mergedContext = { ...Cicada.Context.api, ...context };
+                const mergedContext = { ...Shopware.Context.api, ...context };
 
                 try {
                     const result = await repository.search(criteria, mergedContext);
@@ -99,15 +99,15 @@ export default function initializeExtensionDataLoader(): void {
         },
     );
 
-    Cicada.ExtensionAPI.handle(
+    Shopware.ExtensionAPI.handle(
         'repositoryGet',
-        ({ entityName, id, criteria = new Cicada.Data.Criteria(), context }, additionalInformation) => {
+        ({ entityName, id, criteria = new Shopware.Data.Criteria(), context }, additionalInformation) => {
             const repository = getRepository(entityName as keyof EntitySchema.Entities, additionalInformation);
             if (!repository) {
                 return rejectRepositoryCreation(entityName as keyof EntitySchema.Entities) as Promise<null>;
             }
 
-            const mergedContext = { ...Cicada.Context.api, ...context };
+            const mergedContext = { ...Shopware.Context.api, ...context };
 
             const result = repository.get(id, mergedContext, criteria);
             filterContext(result, context);
@@ -115,31 +115,31 @@ export default function initializeExtensionDataLoader(): void {
         },
     );
 
-    Cicada.ExtensionAPI.handle('repositorySave', ({ entityName, entity, context }, additionalInformation) => {
+    Shopware.ExtensionAPI.handle('repositorySave', ({ entityName, entity, context }, additionalInformation) => {
         const repository = getRepository(entityName as keyof EntitySchema.Entities, additionalInformation);
         if (!repository) {
             return rejectRepositoryCreation(entityName as keyof EntitySchema.Entities) as Promise<void>;
         }
 
-        const mergedContext = { ...Cicada.Context.api, ...context };
+        const mergedContext = { ...Shopware.Context.api, ...context };
 
         return repository.save(entity as Entity<keyof EntitySchema.Entities>, mergedContext) as Promise<void>;
     });
 
-    Cicada.ExtensionAPI.handle('repositoryClone', ({ entityName, behavior, entityId, context }, additionalInformation) => {
+    Shopware.ExtensionAPI.handle('repositoryClone', ({ entityName, behavior, entityId, context }, additionalInformation) => {
         const repository = getRepository(entityName as keyof EntitySchema.Entities, additionalInformation);
         if (!repository) {
             return rejectRepositoryCreation(entityName as keyof EntitySchema.Entities);
         }
 
-        const mergedContext = { ...Cicada.Context.api, ...context };
+        const mergedContext = { ...Shopware.Context.api, ...context };
 
         const result = repository.clone(entityId, behavior as $TSDangerUnknownObject, mergedContext);
         filterContext(result, context);
         return result;
     });
 
-    Cicada.ExtensionAPI.handle('repositoryHasChanges', ({ entityName, entity }, additionalInformation) => {
+    Shopware.ExtensionAPI.handle('repositoryHasChanges', ({ entityName, entity }, additionalInformation) => {
         const repository = getRepository(entityName as keyof EntitySchema.Entities, additionalInformation);
         if (!repository) {
             return rejectRepositoryCreation(entityName as keyof EntitySchema.Entities) as Promise<boolean>;
@@ -148,29 +148,29 @@ export default function initializeExtensionDataLoader(): void {
         return repository.hasChanges(entity as Entity<keyof EntitySchema.Entities>);
     });
 
-    Cicada.ExtensionAPI.handle('repositorySaveAll', ({ entityName, entities, context }, additionalInformation) => {
+    Shopware.ExtensionAPI.handle('repositorySaveAll', ({ entityName, entities, context }, additionalInformation) => {
         const repository = getRepository(entityName as keyof EntitySchema.Entities, additionalInformation);
         if (!repository) {
             return rejectRepositoryCreation(entityName as keyof EntitySchema.Entities) as Promise<void>;
         }
 
-        const mergedContext = { ...Cicada.Context.api, ...context };
+        const mergedContext = { ...Shopware.Context.api, ...context };
 
         return repository.saveAll(entities as EntityCollection<keyof EntitySchema.Entities>, mergedContext) as Promise<void>;
     });
 
-    Cicada.ExtensionAPI.handle('repositoryDelete', ({ entityName, entityId, context }, additionalInformation) => {
+    Shopware.ExtensionAPI.handle('repositoryDelete', ({ entityName, entityId, context }, additionalInformation) => {
         const repository = getRepository(entityName as keyof EntitySchema.Entities, additionalInformation);
         if (!repository) {
             return rejectRepositoryCreation(entityName as keyof EntitySchema.Entities) as Promise<void>;
         }
 
-        const mergedContext = { ...Cicada.Context.api, ...context };
+        const mergedContext = { ...Shopware.Context.api, ...context };
 
         return repository.delete(entityId, mergedContext) as unknown as Promise<void>;
     });
 
-    Cicada.ExtensionAPI.handle('repositoryCreate', ({ entityName, entityId, context }, additionalInformation) => {
+    Shopware.ExtensionAPI.handle('repositoryCreate', ({ entityName, entityId, context }, additionalInformation) => {
         const repository = getRepository(entityName as keyof EntitySchema.Entities, additionalInformation);
         if (!repository) {
             return rejectRepositoryCreation(entityName as keyof EntitySchema.Entities) as Promise<
@@ -178,7 +178,7 @@ export default function initializeExtensionDataLoader(): void {
             >;
         }
 
-        const mergedContext = { ...Cicada.Context.api, ...context };
+        const mergedContext = { ...Shopware.Context.api, ...context };
 
         const result = repository.create(mergedContext, entityId);
         filterContext(result, context);

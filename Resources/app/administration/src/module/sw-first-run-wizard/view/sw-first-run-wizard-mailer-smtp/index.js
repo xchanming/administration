@@ -8,8 +8,6 @@ import template from './sw-first-run-wizard-mailer-smtp.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['systemConfigApiService'],
 
     emits: [
@@ -37,8 +35,8 @@ export default {
 
     computed: {
         nextAction() {
-            if (Cicada.State.get('context').app.config.settings.disableExtensionManagement) {
-                return 'sw.first.run.wizard.index.cicada.account';
+            if (Shopware.Store.get('context').app.config.settings.disableExtensionManagement) {
+                return 'sw.first.run.wizard.index.shopware.account';
             }
 
             return 'sw.first.run.wizard.index.paypal.info';

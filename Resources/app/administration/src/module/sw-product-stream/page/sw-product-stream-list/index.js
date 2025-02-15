@@ -5,16 +5,14 @@
 import template from './sw-product-stream-list.html.twig';
 import './sw-product-stream-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -49,7 +47,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
@@ -58,7 +56,7 @@ export default {
             return promise
                 .then(() => {
                     this.createNotificationSuccess({
-                        message: this.$tc('sw-product-stream.detail.messageSaveSuccess', 0, { name: productStream.name }),
+                        message: this.$tc('sw-product-stream.detail.messageSaveSuccess', { name: productStream.name }, 0),
                     });
                 })
                 .catch(() => {
@@ -210,7 +208,7 @@ export default {
             this.isLoading = true;
 
             this.productStreamRepository
-                .clone(item.id, behavior, Cicada.Context.api)
+                .clone(item.id, behavior, Shopware.Context.api)
                 .then((clone) => {
                     const route = {
                         name: 'sw.product.stream.detail',

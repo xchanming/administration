@@ -8,8 +8,6 @@ import { h } from 'vue';
 export default {
     functional: true,
 
-    compatConfig: Cicada.compatConfig,
-
     render(createElement, context) {
         const title = h(
             'dt',

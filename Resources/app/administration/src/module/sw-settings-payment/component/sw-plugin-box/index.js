@@ -8,8 +8,6 @@ import './sw-plugin-box.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'systemConfigApiService',
         'repositoryFactory',

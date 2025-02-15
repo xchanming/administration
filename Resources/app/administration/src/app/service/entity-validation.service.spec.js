@@ -23,12 +23,12 @@ describe('src/app/service/entity-validation.service.js', () => {
                 entityName,
                 definitionData,
             ]) => {
-                Cicada.EntityDefinition.add(entityName, new EntityDefinition(definitionData));
+                Shopware.EntityDefinition.add(entityName, new EntityDefinition(definitionData));
             },
         );
     });
 
-    it('should create a required cicada error with the right error code and source pointer', () => {
+    it('should create a required shopware error with the right error code and source pointer', () => {
         const fieldPointer = '/0/name';
         const error = EntityValidationService.createRequiredError(fieldPointer);
 
@@ -175,7 +175,7 @@ describe('src/app/service/entity-validation.service.js', () => {
         expect(customValidator.mock.calls).toHaveLength(1);
         expect(customValidator.mock.calls[0][0]).toEqual(expectedErrors); // initial errors already modified because of array reference
         expect(customValidator.mock.calls[0][1]).toBe(testEntity); // entity
-        expect(customValidator.mock.calls[0][2]).toBe(Cicada.EntityDefinition.get(testEntity.getEntityName())); // entity definition
+        expect(customValidator.mock.calls[0][2]).toBe(Shopware.EntityDefinition.get(testEntity.getEntityName())); // entity definition
         expect(customValidator.mock.results[0].value).toEqual(expectedErrors); // should return the errors
     });
 });

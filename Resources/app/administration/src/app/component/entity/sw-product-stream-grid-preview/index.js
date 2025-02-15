@@ -1,19 +1,18 @@
 /**
- * @sw-package framework
+ * @sw-package inventory
  */
+
 import template from './sw-product-stream-grid-preview.html.twig';
 import './sw-product-stream-grid-preview.scss';
 
-const { Component, Context, Defaults } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Context, Defaults } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 Component.register('sw-product-stream-grid-preview', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -143,11 +142,11 @@ Component.register('sw-product-stream-grid-preview', {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
 

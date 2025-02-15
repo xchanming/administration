@@ -4,8 +4,8 @@
 
 import { UploadEvents } from 'src/core/service/api/media.api.service';
 
-const { Component, Mixin, Context } = Cicada;
-const utils = Cicada.Utils;
+const { Component, Mixin, Context } = Shopware;
+const utils = Shopware.Utils;
 
 /**
  * @private
@@ -45,8 +45,6 @@ function isIllegalUrlException(error) {
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-upload-listener', {
     template: '<div style="display: none"></div>',
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -178,34 +176,36 @@ Component.register('sw-upload-listener', {
             }
 
             if (this.notificationId !== null) {
-                Cicada.State.dispatch('notification/updateNotification', {
+                Shopware.Store.get('notification').updateNotification({
                     uuid: this.notificationId,
                     ...notification,
-                }).then(() => {
-                    if (payload.successAmount + payload.failureAmount === payload.totalAmount) {
-                        this.notificationId = null;
-                    }
                 });
+                if (payload.successAmount + payload.failureAmount === payload.totalAmount) {
+                    this.notificationId = null;
+                }
                 return;
             }
 
-            Cicada.State.dispatch('notification/createNotification', {
+            const newNotificationId = Shopware.Store.get('notification').createNotification({
                 variant: 'success',
                 ...notification,
-            }).then((newNotificationId) => {
-                if (payload.successAmount + payload.failureAmount < payload.totalAmount) {
-                    this.notificationId = newNotificationId;
-                }
             });
+            if (payload.successAmount + payload.failureAmount < payload.totalAmount) {
+                this.notificationId = newNotificationId;
+            }
         },
 
         showErrorNotification(payload) {
             if (isIllegalFileNameException(payload.error)) {
                 this.createNotificationError({
                     title: this.$root.$tc('global.default.error'),
-                    message: this.$root.$tc('global.sw-media-upload.notification.illegalFilename.message', 0, {
-                        fileName: payload.fileName,
-                    }),
+                    message: this.$root.$tc(
+                        'global.sw-media-upload.notification.illegalFilename.message',
+                        {
+                            fileName: payload.fileName,
+                        },
+                        0,
+                    ),
                 });
             } else if (isIllegalUrlException(payload.error)) {
                 this.createNotificationError({

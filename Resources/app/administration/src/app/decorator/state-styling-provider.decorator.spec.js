@@ -12,10 +12,10 @@ describe('src/app/decorator/state-styling-provider.decorator.ts', () => {
             variant: expect.any(String),
         });
 
-        Cicada.Service().register('stateStyleDataProviderService', () => {
+        Shopware.Service().register('stateStyleDataProviderService', () => {
             return { addStyle: addStyleMock, bind: () => {} };
         });
-        Cicada.Service('stateStyleDataProviderService');
+        Shopware.Service('stateStyleDataProviderService');
 
         expect(addStyleMock).toHaveBeenCalledWith('order.state', 'open', styleMatcher);
         expect(addStyleMock).toHaveBeenCalledWith('order.state', 'in_progress', styleMatcher);

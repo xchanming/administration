@@ -23,7 +23,7 @@ async function createWrapper(blockConfig = {}) {
             },
             global: {
                 provide: {
-                    cmsService: Cicada.Service().get('cmsService'),
+                    cmsService: Shopware.Service().get('cmsService'),
                 },
                 stubs: {
                     'sw-icon': true,

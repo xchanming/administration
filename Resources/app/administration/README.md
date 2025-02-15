@@ -1,6 +1,6 @@
 # Administration
 
-> Cicada Administration
+> Shopware Administration
 
 ## Build Setup
 

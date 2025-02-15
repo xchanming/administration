@@ -67,7 +67,7 @@ async function createWrapper() {
                     cmsPageTypeService: {
                         getType(type) {
                             return {
-                                title: `sw-cms.detail.label.pageType.${Cicada.Utils.string.camelCase(type)}`,
+                                title: `sw-cms.detail.label.pageType.${Shopware.Utils.string.camelCase(type)}`,
                             };
                         },
                     },
@@ -90,12 +90,12 @@ async function createWrapper() {
 }
 
 /**
- * @sw-package content
+ * @sw-package discovery
  */
 describe('module/sw-custom-entity/component/sw-generic-cms-page-assignment', () => {
     beforeEach(() => {
-        Cicada.Store.unregister('cmsPage');
-        Cicada.Store.register({
+        Shopware.Store.unregister('cmsPage');
+        Shopware.Store.register({
             id: 'cmsPage',
             state: () => ({
                 currentPage: null,
@@ -268,7 +268,7 @@ describe('module/sw-custom-entity/component/sw-generic-cms-page-assignment', () 
     });
 
     it('should emit slotOverrides when the cmsPage is changed', async () => {
-        global.Cicada.Data.ChangesetGenerator = class ChangesetGeneratorMock {
+        global.Shopware.Data.ChangesetGenerator = class ChangesetGeneratorMock {
             generate() {
                 return {
                     changes: {

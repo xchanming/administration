@@ -1,11 +1,9 @@
-<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_customer_base_form %}
 <div class="sw-customer-base-form">
     <sw-container
         columns="repeat(auto-fit, minmax(250px, 1fr))"
         gap="0px 32px"
     >
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_customer_base_form_account_type_field %}
         <sw-single-select
             v-model:value="customer.accountType"
@@ -21,7 +19,6 @@
             columns="1fr 1fr"
             class="sw-customer-base-form__first-item sw-customer-base-form__first-item--full"
         >
-            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
             {% block sw_customer_base_form_first_salutation_field %}
             <sw-entity-single-select
                 v-model:value="customer.salutationId"
@@ -36,7 +33,6 @@
             />
             {% endblock %}
 
-            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
             {% block sw_customer_base_form_title_field %}
             <sw-text-field
                 v-model:value="customer.title"
@@ -47,19 +43,28 @@
             {% endblock %}
         </sw-container>
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_customer_base_form_name_field %}
+        {% block sw_customer_base_form_first_name_field %}
         <sw-text-field
-            v-model:value="customer.name"
-            name="sw-field--customer-name"
+            v-model:value="customer.firstName"
+            name="sw-field--customer-firstName"
             required
-            :label="$tc('sw-customer.baseForm.labelName')"
-            :placeholder="$tc('sw-customer.baseForm.placeholderName')"
-            :error="customerNameError"
+            :label="$tc('sw-customer.baseForm.labelFirstName')"
+            :placeholder="$tc('sw-customer.baseForm.placeholderFirstName')"
+            :error="customerFirstNameError"
         />
         {% endblock %}
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_customer_base_form_last_name_field %}
+        <sw-text-field
+            v-model:value="customer.lastName"
+            name="sw-field--customer-lastName"
+            required
+            :label="$tc('sw-customer.baseForm.labelLastName')"
+            :placeholder="$tc('sw-customer.baseForm.placeholderLastName')"
+            :error="customerLastNameError"
+        />
+        {% endblock %}
+
         {% block sw_customer_base_form_email_field %}
         <sw-email-field
             v-model:value="customer.email"
@@ -71,7 +76,6 @@
         />
         {% endblock %}
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_customer_base_form_password_field %}
         <sw-password-field
             v-model:value="customer.password"
@@ -85,7 +89,6 @@
         />
         {% endblock %}
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_customer_base_form_vat_id_field %}
         <sw-text-field
             v-if="isBusinessAccountType"
@@ -98,7 +101,6 @@
         />
         {% endblock %}
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_customer_base_form_birthday_field %}
         <sw-datepicker
             v-model:value="customer.birthday"
@@ -110,7 +112,6 @@
         />
         {% endblock %}
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_customer_base_form_customer_group_field %}
         <sw-entity-single-select
             v-model:value="customer.groupId"
@@ -125,7 +126,6 @@
         />
         {% endblock %}
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_customer_base_form_sales_channel_field %}
         <sw-entity-single-select
             class="sw-customer-base-form__sales-channel-select"
@@ -140,7 +140,6 @@
         />
         {% endblock %}
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_customer_base_form_customer_number_field %}
         <sw-text-field
             v-model:value="customer.customerNumber"
@@ -153,7 +152,6 @@
         {% endblock %}
     </sw-container>
 
-    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
     {% block sw_customer_base_form_tag_field %}
     <sw-entity-tag-select
         v-model:entity-collection="customer.tags"

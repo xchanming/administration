@@ -6,14 +6,12 @@ import './sw-order-product-select.scss';
  * @sw-package checkout
  */
 
-const { Service } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Service } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         item: {
@@ -62,7 +60,7 @@ export default {
         },
 
         contextWithInheritance() {
-            return { ...Cicada.Context.api, inheritance: true };
+            return { ...Shopware.Context.api, inheritance: true };
         },
 
         productCriteria() {
@@ -80,6 +78,7 @@ export default {
 
             criteria.addFilter(Criteria.equals('visibilities.salesChannelId', this.salesChannelId));
             criteria.addFilter(Criteria.equals('active', true));
+            criteria.setTotalCountMode(0);
 
             return criteria;
         },

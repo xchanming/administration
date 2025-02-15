@@ -1,7 +1,7 @@
 /**
  * @sw-package checkout
  */
-import { purchase } from '@cicada-ag/meteor-admin-sdk/es/iap';
+import { purchase } from '@shopware-ag/meteor-admin-sdk/es/iap';
 import initializeInAppPurchaseCheckout from './in-app-purchase-checkout.init';
 import 'src/app/store/in-app-purchase-checkout.store';
 
@@ -11,8 +11,8 @@ describe('src/app/init/in-app-purchase.init.ts', () => {
     });
 
     beforeEach(() => {
-        Cicada.State._store.state.extensions = {};
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').extensionsState = {};
+        Shopware.Store.get('extensions').addExtension({
             name: 'jestapp',
             baseUrl: '',
             permissions: [],
@@ -22,9 +22,9 @@ describe('src/app/init/in-app-purchase.init.ts', () => {
             active: true,
         });
 
-        Cicada.Store.get('inAppPurchaseCheckout').$reset();
+        Shopware.Store.get('inAppPurchaseCheckout').$reset();
 
-        Cicada.Context.app.config.bundles = {
+        Shopware.Context.app.config.bundles = {
             jestapp: {
                 identifier: 'jestapp',
             },
@@ -40,6 +40,6 @@ describe('src/app/init/in-app-purchase.init.ts', () => {
             closable: true,
         });
 
-        expect(Cicada.Store.get('inAppPurchaseCheckout').entry).toBeDefined();
+        expect(Shopware.Store.get('inAppPurchaseCheckout').entry).toBeDefined();
     });
 });

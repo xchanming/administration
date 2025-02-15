@@ -8,8 +8,6 @@ import './sw-extension-removal-modal.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'modal-close',
         'remove-extension',

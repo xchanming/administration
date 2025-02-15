@@ -1,7 +1,7 @@
 import template from './sw-condition-time-range.html.twig';
 import './sw-condition-time-range.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 const defaultTimeValue = '12:00';
 

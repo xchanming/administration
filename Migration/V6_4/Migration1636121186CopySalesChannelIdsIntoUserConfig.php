@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Migration\V6_4;
+namespace Shopware\Administration\Migration\V6_4;
 
-use Cicada\Core\Defaults;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Migration\MigrationStep;
-use Cicada\Core\Framework\Uuid\Uuid;
-use Cicada\Core\System\Language\LanguageDefinition;
-use Cicada\Core\System\SalesChannel\Aggregate\SalesChannelTranslation\SalesChannelTranslationDefinition;
-use Cicada\Core\System\User\UserDefinition;
 use Doctrine\DBAL\Connection;
+use Shopware\Core\Defaults;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Migration\MigrationStep;
+use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\System\Language\LanguageDefinition;
+use Shopware\Core\System\SalesChannel\Aggregate\SalesChannelTranslation\SalesChannelTranslationDefinition;
+use Shopware\Core\System\User\UserDefinition;
 
 /**
  * @internal

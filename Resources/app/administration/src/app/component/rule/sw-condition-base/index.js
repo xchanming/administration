@@ -1,7 +1,7 @@
 import template from './sw-condition-base.html.twig';
 import './sw-condition-base.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**
@@ -15,8 +15,6 @@ const { mapPropertyErrors } = Component.getComponentHelper();
  */
 Component.register('sw-condition-base', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -91,17 +89,11 @@ Component.register('sw-condition-base', {
     watch: {
         value() {
             if (this.hasError) {
-                this.$store.commit('error/removeApiError', {
-                    expression: this.valueErrorPath,
-                });
+                Shopware.Store.get('error').removeApiError(this.valueErrorPath);
             }
             if (this.isEmpty && !!this.inputKey) {
-                if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                    this.$delete(this.condition.value, this.inputKey);
-                } else {
-                    // eslint-disable-next-line vue/no-mutating-props
-                    delete this.condition.value[this.inputKey];
-                }
+                // eslint-disable-next-line vue/no-mutating-props
+                delete this.condition.value[this.inputKey];
             }
         },
     },

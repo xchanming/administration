@@ -2,8 +2,8 @@ import { inject } from 'vue';
 import template from './sw-number-field.html.twig';
 import './sw-number-field.scss';
 
-const { Component } = Cicada;
-const { warn } = Cicada.Utils.debug;
+const { Component } = Shopware;
+const { warn } = Shopware.Utils.debug;
 
 /**
  * @sw-package framework

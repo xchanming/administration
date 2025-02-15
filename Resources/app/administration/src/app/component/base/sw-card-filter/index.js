@@ -5,15 +5,13 @@
 import template from './sw-card-filter.html.twig';
 import './sw-card-filter.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-card-filter', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['sw-card-filter-term-change'],
 

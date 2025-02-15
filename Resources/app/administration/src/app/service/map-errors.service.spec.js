@@ -2,13 +2,13 @@
  * @sw-package framework
  */
 import * as mapErrors from 'src/app/service/map-errors.service';
-import CicadaError from 'src/core/data/CicadaError';
+import ShopwareError from 'src/core/data/ShopwareError';
 
 describe('app/service/map-errors.service.js', () => {
-    Cicada.Utils.debug.warn = jest.fn();
+    Shopware.Utils.debug.warn = jest.fn();
 
     beforeEach(async () => {
-        Cicada.Utils.debug.warn.mockClear();
+        Shopware.Utils.debug.warn.mockClear();
     });
 
     it('all: should be an object', async () => {
@@ -182,13 +182,13 @@ describe('app/service/map-errors.service.js', () => {
     });
 
     it('mapSystemConfigErrors: it should return an object', () => {
-        Cicada.State.dispatch('error/addApiError', {
+        Shopware.Store.get('error').addApiError({
             expression: 'SYSTEM_CONFIG.testSaleChannelId.dummyKey',
-            error: new CicadaError({ code: 'dummyCode' }),
+            error: new ShopwareError({ code: 'dummyCode' }),
         });
 
         const result = mapErrors.mapSystemConfigErrors('SYSTEM_CONFIG', 'testSaleChannelId', 'dummyKey');
 
-        expect(result).toBeInstanceOf(CicadaError);
+        expect(result).toBeInstanceOf(ShopwareError);
     });
 });

@@ -4,14 +4,14 @@ import { defineComponent } from 'vue';
  * @sw-package checkout
  * @private
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'sw-extension-error',
     defineComponent({
-        mixins: [Cicada.Mixin.getByName('notification')],
+        mixins: [Shopware.Mixin.getByName('notification')],
 
         methods: {
             showExtensionErrors(errorResponse) {
-                Cicada.Service('extensionErrorService')
+                Shopware.Service('extensionErrorService')
                     .handleErrorResponse(errorResponse, this)
                     .forEach((notification) => {
                         this.createNotificationError(notification);

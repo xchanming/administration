@@ -1,7 +1,7 @@
 import template from './sw-media-sidebar.html.twig';
 import './sw-media-sidebar.scss';
 
-const { Filter, Context } = Cicada;
+const { Filter, Context } = Shopware;
 
 /**
  * @sw-package discovery
@@ -10,13 +10,11 @@ const { Filter, Context } = Cicada;
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['repositoryFactory'],
 
     emits: ['media-sidebar-folder-renamed'],
 
-    mixins: [Cicada.Mixin.getByName('notification')],
+    mixins: [Shopware.Mixin.getByName('notification')],
 
     props: {
         items: {
@@ -107,22 +105,10 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
-        },
-
-        listeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
+            return Shopware.Filter.getByName('asset');
         },
 
         filteredAttributes() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return {};
-            }
-
             const filteredAttributes = {};
 
             Object.entries(this.$attrs).forEach(

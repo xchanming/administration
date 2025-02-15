@@ -4,14 +4,12 @@
 import template from './sw-settings-listing.html.twig';
 import './sw-settings-listing.scss';
 
-const { Criteria } = Cicada.Data;
-const { CicadaError } = Cicada.Classes;
+const { Criteria } = Shopware.Data;
+const { ShopwareError } = Shopware.Classes;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -117,7 +115,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         salesChannelDefaultSortingError() {
@@ -125,7 +123,7 @@ export default {
                 ? 'PARENT_MUST_NOT_BE_EMPTY'
                 : 'c1051bb4-d103-4f74-8988-acbcafc7fdc3';
 
-            return new CicadaError({
+            return new ShopwareError({
                 code,
             });
         },

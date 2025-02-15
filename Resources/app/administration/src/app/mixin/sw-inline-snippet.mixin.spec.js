@@ -13,7 +13,7 @@ async function createWrapper() {
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('sw-inline-snippet'),
+                Shopware.Mixin.getByName('sw-inline-snippet'),
             ],
             data() {
                 return {
@@ -31,7 +31,7 @@ describe('src/app/mixin/sw-inline-snippet.mixin.ts', () => {
     let wrapper;
 
     beforeEach(async () => {
-        Cicada.Context.app.fallbackLocale = 'zh-CN';
+        Shopware.Context.app.fallbackLocale = 'de-DE';
         wrapper = await createWrapper();
 
         await flushPromises();
@@ -72,7 +72,7 @@ describe('src/app/mixin/sw-inline-snippet.mixin.ts', () => {
     it('should return correct fallback value with locale using the getInlineSnippet method without value', () => {
         const result = wrapper.vm.getInlineSnippet({
             'fr-FR': 'French',
-            'zh-CN': 'German',
+            'de-DE': 'German',
         });
 
         expect(result).toBe('German');

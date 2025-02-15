@@ -2,8 +2,8 @@
  * @sw-package framework
  */
 describe('src/app/filter/thumbnail-size.filter.ts', () => {
-    const thumbnailSizeFilter = Cicada.Filter.getByName('thumbnailSize');
-    const mediaThumbnailFactory = Cicada.Service('repositoryFactory').create('media_thumbnail_size');
+    const thumbnailSizeFilter = Shopware.Filter.getByName('thumbnailSize');
+    const mediaThumbnailFactory = Shopware.Service('repositoryFactory').create('media_thumbnail_size');
 
     it('should contain a filter', () => {
         expect(thumbnailSizeFilter).toBeDefined();

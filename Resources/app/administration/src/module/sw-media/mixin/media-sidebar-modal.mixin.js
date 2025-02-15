@@ -1,7 +1,7 @@
 /**
  * @sw-package discovery
  */
-Cicada.Mixin.register('media-sidebar-modal-mixin', {
+Shopware.Mixin.register('media-sidebar-modal-mixin', {
     inject: [
         'mediaService',
         'acl',

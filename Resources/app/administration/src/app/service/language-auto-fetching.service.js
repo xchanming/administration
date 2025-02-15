@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+import { watch } from 'vue';
 
 let isInitialized = false;
 
@@ -12,26 +13,18 @@ export default function LanguageAutoFetchingService() {
     isInitialized = true;
 
     // initial loading of the language
-    loadLanguage(Cicada.Context.api.languageId);
+    loadLanguage(Shopware.Context.api.languageId);
 
     // load the language Entity
     async function loadLanguage(newLanguageId) {
-        const languageRepository = Cicada.Service('repositoryFactory').create('language');
+        const languageRepository = Shopware.Service('repositoryFactory').create('language');
         const newLanguage = await languageRepository.get(newLanguageId, {
-            ...Cicada.Context.api,
+            ...Shopware.Context.api,
             inheritance: true,
         });
 
-        Cicada.State.commit('context/setApiLanguage', newLanguage);
+        Shopware.Store.get('context').api.language = newLanguage;
     }
 
-    // watch for changes of the languageId
-    Cicada.State.watch(
-        (state) => state.context.api.languageId,
-        (newValue, oldValue) => {
-            if (newValue === oldValue) return;
-
-            loadLanguage(newValue);
-        },
-    );
+    watch(Shopware.Store.get('context').api.languageId, loadLanguage);
 }

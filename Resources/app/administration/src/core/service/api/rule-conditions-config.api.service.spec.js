@@ -10,7 +10,7 @@ import ruleConditionsConfig from './../../../app/component/rule/condition-type/_
 function getRuleConditionsConfigApiService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
 
     const ruleConditionsConfigApiService = new RuleConditionsConfigApiService(client, loginService);
     return { ruleConditionsConfigApiService, clientMock };
@@ -29,16 +29,16 @@ describe('ruleConditionsConfigApiService', () => {
 
         await ruleConditionsConfigApiService.load();
 
-        expect(Cicada.State.getters['ruleConditionsConfig/getConfig']()).toEqual(ruleConditionsConfig);
+        expect(Shopware.Store.get('ruleConditionsConfig').config).toEqual(ruleConditionsConfig);
     });
 
     it('is request prevented if store has config', async () => {
         const { ruleConditionsConfigApiService } = getRuleConditionsConfigApiService();
 
-        Cicada.State.commit('ruleConditionsConfig/setConfig', { foo: 'bar' });
+        Shopware.Store.get('ruleConditionsConfig').config = { foo: 'bar' };
 
         await ruleConditionsConfigApiService.load();
 
-        expect(Cicada.State.getters['ruleConditionsConfig/getConfig']()).toEqual({ foo: 'bar' });
+        expect(Shopware.Store.get('ruleConditionsConfig').config).toEqual({ foo: 'bar' });
     });
 });

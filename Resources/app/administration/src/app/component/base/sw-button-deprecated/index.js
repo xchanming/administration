@@ -1,7 +1,7 @@
 import './sw-button.scss';
 import template from './sw-button.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -20,12 +20,6 @@ Component.register('sw-button-deprecated', {
     template,
 
     inheritAttrs: false,
-
-    compatConfig: {
-        ...Cicada.compatConfig,
-        // Needed so that Button classes are bound correctly via `v-bind="$attrs"`
-        INSTANCE_ATTRS_CLASS_STYLE: false,
-    },
 
     props: {
         disabled: {
@@ -120,15 +114,6 @@ Component.register('sw-button-deprecated', {
             return {
                 'is--hidden': this.isLoading,
             };
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
 
         filteredAttributes() {

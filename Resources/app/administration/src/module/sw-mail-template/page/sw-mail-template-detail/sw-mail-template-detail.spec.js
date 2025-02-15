@@ -133,7 +133,7 @@ async function createWrapper(privileges = []) {
                 },
             },
             mocks: {
-                $route: { params: { id: Cicada.Utils.createId() } },
+                $route: { params: { id: Shopware.Utils.createId() } },
             },
             stubs: {
                 'sw-page': {
@@ -258,7 +258,7 @@ describe('modules/sw-mail-template/page/sw-mail-template-detail', () => {
                     '/media',
                     'media',
                     null,
-                    { isCicadaContext: true },
+                    { isShopwareContext: true },
                     mediaMock,
                     mediaMock.length,
                     null,
@@ -292,7 +292,7 @@ describe('modules/sw-mail-template/page/sw-mail-template-detail', () => {
                     '/media',
                     'media',
                     null,
-                    { isCicadaContext: true },
+                    { isShopwareContext: true },
                     mediaMock,
                     mediaMock.length,
                     null,
@@ -494,7 +494,7 @@ describe('modules/sw-mail-template/page/sw-mail-template-detail', () => {
                 contentPlain: 'the status of your order at {{ salesChannel.translated.name }}',
                 // eslint-disable-next-line max-len
                 contentHtml:
-                    '{{ order.orderCustomer.salutation.translated.letterName }} {{ order.orderCustomer.name }} {{ order.orderCustomer.lastName }},<br/><br/>',
+                    '{{ order.orderCustomer.salutation.translated.letterName }} {{ order.orderCustomer.firstName }} {{ order.orderCustomer.lastName }},<br/><br/>',
                 senderName: '{{ salesChannel.name }}',
             },
             testerMail: 'foo@bar.com',
@@ -891,7 +891,7 @@ describe('modules/sw-mail-template/page/sw-mail-template-detail', () => {
 
         expect(wrapper.vm.showLanguageNotAssignedToSalesChannelWarning).toBeFalsy();
 
-        Cicada.Context.api.languageId = 'foo';
+        Shopware.Context.api.languageId = 'foo';
         await sendTestMail.trigger('click');
 
         await flushPromises();

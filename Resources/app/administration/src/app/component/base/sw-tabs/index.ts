@@ -1,8 +1,8 @@
 import type { PropType } from 'vue';
-import type { TabItem } from '@cicada-ag/meteor-component-library/dist/esm/components/navigation/mt-tabs/mt-tabs';
+import type { TabItem } from '@shopware-ag/meteor-component-library/dist/esm/components/navigation/mt-tabs/mt-tabs';
 import template from './sw-tabs.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -13,8 +13,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-tabs', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         /**
@@ -29,12 +27,12 @@ Component.register('sw-tabs', {
     computed: {
         useMeteorComponent() {
             // Use new meteor component in major
-            if (Cicada.Feature.isActive('v6.7.0.0')) {
+            if (Shopware.Feature.isActive('ENABLE_METEOR_COMPONENTS')) {
                 return true;
             }
 
             // Throw warning when deprecated component is used
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'sw-tabs',
                 // eslint-disable-next-line max-len
                 'The old usage of "sw-tabs" is deprecated and will be removed in v6.7.0.0. Please use "mt-tabs" instead.',
@@ -144,16 +142,6 @@ Component.register('sw-tabs', {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             return items;
         },
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-        listeners(): Record<string, Function | Function[]> {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
     },
 
     data(): {
@@ -175,12 +163,6 @@ Component.register('sw-tabs', {
     methods: {
         getSlots() {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                return {
-                    ...this.$slots,
-                    ...this.$scopedSlots,
-                };
-            }
 
             return this.$slots;
         },

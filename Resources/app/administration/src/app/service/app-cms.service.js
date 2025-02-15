@@ -1,12 +1,12 @@
 import { h } from 'vue';
 
-const { Locale } = Cicada;
-const { debug } = Cicada.Utils;
+const { Locale } = Shopware;
+const { debug } = Shopware.Utils;
 
 /**
  * Contains a list of allowed block categories
  * @type {string[]}
- * @sw-package buyers-experience
+ * @sw-package discovery
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export const BLOCKS_CATEGORIES = [
@@ -20,7 +20,7 @@ export const BLOCKS_CATEGORIES = [
 ];
 
 /**
- * @sw-package buyers-experience
+ * @sw-package discovery
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default class AppCmsService {
@@ -101,7 +101,7 @@ export default class AppCmsService {
         const previewComponent = this.createBlockPreviewComponent(block);
         const config = this.createBlockConfiguration(block, component, previewComponent);
 
-        Cicada.Service('cmsService').registerCmsBlock(config);
+        Shopware.Service('cmsService').registerCmsBlock(config);
 
         return config;
     }
@@ -136,7 +136,6 @@ export default class AppCmsService {
 
         const component = {
             name: componentName,
-            compatConfig: Cicada.compatConfig,
 
             render(createElement) {
                 const slotEntries = Object.entries(block.slots);
@@ -205,7 +204,7 @@ export default class AppCmsService {
     registerBlockSnippets(blockName, label) {
         return Object.keys(label).reduce((accumulator, localeKey) => {
             if (!Locale.getByName(localeKey)) {
-                debug.warn(this.constructor.name, `The locale "${localeKey}" is not registered in Cicada.Locale.`);
+                debug.warn(this.constructor.name, `The locale "${localeKey}" is not registered in Shopware.Locale.`);
 
                 accumulator = false;
                 return accumulator;

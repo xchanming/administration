@@ -8,10 +8,8 @@ import './sw-cms-el-sidebar-filter.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     mixins: [
-        Cicada.Mixin.getByName('cms-element'),
+        Shopware.Mixin.getByName('cms-element'),
     ],
 
     computed: {

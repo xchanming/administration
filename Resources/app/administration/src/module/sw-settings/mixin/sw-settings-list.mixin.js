@@ -1,11 +1,11 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 const {
     Mixin,
     Data: { Criteria },
-} = Cicada;
-const { debug } = Cicada.Utils;
+} = Shopware;
+const { debug } = Shopware.Utils;
 
 Mixin.register('sw-settings-list', {
     mixins: [
@@ -66,9 +66,13 @@ Mixin.register('sw-settings-list', {
                     });
                 }
 
-                return this.$tc('global.notification.messageDeleteSuccess', 0, {
-                    name: name,
-                });
+                return this.$tc(
+                    'global.notification.messageDeleteSuccess',
+                    {
+                        name: name,
+                    },
+                    0,
+                );
             }
             return '';
         },

@@ -8,8 +8,6 @@ import template from './sw-newsletter-recipient-filter-switch.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['update:value'],
 
     props: {

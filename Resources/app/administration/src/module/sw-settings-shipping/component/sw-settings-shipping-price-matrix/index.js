@@ -5,9 +5,8 @@ const {
     Mixin,
     Context,
     Data: { Criteria },
-} = Cicada;
-const { cloneDeep } = Cicada.Utils.object;
-const { mapState, mapGetters } = Cicada.Component.getComponentHelper();
+} = Shopware;
+const { cloneDeep } = Shopware.Utils.object;
 
 /**
  * @sw-package checkout
@@ -16,11 +15,8 @@ const { mapState, mapGetters } = Cicada.Component.getComponentHelper();
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
-        'feature',
     ],
 
     emits: [
@@ -74,19 +70,34 @@ export default {
     },
 
     computed: {
-        ...mapState('swShippingDetail', [
-            'shippingMethod',
-            'currencies',
-            'restrictedRuleIds',
-        ]),
+        shippingMethod() {
+            return Shopware.Store.get('swShippingDetail').shippingMethod;
+        },
 
-        ...mapGetters('swShippingDetail', [
-            'defaultCurrency',
+        currencies() {
+            return Shopware.Store.get('swShippingDetail').currencies;
+        },
+
+        restrictedRuleIds() {
             /** @deprecated tag:v6.7.0 - usedRules will be removed, use restrictedRuleIds instead */
-            'usedRules',
-            'unrestrictedPriceMatrixExists',
-            'newPriceMatrixExists',
-        ]),
+            return Shopware.Store.get('swShippingDetail').restrictedRuleIds;
+        },
+
+        usedRules() {
+            return Shopware.Store.get('swShippingDetail').usedRules;
+        },
+
+        unrestrictedPriceMatrixExists() {
+            return Shopware.Store.get('swShippingDetail').unrestrictedPriceMatrixExists;
+        },
+
+        newPriceMatrixExists() {
+            return Shopware.Store.get('swShippingDetail').newPriceMatrixExists;
+        },
+
+        defaultCurrency() {
+            return Shopware.Store.get('swShippingDetail').defaultCurrency;
+        },
 
         ruleRepository() {
             return this.repositoryFactory.create('rule');
@@ -172,10 +183,6 @@ export default {
                 ]),
             );
 
-            if (!Cicada.Feature.isActive('v6.7.0.0')) {
-                criteria.addAssociation('conditions');
-            }
-
             return criteria;
         },
 
@@ -187,10 +194,6 @@ export default {
                     Criteria.equals('rule.moduleTypes', null),
                 ]),
             );
-
-            if (!Cicada.Feature.isActive('v6.7.0.0')) {
-                criteria.addAssociation('conditions');
-            }
 
             return criteria;
         },

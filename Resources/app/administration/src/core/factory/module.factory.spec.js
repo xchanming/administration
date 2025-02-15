@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-const { Module, Application } = Cicada;
+const { Module, Application } = Shopware;
 const ModuleFactory = Module;
 const register = ModuleFactory.register;
 
@@ -307,7 +307,7 @@ describe('core/factory/module.factory.js', () => {
         register('sw-foo', {
             entity: 'foo',
             snippets: {
-                'zh-CN': {
+                'de-DE': {
                     global: {
                         snippets: {
                             foo: 'foo',
@@ -326,7 +326,7 @@ describe('core/factory/module.factory.js', () => {
             entity: 'bar',
 
             snippets: {
-                'zh-CN': {
+                'de-DE': {
                     global: {
                         snippets: {
                             bar: 'bar',
@@ -345,7 +345,7 @@ describe('core/factory/module.factory.js', () => {
             entity: 'bar2',
 
             snippets: {
-                'zh-CN': {
+                'de-DE': {
                     global: {
                         snippets: {
                             foo: 'no foo',
@@ -364,7 +364,7 @@ describe('core/factory/module.factory.js', () => {
 
         const moduleFactory = Application.getContainer('factory').module;
         expect(moduleFactory.getModuleSnippets()).toEqual({
-            'zh-CN': {
+            'de-DE': {
                 global: {
                     snippets: {
                         foo: 'no foo',
@@ -377,7 +377,7 @@ describe('core/factory/module.factory.js', () => {
 
     it('should add settings item if feature flag is active', () => {
         global.activeFeatureFlags = ['testFlag'];
-        Cicada.State.get('settingsItems').settingsGroups = {};
+        Shopware.Store.get('settingsItems').settingsGroups = {};
 
         register('sw-foo', {
             name: 'fooBar',
@@ -408,12 +408,12 @@ describe('core/factory/module.factory.js', () => {
                 },
             ],
         };
-        expect(Cicada.State.get('settingsItems').settingsGroups).toEqual(expectedSettingsItem);
+        expect(Shopware.Store.get('settingsItems').settingsGroups).toEqual(expectedSettingsItem);
     });
 
     it('should not add settings item if feature flag is deactivated', () => {
         global.activeFeatureFlags = [];
-        Cicada.State.get('settingsItems').settingsGroups = {};
+        Shopware.Store.get('settingsItems').settingsGroups = {};
 
         register('sw-foo', {
             name: 'fooBar',
@@ -432,7 +432,7 @@ describe('core/factory/module.factory.js', () => {
             },
         });
 
-        expect(Cicada.State.get('settingsItems').settingsGroups).toEqual({});
+        expect(Shopware.Store.get('settingsItems').settingsGroups).toEqual({});
     });
 
     it('should not allow plugin modules to create menu entries on first level', () => {

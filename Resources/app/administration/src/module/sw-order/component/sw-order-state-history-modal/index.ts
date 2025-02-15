@@ -7,8 +7,8 @@ import template from './sw-order-state-history-modal.html.twig';
  * @sw-package checkout
  */
 
-const { Component, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 interface StateMachineHistoryData {
     order: Entity<'state_machine_state'>;
@@ -31,8 +31,6 @@ interface CombinedStates {
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

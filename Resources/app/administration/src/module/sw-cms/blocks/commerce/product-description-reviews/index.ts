@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-product-description-reviews', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-product-description-reviews', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-product-description-reviews', () => import('./component'));
+Shopware.Component.register('sw-cms-block-product-description-reviews', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'product-description-reviews',
     label: 'sw-cms.blocks.commerce.productDescriptionReviews.label',
     category: 'commerce',

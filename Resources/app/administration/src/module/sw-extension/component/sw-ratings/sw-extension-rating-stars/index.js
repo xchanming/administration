@@ -8,8 +8,6 @@ import './sw-extension-rating-stars.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['feature'],
 
     emits: ['update:rating'],

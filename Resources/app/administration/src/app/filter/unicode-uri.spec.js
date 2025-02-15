@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 describe('src/app/filter/unicode-uri.ts', () => {
-    const unicodeUriFilter = Cicada.Filter.getByName('unicodeUri');
+    const unicodeUriFilter = Shopware.Filter.getByName('unicodeUri');
 
     it('should contain a filter', () => {
         expect(unicodeUriFilter).toBeDefined();

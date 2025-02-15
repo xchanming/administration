@@ -4,13 +4,11 @@
 
 import template from './sw-settings-sitemap.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('notification'),

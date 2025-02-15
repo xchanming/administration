@@ -252,6 +252,7 @@ describe('app/component/form/sw-checkbox-field', () => {
         const secondCheckbox = wrapper.findAll('.sw-field--checkbox').at(1);
         expect(secondCheckbox.find('input').attributes('aria-label')).toBe('Check Two');
     });
+
     it('injects ariaLabel prop from global injection', async () => {
         const wrapper = mount(
             { template: `<sw-checkbox-field-deprecated />` },

@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-text-hero', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-text-hero', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-text-hero', () => import('./component'));
+Shopware.Component.register('sw-cms-block-text-hero', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'text-hero',
     label: 'sw-cms.blocks.text.textHero.label',
     category: 'text',

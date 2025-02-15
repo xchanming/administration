@@ -1,6 +1,6 @@
 import template from './sw-landing-page-view.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @sw-package discovery
@@ -8,8 +8,6 @@ const { Mixin } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['acl'],
 
@@ -27,11 +25,11 @@ export default {
 
     computed: {
         landingPage() {
-            return Cicada.State.get('swCategoryDetail').landingPage;
+            return Shopware.Store.get('swCategoryDetail').landingPage;
         },
 
         cmsPage() {
-            return Cicada.Store.get('cmsPage').currentPage;
+            return Shopware.Store.get('cmsPage').currentPage;
         },
     },
 };

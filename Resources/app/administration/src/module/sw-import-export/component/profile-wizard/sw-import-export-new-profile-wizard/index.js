@@ -4,13 +4,11 @@
 import template from './sw-import-export-new-profile-wizard.html.twig';
 import './sw-import-export-new-profile-wizard.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

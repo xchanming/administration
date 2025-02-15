@@ -3,10 +3,11 @@
  *
  * @private
  */
+import '../store/action-buttons.store';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeActionButtons(): void {
-    Cicada.ExtensionAPI.handle('actionButtonAdd', (configuration) => {
-        Cicada.State.commit('actionButtons/add', configuration);
+    Shopware.ExtensionAPI.handle('actionButtonAdd', (configuration) => {
+        Shopware.Store.get('actionButtons').add(configuration);
     });
 }

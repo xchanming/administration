@@ -1,20 +1,18 @@
 /**
  * @sw-package inventory
  */
-import Criteria from '@cicada-ag/meteor-admin-sdk/es/data/Criteria';
+import Criteria from '@shopware-ag/meteor-admin-sdk/es/data/Criteria';
 import template from './sw-settings-units-detail.html.twig';
 import type Repository from '../../../../core/data/repository.data';
 import { mapPropertyErrors } from '../../../../app/service/map-errors.service';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @private
  */
 export default Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('notification'),
@@ -100,7 +98,7 @@ export default Component.wrapComponentConfig({
                     return;
                 }
 
-                this.unit = this.unitRepository.create(Cicada.Context.api);
+                this.unit = this.unitRepository.create(Shopware.Context.api);
                 this.isLoading = false;
             })
             .catch(() => {
@@ -118,7 +116,7 @@ export default Component.wrapComponentConfig({
             this.isLoading = true;
 
             this.unitRepository
-                .get(this.unitId, Cicada.Context.api)
+                .get(this.unitId, Shopware.Context.api)
                 .then((unit) => {
                     this.unit = unit;
 

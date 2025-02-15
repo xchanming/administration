@@ -1,6 +1,6 @@
 import './sw-boolean-radio-group.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -30,8 +30,6 @@ Component.register('sw-boolean-radio-group', {
 `,
 
     inject: ['feature'],
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['update:value'],
 

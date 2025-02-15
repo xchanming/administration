@@ -4,18 +4,18 @@ import CMS from '../../../constant/sw-cms.constant';
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-image-three-cover', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-image-three-cover', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-image-three-cover', () => import('./component'));
+Shopware.Component.register('sw-cms-block-image-three-cover', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'image-three-cover',
     label: 'sw-cms.blocks.image.imageThreeCover.label',
     category: 'image',

@@ -1,10 +1,10 @@
 import './page/index';
 
 import type { RouteLocationNamedRaw } from 'vue-router';
-import deDE from './snippet/zh-CN.json';
+import zhCN from './snippet/zh-CN.json';
 import enGB from './snippet/en-GB.json';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /**
  * @sw-package framework
@@ -21,7 +21,7 @@ Module.register('sw-inactivity-login', {
     color: '#F19D12',
 
     snippets: {
-        'zh-CN': deDE,
+        'zh-CN': zhCN,
         'en-GB': enGB,
     },
 

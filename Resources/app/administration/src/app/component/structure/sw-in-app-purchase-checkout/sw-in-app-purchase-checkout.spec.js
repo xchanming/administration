@@ -49,13 +49,13 @@ describe('src/app/component/structure/sw-in-app-purchase-checkout', () => {
             featureId: 'Test Feature',
         };
 
-        Cicada.Context.app.config.bundles = {
-            'TestExtension': {
+        Shopware.Context.app.config.bundles = {
+            TestExtension: {
                 identifier: 'TestExtension',
-            }
+            },
         };
 
-        Cicada.Store.get('inAppPurchaseCheckout').request(requestCheckout, 'TestExtension');
+        Shopware.Store.get('inAppPurchaseCheckout').request(requestCheckout, 'TestExtension');
 
         await flushPromises();
 
@@ -74,13 +74,13 @@ describe('src/app/component/structure/sw-in-app-purchase-checkout', () => {
             featureId: 'Test Feature',
         };
 
-        Cicada.Context.app.config.bundles = {
-            'TestExtension': {
+        Shopware.Context.app.config.bundles = {
+            TestExtension: {
                 identifier: 'TestExtension',
-            }
+            },
         };
 
-        Cicada.Store.get('inAppPurchaseCheckout').request(requestCheckout, 'TestExtension');
+        Shopware.Store.get('inAppPurchaseCheckout').request(requestCheckout, 'TestExtension');
 
         await flushPromises();
 

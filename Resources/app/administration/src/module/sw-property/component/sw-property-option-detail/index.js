@@ -4,14 +4,12 @@
 
 import template from './sw-property-option-detail.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -49,9 +47,7 @@ export default {
     methods: {
         onCancel() {
             // Remove all property group options
-            Cicada.State.dispatch('error/removeApiError', {
-                expression: 'property_group_option',
-            });
+            Shopware.Store.get('error').removeApiError('property_group_option');
 
             this.$emit('cancel-option-edit', this.currentOption);
         },

@@ -4,7 +4,7 @@
 import { mount } from '@vue/test-utils';
 import 'src/module/sw-cms/mixin/sw-cms-state.mixin';
 
-const { EntityCollection, Entity } = Cicada.Data;
+const { EntityCollection, Entity } = Shopware.Data;
 
 function getBlockData(position, id = '1a2b') {
     return {
@@ -35,9 +35,9 @@ async function createWrapper(
 ) {
     localStorage.clear();
 
-    Cicada.Store.unregister('cmsPage');
+    Shopware.Store.unregister('cmsPage');
 
-    Cicada.Store.register({
+    Shopware.Store.register({
         id: 'cmsPage',
         state: () => ({
             isSystemDefaultLanguage: true,

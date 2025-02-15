@@ -4,13 +4,13 @@ import ApiService from '../api.service';
  * Custom gateway for the "user/user-recovery" routes
  * @class
  * @extends ApiService
- * @sw-package fundamentals@after-sales
+ * @sw-package fundamentals@framework
  */
 class UserRecoveryApiService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = 'user') {
         super(httpClient, loginService, apiEndpoint);
         this.name = 'userRecoveryService';
-        this.context = Cicada.Context;
+        this.context = Shopware.Context;
     }
 
     createRecovery(email) {

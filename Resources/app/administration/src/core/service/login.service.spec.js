@@ -45,7 +45,7 @@ describe('core/service/login.service.js', () => {
         const mockDate = new Date(1577881800000);
         Date.now = jest.fn(() => +mockDate);
 
-        Cicada.Service().register('userActivityService', () => {
+        Shopware.Service().register('userActivityService', () => {
             return {
                 getLastUserActivity: () => {
                     return lastUserActivity ?? new Date();
@@ -60,7 +60,7 @@ describe('core/service/login.service.js', () => {
     beforeEach(() => {
         cookieStorageMock = '';
         lastUserActivity = null;
-        Cicada.Application.view.router = undefined;
+        Shopware.Application.view.router = undefined;
     });
 
     afterEach(() => {
@@ -180,7 +180,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN',
         });
 
-        const auth = await loginService.loginByUsername('admin', 'cicada');
+        const auth = await loginService.loginByUsername('admin', 'shopware');
 
         expect(auth).toEqual({
             expiry: Date.now() + 600 * 1000,
@@ -207,7 +207,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         clientMock.onPost('/oauth/token').reply(200, {
             token_type: 'Bearer',
@@ -230,7 +230,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         clientMock.onPost('/oauth/token').reply(200, {
             token_type: 'Bearer',
@@ -259,7 +259,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         const authLoggedIn = loginService.getBearerAuthentication();
         expect(authLoggedIn).toEqual({
@@ -292,7 +292,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         expect(loginService.isLoggedIn()).toBeTruthy();
     });
@@ -307,7 +307,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         expect(loginService.getToken()).toBe('aCcEsS_tOkEn');
     });
@@ -338,7 +338,7 @@ describe('core/service/login.service.js', () => {
 
         expect(tokenChangedListener).not.toHaveBeenCalled();
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         expect(tokenChangedListener).toHaveBeenCalled();
 
@@ -401,7 +401,7 @@ describe('core/service/login.service.js', () => {
         await expect(loginService.isLoggedIn()).toBe(false);
     });
 
-    it('should not be logged in when token does not exists', async () => {
+    it('should not be logged in when token does not exist', async () => {
         document.cookie = '';
         const { loginService } = loginServiceFactory();
 
@@ -420,7 +420,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN_first',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         expect(clientMock.history.post[0]).toBeDefined();
         expect(clientMock.history.post[1]).toBeUndefined();
@@ -442,7 +442,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         clientMock.onPost('/oauth/token').reply(200, {
             token_type: 'Bearer',
@@ -481,7 +481,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN_first',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         expect(clientMock.history.post[0]).toBeDefined();
         expect(clientMock.history.post[1]).toBeUndefined();
@@ -492,7 +492,7 @@ describe('core/service/login.service.js', () => {
 
     it('should set logout refresh storage key correctly', async () => {
         // Mock Router
-        Cicada.Application.view.router = {
+        Shopware.Application.view.router = {
             currentRoute: {
                 value: {
                     fullPath: '/sw/dashboard/index',
@@ -523,7 +523,7 @@ describe('core/service/login.service.js', () => {
             refresh_token: 'rEfReSh_ToKeN',
         });
 
-        await loginService.loginByUsername('admin', 'cicada');
+        await loginService.loginByUsername('admin', 'shopware');
 
         lastUserActivity = new Date(Date.now() - 30 * 60 * 1000 - 1);
 

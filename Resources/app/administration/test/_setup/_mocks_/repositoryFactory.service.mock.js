@@ -3,7 +3,7 @@
  */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import chalk from 'chalk';
+import colors from 'picocolors';
 import RepositoryFactory from 'src/core/data/repository-factory.data';
 import EntityHydrator from 'src/core/data/entity-hydrator.data';
 import ChangesetGenerator from 'src/core/data/changeset-generator.data';
@@ -17,7 +17,7 @@ import EntitySchema from '../../_mocks_/entity-schema.json';
 
 // Add all entities from entity-schema
 Object.entries(EntitySchema).forEach(([entityName, entityInformation]) => {
-    Cicada.EntityDefinition.add(entityName, entityInformation);
+    Shopware.EntityDefinition.add(entityName, entityInformation);
 });
 
 // This function throws an error if some request has no mocked return value
@@ -26,7 +26,7 @@ function throwMissingImplementationError(config) {
         return;
     }
 
-    console.error(chalk.yellow(`
+    console.error(colors.yellow(`
 You should to implement mock data for this route: "${config.url}".
 
 ############### Example ###############

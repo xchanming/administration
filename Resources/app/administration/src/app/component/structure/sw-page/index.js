@@ -1,8 +1,8 @@
 import template from './sw-page.html.twig';
 import './sw-page.scss';
 
-const { Component } = Cicada;
-const { dom } = Cicada.Utils;
+const { Component } = Shopware;
+const { dom } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -45,13 +45,7 @@ const { dom } = Cicada.Utils;
 Component.register('sw-page', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     provide() {
-        if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-            return {};
-        }
-
         return {
             setSwPageSidebarOffset: this.setSidebarOffset,
             removeSwPageSidebarOffset: this.removeSidebarOffset,
@@ -161,14 +155,6 @@ Component.register('sw-page', {
             };
         },
 
-        additionalEventListeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
-
         smartBarContentStyle() {
             const rowNumber = this.showSearchBar ? 2 : 1;
 
@@ -191,19 +177,12 @@ Component.register('sw-page', {
     },
 
     beforeUnmount() {
-        Cicada.State.dispatch('error/resetApiErrors');
+        Shopware.Store.get('error').resetApiErrors();
         this.beforeDestroyComponent();
     },
 
     methods: {
         createdComponent() {
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                // eslint-disable-next-line vue/no-deprecated-events-api
-                this.$on('mount', this.setSidebarOffset);
-                // eslint-disable-next-line vue/no-deprecated-events-api
-                this.$on('destroy', this.removeSidebarOffset);
-            }
-
             window.addEventListener('resize', this.readScreenWidth);
         },
 

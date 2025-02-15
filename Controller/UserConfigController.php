@@ -1,22 +1,22 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Controller;
+namespace Shopware\Administration\Controller;
 
-use Cicada\Core\Defaults;
-use Cicada\Core\Framework\Api\ApiException;
-use Cicada\Core\Framework\Api\Context\AdminApiSource;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\Doctrine\MultiInsertQueryQueue;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Util\Json;
-use Cicada\Core\Framework\Uuid\Uuid;
-use Cicada\Core\System\User\Aggregate\UserConfig\UserConfigCollection;
-use Cicada\Core\System\User\Aggregate\UserConfig\UserConfigDefinition;
 use Doctrine\DBAL\Connection;
+use Shopware\Core\Defaults;
+use Shopware\Core\Framework\Api\ApiException;
+use Shopware\Core\Framework\Api\Context\AdminApiSource;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\MultiInsertQueryQueue;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Util\Json;
+use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\System\User\Aggregate\UserConfig\UserConfigCollection;
+use Shopware\Core\System\User\Aggregate\UserConfig\UserConfigDefinition;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

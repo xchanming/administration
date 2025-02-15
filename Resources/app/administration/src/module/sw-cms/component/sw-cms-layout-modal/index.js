@@ -1,8 +1,8 @@
 import template from './sw-cms-layout-modal.html.twig';
 import './sw-cms-layout-modal.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Criteria } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -119,7 +117,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 

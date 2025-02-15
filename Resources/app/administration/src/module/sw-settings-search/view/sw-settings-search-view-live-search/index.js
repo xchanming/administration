@@ -7,8 +7,6 @@ import template from './sw-settings-search-view-live-search.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         currentSalesChannelId: {
             type: String,
@@ -39,16 +37,7 @@ export default {
 
     computed: {
         storefrontEsEnable() {
-            return Cicada.Context.app.storefrontEsEnable ?? false;
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
+            return Shopware.Context.app.storefrontEsEnable ?? false;
         },
     },
 };

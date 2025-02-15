@@ -1,4 +1,4 @@
-const { deepCopyObject } = Cicada.Utils.object;
+const { deepCopyObject } = Shopware.Utils.object;
 
 type variantKeys = 'neutral' | 'progress' | 'done' | 'warning' | 'danger';
 

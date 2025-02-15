@@ -2,7 +2,7 @@
  * @sw-package inventory
  */
 
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'catalogues',
     key: 'product_manufacturer',
@@ -13,7 +13,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'custom_field_set:read',
                 'custom_field:read',
                 'custom_field_set_relation:read',
-                Cicada.Service('privileges').getPrivileges('media.viewer'),
+                Shopware.Service('privileges').getPrivileges('media.viewer'),
                 'user_config:read',
                 'user_config:create',
                 'user_config:update',
@@ -23,7 +23,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
         editor: {
             privileges: [
                 'product_manufacturer:update',
-                Cicada.Service('privileges').getPrivileges('media.creator'),
+                Shopware.Service('privileges').getPrivileges('media.creator'),
             ],
             dependencies: [
                 'product_manufacturer.viewer',

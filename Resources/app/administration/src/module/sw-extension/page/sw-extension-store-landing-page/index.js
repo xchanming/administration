@@ -8,8 +8,6 @@ import './sw-extension-store-landing-page.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['extensionHelperService'],
 
     props: {
@@ -34,7 +32,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -60,7 +58,7 @@ export default {
                         this.error = error.response.data.errors[0];
                     }
 
-                    Cicada.Utils.debug.error(error);
+                    Shopware.Utils.debug.error(error);
                 })
                 .finally(() => {
                     this.isLoading = false;

@@ -5,15 +5,13 @@
 import template from './sw-product-category-form.html.twig';
 import './sw-product-category-form.scss';
 
-const { Context, Mixin } = Cicada;
-const { EntityCollection, Criteria } = Cicada.Data;
-const { mapPropertyErrors, mapState, mapGetters } = Cicada.Component.getComponentHelper();
+const { Context, Mixin } = Shopware;
+const { EntityCollection, Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -44,17 +42,25 @@ export default {
     },
 
     computed: {
-        ...mapState('swProductDetail', [
-            'product',
-            'parentProduct',
-            'localMode',
-            'loading',
-        ]),
+        product() {
+            return Shopware.Store.get('swProductDetail').product;
+        },
 
-        ...mapGetters('swProductDetail', [
-            'isChild',
-            'showModeSetting',
-        ]),
+        parentProduct() {
+            return Shopware.Store.get('swProductDetail').parentProduct;
+        },
+
+        loading() {
+            return Shopware.Store.get('swProductDetail').loading;
+        },
+
+        isChild() {
+            return Shopware.Store.get('swProductDetail').isChild;
+        },
+
+        showModeSetting() {
+            return Shopware.Store.get('swProductDetail').showModeSetting;
+        },
 
         ...mapPropertyErrors('product', [
             'tags',
@@ -86,7 +92,7 @@ export default {
             this.salesChannel = new EntityCollection(
                 '/sales-channel',
                 'sales_channel',
-                Cicada.Context.api,
+                Shopware.Context.api,
                 new Criteria(1, 25),
             );
         },

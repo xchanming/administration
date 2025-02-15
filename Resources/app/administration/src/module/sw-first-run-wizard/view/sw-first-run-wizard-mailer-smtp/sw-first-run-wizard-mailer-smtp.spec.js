@@ -1,10 +1,7 @@
-/**
- * @sw-package fundamentals@after-sales
- */
 import { mount } from '@vue/test-utils';
 
 /**
- * @sw-package checkout
+ * @sw-package fundamentals@after-sales
  */
 describe('module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-smtp', () => {
     async function createWrapper() {
@@ -45,13 +42,13 @@ describe('module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-smtp', () =
     }
 
     beforeAll(() => {
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
+        if (Shopware.Store.get('context')) {
+            Shopware.Store.unregister('context');
         }
 
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
+        Shopware.Store.register({
+            id: 'context',
+            state: () => ({
                 app: {
                     config: {
                         settings: {
@@ -65,21 +62,21 @@ describe('module/sw-first-run-wizard/view/sw-first-run-wizard-mailer-smtp', () =
                         token: 'testToken',
                     },
                 },
-            },
+            }),
         });
     });
 
     it('template renders with disabled extension management', async () => {
-        Cicada.State.get('context').app.config.settings.disableExtensionManagement = true;
+        Shopware.Store.get('context').app.config.settings.disableExtensionManagement = true;
 
         const wrapper = await createWrapper();
         await flushPromises();
 
         expect(wrapper.find('.sw-first-run-wizard-mailer-smtp').exists()).toBe(true);
 
-        expect(wrapper.vm.nextAction).toBe('sw.first.run.wizard.index.cicada.account');
+        expect(wrapper.vm.nextAction).toBe('sw.first.run.wizard.index.shopware.account');
 
-        Cicada.State.get('context').app.config.settings.disableExtensionManagement = false;
+        Shopware.Store.get('context').app.config.settings.disableExtensionManagement = false;
     });
 
     it('should emit the button config and the title on creation', async () => {

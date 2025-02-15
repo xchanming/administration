@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@after-sales
+ * @sw-package framework
  */
 import TimezoneService from './timezone.service';
 

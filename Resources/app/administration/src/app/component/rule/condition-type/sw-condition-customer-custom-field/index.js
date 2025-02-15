@@ -1,9 +1,9 @@
 import template from './sw-condition-customer-custom-field.html.twig';
 import './sw-condition-customer-custom-field.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @public

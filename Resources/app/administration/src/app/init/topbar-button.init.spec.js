@@ -2,7 +2,7 @@
  * @sw-package innovation
  */
 import initTopbarButtons from 'src/app/init/topbar-button.init';
-import { send } from '@cicada-ag/meteor-admin-sdk/es/channel';
+import { send } from '@shopware-ag/meteor-admin-sdk/es/channel';
 
 describe('src/app/init/topbar-button.init.ts', () => {
     it('should handle __upsellingMenuButton', async () => {
@@ -14,7 +14,7 @@ describe('src/app/init/topbar-button.init.ts', () => {
             callback: () => {},
         });
 
-        const buttons = Cicada.Store.get('topBarButton').buttons;
+        const buttons = Shopware.Store.get('topBarButton').buttons;
         expect(buttons).toHaveLength(1);
 
         const button = buttons[0];

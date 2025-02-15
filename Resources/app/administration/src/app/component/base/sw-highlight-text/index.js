@@ -1,7 +1,7 @@
 import { h } from 'vue';
 import './sw-highlight-text.scss';
 
-const { Component, Context } = Cicada;
+const { Component, Context } = Shopware;
 
 /**
  * @sw-package framework
@@ -15,8 +15,6 @@ const { Component, Context } = Cicada;
  */
 Component.register('sw-highlight-text', {
     template: '',
-
-    compatConfig: Cicada.compatConfig,
 
     render(createElement) {
         // Vue2 syntax

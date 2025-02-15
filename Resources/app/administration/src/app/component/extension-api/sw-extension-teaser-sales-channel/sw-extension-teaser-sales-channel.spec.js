@@ -25,7 +25,7 @@ describe('src/app/component/extension-api/sw-extension-teaser-sales-channel', ()
     let store = null;
 
     beforeEach(async () => {
-        store = Cicada.Store.get('teaserPopover');
+        store = Shopware.Store.get('teaserPopover');
         store.salesChannels = [];
     });
 

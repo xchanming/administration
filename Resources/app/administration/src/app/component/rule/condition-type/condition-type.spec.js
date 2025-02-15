@@ -25,7 +25,7 @@ function importAllConditionTypes() {
 }
 
 async function createWrapperForComponent(componentName, props = {}) {
-    return mount(await Cicada.Component.build(componentName), {
+    return mount(await Shopware.Component.build(componentName), {
         props: {
             condition: {},
             ...props,
@@ -146,7 +146,7 @@ describe('src/app/component/rule/condition-type/*.js', () => {
     });
 
     beforeEach(() => {
-        Cicada.State.commit('ruleConditionsConfig/setConfig', ruleConditionsConfig);
+        Shopware.Store.get('ruleConditionsConfig').config = ruleConditionsConfig;
     });
 
     it.each(conditionTypes)('The component "%s" should have all fields enabled', async (conditionType) => {

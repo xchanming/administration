@@ -1,9 +1,9 @@
 import template from './sw-data-grid.html.twig';
 import './sw-data-grid.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
-const utils = Cicada.Utils;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
+const utils = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -30,8 +30,6 @@ const utils = Cicada.Utils;
  */
 Component.register('sw-data-grid', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -309,7 +307,7 @@ Component.register('sw-data-grid', {
         },
 
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         userGridSettingCriteria() {
@@ -412,7 +410,7 @@ Component.register('sw-data-grid', {
                 return Promise.resolve();
             }
 
-            return this.userConfigRepository.search(this.userGridSettingCriteria, Cicada.Context.api).then((response) => {
+            return this.userConfigRepository.search(this.userGridSettingCriteria, Shopware.Context.api).then((response) => {
                 if (!response.length) {
                     return;
                 }
@@ -429,7 +427,7 @@ Component.register('sw-data-grid', {
         },
 
         findUserSettingById() {
-            return this.userConfigRepository.get(this.currentSetting.id, Cicada.Context.api).then((response) => {
+            return this.userConfigRepository.get(this.currentSetting.id, Shopware.Context.api).then((response) => {
                 if (!response) {
                     return;
                 }
@@ -506,11 +504,7 @@ Component.register('sw-data-grid', {
         findPreviewSlots() {
             let scopedSlots = [];
 
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                scopedSlots = Array.from(Object.keys(this.$scopedSlots));
-            } else {
-                scopedSlots = Object.keys(this.$slots);
-            }
+            scopedSlots = Object.keys(this.$slots);
 
             this.hasPreviewSlots = scopedSlots.some((scopedSlot) => {
                 return scopedSlot.includes('preview-');
@@ -540,7 +534,7 @@ Component.register('sw-data-grid', {
         },
 
         createUserGridSetting() {
-            const newUserGrid = this.userConfigRepository.create(Cicada.Context.api);
+            const newUserGrid = this.userConfigRepository.create(Shopware.Context.api);
             newUserGrid.key = `grid.setting.${this.identifier}`;
             newUserGrid.userId = this.currentUser && this.currentUser.id;
             this.currentSetting = newUserGrid;
@@ -564,7 +558,7 @@ Component.register('sw-data-grid', {
                 compact: this.compact,
                 previews: this.previews,
             };
-            this.userConfigRepository.save(this.currentSetting, Cicada.Context.api).then(() => {
+            this.userConfigRepository.save(this.currentSetting, Shopware.Context.api).then(() => {
                 this.findUserSettingById();
             });
         },
@@ -696,11 +690,7 @@ Component.register('sw-data-grid', {
         },
 
         selectAll(selected) {
-            if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                this.$delete(this.selection);
-            } else {
-                this.selection = {};
-            }
+            this.selection = {};
 
             this.records.forEach((item) => {
                 if (this.isSelected(item[this.itemIdentifierProperty]) !== selected) {
@@ -807,7 +797,7 @@ Component.register('sw-data-grid', {
             this.originalTarget = null;
             this.columnIndex = null;
 
-            Cicada.Utils.debounce(() => {
+            Shopware.Utils.debounce(() => {
                 this._isResizing = false;
             }, 50)();
 

@@ -9,7 +9,7 @@ const { join, resolve } = require('path');
 
 process.env.PROJECT_ROOT = process.env.PROJECT_ROOT || process.env.INIT_CWD || '.';
 process.env.ADMIN_PATH = process.env.ADMIN_PATH || __dirname;
-process.env.TZ = process.env.TZ || 'Asia/Shanghai';
+process.env.TZ = process.env.TZ || 'UTC';
 
 // Check if ADMIN_PATH/test/_helper_/component-imports.js exists
 if (!existsSync(join(process.env.ADMIN_PATH, '/test/_helper_/componentWrapper/component-imports.js'))) {
@@ -33,7 +33,7 @@ if (isCi) {
 
 module.exports = {
     cacheDirectory: process.env.JEST_CACHE_DIR,
-    preset: '@cicada-ag/jest-preset-sw6-admin',
+    preset: '@shopware-ag/jest-preset-sw6-admin',
     globals: {
         adminPath: process.env.ADMIN_PATH,
         projectRoot: process.env.PROJECT_ROOT,
@@ -42,6 +42,8 @@ module.exports = {
     globalTeardown: '<rootDir>test/globalTeardown.js',
 
     testRunner: 'jest-jasmine2',
+
+    resolver: '<rootDir>/jest-resolver.js',
 
     runner: 'groups',
 
@@ -76,15 +78,16 @@ module.exports = {
     },
 
     transformIgnorePatterns: [
-        '/node_modules/(?!(@cicada-ag/meteor-icon-kit|uuidv7|@vue/compat|other)/)',
+        '/node_modules/(?!(@shopware-ag/meteor-component-library|@shopware-ag/meteor-icon-kit|uuidv7|other)/)',
     ],
 
     moduleNameMapper: {
         '^test(.*)$': '<rootDir>/test$1',
-        '^\@cicada-ag\/admin-extension-sdk\/es\/(.*)': '<rootDir>/node_modules/@cicada-ag/admin-extension-sdk/umd/$1',
-        '^\@cicada-ag\/meteor-admin-sdk\/es\/(.*)': '<rootDir>/node_modules/@cicada-ag/meteor-admin-sdk/umd/$1',
+        '^\@shopware-ag\/admin-extension-sdk\/es\/(.*)': '<rootDir>/node_modules/@shopware-ag/admin-extension-sdk/umd/$1',
+        '^\@shopware-ag\/meteor-admin-sdk\/es\/(.*)': '<rootDir>/node_modules/@shopware-ag/meteor-admin-sdk/umd/$1',
+        '^@shopware-ag/meteor-component-library$': '<rootDir>/node_modules/@shopware-ag/meteor-component-library/dist/common/index.js',
         '^lodash-es$': 'lodash',
-        vue$: '@vue/compat/dist/vue.cjs.js',
+        vue$: 'vue/dist/vue.cjs.js',
     },
 
     reporters: isCi ? [
@@ -97,7 +100,7 @@ module.exports = {
             },
         ],
         ['jest-junit', {
-            suiteName: 'Cicada 6 Unit Tests',
+            suiteName: 'Shopware 6 Unit Tests',
             outputDirectory: join(process.env.PROJECT_ROOT, '/build/artifacts/jest'),
             outputName: 'administration.junit.xml',
         }],
@@ -110,7 +113,9 @@ module.exports = {
         '<rootDir>/src/**/*.spec.ts',
         '<rootDir>/eslint-rules/**/*.spec.js',
         '<rootDir>/build/vite-plugins/**/*.spec.ts',
+        '<rootDir>/build/vite-plugins/**/*.spec.js',
         '!<rootDir>/src/**/*.spec.vue2.js',
+        '<rootDir>/scripts/**/*.spec.ts',
     ],
 
     testEnvironmentOptions: {

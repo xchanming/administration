@@ -47,7 +47,7 @@ describe('src/app/directive/autofocus.directive.ts', () => {
     });
 
     it('should have registered the autofocus directive', () => {
-        expect(Cicada.Directive.getByName('autofocus')).toBeDefined();
+        expect(Shopware.Directive.getByName('autofocus')).toBeDefined();
     });
 
     it('should autofocus on the second input', () => {

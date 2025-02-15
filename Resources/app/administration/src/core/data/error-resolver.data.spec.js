@@ -10,9 +10,10 @@ describe('src/core/data/error-resolver.data', () => {
     let errorResolver;
 
     beforeEach(() => {
-        Object.defineProperty(Cicada.State, 'dispatch', {
-            value: jest.fn(),
-        });
+        // Spy on error store methods
+        jest.spyOn(Shopware.Store.get('error'), 'resetApiErrors');
+        jest.spyOn(Shopware.Store.get('error'), 'addApiError');
+        jest.spyOn(Shopware.Store.get('error'), 'addSystemError');
 
         errorResolver = new ErrorResolver();
     });
@@ -25,7 +26,7 @@ describe('src/core/data/error-resolver.data', () => {
         it('should dispatches "error/resetApiErrors" action', () => {
             errorResolver.resetApiErrors();
 
-            expect(Cicada.State.dispatch).toHaveBeenCalledWith('error/resetApiErrors');
+            expect(Shopware.Store.get('error').resetApiErrors).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -38,15 +39,16 @@ describe('src/core/data/error-resolver.data', () => {
 
         it('should handles write errors and adds system errors', () => {
             const errors = [
-                { source: { pointer: '/0/name' }, code: 'CODE1' },
+                { source: { pointer: '/0/firstName' }, code: 'CODE1' },
+                { source: { pointer: '/0/lastName' }, code: 'CODE2' },
                 {
                     source: { pointer: '/0/translations/123123' },
-                    code: 'CODE1',
+                    code: 'CODE2',
                 },
                 {
                     source: { pointer: '' },
                     message: 'System Error',
-                    code: 'CODE3',
+                    code: 'CODE4',
                 },
             ];
 
@@ -55,7 +57,8 @@ describe('src/core/data/error-resolver.data', () => {
                     entity: entityFactory.create('customer'),
                     changes: [
                         {
-                            name: 'a',
+                            firstName: 'a',
+                            lastName: 'b',
                         },
                     ],
                 },
@@ -63,7 +66,8 @@ describe('src/core/data/error-resolver.data', () => {
                     entity: entityFactory.create('customer'),
                     changes: [
                         {
-                            name: 'c',
+                            firstName: 'c',
+                            lastName: 'd',
                         },
                     ],
                 },
@@ -71,21 +75,24 @@ describe('src/core/data/error-resolver.data', () => {
 
             errorResolver.handleWriteErrors(changeset, { errors });
 
-            expect(Cicada.State.dispatch).toHaveBeenCalledTimes(2);
-            expect(Cicada.State.dispatch).toHaveBeenNthCalledWith(1, 'error/addApiError', {
+            expect(Shopware.Store.get('error').addApiError).toHaveBeenCalledTimes(2);
+            expect(Shopware.Store.get('error').addSystemError).toHaveBeenCalledTimes(1);
+            expect(Shopware.Store.get('error').addApiError).toHaveBeenNthCalledWith(1, {
                 expression: expect.anything(),
-                error: expect.any(Cicada.Classes.CicadaError),
+                error: expect.any(Shopware.Classes.ShopwareError),
             });
-            expect(Cicada.State.dispatch).toHaveBeenNthCalledWith(
-                2,
-                'error/addSystemError',
-                expect.any(Cicada.Classes.CicadaError),
+            expect(Shopware.Store.get('error').addApiError).toHaveBeenNthCalledWith(2, {
+                expression: expect.anything(),
+                error: expect.any(Shopware.Classes.ShopwareError),
+            });
+            expect(Shopware.Store.get('error').addSystemError).toHaveBeenCalledWith(
+                expect.any(Shopware.Classes.ShopwareError),
             );
         });
 
-        it('should convert to CicadaError', () => {
+        it('should convert to ShopwareError', () => {
             const errors = [
-                { source: { pointer: '/0/name' }, code: 'CODE1' },
+                { source: { pointer: '/0/firstName' }, code: 'CODE1' },
             ];
 
             const changeset = [
@@ -93,7 +100,7 @@ describe('src/core/data/error-resolver.data', () => {
                     entity: entityFactory.create('customer'),
                     changes: [
                         {
-                            name: 'a',
+                            firstName: 'a',
                         },
                     ],
                 },
@@ -102,7 +109,7 @@ describe('src/core/data/error-resolver.data', () => {
             errorResolver.reduceErrorsByWriteIndex = jest.fn().mockReturnValue({
                 system: [],
                 0: {
-                    name: {
+                    firstName: {
                         code: 'CODE1',
                     },
                 },
@@ -111,9 +118,9 @@ describe('src/core/data/error-resolver.data', () => {
             errorResolver.handleWriteErrors(changeset, { errors });
 
             expect(errorResolver.reduceErrorsByWriteIndex).toHaveBeenCalledTimes(1);
-            expect(Cicada.State.dispatch).toHaveBeenNthCalledWith(1, 'error/addApiError', {
+            expect(Shopware.Store.get('error').addApiError).toHaveBeenCalledWith({
                 expression: expect.anything(),
-                error: expect.any(Cicada.Classes.CicadaError),
+                error: expect.any(Shopware.Classes.ShopwareError),
             });
         });
     });
@@ -161,16 +168,14 @@ describe('src/core/data/error-resolver.data', () => {
 
             errorResolver.handleDeleteError(errors);
 
-            expect(Cicada.State.dispatch).toHaveBeenCalledWith('error/addSystemError', {
-                error: expect.any(Cicada.Classes.CicadaError),
+            expect(Shopware.Store.get('error').addSystemError).toHaveBeenCalledTimes(2);
+            expect(Shopware.Store.get('error').addApiError).toHaveBeenCalledTimes(2);
+            expect(Shopware.Store.get('error').addSystemError).toHaveBeenCalledWith({
+                error: expect.any(Shopware.Classes.ShopwareError),
             });
-            expect(Cicada.State.dispatch).toHaveBeenCalledWith('error/addApiError', {
+            expect(Shopware.Store.get('error').addApiError).toHaveBeenCalledWith({
                 expression: 'Entity1.1',
-                error: expect.any(Cicada.Classes.CicadaError),
-            });
-            expect(Cicada.State.dispatch).toHaveBeenCalledWith('error/addApiError', {
-                expression: 'Entity2.2',
-                error: expect.any(Cicada.Classes.CicadaError),
+                error: expect.any(Shopware.Classes.ShopwareError),
             });
         });
     });

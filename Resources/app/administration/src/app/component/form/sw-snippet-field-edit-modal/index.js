@@ -1,7 +1,7 @@
 import Sanitizer from 'src/core/helper/sanitizer.helper';
 import template from './sw-snippet-field-edit-modal.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -22,8 +22,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-snippet-field-edit-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -82,7 +80,7 @@ Component.register('sw-snippet-field-edit-modal', {
         },
 
         currentAuthor() {
-            return `user/${Cicada.State.get('session').currentUser.username}`;
+            return `user/${Shopware.Store.get('session').currentUser.username}`;
         },
 
         snippetRepository() {
@@ -108,7 +106,7 @@ Component.register('sw-snippet-field-edit-modal', {
 
             this.snippetSets.forEach((snippetSet) => {
                 const existingSnippet = this.snippets.find((item) => item.setId === snippetSet.id);
-                const snippet = this.snippetRepository.create(Cicada.Context.api);
+                const snippet = this.snippetRepository.create(Shopware.Context.api);
 
                 if (existingSnippet) {
                     snippet.author = existingSnippet.author;
@@ -165,10 +163,10 @@ Component.register('sw-snippet-field-edit-modal', {
 
                 if (snippet.origin !== snippet.value) {
                     // Only save if values differs from origin
-                    responses.push(this.snippetRepository.save(snippet, Cicada.Context.api));
+                    responses.push(this.snippetRepository.save(snippet, Shopware.Context.api));
                 } else if (snippet.hasOwnProperty('id') && snippet.id !== null) {
                     // There's no need to keep a snippet which is exactly like the file-snippet, so delete
-                    responses.push(this.snippetRepository.delete(snippet.id, Cicada.Context.api));
+                    responses.push(this.snippetRepository.delete(snippet.id, Shopware.Context.api));
                 }
             });
 

@@ -8,11 +8,9 @@ import './sw-cms-el-category-navigation.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     mixins: [
-        Cicada.Mixin.getByName('cms-element'),
-        Cicada.Mixin.getByName('placeholder'),
+        Shopware.Mixin.getByName('cms-element'),
+        Shopware.Mixin.getByName('placeholder'),
     ],
 
     created() {

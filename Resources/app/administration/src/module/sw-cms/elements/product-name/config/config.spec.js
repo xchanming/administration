@@ -53,7 +53,7 @@ async function createWrapper(propsOverride) {
                         sync: true,
                     }),
                     'sw-cms-mapping-field': await wrapTestComponent('sw-cms-mapping-field', { sync: true }),
-                    'sw-text-editor': {
+                    'mt-text-editor': {
                         props: ['value'],
                         emits: [
                             'blur',
@@ -82,8 +82,8 @@ describe('module/sw-cms/elements/product-name/config', () => {
     });
 
     beforeEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
-        Cicada.Store.get('cmsPage').setCurrentPage({
+        Shopware.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').setCurrentPage({
             type: 'product_detail',
         });
     });

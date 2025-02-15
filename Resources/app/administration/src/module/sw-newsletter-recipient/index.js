@@ -5,12 +5,12 @@ import defaultSearchConfiguration from './default-search-configuration';
  * @sw-package after-sales
  */
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-newsletter-recipient-list', () => import('./page/sw-newsletter-recipient-list/index'));
-Cicada.Component.register('sw-newsletter-recipient-detail', () => import('./page/sw-newsletter-recipient-detail/index'));
-Cicada.Component.register(
+Shopware.Component.register('sw-newsletter-recipient-list', () => import('./page/sw-newsletter-recipient-list/index'));
+Shopware.Component.register('sw-newsletter-recipient-detail', () => import('./page/sw-newsletter-recipient-detail/index'));
+Shopware.Component.register(
     'sw-newsletter-recipient-filter-switch',
     () => import('./component/sw-newsletter-recipient-filter-switch'),
 );

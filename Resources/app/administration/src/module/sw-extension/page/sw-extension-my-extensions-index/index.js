@@ -7,8 +7,6 @@ import template from './sw-extension-my-extensions-index.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['acl'],
 
     computed: {
@@ -31,7 +29,7 @@ export default {
         },
 
         extensionManagementDisabled() {
-            return Cicada.State.get('context').app.config.settings.disableExtensionManagement;
+            return Shopware.Store.get('context').app.config.settings.disableExtensionManagement;
         },
     },
 
@@ -55,7 +53,7 @@ export default {
             };
 
             // If query is empty then replace route, otherwise push
-            if (Cicada.Utils.types.isEmpty(routeQuery)) {
+            if (Shopware.Utils.types.isEmpty(routeQuery)) {
                 this.$router.replace(route);
             } else {
                 this.$router.push(route);

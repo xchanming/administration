@@ -6,7 +6,7 @@ import './sw-order-line-items-grid.scss';
  * @sw-package checkout
  */
 
-const { Utils } = Cicada;
+const { Utils } = Shopware;
 const { get, format } = Utils;
 
 // merge 16.11.2020
@@ -14,13 +14,10 @@ const { get, format } = Utils;
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'orderService',
         'acl',
-        'feature',
     ],
 
     emits: [
@@ -181,7 +178,7 @@ export default {
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
     methods: {
@@ -380,10 +377,14 @@ export default {
             });
 
             const decorateTaxes = sortTaxes.map((taxItem) => {
-                return this.$tc('sw-order.detailBase.taxDetail', 0, {
-                    taxRate: taxItem.taxRate,
-                    tax: format.currency(taxItem.tax, this.order.currency.isoCode),
-                });
+                return this.$tc(
+                    'sw-order.detailBase.taxDetail',
+                    {
+                        taxRate: taxItem.taxRate,
+                        tax: format.currency(taxItem.tax, this.order.currency.isoCode),
+                    },
+                    0,
+                );
             });
 
             return {

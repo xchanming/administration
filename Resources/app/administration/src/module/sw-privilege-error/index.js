@@ -3,10 +3,10 @@
  */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Component.register('sw-privilege-error', () => import('./page/sw-privilege-error'));
+Shopware.Component.register('sw-privilege-error', () => import('./page/sw-privilege-error'));
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Module.register('sw-privilege-error', {
+Shopware.Module.register('sw-privilege-error', {
     type: 'core',
     name: 'privilege',
     title: 'sw-privilege-error.general.mainMenuItemGeneral',

@@ -1,7 +1,7 @@
 import template from './sw-context-menu.html.twig';
 import './sw-context-menu.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -10,6 +10,4 @@ const { Component } = Cicada;
  */
 Component.register('sw-context-menu', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 });

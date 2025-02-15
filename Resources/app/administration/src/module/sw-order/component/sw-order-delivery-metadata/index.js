@@ -9,8 +9,6 @@ import './sw-order-delivery-metadata.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['customSnippetApiService'],
 
     props: {
@@ -44,11 +42,11 @@ export default {
 
     computed: {
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 

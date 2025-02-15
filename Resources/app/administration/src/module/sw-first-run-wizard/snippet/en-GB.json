@@ -14,7 +14,7 @@
         },
         "welcome": {
             "modalTitle": "Welcome",
-            "headlineWelcome": "Welcome to the Cicada 6 Administration",
+            "headlineWelcome": "Welcome to the Shopware 6 Administration",
             "messageWelcome": "This wizard guides you through the setup and tries to be helpful with the most important settings.<br>Do you want to use your shop in a different language and reach customers in other countries? Then simply install the desired language packs here.",
             "headlineChangeLanguage": "Install additional languages",
             "switchLanguageModalTitle": "Select the interface language",
@@ -29,12 +29,12 @@
             "noConnectionMessage": "There seem to be connection issues, the language could not be installed."
         },
         "dataImport": {
-            "modalTitle": "Getting started with Cicada 6",
+            "modalTitle": "Getting started with Shopware 6",
             "headlineDemoData": "Use demo data",
-            "messageDemoData": "Start exploring Cicada 6 by adding a set of demo data. Demo data gives the impression of a fully working shop, but should strictly be used for testing purposes only.",
+            "messageDemoData": "Start exploring Shopware 6 by adding a set of demo data. Demo data gives the impression of a fully working shop, but should strictly be used for testing purposes only.",
             "buttonInstallDemoData": "Install demo data",
             "headlineMigration": "Migrate your shop data",
-            "messageMigration": "The Migration Assistant helps you connect to and transfer data from a previous shop system right into your new Cicada 6 environment.",
+            "messageMigration": "The Migration Assistant helps you connect to and transfer data from a previous shop system right into your new Shopware 6 environment.",
             "buttonInstallMigration": "Install Migration Assistant",
             "loadingMessage": "Installing extension<br>This may take a while..."
         },
@@ -58,7 +58,7 @@
         },
         "paypalInfo": {
             "modalTitle": "Setup PayPal",
-            "headline": "Now pre-integrated in Cicada with even easier and faster activation of the most popular payment methods*",
+            "headline": "Now pre-integrated in Shopware with even easier and faster activation of the most popular payment methods*",
             "paymethod": {
                 "paypal": "PayPal",
                 "debit": "Debit",
@@ -80,15 +80,15 @@
             "topRecommendations": "Global recommendations",
             "otherRecommendations": "Regional recommendations"
         },
-        "cicadaAccount": {
-            "headline": "Cicada Account - Login",
+        "shopwareAccount": {
+            "headline": "Shopware Account - Login",
             "passwordLabel": "Password",
             "passwordPlaceholder": "Enter your password...",
             "emailAddressLabel": "Email address",
             "emailAddressPlaceholder": "Enter your email address...",
-            "modalTitle": "Cicada Account",
-            "message": "The Cicada Account is your main hub for interaction with all Cicada services.",
-            "registerAccountText": "You don't have a Cicada Account yet? Sign up right",
+            "modalTitle": "Shopware Account",
+            "message": "The Shopware Account is your main hub for interaction with all Shopware services.",
+            "registerAccountText": "You don't have a Shopware Account yet? Sign up right",
             "registerAccountHere": "here",
             "registerAccountUrl": "https://account.xchanming.com/register?lang=en",
             "forgotPasswordText": "Did you forget your password?",
@@ -97,31 +97,31 @@
         "error": {
             "messageLoginDataInvalid": "Login credentials incorrect, please try again."
         },
-        "cicadaDomain": {
+        "shopwareDomain": {
             "headline": "Verify your domain",
             "message": "Which domain do you want to link this shop? Select a valid domain or create a new one.",
             "labelCreateDomain": "Create a new shop domain",
             "testEnvironment": "Test environment"
         },
         "store": {
-          "modalTitle": "Cicada Store",
+          "modalTitle": "Shopware Store",
           "loadStatusCollect": "Collecting store information...",
           "takeMinutes": "This may take a few minutes.",
           "alreadyActivated": "Store has already been successfully activated.",
-          "enablingStore": "Enabling the Cicada Store ... ",
+          "enablingStore": "Enabling the Shopware Store ... ",
           "activationErrorTitle": "Error on activation",
           "activationErrorDescription": "Please ask your administrator for help.",
           "headingOne": "Explore and buy extensions easily -",
-          "headingTwo": "right from within your own Cicada shop.",
-          "description": "Activate the all new Cicada Store and get access to loads of helpful extensions and modern themes that can be integrated into your Shop seemlessly - without any programming skills."
+          "headingTwo": "right from within your own Shopware shop.",
+          "description": "Activate the all new Shopware Store and get access to loads of helpful extensions and modern themes that can be integrated into your Shop seemlessly - without any programming skills."
         },
         "defaults": {
             "modalTitle": "Setup default values"
         },
         "finish": {
             "headlineAllDone": "All done!",
-            "message": "Your Cicada 6 {edition} is now verified.",
-            "messageNotLicensed": "Your Cicada 6 is now prepared.",
+            "message": "Your Shopware 6 {edition} is now verified.",
+            "messageNotLicensed": "Your Shopware 6 is now prepared.",
             "headlineUsefulLinks": "Useful links",
             "loadingMessage": "Restarting application<br>This may take a while...",
             "documentationLabel": "Documentation",
@@ -137,8 +137,8 @@
             "mailer": "Mailer configuration",
             "setupPaypal": "PayPal setup",
             "plugins": "Extensions",
-            "cicada": "Cicada Account",
-            "store": "Cicada Store",
+            "shopware": "Shopware Account",
+            "store": "Shopware Store",
             "defaults": "Default values"
         }
     },

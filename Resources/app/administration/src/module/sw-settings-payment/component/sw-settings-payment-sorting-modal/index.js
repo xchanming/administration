@@ -1,7 +1,7 @@
 import template from './sw-settings-payment-sorting-modal.html.twig';
 import './sw-settings-payment-sorting-modal.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @sw-package checkout
@@ -10,12 +10,9 @@ const { Mixin } = Cicada;
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'acl',
         'repositoryFactory',
-        'feature',
     ],
 
     emits: [
@@ -51,7 +48,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -69,7 +66,7 @@ export default {
             });
 
             return this.paymentMethodRepository
-                .saveAll(this.sortedPaymentMethods, Cicada.Context.api)
+                .saveAll(this.sortedPaymentMethods, Shopware.Context.api)
                 .then(() => {
                     this.isSaving = false;
                     this.$emit('modal-close');
@@ -90,10 +87,12 @@ export default {
             this.sortedPaymentMethods = sortedItems;
         },
 
-        isCicadaDefaultPaymentMethod(paymentMethod) {
+        isShopwareDefaultPaymentMethod(paymentMethod) {
             const defaultPaymentMethods = [
-                'Cicada\\Core\\Checkout\\Payment\\Cart\\PaymentHandler\\CashPayment',
-                'Cicada\\Core\\Checkout\\Payment\\Cart\\PaymentHandler\\PrePayment',
+                'Shopware\\Core\\Checkout\\Payment\\Cart\\PaymentHandler\\DebitPayment',
+                'Shopware\\Core\\Checkout\\Payment\\Cart\\PaymentHandler\\InvoicePayment',
+                'Shopware\\Core\\Checkout\\Payment\\Cart\\PaymentHandler\\CashPayment',
+                'Shopware\\Core\\Checkout\\Payment\\Cart\\PaymentHandler\\PrePayment',
             ];
 
             return defaultPaymentMethods.includes(paymentMethod.handlerIdentifier);

@@ -93,7 +93,7 @@ async function createWrapper(productSortings = [], defaultSorting = {}) {
                 },
             },
             mixins: [
-                Cicada.Mixin.getByName('sw-inline-snippet'),
+                Shopware.Mixin.getByName('sw-inline-snippet'),
             ],
         },
         props: {

@@ -1,7 +1,7 @@
 /**
  * @sw-package inventory
  */
-const ApiService = Cicada.Classes.ApiService;
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * Gateway for the API endpoint "proxy search"

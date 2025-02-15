@@ -1,8 +1,8 @@
 import template from './sw-cms-el-cross-selling.html.twig';
 import './sw-cms-el-cross-selling.scss';
 
-const { Mixin } = Cicada;
-const { isEmpty } = Cicada.Utils.types;
+const { Mixin } = Shopware;
+const { isEmpty } = Shopware.Utils.types;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { isEmpty } = Cicada.Utils.types;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('cms-element'),

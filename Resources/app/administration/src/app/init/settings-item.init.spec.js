@@ -2,30 +2,23 @@
  * @sw-package framework
  */
 import initializeSettingItems from 'src/app/init/settings-item.init';
-import { ui } from '@cicada-ag/meteor-admin-sdk';
+import { ui } from '@shopware-ag/meteor-admin-sdk';
 
-let stateDispatchBackup = null;
 describe('src/app/init/settings-item.init.ts', () => {
     beforeAll(() => {
         initializeSettingItems();
-        stateDispatchBackup = Cicada.State.dispatch;
     });
 
     beforeEach(() => {
-        Object.defineProperty(Cicada.State, 'dispatch', {
-            value: stateDispatchBackup,
-            writable: true,
-            configurable: true,
-        });
-        Cicada.State.get('extensionSdkModules').modules = [];
-        Cicada.State.get('settingsItems').settingsGroups = {
+        Shopware.Store.get('extensionSdkModules').modules = [];
+        Shopware.Store.get('settingsItems').settingsGroups = {
             shop: [],
             system: [],
             plugins: [],
         };
 
-        Cicada.State._store.state.extensions = {};
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').extensionsState = {};
+        Shopware.Store.get('extensions').addExtension({
             name: 'jestapp',
             baseUrl: '',
             permissions: [],
@@ -34,6 +27,9 @@ describe('src/app/init/settings-item.init.ts', () => {
             integrationId: '123',
             active: true,
         });
+
+        // Clear mocks
+        jest.clearAllMocks();
     });
 
     it('should handle the settingsItemAdd requests', async () => {
@@ -45,8 +41,8 @@ describe('src/app/init/settings-item.init.ts', () => {
             tab: 'system',
         });
 
-        expect(Cicada.State.get('extensionSdkModules').modules).toHaveLength(1);
-        expect(Cicada.State.get('extensionSdkModules').modules[0]).toEqual({
+        expect(Shopware.Store.get('extensionSdkModules').modules).toHaveLength(1);
+        expect(Shopware.Store.get('extensionSdkModules').modules[0]).toEqual({
             baseUrl: '',
             displaySearchBar: true,
             heading: 'App Settings',
@@ -54,8 +50,8 @@ describe('src/app/init/settings-item.init.ts', () => {
             locationId: 'settings-location-id',
         });
 
-        expect(Cicada.State.get('settingsItems').settingsGroups.system).toHaveLength(1);
-        expect(Cicada.State.get('settingsItems').settingsGroups.system[0]).toEqual({
+        expect(Shopware.Store.get('settingsItems').settingsGroups.system).toHaveLength(1);
+        expect(Shopware.Store.get('settingsItems').settingsGroups.system[0]).toEqual({
             group: 'system',
             icon: 'default-object-books',
             id: 'settings-location-id',
@@ -79,8 +75,8 @@ describe('src/app/init/settings-item.init.ts', () => {
             displaySearchBar: true,
         });
 
-        expect(Cicada.State.get('extensionSdkModules').modules).toHaveLength(1);
-        expect(Cicada.State.get('extensionSdkModules').modules[0]).toEqual({
+        expect(Shopware.Store.get('extensionSdkModules').modules).toHaveLength(1);
+        expect(Shopware.Store.get('extensionSdkModules').modules[0]).toEqual({
             baseUrl: '',
             displaySearchBar: true,
             heading: 'App Settings',
@@ -88,8 +84,8 @@ describe('src/app/init/settings-item.init.ts', () => {
             locationId: 'settings-location-id',
         });
 
-        expect(Cicada.State.get('settingsItems').settingsGroups.plugins).toHaveLength(1);
-        expect(Cicada.State.get('settingsItems').settingsGroups.plugins[0]).toEqual({
+        expect(Shopware.Store.get('settingsItems').settingsGroups.plugins).toHaveLength(1);
+        expect(Shopware.Store.get('settingsItems').settingsGroups.plugins[0]).toEqual({
             group: 'plugins',
             icon: 'default-object-books',
             id: 'settings-location-id',
@@ -114,8 +110,8 @@ describe('src/app/init/settings-item.init.ts', () => {
             tab: 'not-allowed',
         });
 
-        expect(Cicada.State.get('extensionSdkModules').modules).toHaveLength(1);
-        expect(Cicada.State.get('extensionSdkModules').modules[0]).toEqual({
+        expect(Shopware.Store.get('extensionSdkModules').modules).toHaveLength(1);
+        expect(Shopware.Store.get('extensionSdkModules').modules[0]).toEqual({
             baseUrl: '',
             displaySearchBar: true,
             heading: 'App Settings',
@@ -123,8 +119,8 @@ describe('src/app/init/settings-item.init.ts', () => {
             locationId: 'settings-location-id',
         });
 
-        expect(Cicada.State.get('settingsItems').settingsGroups.plugins).toHaveLength(1);
-        expect(Cicada.State.get('settingsItems').settingsGroups.plugins[0]).toEqual({
+        expect(Shopware.Store.get('settingsItems').settingsGroups.plugins).toHaveLength(1);
+        expect(Shopware.Store.get('settingsItems').settingsGroups.plugins[0]).toEqual({
             group: 'plugins',
             icon: 'default-object-books',
             id: 'settings-location-id',
@@ -141,7 +137,7 @@ describe('src/app/init/settings-item.init.ts', () => {
     });
 
     it('should not handle requests when extension is not valid', async () => {
-        Cicada.State._store.state.extensions = {};
+        Shopware.Store.get('extensions').extensionsState = {};
 
         await expect(async () => {
             await ui.settings.addSettingsItem({
@@ -153,11 +149,11 @@ describe('src/app/init/settings-item.init.ts', () => {
             });
         }).rejects.toThrow(new Error('Extension with the origin "" not found.'));
 
-        expect(Cicada.State.get('extensionSdkModules').modules).toHaveLength(0);
+        expect(Shopware.Store.get('extensionSdkModules').modules).toHaveLength(0);
     });
 
     it('should not commit the extension when moduleID could not be generated', async () => {
-        jest.spyOn(Cicada.State, 'dispatch').mockImplementationOnce(() => {
+        jest.spyOn(Shopware.Store.get('extensionSdkModules'), 'addModule').mockImplementationOnce(() => {
             return Promise.resolve(null);
         });
 
@@ -169,6 +165,6 @@ describe('src/app/init/settings-item.init.ts', () => {
             tab: 'plugins',
         });
 
-        expect(Cicada.State.get('extensionSdkModules').modules).toHaveLength(0);
+        expect(Shopware.Store.get('extensionSdkModules').modules).toHaveLength(0);
     });
 });

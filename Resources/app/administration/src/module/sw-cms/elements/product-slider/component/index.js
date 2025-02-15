@@ -1,7 +1,7 @@
 import template from './sw-cms-el-product-slider.html.twig';
 import './sw-cms-el-product-slider.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -39,13 +37,6 @@ export default {
                 },
                 data: null,
             };
-        },
-
-        /**
-         * @deprecated tag:v6.7.0 - Will be removed, use the specific navigation setting `hasNavigationArrows` instead
-         */
-        hasNavigation() {
-            return this.hasNavigationArrows;
         },
 
         hasNavigationArrows() {

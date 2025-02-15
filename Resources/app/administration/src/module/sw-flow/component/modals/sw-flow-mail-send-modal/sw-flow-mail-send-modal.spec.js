@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import flowState from 'src/module/sw-flow/state/flow.state';
+import { createPinia } from 'pinia';
 
 /**
  * @sw-package after-sales
@@ -33,7 +33,7 @@ function mockMailTemplateData() {
     return [
         {
             id: 'mailTemplate1',
-            description: 'Cicada default template',
+            description: 'Shopware default template',
             subject: 'Your order with {{ salesChannel.name }} is being processed.',
             mailTemplateTypeId: '5',
             mailTemplateType: {
@@ -44,7 +44,7 @@ function mockMailTemplateData() {
                 },
             },
             translated: {
-                description: 'Cicada default template',
+                description: 'Shopware default template',
             },
         },
         {
@@ -66,9 +66,12 @@ function mockMailTemplateData() {
     ];
 }
 
+const pinia = createPinia();
+
 async function createWrapper(sequence = {}) {
     return mount(await wrapTestComponent('sw-flow-mail-send-modal', { sync: true }), {
         global: {
+            plugins: [pinia],
             stubs: {
                 'sw-modal': {
                     template: `
@@ -163,12 +166,6 @@ async function createWrapper(sequence = {}) {
 }
 
 describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
-    beforeAll(() => {
-        Cicada.State.registerModule('swFlowState', {
-            ...flowState,
-        });
-    });
-
     it('should show and remove error on email template field if value is valid', async () => {
         const wrapper = await createWrapper();
         await flushPromises();
@@ -375,7 +372,7 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
     });
 
     it('should show customer recipient when entity available', async () => {
-        Cicada.State.commit('swFlowState/setTriggerEvent', {
+        Shopware.Store.get('swFlow').triggerEvent = {
             data: {
                 customer: '',
                 order: '',
@@ -385,10 +382,10 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
             mailAware: true,
             name: 'checkout.customer.login',
             aware: [
-                'Cicada\\Core\\Framework\\Event\\CustomerAware',
-                'Cicada\\Core\\Framework\\Event\\MailAware',
+                'Shopware\\Core\\Framework\\Event\\CustomerAware',
+                'Shopware\\Core\\Framework\\Event\\MailAware',
             ],
-        });
+        };
 
         const wrapper = await createWrapper();
         await flushPromises();
@@ -406,7 +403,7 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
     });
 
     it('should show standard recipient for contact form', async () => {
-        Cicada.State.commit('swFlowState/setTriggerEvent', {
+        Shopware.Store.get('swFlow').triggerEvent = {
             data: {
                 customer: '',
                 order: '',
@@ -416,9 +413,9 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
             mailAware: true,
             name: 'contact_form.send',
             aware: [
-                'Cicada\\Core\\Framework\\Event\\MailAware',
+                'Shopware\\Core\\Framework\\Event\\MailAware',
             ],
-        });
+        };
 
         const wrapper = await createWrapper();
         await flushPromises();
@@ -438,7 +435,7 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
     });
 
     it('should not show standard recipient when entity not available', async () => {
-        Cicada.State.commit('swFlowState/setTriggerEvent', {
+        Shopware.Store.get('swFlow').triggerEvent = {
             data: {
                 customer: '',
                 order: '',
@@ -448,9 +445,9 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
             mailAware: true,
             name: 'checkout.customer.login',
             aware: [
-                'Cicada\\Core\\Framework\\Event\\MailAware',
+                'Shopware\\Core\\Framework\\Event\\MailAware',
             ],
-        });
+        };
 
         const wrapper = await createWrapper();
         await flushPromises();
@@ -468,16 +465,16 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
     });
 
     it('should show default recipient with newsletter recipient confirm', async () => {
-        Cicada.State.commit('swFlowState/setTriggerEvent', {
+        Shopware.Store.get('swFlow').triggerEvent = {
             data: {},
             customerAware: true,
             extensions: [],
             mailAware: true,
             name: 'newsletter.confirm',
             aware: [
-                'Cicada\\Core\\Framework\\Event\\MailAware',
+                'Shopware\\Core\\Framework\\Event\\MailAware',
             ],
-        });
+        };
 
         const wrapper = await createWrapper();
         await flushPromises();
@@ -495,16 +492,16 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
     });
 
     it('should show default recipient with newsletter recipient register', async () => {
-        Cicada.State.commit('swFlowState/setTriggerEvent', {
+        Shopware.Store.get('swFlow').triggerEvent = {
             data: {},
             customerAware: true,
             extensions: [],
             mailAware: true,
             name: 'newsletter.register',
             aware: [
-                'Cicada\\Core\\Framework\\Event\\MailAware',
+                'Shopware\\Core\\Framework\\Event\\MailAware',
             ],
-        });
+        };
 
         const wrapper = await createWrapper();
         await flushPromises();
@@ -522,16 +519,16 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
     });
 
     it('should show default recipient with newsletter recipient unsubscribe', async () => {
-        Cicada.State.commit('swFlowState/setTriggerEvent', {
+        Shopware.Store.get('swFlow').triggerEvent = {
             data: {},
             customerAware: true,
             extensions: [],
             mailAware: true,
             name: 'newsletter.unsubscribe',
             aware: [
-                'Cicada\\Core\\Framework\\Event\\MailAware',
+                'Shopware\\Core\\Framework\\Event\\MailAware',
             ],
-        });
+        };
 
         const wrapper = await createWrapper();
         await flushPromises();
@@ -581,9 +578,9 @@ describe('module/sw-flow/component/sw-flow-mail-send-modal', () => {
     });
 
     it('should validate reply to field with contact form trigger', async () => {
-        Cicada.State.commit('swFlowState/setTriggerEvent', {
+        Shopware.Store.get('swFlow').triggerEvent = {
             name: 'contact_form.send',
-        });
+        };
 
         const wrapper = await createWrapper();
         await wrapper.setData({

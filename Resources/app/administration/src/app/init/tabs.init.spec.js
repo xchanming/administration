@@ -3,7 +3,7 @@
  */
 import { createRouter, createWebHistory } from 'vue-router';
 import initTabs from 'src/app/init/tabs.init';
-import { ui } from '@cicada-ag/meteor-admin-sdk';
+import { ui } from '@shopware-ag/meteor-admin-sdk';
 
 describe('src/app/init/tabs.init', () => {
     let routerMock;
@@ -21,14 +21,14 @@ describe('src/app/init/tabs.init', () => {
         });
 
         // Mock component
-        Cicada.Application.view.getComponent = () => ({});
+        Shopware.Application.view.getComponent = () => ({});
 
         // Mock router factory
-        Cicada.Application.addInitializer('router', () => {
-            return new Cicada.Classes._private.RouterFactory(
+        Shopware.Application.addInitializer('router', () => {
+            return new Shopware.Classes._private.RouterFactory(
                 undefined,
                 undefined,
-                Cicada.Application.getContainer('factory').module,
+                Shopware.Application.getContainer('factory').module,
             );
         });
 
@@ -57,10 +57,10 @@ describe('src/app/init/tabs.init', () => {
             routes: routesMock,
         });
         routerMock.push('/sw/category/index/eXaMpLeId');
-        Cicada.Application.view.router = routerMock;
+        Shopware.Application.view.router = routerMock;
 
         // Add module to registry for receiving meta data
-        Cicada.Module.register('sw-category', {
+        Shopware.Module.register('sw-category', {
             type: 'core',
             name: 'category',
             title: 'sw-category.general.mainMenuItemIndex',
@@ -83,6 +83,42 @@ describe('src/app/init/tabs.init', () => {
             },
         });
 
+        Shopware.Module.register('sw-settings-usage-data', {
+            type: 'core',
+            name: 'usage-data',
+            title: 'sw-settings-usage-data.general.mainMenuItemGeneral',
+            description: 'sw-settings-usage-data.general.description',
+            version: '1.0.0',
+            targetVersion: '1.0.0',
+            color: '#9AA8B5',
+            icon: 'regular-cog',
+            favicon: 'icon-module-settings.png',
+            entity: 'store_settings',
+            routes: {
+                index: {
+                    component: 'sw-settings-usage-data',
+                    path: 'index',
+                    meta: {
+                        // Do not use parentPath here to test the fallback
+                        privilege: 'system.system_config',
+                    },
+                    redirect: {
+                        name: 'sw.settings.usage.data.index.general',
+                    },
+                    children: {
+                        general: {
+                            component: 'sw-settings-usage-data-general',
+                            path: 'general',
+                            meta: {
+                                parentPath: 'sw.settings.index.system',
+                                privilege: 'system.system_config',
+                            },
+                        },
+                    },
+                },
+            },
+        });
+
         // start handler for extensionAPI
         initTabs();
     });
@@ -95,8 +131,8 @@ describe('src/app/init/tabs.init', () => {
         });
 
         // Check if value was registered correctly
-        expect(Cicada.State.get('tabs').tabItems).toHaveProperty('foo-position-id');
-        expect(Cicada.State.get('tabs').tabItems['foo-position-id']).toEqual([
+        expect(Shopware.Store.get('tabs').tabItems).toHaveProperty('foo-position-id');
+        expect(Shopware.Store.get('tabs').tabItems['foo-position-id']).toEqual([
             {
                 label: 'My tab item',
                 componentSectionId: 'foo-component-section-id',
@@ -112,7 +148,7 @@ describe('src/app/init/tabs.init', () => {
         });
 
         // initialize view
-        await Cicada.Application._resolveViewInitialized();
+        await Shopware.Application._resolveViewInitialized();
 
         // Visit the route and expect that the interceptor redirects the route
         await routerMock.push('/sw/category/index/eXaMpLeId/route-example-component-section-id');
@@ -134,7 +170,7 @@ describe('src/app/init/tabs.init', () => {
         });
 
         // initialize view
-        await Cicada.Application._resolveViewInitialized();
+        await Shopware.Application._resolveViewInitialized();
 
         // Visit the route and expect that the interceptor redirects the route
         await routerMock.push('/sw/settings/usage/data/index/route-example-component-section-id');
@@ -156,7 +192,7 @@ describe('src/app/init/tabs.init', () => {
         });
 
         // initialize view
-        await Cicada.Application._resolveViewInitialized();
+        await Shopware.Application._resolveViewInitialized();
 
         // Visit the route and expect that the interceptor redirects the route
         await routerMock.push('/sw/category/index/eXaMpLeId/route-example-component-section-id');
@@ -177,6 +213,41 @@ describe('src/app/init/tabs.init', () => {
                         icon: 'regular-products',
                         favicon: 'icon-module-products.png',
                         entity: 'category',
+                    }),
+                }),
+            }),
+        );
+    });
+
+    it('should add the correct meta data to the route (static)', async () => {
+        // add tab
+        await ui.tabs('route-position-example-id').addTabItem({
+            label: 'My tab item with route',
+            componentSectionId: 'route-example-component-section-id',
+        });
+
+        // initialize view
+        await Shopware.Application._resolveViewInitialized();
+
+        // Visit the route and expect that the interceptor redirects the route
+        await routerMock.push('/sw/settings/usage/data/index/route-example-component-section-id');
+
+        // Check if route was created correctly
+        expect(routerMock.resolve('/sw/settings/usage/data/index/route-example-component-section-id').matched[1]).toEqual(
+            expect.objectContaining({
+                meta: expect.objectContaining({
+                    parentPath: 'sw.settings.usage.data.index',
+                    $module: expect.objectContaining({
+                        type: 'core',
+                        name: 'usage-data',
+                        title: 'sw-settings-usage-data.general.mainMenuItemGeneral',
+                        description: 'sw-settings-usage-data.general.description',
+                        version: '1.0.0',
+                        targetVersion: '1.0.0',
+                        color: '#9AA8B5',
+                        icon: 'regular-cog',
+                        favicon: 'icon-module-settings.png',
+                        entity: 'store_settings',
                     }),
                 }),
             }),

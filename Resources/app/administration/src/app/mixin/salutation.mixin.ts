@@ -11,19 +11,20 @@ type SalutationFilterEntityType = {
         displayName: string;
     };
     title: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     [key: string]: unknown;
 };
 
 /**
  * @private
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'salutation',
     defineComponent({
         computed: {
             salutationFilter(): (entity: SalutationFilterEntityType, fallbackSnippet: string) => string {
-                return Cicada.Filter.getByName('salutation');
+                return Shopware.Filter.getByName('salutation');
             },
         },
 

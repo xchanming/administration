@@ -1,11 +1,9 @@
-import PaymentOverviewCardStore from '../state/overview-cards.store';
+import '../store/overview-cards.store';
 
 /**
  * @sw-package checkout
  */
 
-Cicada.State.registerModule('paymentOverviewCardState', PaymentOverviewCardStore);
-
-Cicada.ExtensionAPI.handle('uiModulePaymentOverviewCard', (componentConfig) => {
-    Cicada.State.commit('paymentOverviewCardState/add', componentConfig);
+Shopware.ExtensionAPI.handle('uiModulePaymentOverviewCard', (componentConfig) => {
+    Shopware.Store.get('paymentOverviewCard').add(componentConfig);
 });

@@ -5,18 +5,7 @@
 import { mount } from '@vue/test-utils';
 
 async function createWrapper(errors = {}, options = {}) {
-    if (typeof Cicada.State.get('error') !== 'undefined') {
-        Cicada.State.unregisterModule('error');
-    }
-
-    Cicada.State.registerModule('error', {
-        namespaced: true,
-
-        state: {
-            api: errors,
-        },
-    });
-    Cicada.State.getters['error/getAllApiErrors'] = () => [errors];
+    Shopware.Store.get('error').api = errors;
 
     return mount(await wrapTestComponent('sw-error-summary', { sync: true }), {
         attachTo: document.body,

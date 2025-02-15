@@ -9,7 +9,7 @@ describe('src/app/init/locale.init.ts', () => {
     });
 
     it('should register the locale factory with correct snippet languages', () => {
-        expect(Cicada.Application.getContainer('factory').locale).toEqual(
+        expect(Shopware.Application.getContainer('factory').locale).toEqual(
             expect.objectContaining({
                 getLocaleByName: expect.any(Function),
                 getLocaleRegistry: expect.any(Function),

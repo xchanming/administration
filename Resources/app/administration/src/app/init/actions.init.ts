@@ -4,9 +4,9 @@
  * @private
  */
 export default function initializeActions(): void {
-    Cicada.ExtensionAPI.handle('actionExecute', async (actionConfiguration, additionalInformation) => {
-        const extensionName = Object.keys(Cicada.State.get('extensions')).find((key) =>
-            Cicada.State.get('extensions')[key].baseUrl.startsWith(additionalInformation._event_.origin),
+    Shopware.ExtensionAPI.handle('actionExecute', async (actionConfiguration, additionalInformation) => {
+        const extensionName = Object.keys(Shopware.Store.get('extensions').extensionsState).find((key) =>
+            Shopware.Store.get('extensions').extensionsState[key].baseUrl.startsWith(additionalInformation._event_.origin),
         );
 
         if (!extensionName) {
@@ -16,11 +16,11 @@ export default function initializeActions(): void {
             );
         }
 
-        await Cicada.Service('extensionSdkService').runAction(
+        await Shopware.Service('extensionSdkService').runAction(
             {
                 url: actionConfiguration.url,
                 entity: actionConfiguration.entity,
-                action: Cicada.Utils.createId(),
+                action: Shopware.Utils.createId(),
                 appName: extensionName,
             },
             actionConfiguration.entityIds,

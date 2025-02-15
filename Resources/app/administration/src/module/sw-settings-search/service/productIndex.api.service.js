@@ -1,7 +1,7 @@
 /**
  * @sw-package inventory
  */
-const ApiService = Cicada.Classes.ApiService;
+const ApiService = Shopware.Classes.ApiService;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default class ProductIndexService extends ApiService {

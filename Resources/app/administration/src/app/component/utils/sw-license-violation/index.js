@@ -1,18 +1,15 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-license-violation.html.twig';
 import './sw-license-violation.scss';
-
-const { mapState } = Cicada.Component.getComponentHelper();
 
 /**
  * @private
  */
-Cicada.Component.register('sw-license-violation', {
+Shopware.Component.register('sw-license-violation', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'cacheApiService',
@@ -22,7 +19,7 @@ Cicada.Component.register('sw-license-violation', {
     ],
 
     mixins: [
-        Cicada.Mixin.getByName('notification'),
+        Shopware.Mixin.getByName('notification'),
     ],
 
     data() {
@@ -37,10 +34,13 @@ Cicada.Component.register('sw-license-violation', {
     },
 
     computed: {
-        ...mapState('licenseViolation', [
-            'violations',
-            'warnings',
-        ]),
+        violations() {
+            return Shopware.Store.get('licenseViolation').violations;
+        },
+
+        warnings() {
+            return Shopware.Store.get('licenseViolation').warnings;
+        },
 
         visible() {
             if (!this.showViolation) {
@@ -51,7 +51,7 @@ Cicada.Component.register('sw-license-violation', {
         },
 
         pluginCriteria() {
-            return new Cicada.Data.Criteria(1, 50);
+            return new Shopware.Data.Criteria(1, 50);
         },
 
         isLoading() {
@@ -95,9 +95,10 @@ Cicada.Component.register('sw-license-violation', {
             return this.licenseViolationService
                 .checkForLicenseViolations()
                 .then(({ violations, warnings, other }) => {
-                    Cicada.State.commit('licenseViolation/setViolations', violations);
-                    Cicada.State.commit('licenseViolation/setWarnings', warnings);
-                    Cicada.State.commit('licenseViolation/setOther', other);
+                    const licenseViolationStore = Shopware.Store.get('licenseViolation');
+                    licenseViolationStore.violations = violations;
+                    licenseViolationStore.warnings = warnings;
+                    licenseViolationStore.other = other;
                 })
                 .finally(() => {
                     this.finishLoading('getPluginViolation');

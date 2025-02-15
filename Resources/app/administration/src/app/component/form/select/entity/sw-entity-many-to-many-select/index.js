@@ -1,12 +1,13 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-entity-many-to-many-select.html.twig';
 
-const { Component } = Cicada;
-const { debounce, get } = Cicada.Utils;
-const { deepCopyObject } = Cicada.Utils.object;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Component } = Shopware;
+const { debounce, get } = Shopware.Utils;
+const { deepCopyObject } = Shopware.Utils.object;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 /**
  * @private
@@ -15,8 +16,6 @@ Component.register('sw-entity-many-to-many-select', {
     template,
 
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -79,7 +78,7 @@ Component.register('sw-entity-many-to-many-select', {
             type: Object,
             required: false,
             default() {
-                return Cicada.Context.api;
+                return Shopware.Context.api;
             },
         },
         advancedSelectionComponent: {
@@ -151,15 +150,6 @@ Component.register('sw-entity-many-to-many-select', {
 
         isAdvancedSelectionActive() {
             return this.advancedSelectionComponent && Component.getComponentRegistry().has(this.advancedSelectionComponent);
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 
@@ -244,7 +234,7 @@ Component.register('sw-entity-many-to-many-select', {
                 this.searchCriteria.sortings = this.criteria.sortings;
             }
 
-            return this.searchRepository.search(this.searchCriteria, Cicada.Context.api).then((searchResult) => {
+            return this.searchRepository.search(this.searchCriteria, Shopware.Context.api).then((searchResult) => {
                 if (searchResult.length <= 0) {
                     this.isLoading = false;
                     return searchResult;

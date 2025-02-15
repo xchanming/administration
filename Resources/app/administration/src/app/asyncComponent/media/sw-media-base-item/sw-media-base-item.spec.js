@@ -2,7 +2,7 @@
  * @sw-package discovery
  */
 import { mount } from '@vue/test-utils';
-import { MtIcon } from '@cicada-ag/meteor-component-library';
+import { MtIcon } from '@shopware-ag/meteor-component-library';
 
 const setup = async (itemChanges = {}) => {
     const propsData = {

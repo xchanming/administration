@@ -5,14 +5,12 @@ import './sw-extension-app-module-error-page.scss';
  * @sw-package checkout
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     computed: {
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

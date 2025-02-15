@@ -1,12 +1,12 @@
 import BulkEditBaseHandler from './bulk-edit-base.handler';
 import RetryHelper from '../../../../core/helper/retry.helper';
 
-const types = Cicada.Utils.types;
+const types = Shopware.Utils.types;
 
 /**
  * @class
  * @extends BulkEditBaseHandler
- * @sw-package inventory
+ * @sw-package checkout
  */
 class BulkEditCustomerHandler extends BulkEditBaseHandler {
     constructor() {
@@ -14,8 +14,8 @@ class BulkEditCustomerHandler extends BulkEditBaseHandler {
         this.name = 'bulkEditCustomerHandler';
         this.entityName = 'customer';
         this.entityIds = [];
-        this.customerGroupRegistrationService = Cicada.Service('customerGroupRegistrationService');
-        this.customerRepository = Cicada.Service('repositoryFactory').create('customer');
+        this.customerGroupRegistrationService = Shopware.Service('customerGroupRegistrationService');
+        this.customerRepository = Shopware.Service('repositoryFactory').create('customer');
     }
 
     async bulkEdit(entityIds, payload) {
@@ -33,7 +33,7 @@ class BulkEditCustomerHandler extends BulkEditBaseHandler {
                 {},
                 {
                     'single-operation': 1,
-                    'sw-language-id': Cicada.Context.api.languageId,
+                    'sw-language-id': Shopware.Context.api.languageId,
                 },
             );
         });
@@ -41,7 +41,7 @@ class BulkEditCustomerHandler extends BulkEditBaseHandler {
 
     async bulkEditRequestedGroup(entityIds, payload) {
         const promises = [];
-        const shouldTriggerFlows = Cicada.State.get('swBulkEdit').isFlowTriggered;
+        const shouldTriggerFlows = Shopware.Store.get('swBulkEdit').isFlowTriggered;
 
         payload.forEach((change) => {
             if (!change.value) {

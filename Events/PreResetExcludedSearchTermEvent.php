@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Events;
+namespace Shopware\Administration\Events;
 
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\Event\CicadaEvent;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\Event\ShopwareEvent;
+use Shopware\Core\Framework\Log\Package;
 use Symfony\Contracts\EventDispatcher\Event;
 
 #[Package('framework')]
-class PreResetExcludedSearchTermEvent extends Event implements CicadaEvent
+class PreResetExcludedSearchTermEvent extends Event implements ShopwareEvent
 {
     /**
      * @param array<string> $excludedTerms

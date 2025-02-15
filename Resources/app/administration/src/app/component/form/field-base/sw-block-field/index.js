@@ -4,7 +4,7 @@
 import template from './sw-block-field.html.twig';
 import './sw-block-field.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -12,8 +12,6 @@ const { Component } = Cicada;
 Component.register('sw-block-field', {
     template,
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         size: {
@@ -53,15 +51,6 @@ Component.register('sw-block-field', {
                 },
                 this.swBlockSize,
             ];
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

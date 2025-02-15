@@ -1,7 +1,7 @@
 import './sw-loader.scss';
 import template from './sw-loader.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -16,8 +16,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-loader-deprecated', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         size: {

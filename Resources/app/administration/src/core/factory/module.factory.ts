@@ -137,7 +137,7 @@ const middlewareHelper = new MiddlewareHelper();
  */
 function getModuleRegistry(): Map<string, ModuleDefinition> {
     modules.forEach((value, key) => {
-        if (hasOwnProperty(value.manifest, 'flag') && !Cicada.Feature.isActive(value?.manifest?.flag ?? '')) {
+        if (hasOwnProperty(value.manifest, 'flag') && !Shopware.Feature.isActive(value?.manifest?.flag ?? '')) {
             modules.delete(key);
         }
     });
@@ -439,7 +439,7 @@ function getModuleRoutes(): SwRouteConfig[] {
 
     modules.forEach((module) => {
         module.routes.forEach((route) => {
-            if (hasOwnProperty(route, 'flag') && !Cicada.Feature.isActive(route.flag ?? '')) {
+            if (hasOwnProperty(route, 'flag') && !Shopware.Feature.isActive(route.flag ?? '')) {
                 return;
             }
 
@@ -499,7 +499,7 @@ function getModuleSnippets(): { [lang: string]: Snippets | undefined } {
  * Adds a module to the settingsItems Store
  */
 function addSettingsItemsToStore(moduleId: string, module: ModuleManifest): void {
-    if (hasOwnProperty(module, 'flag') && !Cicada.Feature.isActive(module.flag ?? '')) {
+    if (hasOwnProperty(module, 'flag') && !Shopware.Feature.isActive(module.flag ?? '')) {
         return;
     }
 
@@ -525,7 +525,7 @@ function addSettingsItemsToStore(moduleId: string, module: ModuleManifest): void
                 settingsItem.label = module.title;
             }
 
-            Cicada.State.commit('settingsItems/addItem', settingsItem);
+            Shopware.Store.get('settingsItems').addItem(settingsItem);
         } else {
             warn(
                 'ModuleFactory',
@@ -550,7 +550,7 @@ function addEntryRouteToExtensionRouteStore(config: { extensionName: string; rou
         return;
     }
 
-    Cicada.State.commit('extensionEntryRoutes/addItem', config);
+    Shopware.Store.get('extensionEntryRoutes').addItem(config);
 }
 
 /**

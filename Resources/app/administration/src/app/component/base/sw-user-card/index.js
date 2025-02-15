@@ -5,7 +5,7 @@
 import template from './sw-user-card.html.twig';
 import './sw-user-card.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -19,7 +19,8 @@ const { Component } = Cicada;
  *     addresses: [{
  *         salutation: 'Mister',
  *         title: 'Doctor',
- *         name: 'John',
+ *         firstName: 'John',
+ *         lastName: 'Doe',
  *         street: 'Main St 123',
  *         zipcode: '12456',
  *         city: 'Anytown',
@@ -27,7 +28,8 @@ const { Component } = Cicada;
  *     }],
  *     salutation: 'Mister',
  *     title: 'Doctor',
- *     name: 'John',
+ *     firstName: 'John',
+ *     lastName: 'Doe',
  *     street: 'Main St 123',
  *     zipcode: '12456',
  *     city: 'Anytown',
@@ -48,8 +50,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-user-card', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         user: {
@@ -90,7 +90,7 @@ Component.register('sw-user-card', {
         },
 
         salutationFilter() {
-            return Cicada.Filter.getByName('salutation');
+            return Shopware.Filter.getByName('salutation');
         },
     },
 });

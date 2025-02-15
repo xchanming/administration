@@ -5,7 +5,7 @@
 import header from './header.csv.twig';
 import body from './body.csv.twig';
 
-Cicada.Service('exportTemplateService').registerProductExportTemplate({
+Shopware.Service('exportTemplateService').registerProductExportTemplate({
     name: 'idealo',
     translationKey: 'sw-sales-channel.detail.productComparison.templates.template-label.idealo',
     headerTemplate: header.trim(),

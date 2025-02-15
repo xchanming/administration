@@ -3,12 +3,11 @@ import './sw-first-run-wizard-mailer-selection.scss';
 
 /**
  * @sw-package fundamentals@after-sales
+ *
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['systemConfigApiService'],
 
@@ -31,8 +30,8 @@ export default {
         },
 
         buttonConfig() {
-            const disabledExtensionManagement = Cicada.State.get('context').app.config.settings.disableExtensionManagement;
-            const nextRoute = disabledExtensionManagement ? 'cicada.account' : 'paypal.info';
+            const disabledExtensionManagement = Shopware.Store.get('context').app.config.settings.disableExtensionManagement;
+            const nextRoute = disabledExtensionManagement ? 'shopware.account' : 'paypal.info';
 
             return [
                 {
@@ -63,7 +62,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

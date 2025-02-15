@@ -17,7 +17,7 @@ async function createWrapper() {
             },
             global: {
                 stubs: {
-                    'sw-icon': await Cicada.Component.build('sw-icon'),
+                    'sw-icon': await Shopware.Component.build('sw-icon'),
                     'sw-icon-deprecated': await wrapTestComponent('sw-icon-deprecated', { sync: true }),
                     'icons-regular-eye-slash': true,
                     'icons-regular-chevron-down-xs': true,

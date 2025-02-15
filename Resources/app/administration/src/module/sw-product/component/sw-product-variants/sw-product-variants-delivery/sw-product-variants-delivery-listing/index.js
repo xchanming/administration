@@ -5,13 +5,11 @@
 import template from './sw-product-variants-delivery-listing.html.twig';
 import './sw-product-variants-delivery-listing.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         product: {
@@ -79,7 +77,7 @@ export default {
         },
 
         context() {
-            const context = { ...Cicada.Context.api, inheritance: true };
+            const context = { ...Shopware.Context.api, inheritance: true };
 
             return context;
         },

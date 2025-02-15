@@ -1,30 +1,33 @@
 /**
  * @sw-package inventory
  */
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-listing', () => import('./page/sw-settings-listing'));
-Cicada.Component.register('sw-settings-listing-option-base', () => import('./page/sw-settings-listing-option-base'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-settings-listing', () => import('./page/sw-settings-listing'));
+Shopware.Component.register('sw-settings-listing-option-base', () => import('./page/sw-settings-listing-option-base'));
+Shopware.Component.extend(
     'sw-settings-listing-option-create',
     'sw-settings-listing-option-base',
     () => import('./page/sw-settings-listing-option-create'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-listing-default-sales-channel',
     () => import('./component/sw-settings-listing-default-sales-channel'),
 );
-Cicada.Component.register('sw-settings-listing-delete-modal', () => import('./component/sw-settings-listing-delete-modal'));
-Cicada.Component.register(
+Shopware.Component.register(
+    'sw-settings-listing-delete-modal',
+    () => import('./component/sw-settings-listing-delete-modal'),
+);
+Shopware.Component.register(
     'sw-settings-listing-option-general-info',
     () => import('./component/sw-settings-listing-option-general-info'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-listing-option-criteria-grid',
     () => import('./component/sw-settings-listing-option-criteria-grid'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-listing-visibility-detail',
     () => import('./component/sw-settings-listing-visibility-detail'),
 );
@@ -73,7 +76,7 @@ Module.register('sw-settings-listing', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'commerce',
         to: 'sw.settings.listing.index',
         icon: 'regular-products',
         privilege: 'system.system_config',

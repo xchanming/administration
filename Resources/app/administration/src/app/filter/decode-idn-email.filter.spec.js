@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-const { Filter } = Cicada;
+const { Filter } = Shopware;
 
 describe('filter/decode-idn-email.filter', () => {
     let emailIdnFilter;

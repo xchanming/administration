@@ -1,10 +1,10 @@
-const ApiService = Cicada.Classes.ApiService;
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * Gateway for the API end point "snippet-set"
  * @class
  * @extends ApiService
- * @sw-package fundamentals@after-sales
+ * @sw-package discovery
  */
 class SnippetSetApiService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = 'snippet-set') {

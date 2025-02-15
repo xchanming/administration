@@ -8,8 +8,6 @@ import './sw-users-permissions-additional-permissions.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['privileges'],
 
     props: {

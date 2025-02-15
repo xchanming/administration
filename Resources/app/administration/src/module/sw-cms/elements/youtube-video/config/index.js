@@ -1,7 +1,7 @@
 import template from './sw-cms-el-config-youtube-video.html.twig';
 import './sw-cms-el-config-youtube-video.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -181,13 +179,8 @@ export default {
         },
 
         updateElementData(media = null) {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element.data, 'previewMediaId', media === null ? null : media.id);
-                this.$set(this.element.data, 'previewMedia', media);
-            } else {
-                this.element.data.previewMediaId = media === null ? null : media.id;
-                this.element.data.previewMedia = media;
-            }
+            this.element.data.previewMediaId = media === null ? null : media.id;
+            this.element.data.previewMedia = media;
         },
 
         onOpenMediaModal() {

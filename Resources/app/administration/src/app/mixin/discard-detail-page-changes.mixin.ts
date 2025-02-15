@@ -1,7 +1,7 @@
 import type { NavigationGuardNext } from 'vue-router';
 
-const { Mixin } = Cicada;
-const { types } = Cicada.Utils;
+const { Mixin } = Shopware;
+const { types } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -40,7 +40,7 @@ export default Mixin.register('discard-detail-page-changes', (...entityNames: Ar
         throw new Error('discard-detail-page-changes.mixin - You need to provide the entity names');
     }
 
-    return Cicada.Component.wrapComponentConfig({
+    return Shopware.Component.wrapComponentConfig({
         beforeRouteLeave(to, from, next: NavigationGuardNext) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             this.discardChanges();
@@ -71,7 +71,7 @@ export default Mixin.register('discard-detail-page-changes', (...entityNames: Ar
                         return;
                     }
 
-                    Cicada.Utils.debug.warn(
+                    Shopware.Utils.debug.warn(
                         'Discard-detail-page-changes Mixin',
                         `Could not discard changes for entity with name "${entityName}".`,
                     );

@@ -14,20 +14,20 @@ const CURRENCY_ID = {
 
 function mockContext() {
     return {
-        apiPath: 'http://cicada.local/api',
-        apiResourcePath: 'http://cicada.local/api/v2',
-        assetsPath: 'http://cicada.local/bundles/',
+        apiPath: 'http://shopware.local/api',
+        apiResourcePath: 'http://shopware.local/api/v2',
+        assetsPath: 'http://shopware.local/bundles/',
         basePath: '',
-        host: 'cicada.local',
+        host: 'shopware.local',
         inheritance: false,
-        installationPath: 'http://cicada.local',
+        installationPath: 'http://shopware.local',
         languageId: '2fbb5fe2e29a4d70aa5854ce7ce3e20b',
         liveVersionId: '0fa91ce3e96a4bc2be4bd9ce752c3425',
         pathInfo: '/admin',
         port: 80,
         scheme: 'http',
-        schemeAndHttpHost: 'http://cicada.local',
-        uri: 'http://cicada.local/admin',
+        schemeAndHttpHost: 'http://shopware.local',
+        uri: 'http://shopware.local/admin',
     };
 }
 
@@ -360,7 +360,7 @@ async function createWrapper() {
     };
 }
 
-Cicada.Service().register('filterService', () => {
+Shopware.Service().register('filterService', () => {
     return {
         mergeWithStoredFilters: (storeKey, criteria) => criteria,
     };
@@ -506,6 +506,36 @@ describe('module/sw-product/page/sw-product-list', () => {
         const params = new URLSearchParams(window.location.href);
         expect(params.get('naturalSorting')).toBe('false');
         expect(wrapper.vm.naturalSorting).toBe(false);
+    });
+
+    it('should sort products by Manufacturer name', async () => {
+        await wrapper.vm.getList();
+
+        const currencyColumnHeader = wrapper.find('.sw-data-grid__cell--header.sw-data-grid__cell--2');
+
+        await currencyColumnHeader.trigger('click');
+        await flushPromises();
+
+        const manufacturerNamesASCSorted = wrapper.findAll('.sw-data-grid__cell--manufacturer-name');
+        const [
+            firstManufacturerNameASCSorted,
+            secondManufacturerNameASCSorted,
+        ] = manufacturerNamesASCSorted;
+
+        expect(firstManufacturerNameASCSorted.text()).toBe('Manufacturer A');
+        expect(secondManufacturerNameASCSorted.text()).toBe('Manufacturer B');
+
+        await currencyColumnHeader.trigger('click');
+        await flushPromises();
+
+        const manufacturerNamesDESCSorted = wrapper.findAll('.sw-data-grid__cell--manufacturer-name');
+        const [
+            firstManufacturerNameDESCSorted,
+            secondManufacturerNameDESCSorted,
+        ] = manufacturerNamesDESCSorted;
+
+        expect(firstManufacturerNameDESCSorted.text()).toBe('Manufacturer B');
+        expect(secondManufacturerNameDESCSorted.text()).toBe('Manufacturer A');
     });
 
     it('should return price when given currency id', async () => {

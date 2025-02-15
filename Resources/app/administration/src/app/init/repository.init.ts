@@ -2,9 +2,9 @@
  * @sw-package framework
  */
 
-const RepositoryFactory = Cicada.Classes._private.RepositoryFactory;
-const { EntityHydrator, ChangesetGenerator, EntityFactory } = Cicada.Data;
-const ErrorResolverError = Cicada.Data.ErrorResolver;
+const RepositoryFactory = Shopware.Classes._private.RepositoryFactory;
+const { EntityHydrator, ChangesetGenerator, EntityFactory } = Shopware.Data;
+const ErrorResolverError = Shopware.Data.ErrorResolver;
 
 const customEntityTypes = [
     {
@@ -21,8 +21,8 @@ const customEntityTypes = [
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeRepositoryFactory(container: InitContainer) {
     const httpClient = container.httpClient;
-    const factoryContainer = Cicada.Application.getContainer('factory');
-    const serviceContainer = Cicada.Application.getContainer('service');
+    const factoryContainer = Shopware.Application.getContainer('factory');
+    const serviceContainer = Shopware.Application.getContainer('service');
 
     return httpClient
         .get('_info/entity-schema.json', {
@@ -65,13 +65,13 @@ export default function initializeRepositoryFactory(container: InitContainer) {
             const entityFactory = new EntityFactory();
             const errorResolver = new ErrorResolverError();
 
-            Cicada.Application.addServiceProvider('repositoryFactory', () => {
+            Shopware.Application.addServiceProvider('repositoryFactory', () => {
                 return new RepositoryFactory(hydrator, changesetGenerator, entityFactory, httpClient, errorResolver);
             });
-            Cicada.Application.addServiceProvider('entityHydrator', () => {
+            Shopware.Application.addServiceProvider('entityHydrator', () => {
                 return hydrator;
             });
-            Cicada.Application.addServiceProvider('entityFactory', () => {
+            Shopware.Application.addServiceProvider('entityFactory', () => {
                 return entityFactory;
             });
         });

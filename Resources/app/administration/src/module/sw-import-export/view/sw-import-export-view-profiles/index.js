@@ -4,16 +4,14 @@
 import template from './sw-import-export-view-profiles.html.twig';
 import './sw-import-export-view-profiles.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -83,7 +81,7 @@ export default {
         },
 
         isNotSystemLanguage() {
-            return Cicada.Context.api.systemLanguageId !== Cicada.Context.api.languageId;
+            return Shopware.Context.api.systemLanguageId !== Shopware.Context.api.languageId;
         },
 
         createTooltip() {
@@ -141,11 +139,7 @@ export default {
             const profile = await this.profileRepository.get(id);
 
             if (Array.isArray(profile.config) && profile.config.length <= 0) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(profile, 'config', {});
-                } else {
-                    this.profile.config = {};
-                }
+                this.profile.config = {};
             }
 
             if (profile.config?.createEntities === undefined) {
@@ -170,7 +164,7 @@ export default {
             };
 
             return this.profileRepository
-                .clone(item.id, behavior, Cicada.Context.api)
+                .clone(item.id, behavior, Shopware.Context.api)
                 .then((clone) => {
                     const criteria = new Criteria(1, 25);
                     criteria.setIds([clone.id]);
@@ -213,7 +207,7 @@ export default {
         saveSelectedProfile() {
             this.isLoading = true;
             return this.profileRepository
-                .save(this.selectedProfile, Cicada.Context.api)
+                .save(this.selectedProfile, Shopware.Context.api)
                 .then(() => {
                     this.showProfileEditModal = false;
                     this.selectedProfile = null;

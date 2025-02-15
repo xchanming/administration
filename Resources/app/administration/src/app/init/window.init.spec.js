@@ -3,7 +3,7 @@
  */
 
 import initializeWindow from 'src/app/init/window.init';
-import { send } from '@cicada-ag/meteor-admin-sdk/es/channel';
+import { send } from '@shopware-ag/meteor-admin-sdk/es/channel';
 
 describe('src/app/init/window.init.ts', () => {
     const reload = window.location.reload;
@@ -48,7 +48,7 @@ describe('src/app/init/window.init.ts', () => {
     });
 
     it('should handle windowRouterPush', async () => {
-        Cicada.Application = {
+        Shopware.Application = {
             view: {
                 router: {
                     push: jest.fn(),
@@ -60,7 +60,7 @@ describe('src/app/init/window.init.ts', () => {
             name: 'sw.product.index',
         });
 
-        expect(Cicada.Application.view.router.push).toHaveBeenCalledWith({
+        expect(Shopware.Application.view.router.push).toHaveBeenCalledWith({
             name: 'sw.product.index',
             params: undefined,
             path: '',

@@ -1,8 +1,7 @@
 /**
  * @sw-package checkout
  */
-import type { iapCheckout } from '@cicada-ag/meteor-admin-sdk/es/iap';
-import type { Extension } from 'src/app/state/extensions.store';
+import type { iapCheckout } from '@shopware-ag/meteor-admin-sdk/es/iap';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export type InAppPurchaseRequest = Omit<iapCheckout, 'responseType'>;
@@ -19,7 +18,7 @@ export type InAppPurchaseCheckoutState =
       };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const inAppPurchaseCheckoutStore = Cicada.Store.register({
+const inAppPurchaseCheckoutStore = Shopware.Store.register({
     id: 'inAppPurchaseCheckout',
 
     state: (): InAppPurchaseCheckoutState => ({
@@ -28,13 +27,8 @@ const inAppPurchaseCheckoutStore = Cicada.Store.register({
     }),
 
     actions: {
-        // @deprecated tag:v6.7.0 - extension will only be string
-        request(entry: InAppPurchaseRequest, extension: Extension | string): void {
-            if (Cicada.Utils.types.isObject(extension)) {
-                extension = extension.name;
-            }
-
-            if (!Cicada.Context.app.config.bundles?.[extension]) {
+        request(entry: InAppPurchaseRequest, extension: string): void {
+            if (!Shopware.Context.app.config.bundles?.[extension]) {
                 throw new Error(`Extension with the name "${extension}" not found.`);
             }
 

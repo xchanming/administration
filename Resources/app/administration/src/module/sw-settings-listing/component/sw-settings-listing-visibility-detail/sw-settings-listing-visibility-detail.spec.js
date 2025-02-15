@@ -5,7 +5,7 @@ import { mount } from '@vue/test-utils';
  */
 
 // Turn off known errors
-import { unknownOptionError } from 'src/../test/_helper_/allowedErrors';
+import { unknownOptionError } from 'test/_helper_/allowedErrors';
 
 global.allowedErrors = [
     ...global.allowedErrors,
@@ -24,7 +24,7 @@ const defaultProps = {
 };
 
 function createEntityCollection(entities = []) {
-    return new Cicada.Data.EntityCollection('sales_channel', 'sales_channel', {}, null, entities);
+    return new Shopware.Data.EntityCollection('sales_channel', 'sales_channel', {}, null, entities);
 }
 
 async function createWrapper(props = defaultProps) {

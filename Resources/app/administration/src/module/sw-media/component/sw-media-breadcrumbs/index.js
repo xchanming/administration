@@ -1,7 +1,7 @@
 import template from './sw-media-breadcrumbs.html.twig';
 import './sw-media-breadcrumbs.scss';
 
-const { Context, Filter } = Cicada;
+const { Context, Filter } = Shopware;
 
 /**
  * @sw-package discovery
@@ -9,8 +9,6 @@ const { Context, Filter } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

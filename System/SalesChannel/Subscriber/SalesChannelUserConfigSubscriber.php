@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\System\SalesChannel\Subscriber;
+namespace Shopware\Administration\System\SalesChannel\Subscriber;
 
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Cicada\Core\Framework\DataAbstractionLayer\Event\EntityDeletedEvent;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\System\User\Aggregate\UserConfig\UserConfigCollection;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityDeletedEvent;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\System\User\Aggregate\UserConfig\UserConfigCollection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @internal
  */
-#[Package('buyers-experience')]
+#[Package('discovery')]
 class SalesChannelUserConfigSubscriber implements EventSubscriberInterface
 {
     final public const CONFIG_KEY = 'sales-channel-favorites';

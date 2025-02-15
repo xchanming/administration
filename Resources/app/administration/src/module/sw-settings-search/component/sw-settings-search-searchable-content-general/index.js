@@ -3,13 +3,11 @@
  */
 import template from './sw-settings-search-searchable-content-general.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -63,7 +61,7 @@ export default {
 
     computed: {
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

@@ -1,10 +1,11 @@
 /**
  * @sw-package checkout
  */
-const { Module } = Cicada;
+
+const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Component.register('sw-settings-cart', () => import('./page/sw-settings-cart'));
+Shopware.Component.register('sw-settings-cart', () => import('./page/sw-settings-cart'));
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-cart', {
@@ -31,7 +32,7 @@ Module.register('sw-settings-cart', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'general',
         to: 'sw.settings.cart.index',
         icon: 'regular-shopping-cart',
         privilege: 'system.system_config',

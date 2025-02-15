@@ -17,7 +17,7 @@ describe('src/core/data/changeset-generator.data.js', () => {
                 entityName,
                 entityDefinition,
             ]) => {
-                Cicada.EntityDefinition.add(entityName, entityDefinition);
+                Shopware.EntityDefinition.add(entityName, entityDefinition);
             },
         );
     });
@@ -35,8 +35,8 @@ describe('src/core/data/changeset-generator.data.js', () => {
             description: 'Change property name',
             entityName: 'cms_page',
             originChanges: { name: 'Microsoft' },
-            entityChanges: { name: 'Cicada AG' },
-            expected: { name: 'Cicada AG' },
+            entityChanges: { name: 'Shopware AG' },
+            expected: { name: 'Shopware AG' },
         },
         {
             description: 'Should create full changeset',

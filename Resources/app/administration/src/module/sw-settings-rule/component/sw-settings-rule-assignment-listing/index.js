@@ -7,8 +7,6 @@ import template from './sw-settings-rule-assignment-listing.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['delete-items'],
 
     methods: {

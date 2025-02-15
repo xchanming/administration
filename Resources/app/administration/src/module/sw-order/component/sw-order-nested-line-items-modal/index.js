@@ -5,14 +5,12 @@ import './sw-order-nested-line-items-modal.scss';
  * @sw-package checkout
  */
 
-const { Filter } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Filter } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -46,10 +44,14 @@ export default {
         modalTitle() {
             const price = Filter.getByName('currency')(this.lineItem.totalPrice, this.order.currency.isoCode);
 
-            return this.$tc('sw-order.nestedLineItemsModal.titlePrefix', 0, {
-                lineItemLabel: this.lineItem.label,
-                price,
-            });
+            return this.$tc(
+                'sw-order.nestedLineItemsModal.titlePrefix',
+                {
+                    lineItemLabel: this.lineItem.label,
+                    price,
+                },
+                0,
+            );
         },
     },
 
@@ -87,7 +89,7 @@ export default {
 
             criteria.getAssociation('children').addSorting(Criteria.naturalSorting('label'));
 
-            const children = await this.lineItemRepository.search(criteria, Cicada.Context.api);
+            const children = await this.lineItemRepository.search(criteria, Shopware.Context.api);
 
             const descendants = [];
             nestedLineItems.forEach((nestedLineItem) => {

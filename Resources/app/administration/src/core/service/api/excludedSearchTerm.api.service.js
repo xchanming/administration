@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@after-sales
+ * @sw-package inventory
  */
 import ApiService from '../api.service';
 
@@ -19,7 +19,7 @@ export default class ExcludedSearchTermService extends ApiService {
     _getHeader() {
         return {
             ...super.getBasicHeaders(),
-            'sw-language-id': Cicada.Context.api.languageId,
+            'sw-language-id': Shopware.Context.api.languageId,
         };
     }
 }

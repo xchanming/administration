@@ -9,8 +9,6 @@ import './sw-sales-channel-detail-product-comparison-preview.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['close'],
 
     props: {

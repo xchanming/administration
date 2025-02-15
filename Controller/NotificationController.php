@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Controller;
+namespace Shopware\Administration\Controller;
 
-use Cicada\Administration\Notification\NotificationService;
-use Cicada\Core\Framework\Api\ApiException;
-use Cicada\Core\Framework\Api\Context\AdminApiSource;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\RateLimiter\Exception\RateLimitExceededException;
-use Cicada\Core\Framework\RateLimiter\RateLimiter;
-use Cicada\Core\Framework\Routing\RoutingException;
-use Cicada\Core\Framework\Uuid\Uuid;
+use Shopware\Administration\Notification\NotificationService;
+use Shopware\Core\Framework\Api\ApiException;
+use Shopware\Core\Framework\Api\Context\AdminApiSource;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\RateLimiter\Exception\RateLimitExceededException;
+use Shopware\Core\Framework\RateLimiter\RateLimiter;
+use Shopware\Core\Framework\Routing\RoutingException;
+use Shopware\Core\Framework\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,17 +1,15 @@
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
 import template from './sw-bulk-edit-order-documents.html.twig';
 import './sw-bulk-edit-order-documents.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

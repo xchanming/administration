@@ -5,15 +5,13 @@
 import template from './sw-product-stream-filter.html.twig';
 import './sw-product-stream-filter.scss';
 
-const { EntityDefinition } = Cicada;
+const { EntityDefinition } = Shopware;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'createCondition',

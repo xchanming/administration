@@ -108,7 +108,7 @@ describe('module/sw-settings-search/component/sw-settings-search-searchable-cont
     });
 
     it('should return storefrontEsEnable value', async () => {
-        Cicada.Context.app.storefrontEsEnable = true;
+        Shopware.Context.app.storefrontEsEnable = true;
         const wrapper = await createWrapper();
 
         expect(wrapper.vm.storefrontEsEnable).toBeTruthy();

@@ -9,8 +9,6 @@ import './sw-product-layout-assignment.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['acl'],
 
     emits: [

@@ -1,8 +1,8 @@
 import template from './sw-condition-generic.html.twig';
 import './sw-condition-generic.scss';
 
-const { Component, Mixin } = Cicada;
-const { getPlaceholderSnippet } = Cicada.Utils.genericRuleCondition;
+const { Component, Mixin } = Shopware;
+const { getPlaceholderSnippet } = Shopware.Utils.genericRuleCondition;
 
 /**
  * @public

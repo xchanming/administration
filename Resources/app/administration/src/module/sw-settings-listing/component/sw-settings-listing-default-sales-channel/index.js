@@ -5,15 +5,13 @@ import './sw-settings-listing-default-sales-channel.scss';
  * @sw-package inventory
  */
 
-const { EntityCollection } = Cicada.Data;
-const { isEmpty } = Cicada.Utils.types;
-const { cloneDeep } = Cicada.Utils.object;
+const { EntityCollection } = Shopware.Data;
+const { isEmpty } = Shopware.Utils.types;
+const { cloneDeep } = Shopware.Utils.object;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -103,7 +101,7 @@ export default {
             const salesChannelEntity = new EntityCollection(
                 this.salesChannelRepository.route,
                 this.salesChannelRepository.entityName,
-                Cicada.Context.api,
+                Shopware.Context.api,
             );
 
             this.systemConfigApiService.getValues('core.defaultSalesChannel').then((configData) => {

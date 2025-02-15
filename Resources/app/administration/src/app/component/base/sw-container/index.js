@@ -1,8 +1,8 @@
 import template from './sw-container.html.twig';
 import './sw-container.scss';
 
-const { Component } = Cicada;
-const { warn } = Cicada.Utils.debug;
+const { Component } = Shopware;
+const { warn } = Shopware.Utils.debug;
 
 /**
  * @sw-package framework
@@ -19,8 +19,6 @@ const { warn } = Cicada.Utils.debug;
  */
 Component.register('sw-container', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         columns: {

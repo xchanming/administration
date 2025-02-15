@@ -4,7 +4,7 @@
 
 import { getCurrentInstance, watchEffect } from 'vue';
 
-const { warn } = Cicada.Utils.debug;
+const { warn } = Shopware.Utils.debug;
 
 class MetaInfoPlugin {
     pluginInstalled = false;

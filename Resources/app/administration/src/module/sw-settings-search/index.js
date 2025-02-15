@@ -4,36 +4,42 @@
 import './init/services.init';
 import './acl';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-search', () => import('./page/sw-settings-search'));
-Cicada.Component.register('sw-settings-search-view-general', () => import('./view/sw-settings-search-view-general'));
-Cicada.Component.register('sw-settings-search-view-live-search', () => import('./view/sw-settings-search-view-live-search'));
-Cicada.Component.register(
+Shopware.Component.register('sw-settings-search', () => import('./page/sw-settings-search'));
+Shopware.Component.register('sw-settings-search-view-general', () => import('./view/sw-settings-search-view-general'));
+Shopware.Component.register(
+    'sw-settings-search-view-live-search',
+    () => import('./view/sw-settings-search-view-live-search'),
+);
+Shopware.Component.register(
     'sw-settings-search-search-behaviour',
     () => import('./component/sw-settings-search-search-behaviour'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-search-searchable-content',
     () => import('./component/sw-settings-search-searchable-content'),
 );
-Cicada.Component.register('sw-settings-search-example-modal', () => import('./component/sw-settings-search-example-modal'));
-Cicada.Component.register(
+Shopware.Component.register(
+    'sw-settings-search-example-modal',
+    () => import('./component/sw-settings-search-example-modal'),
+);
+Shopware.Component.register(
     'sw-settings-search-searchable-content-general',
     () => import('./component/sw-settings-search-searchable-content-general'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-search-searchable-content-customfields',
     () => import('./component/sw-settings-search-searchable-content-customfields'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-search-excluded-search-terms',
     () => import('./component/sw-settings-search-excluded-search-terms'),
 );
-Cicada.Component.register('sw-settings-search-search-index', () => import('./component/sw-settings-search-search-index'));
-Cicada.Component.register('sw-settings-search-live-search', () => import('./component/sw-settings-search-live-search'));
-Cicada.Component.register(
+Shopware.Component.register('sw-settings-search-search-index', () => import('./component/sw-settings-search-search-index'));
+Shopware.Component.register('sw-settings-search-live-search', () => import('./component/sw-settings-search-live-search'));
+Shopware.Component.register(
     'sw-settings-search-live-search-keyword',
     () => import('./component/sw-settings-search-live-search-keyword'),
 );
@@ -88,7 +94,7 @@ Module.register('sw-settings-search', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'general',
         to: 'sw.settings.search.index',
         icon: 'regular-search',
         privilege: 'product_search_config.viewer',

@@ -1,6 +1,6 @@
 import template from './sw-price-preview.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -21,7 +21,7 @@ Component.extend('sw-price-preview', 'sw-price-field', {
 
     computed: {
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
 });

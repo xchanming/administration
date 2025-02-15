@@ -1,8 +1,9 @@
 /**
  * @sw-package framework
  */
-const { Component } = Cicada;
-const utils = Cicada.Utils;
+
+const { Component } = Shopware;
+const utils = Shopware.Utils;
 
 Component.register('dummy-component', {
     data() {

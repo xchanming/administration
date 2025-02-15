@@ -1,8 +1,8 @@
 import template from './sw-flow-tag-modal.html.twig';
 
-const { Component, Mixin, Context } = Cicada;
-const { CicadaError } = Cicada.Classes;
-const { EntityCollection, Criteria } = Cicada.Data;
+const { Component, Mixin, Context, Store } = Shopware;
+const { ShopwareError } = Shopware.Classes;
+const { EntityCollection, Criteria } = Shopware.Data;
 const { mapState } = Component.getComponentHelper();
 
 /**
@@ -11,8 +11,6 @@ const { mapState } = Component.getComponentHelper();
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -87,10 +85,13 @@ export default {
             return '';
         },
 
-        ...mapState('swFlowState', [
-            'triggerEvent',
-            'triggerActions',
-        ]),
+        ...mapState(
+            () => Store.get('swFlow'),
+            [
+                'triggerEvent',
+                'triggerActions',
+            ],
+        ),
     },
 
     watch: {
@@ -186,7 +187,7 @@ export default {
 
         fieldError(field) {
             if (!field || !field.length) {
-                return new CicadaError({
+                return new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
             }

@@ -7,15 +7,13 @@ import type { Cart, SalesChannelContext } from '../../order.types';
  * @sw-package checkout
  */
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @private
  */
 export default Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -46,7 +44,7 @@ export default Component.wrapComponentConfig({
                 return '';
             }
 
-            return `${this.context.customer.name} (${this.context.customer.email})`;
+            return `${this.context.customer.firstName} ${this.context.customer.lastName} (${this.context.customer.email})`;
         },
 
         paymentMethodName(): string {
@@ -58,7 +56,7 @@ export default Component.wrapComponentConfig({
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
 });

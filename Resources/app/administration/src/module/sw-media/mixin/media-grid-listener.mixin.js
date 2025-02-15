@@ -1,4 +1,4 @@
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * Mixin to handle the selection of sw-media-media-item components.

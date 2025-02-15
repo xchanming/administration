@@ -5,15 +5,13 @@
 import template from './sw-sorting-select.html.twig';
 import './sw-sorting-select.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-sorting-select', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['sorting-changed'],
 

@@ -1,4 +1,4 @@
-const ApiService = Cicada.Classes.ApiService;
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * Gateway for the API end point "import-export"
@@ -80,7 +80,7 @@ class ImportExportApiService extends ApiService {
     }
 
     getDownloadUrl(fileId, accessToken) {
-        const baseUrl = `${Cicada.Context.api.apiPath}`;
+        const baseUrl = `${Shopware.Context.api.apiPath}`;
         return `/${baseUrl}/_action/${this.getApiBasePath()}/file/download?fileId=${fileId}&accessToken=${accessToken}`;
     }
 }

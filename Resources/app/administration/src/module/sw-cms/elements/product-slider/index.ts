@@ -2,23 +2,23 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-product-slider', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-product-slider', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-product-slider', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-product-slider', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-product-slider', () => import('./component'));
+Shopware.Component.register('sw-cms-el-product-slider', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'product-slider',
     label: 'sw-cms.elements.productSlider.label',
     component: 'sw-cms-el-product-slider',
@@ -31,7 +31,7 @@ Cicada.Service('cmsService').registerCmsElement({
             required: true,
             entity: {
                 name: 'product',
-                criteria: new Cicada.Data.Criteria(1, 25).addAssociation('cover'),
+                criteria: new Shopware.Data.Criteria(1, 25).addAssociation('cover'),
             },
         },
         title: {
@@ -45,11 +45,6 @@ Cicada.Service('cmsService').registerCmsElement({
         boxLayout: {
             source: 'static',
             value: 'standard',
-        },
-        /** @deprecated tag:v6.7.0 - Will be removed. Use `navigationArrows` instead */
-        navigation: {
-            source: 'static',
-            value: true,
         },
         navigationArrows: {
             source: 'static',
@@ -88,5 +83,5 @@ Cicada.Service('cmsService').registerCmsElement({
             value: 10,
         },
     },
-    collect: Cicada.Service('cmsService').getCollectFunction(),
+    collect: Shopware.Service('cmsService').getCollectFunction(),
 });

@@ -1,7 +1,7 @@
 import template from './sw-cms-el-config-html.html.twig';
 import './sw-cms-el-config-html.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['element-update'],
 

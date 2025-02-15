@@ -1,7 +1,7 @@
 import template from './sw-media-modal-replace.html.twig';
 import './sw-media-modal-replace.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @status ready
@@ -16,8 +16,6 @@ const { Mixin } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'mediaService',

@@ -77,9 +77,9 @@ async function createWrapper() {
 
 describe('module/sw-cms/component/sw-cms-section', () => {
     beforeEach(() => {
-        Cicada.Store.unregister('cmsPage');
+        Shopware.Store.unregister('cmsPage');
 
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
             state: () => ({
                 selectedBlock: {

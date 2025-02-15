@@ -2,7 +2,8 @@
  * @sw-package framework
  */
 
-import { flushPromises, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
 
 async function createWrapper(customOptions = {}) {
     const wrapper = mount(await wrapTestComponent('sw-datepicker-deprecated', { sync: true }), {
@@ -26,14 +27,14 @@ async function createWrapper(customOptions = {}) {
 
 describe('src/app/component/form/sw-datepicker', () => {
     let wrapper;
-    const currentUser = Cicada.State.get('session').currentUser;
+    const currentUser = Shopware.Store.get('session').currentUser;
 
     beforeEach(async () => {
-        Cicada.State.commit('setCurrentUser', { timeZone: 'Asia/Shanghai' });
+        Shopware.Store.get('session').setCurrentUser({ timeZone: 'UTC' });
     });
 
     afterAll(() => {
-        Cicada.State.commit('setCurrentUser', currentUser);
+        Shopware.Store.get('session').setCurrentUser(currentUser);
     });
 
     it('should have enabled links', async () => {
@@ -68,12 +69,12 @@ describe('src/app/component/form/sw-datepicker', () => {
     });
 
     it('should use the admin locale', async () => {
-        Cicada.State.get('session').currentLocale = 'zh-CN';
+        Shopware.Store.get('session').currentLocale = 'de-DE';
         wrapper = await createWrapper();
 
-        expect(wrapper.vm.$data.flatpickrInstance.config.locale).toBe('zh');
+        expect(wrapper.vm.$data.flatpickrInstance.config.locale).toBe('de');
 
-        Cicada.State.get('session').currentLocale = 'en-GB';
+        Shopware.Store.get('session').currentLocale = 'en-GB';
         await flushPromises();
 
         expect(wrapper.vm.$data.flatpickrInstance.config.locale).toBe('en');
@@ -142,7 +143,7 @@ describe('src/app/component/form/sw-datepicker', () => {
     ])(
         'should show the $expectedTimeZone timezone as a hint when the $timeZone timezone was selected and dateType is $dateType and hideHint is false',
         async ({ dateType, timeZone, expectedTimeZone }) => {
-            Cicada.State.commit('setCurrentUser', { timeZone: timeZone });
+            Shopware.Store.get('session').setCurrentUser({ timeZone: timeZone });
 
             wrapper = await createWrapper({
                 props: {
@@ -150,6 +151,7 @@ describe('src/app/component/form/sw-datepicker', () => {
                     hideHint: false,
                 },
             });
+            await nextTick();
 
             const hint = wrapper.find('.sw-field__hint');
             const clockIcon = hint.find('sw-icon-stub[name="solid-clock"]');
@@ -169,7 +171,7 @@ describe('src/app/component/form/sw-datepicker', () => {
     ])(
         'should show no timezone as a hint when the $timeZone timezone was selected and dateType is $dateType and hideHint is true',
         async ({ dateType, timeZone }) => {
-            Cicada.State.commit('setCurrentUser', { timeZone: timeZone });
+            Shopware.Store.get('session').setCurrentUser({ timeZone: timeZone });
 
             wrapper = await createWrapper({
                 props: {
@@ -183,7 +185,7 @@ describe('src/app/component/form/sw-datepicker', () => {
     );
 
     it('should not convert the date when a timezone is set and dateType is date', async () => {
-        Cicada.State.commit('setCurrentUser', { timeZone: 'Europe/Berlin' });
+        Shopware.Store.get('session').setCurrentUser({ timeZone: 'Europe/Berlin' });
 
         wrapper = await createWrapper({
             props: {
@@ -197,7 +199,7 @@ describe('src/app/component/form/sw-datepicker', () => {
     });
 
     it('should not emit a converted date when a timezone is set and dateType is date', async () => {
-        Cicada.State.commit('setCurrentUser', { timeZone: 'Europe/Berlin' });
+        Shopware.Store.get('session').setCurrentUser({ timeZone: 'Europe/Berlin' });
 
         wrapper = await createWrapper({
             props: {
@@ -215,7 +217,7 @@ describe('src/app/component/form/sw-datepicker', () => {
     });
 
     it('should not convert the date when a timezone is set and dateType is time', async () => {
-        Cicada.State.commit('setCurrentUser', { timeZone: 'Europe/Berlin' });
+        Shopware.Store.get('session').setCurrentUser({ timeZone: 'Europe/Berlin' });
 
         wrapper = await createWrapper({
             props: {
@@ -223,13 +225,14 @@ describe('src/app/component/form/sw-datepicker', () => {
                 dateType: 'time',
             },
         });
+        await flushPromises();
 
         // Can't test with DOM because of the flatpickr dependency
         expect(wrapper.vm.timezoneFormattedValue).toBe('2023-03-27T00:00:00.000+00:00');
     });
 
     it('should not emit a converted date when a timezone is set and dateType is time', async () => {
-        Cicada.State.commit('setCurrentUser', { timeZone: 'Europe/Berlin' });
+        Shopware.Store.get('session').setCurrentUser({ timeZone: 'Europe/Berlin' });
 
         wrapper = await createWrapper({
             props: {
@@ -247,7 +250,7 @@ describe('src/app/component/form/sw-datepicker', () => {
     });
 
     it('should convert the date when a timezone is set and dateType is dateTime', async () => {
-        Cicada.State.commit('setCurrentUser', { timeZone: 'Europe/Berlin' });
+        Shopware.Store.get('session').setCurrentUser({ timeZone: 'Europe/Berlin' });
 
         wrapper = await createWrapper({
             props: {
@@ -257,11 +260,11 @@ describe('src/app/component/form/sw-datepicker', () => {
         });
 
         // Can't test with DOM because of the flatpickr dependency
-        expect(wrapper.vm.timezoneFormattedValue).toBe('2023-03-26T18:00:00.000Z');
+        expect(wrapper.vm.timezoneFormattedValue).toBe('2023-03-27T02:00:00.000Z');
     });
 
     it('should emit a converted date when a timezone is set and dateType is dateTime', async () => {
-        Cicada.State.commit('setCurrentUser', { timeZone: 'Europe/Berlin' });
+        Shopware.Store.get('session').setCurrentUser({ timeZone: 'Europe/Berlin' });
 
         wrapper = await createWrapper({
             props: {
@@ -274,7 +277,7 @@ describe('src/app/component/form/sw-datepicker', () => {
         wrapper.vm.timezoneFormattedValue = '2023-03-22T00:00:00.000+00:00';
 
         expect(wrapper.emitted('update:value')[0]).toEqual([
-            '2023-03-22T07:00:00.000Z',
+            '2023-03-21T23:00:00.000Z',
         ]);
     });
 
@@ -292,7 +295,7 @@ describe('src/app/component/form/sw-datepicker', () => {
     });
 
     it('should support other locales formats', async () => {
-        Cicada.State.get('session').currentLocale = 'en-US';
+        Shopware.Store.get('session').currentLocale = 'en-US';
         wrapper = await createWrapper({});
         let input = wrapper.find('.form-control.input');
         input.element.value = '12/25/2024';
@@ -301,7 +304,7 @@ describe('src/app/component/form/sw-datepicker', () => {
 
         expect(input.element.value).toBe('12/25/2024');
 
-        Cicada.State.get('session').currentLocale = 'en-UK';
+        Shopware.Store.get('session').currentLocale = 'en-UK';
 
         wrapper = await createWrapper({});
         input = wrapper.find('.form-control.input');

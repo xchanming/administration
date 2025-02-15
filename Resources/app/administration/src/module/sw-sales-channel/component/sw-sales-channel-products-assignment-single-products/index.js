@@ -5,14 +5,12 @@
 import template from './sw-sales-channel-products-assignment-single-products.html.twig';
 import './sw-sales-channel-products-assignment-single-products.scss';
 
-const { Component, Mixin, Filter } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Mixin, Filter } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-sales-channel-products-assignment-single-products', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 

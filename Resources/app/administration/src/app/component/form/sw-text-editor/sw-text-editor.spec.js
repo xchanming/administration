@@ -115,7 +115,7 @@ describe('src/app/component/form/sw-text-editor', () => {
     let wrapper;
 
     beforeAll(() => {
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
             state: () => ({
                 currentMappingTypes: {
@@ -536,14 +536,14 @@ describe('src/app/component/form/sw-text-editor', () => {
             <p id="paragraphWithoutLink">No Link</p>
 
             <p id="paragraphWithLink">
-                <a id="linkText" href="http://xchanming.com" target="_self">Cicada</a>
+                <a id="linkText" href="http://xchanming.com" target="_self">Shopware</a>
             </p>
         `,
         );
 
-        // select "Cicada"
+        // select "Shopware"
         const linkText = document.getElementById('linkText');
-        await addAndCheckSelection(wrapper, linkText, 0, 6, 'Cicada');
+        await addAndCheckSelection(wrapper, linkText, 0, 8, 'Shopware');
         document.dispatchEvent(new Event('mouseup'));
 
         // click on link button
@@ -577,14 +577,14 @@ describe('src/app/component/form/sw-text-editor', () => {
             <p id="paragraphWithoutLink">No Link</p>
 
             <p id="paragraphWithLink">
-                <a id="linkText" href="http://xchanming.com" target="_blank">Cicada</a>
+                <a id="linkText" href="http://xchanming.com" target="_blank">Shopware</a>
             </p>
         `,
         );
 
-        // select "Cicada"
+        // select "Shopware"
         const linkText = document.getElementById('linkText');
-        await addAndCheckSelection(wrapper, linkText, 0, 6, 'Cicada');
+        await addAndCheckSelection(wrapper, linkText, 0, 8, 'Shopware');
         document.dispatchEvent(new Event('mouseup'));
 
         // click on link button
@@ -618,7 +618,7 @@ describe('src/app/component/form/sw-text-editor', () => {
             <p id="paragraphWithoutLink">No link</p>
 
             <p id="paragraphWithLink">
-                <a id="linkText" href="http://xchanming.com" target="_blank">Cicada</a>
+                <a id="linkText" href="http://xchanming.com" target="_blank">Shopware</a>
             </p>
         `,
         );
@@ -659,14 +659,14 @@ describe('src/app/component/form/sw-text-editor', () => {
             <p id="paragraphWithoutLink">No link</p>
 
             <p id="paragraphWithLink">
-                <a id="linkText" href="http://xchanming.com" target="_blank">Cicada</a>
+                <a id="linkText" href="http://xchanming.com" target="_blank">Shopware</a>
             </p>
         `,
         );
 
-        // select "Cicada"
+        // select "Shopware"
         const linkText = document.getElementById('linkText');
-        await addAndCheckSelection(wrapper, linkText, 0, 6, 'Cicada');
+        await addAndCheckSelection(wrapper, linkText, 0, 8, 'Shopware');
         document.dispatchEvent(new Event('mouseup'));
 
         // click on link button
@@ -687,7 +687,7 @@ describe('src/app/component/form/sw-text-editor', () => {
         let newTabSwitch = wrapper.find('.sw-text-editor-toolbar-button__link-menu-new-tab input');
         expect(newTabSwitch.element.checked).toBe(true);
 
-        // select "No Link" after the "Cicada" link was selected before
+        // select "No Link" after the "Shopware" link was selected before
         const paragraphWithoutLink = document.getElementById('paragraphWithoutLink');
         await clearSelection(wrapper);
         await addAndCheckSelection(wrapper, paragraphWithoutLink, 0, 7, 'No link');
@@ -718,14 +718,14 @@ describe('src/app/component/form/sw-text-editor', () => {
         await addTextToEditor(
             wrapper,
             `
-            <a id="linkOne" href="http://xchanming.com" target="_self">Cicada</a>
+            <a id="linkOne" href="http://xchanming.com" target="_self">Shopware</a>
             <a id="linkTwo" href="http://google.com" target="_blank">Google</a>
         `,
         );
 
-        // select "Cicada"
+        // select "Shopware"
         const linkOne = document.getElementById('linkOne');
-        await addAndCheckSelection(wrapper, linkOne, 0, 6, 'Cicada');
+        await addAndCheckSelection(wrapper, linkOne, 0, 8, 'Shopware');
         document.dispatchEvent(new Event('mouseup'));
 
         // click on link button
@@ -746,7 +746,7 @@ describe('src/app/component/form/sw-text-editor', () => {
         let newTabSwitch = wrapper.find('.sw-text-editor-toolbar-button__link-menu-new-tab input');
         expect(newTabSwitch.element.checked).toBe(false);
 
-        // select "Google" after the "Cicada" link was selected before
+        // select "Google" after the "Shopware" link was selected before
         const linkTwo = document.getElementById('linkTwo');
         await clearSelection(wrapper);
         await addAndCheckSelection(wrapper, linkTwo, 0, 6, 'Google');
@@ -808,12 +808,12 @@ describe('src/app/component/form/sw-text-editor', () => {
 
         await addTextToEditor(
             wrapper,
-            '<a href="http://xchanming.com" target="_blank"><bold><u id="content">Cicada</u></bold></a>',
+            '<a href="http://xchanming.com" target="_blank"><bold><u id="content">Shopware</u></bold></a>',
         );
 
         // select anything to trigger the toolbar
         const content = document.getElementById('content');
-        await addAndCheckSelection(wrapper, content, 0, 4, 'Cica');
+        await addAndCheckSelection(wrapper, content, 0, 4, 'Shop');
         document.dispatchEvent(new Event('mouseup'));
 
         // click on link button

@@ -1,7 +1,7 @@
 import './sw-button-group.scss';
 import template from './sw-button-group.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -19,8 +19,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-button-group', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         block: {

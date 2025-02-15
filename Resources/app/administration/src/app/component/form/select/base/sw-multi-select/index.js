@@ -1,7 +1,7 @@
 import template from './sw-multi-select.html.twig';
 
-const { Component, Mixin } = Cicada;
-const { debounce, get } = Cicada.Utils;
+const { Component, Mixin } = Shopware;
+const { debounce, get } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -26,8 +26,6 @@ const { debounce, get } = Cicada.Utils;
  */
 Component.register('sw-multi-select', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -170,15 +168,6 @@ Component.register('sw-multi-select', {
             }
 
             return this.options;
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

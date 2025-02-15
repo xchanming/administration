@@ -33,7 +33,7 @@ const createWrapper = () => {
         attachTo: '#root',
         global: {
             directives: {
-                popover: Cicada.Directive.getByName('popover'),
+                popover: Shopware.Directive.getByName('popover'),
             },
         },
     });

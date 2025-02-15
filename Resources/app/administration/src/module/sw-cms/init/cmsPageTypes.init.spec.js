@@ -8,11 +8,11 @@ describe('module/sw-cms/service/cms-page-type.service.ts', () => {
     let cmsPageTypeService;
 
     beforeAll(() => {
-        Cicada.Service().register('cmsPageTypeService', () => {
+        Shopware.Service().register('cmsPageTypeService', () => {
             return new CmsPageTypeService();
         });
 
-        cmsPageTypeService = Cicada.Service().get('cmsPageTypeService');
+        cmsPageTypeService = Shopware.Service().get('cmsPageTypeService');
     });
 
     it('should call pageType.register() for each default type', () => {

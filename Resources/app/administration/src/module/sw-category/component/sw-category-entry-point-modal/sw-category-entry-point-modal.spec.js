@@ -3,8 +3,8 @@
  */
 import { mount } from '@vue/test-utils';
 
-const { Context } = Cicada;
-const { EntityCollection } = Cicada.Data;
+const { Context } = Shopware;
+const { EntityCollection } = Shopware.Data;
 
 async function createWrapper() {
     const salesChannelCollection = new EntityCollection('/sales_channel', 'sales_channel', Context.api, null, [

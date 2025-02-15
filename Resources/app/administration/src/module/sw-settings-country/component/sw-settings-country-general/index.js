@@ -1,18 +1,16 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
 import template from './sw-settings-country-general.html.twig';
 import './sw-settings-country-general.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -84,7 +82,7 @@ export default {
         },
 
         loadCurrencies() {
-            return this.currencyRepository.search(new Criteria(1, 25), Cicada.Context.api).then((currencies) => {
+            return this.currencyRepository.search(new Criteria(1, 25), Shopware.Context.api).then((currencies) => {
                 this.currencies = currencies;
             });
         },

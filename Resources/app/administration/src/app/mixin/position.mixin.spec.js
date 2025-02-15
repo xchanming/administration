@@ -13,7 +13,7 @@ async function createWrapper() {
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('position'),
+                Shopware.Mixin.getByName('position'),
             ],
             data() {
                 return {
@@ -60,7 +60,7 @@ describe('src/app/mixin/position.mixin.ts', () => {
                     },
                 }),
         };
-        const criteria = new Cicada.Data.Criteria();
+        const criteria = new Shopware.Data.Criteria();
 
         const result = await wrapper.vm.getNewPosition(productRepositoryMock, criteria);
 
@@ -75,7 +75,7 @@ describe('src/app/mixin/position.mixin.ts', () => {
                     aggregations: {},
                 }),
         };
-        const criteria = new Cicada.Data.Criteria();
+        const criteria = new Shopware.Data.Criteria();
 
         const result = await wrapper.vm.getNewPosition(productRepositoryMock, criteria);
 

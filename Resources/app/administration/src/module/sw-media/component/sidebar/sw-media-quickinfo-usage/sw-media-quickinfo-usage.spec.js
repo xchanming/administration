@@ -3,58 +3,62 @@
  */
 import { mount } from '@vue/test-utils';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 const ModuleFactory = Module;
 const register = ModuleFactory.register;
 
-describe('module/sw-media/components/sw-media-quickinfo-usage', () => {
-    const itemDeleteMock = (options = {}) => {
-        return {
-            getEntityName: () => {
-                return 'media';
-            },
-            id: '4a12jd3kki9yyy765gkn5hdb',
-            fileName: 'demo.jpg',
-            avatarUsers: [],
-            categories: [],
-            productManufacturers: [],
-            productMedia: [],
-            mailTemplateMedia: [],
-            documentBaseConfigs: [],
-            paymentMethods: [],
-            shippingMethods: [],
-            cmsBlocks: [],
-            cmsSections: [],
-            cmsPages: [],
-            ...options,
-        };
+const itemDeleteMock = (options = {}) => {
+    return {
+        getEntityName: () => {
+            return 'media';
+        },
+        id: '4a12jd3kki9yyy765gkn5hdb',
+        fileName: 'demo.jpg',
+        avatarUsers: [],
+        categories: [],
+        productManufacturers: [],
+        productMedia: [],
+        mailTemplateMedia: [],
+        documentBaseConfigs: [],
+        paymentMethods: [],
+        shippingMethods: [],
+        cmsBlocks: [],
+        cmsSections: [],
+        cmsPages: [],
+        ...options,
     };
+};
 
-    let wrapper;
-    let moduleMock;
-    beforeEach(async () => {
-        wrapper = mount(await wrapTestComponent('sw-media-quickinfo-usage', { sync: true }), {
-            props: { item: itemDeleteMock() },
-            global: {
-                stubs: {
-                    'router-link': true,
-                    'sw-icon': true,
-                    'sw-alert': true,
-                    'sw-loader': true,
-                },
-                provide: {
-                    repositoryFactory: {
-                        create: () => {
-                            return {
-                                search: () => {
-                                    return Promise.resolve([]);
-                                },
-                            };
-                        },
+const createWrapper = async (repositoryFactoryMock) => {
+    return mount(await wrapTestComponent('sw-media-quickinfo-usage', { sync: true }), {
+        props: { item: itemDeleteMock() },
+        global: {
+            stubs: {
+                'router-link': true,
+                'sw-icon': true,
+                'sw-alert': true,
+                'sw-loader': true,
+            },
+            provide: {
+                repositoryFactory: repositoryFactoryMock ?? {
+                    create: () => {
+                        return {
+                            search: () => {
+                                return Promise.resolve([]);
+                            },
+                        };
                     },
                 },
             },
-        });
+        },
+    });
+};
+
+describe('module/sw-media/components/sw-media-quickinfo-usage', () => {
+    let wrapper;
+    let moduleMock;
+    beforeEach(async () => {
+        wrapper = await createWrapper();
 
         const modules = ModuleFactory.getModuleRegistry();
         modules.clear();
@@ -96,26 +100,41 @@ describe('module/sw-media/components/sw-media-quickinfo-usage', () => {
     });
 
     it('should be correct show all of media in used information', async () => {
-        wrapper.vm.productRepository.search = jest.fn(() =>
-            Promise.resolve([
-                { id: 'a', translated: { name: 'Product Media Test' } },
-            ]),
-        );
-        wrapper.vm.categoryRepository.search = jest.fn(() =>
-            Promise.resolve([
-                { id: 'b', translated: { name: 'Category Media Test' } },
-            ]),
-        );
-        wrapper.vm.landingPageRepository.search = jest.fn(() =>
-            Promise.resolve([
-                { id: 'c', translated: { name: 'Landing Page Media Test' } },
-            ]),
-        );
-        wrapper.vm.cmsPageRepository.search = jest.fn(() =>
-            Promise.resolve([
-                { id: 'd', name: 'CMS Page Media Test' },
-            ]),
-        );
+        await wrapper.unmount();
+
+        wrapper = await createWrapper({
+            create: (entityName) => {
+                return {
+                    search: () => {
+                        if (entityName === 'product') {
+                            return Promise.resolve([
+                                { id: 'a', translated: { name: 'Product Media Test' } },
+                            ]);
+                        }
+
+                        if (entityName === 'category') {
+                            return Promise.resolve([
+                                { id: 'b', translated: { name: 'Category Media Test' } },
+                            ]);
+                        }
+
+                        if (entityName === 'landing_page') {
+                            return Promise.resolve([
+                                { id: 'c', translated: { name: 'Landing Page Media Test' } },
+                            ]);
+                        }
+
+                        if (entityName === 'cms_page') {
+                            return Promise.resolve([
+                                { id: 'd', name: 'CMS Page Media Test' },
+                            ]);
+                        }
+
+                        return Promise.resolve([]);
+                    },
+                };
+            },
+        });
 
         register('sw-users-permissions', moduleMock);
         const avatarUserMock = { username: 'abc123' };
@@ -139,6 +158,9 @@ describe('module/sw-media/components/sw-media-quickinfo-usage', () => {
                 translated: { description: 'mail test' },
             },
         };
+
+        register('sw-settings-document', moduleMock);
+        const documentBaseConfigMock = { name: 'document test' };
 
         register('sw-settings-payment', moduleMock);
         const paymentMock = {
@@ -171,6 +193,7 @@ describe('module/sw-media/components/sw-media-quickinfo-usage', () => {
                 categories: [categoryMock],
                 productManufacturers: [manufacturerMock],
                 mailTemplateMedia: [mailTemplateMediaMock],
+                documentBaseConfigs: [documentBaseConfigMock],
                 paymentMethods: [paymentMock],
                 shippingMethods: [shippingMock],
                 cmsBlocks: [cmsBlockMock],
@@ -193,6 +216,7 @@ describe('module/sw-media/components/sw-media-quickinfo-usage', () => {
         expect(usages.some((usage) => usage.name === cmsBlockMock.section.page.translated.name)).toBeTruthy();
         expect(usages.some((usage) => usage.name === cmsSectionMock.page.translated.name)).toBeTruthy();
         expect(usages.some((usage) => usage.name === cmsPageMock.translated.name)).toBeTruthy();
+        expect(usages.some((usage) => usage.name === documentBaseConfigMock.name)).toBeTruthy();
         expect(usages.some((usage) => usage.name === 'Product Media Test')).toBeTruthy();
         expect(usages.some((usage) => usage.name === 'Category Media Test')).toBeTruthy();
         expect(usages.some((usage) => usage.name === 'Landing Page Media Test')).toBeTruthy();

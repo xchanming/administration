@@ -1,7 +1,7 @@
 import template from './sw-inheritance-warning.html.twig';
 import './sw-inheritance-warning.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -17,8 +17,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-inheritance-warning', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         name: {

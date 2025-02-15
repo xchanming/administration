@@ -4,15 +4,13 @@
 import template from './sw-import-export-edit-profile-modal-identifiers.html.twig';
 import './sw-import-export-edit-profile-modal-identifiers.scss';
 
-const Criteria = Cicada.Data.Criteria;
+const Criteria = Shopware.Data.Criteria;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -109,7 +107,7 @@ export default {
                     propertyNames: [],
                 };
 
-                const value = path !== '' ? mapping.key.replace(new RegExp(`^(${path}\.)`), '') : mapping.key;
+                const value = path !== '' ? mapping.key.replace(new RegExp(`^(${path}.)`), '') : mapping.key;
 
                 identifiers[entity].options.push({ label: value, value });
 

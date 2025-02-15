@@ -1,8 +1,6 @@
 import template from './sw-extension-my-extensions-listing.html.twig';
 import './sw-extension-my-extensions-listing.scss';
 
-const { mapState } = Cicada.Component.getComponentHelper();
-
 /**
  * @sw-package checkout
  * @private
@@ -10,9 +8,7 @@ const { mapState } = Cicada.Component.getComponentHelper();
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
-    inject: ['cicadaExtensionService'],
+    inject: ['shopwareExtensionService'],
 
     data() {
         return {
@@ -22,18 +18,18 @@ export default {
     },
 
     computed: {
-        ...mapState('context', {
-            isAppUrlReachable: (state) => state.app.config.settings.appUrlReachable,
-        }),
+        isAppUrlReachable() {
+            return Shopware.Store.get('context').app.config.settings?.appUrlReachable;
+        },
 
         isLoading() {
-            const state = Cicada.State.get('cicadaExtensions');
+            const state = Shopware.Store.get('shopwareExtensions');
 
             return state.myExtensions.loading;
         },
 
         myExtensions() {
-            return Cicada.State.get('cicadaExtensions').myExtensions.data;
+            return Shopware.Store.get('shopwareExtensions').myExtensions.data;
         },
 
         extensionList() {
@@ -119,11 +115,11 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         extensionManagementDisabled() {
-            return Cicada.State.get('context').app.config.settings.disableExtensionManagement;
+            return Shopware.Store.get('context').app.config.settings.disableExtensionManagement;
         },
     },
 
@@ -145,7 +141,7 @@ export default {
         },
 
         updateList() {
-            this.cicadaExtensionService.updateExtensionData();
+            this.shopwareExtensionService.updateExtensionData();
         },
 
         openStore() {
@@ -178,7 +174,7 @@ export default {
             };
 
             // If query is empty then replace route, otherwise push
-            if (Cicada.Utils.types.isEmpty(routeQuery)) {
+            if (Shopware.Utils.types.isEmpty(routeQuery)) {
                 this.$router.replace(route);
             } else {
                 this.$router.push(route);

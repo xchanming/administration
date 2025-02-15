@@ -1,5 +1,5 @@
 import type { PropType } from 'vue';
-import { MtPopover } from '@cicada-ag/meteor-component-library';
+import { MtPopover } from '@shopware-ag/meteor-component-library';
 import template from './sw-extension-teaser-popover.html.twig';
 import './sw-extension-teaser-popover.scss';
 
@@ -25,10 +25,8 @@ interface TeaserPopoverConfig {
  * @component-example
  * <sw-extension-teaser-popover position-identifier="my-special-position" />
  */
-Cicada.Component.register('sw-extension-teaser-popover', {
+Shopware.Component.register('sw-extension-teaser-popover', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     components: {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -67,7 +65,7 @@ Cicada.Component.register('sw-extension-teaser-popover', {
                 return this.component;
             }
 
-            return Cicada.Store.get('teaserPopover')?.identifier[this.positionIdentifier] || {};
+            return Shopware.Store.get('teaserPopover')?.identifier[this.positionIdentifier] || {};
         },
 
         isInsideComponent(): boolean {

@@ -1,13 +1,11 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-custom-field-type-base.html.twig';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['acl'],
 

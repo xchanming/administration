@@ -2,10 +2,10 @@ import type { SubContainer } from 'src/global.types';
 
 import type { App } from 'vue';
 import ExtensionStoreActionService from './extension-store-action.service';
-import CicadaExtensionService from './cicada-extension.service';
+import ShopwareExtensionService from './shopware-extension.service';
 import ExtensionErrorService from './extension-error.service';
 
-const { Application } = Cicada;
+const { Application } = Shopware;
 
 /**
  * @sw-package checkout
@@ -13,29 +13,29 @@ const { Application } = Cicada;
 declare global {
     interface ServiceContainer extends SubContainer<'service'> {
         extensionStoreActionService: ExtensionStoreActionService;
-        cicadaExtensionService: CicadaExtensionService;
+        shopwareExtensionService: ShopwareExtensionService;
         extensionErrorService: ExtensionErrorService;
     }
 }
 
 Application.addServiceProvider('extensionStoreActionService', () => {
     return new ExtensionStoreActionService(
-        Cicada.Application.getContainer('init').httpClient,
-        Cicada.Service('loginService'),
+        Shopware.Application.getContainer('init').httpClient,
+        Shopware.Service('loginService'),
     );
 });
 
-Application.addServiceProvider('cicadaExtensionService', () => {
-    return new CicadaExtensionService(
-        Cicada.Service('appModulesService'),
-        Cicada.Service('extensionStoreActionService'),
-        Cicada.Service('cicadaDiscountCampaignService'),
-        Cicada.Service('storeService'),
+Application.addServiceProvider('shopwareExtensionService', () => {
+    return new ShopwareExtensionService(
+        Shopware.Service('appModulesService'),
+        Shopware.Service('extensionStoreActionService'),
+        Shopware.Service('shopwareDiscountCampaignService'),
+        Shopware.Service('storeService'),
     );
 });
 
 Application.addServiceProvider('extensionErrorService', () => {
-    const root = Cicada.Application.getApplicationRoot() as App<Element>;
+    const root = Shopware.Application.getApplicationRoot() as App<Element>;
 
     return new ExtensionErrorService(
         {

@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-const { Filter, Defaults } = Cicada;
+const { Filter, Defaults } = Shopware;
 
 type SalutationType = {
     id: string;
@@ -16,7 +16,8 @@ Filter.register(
         entity: {
             salutation: SalutationType;
             title: string;
-            name: string;
+            firstName: string;
+            lastName: string;
             [key: string]: unknown;
         },
         fallbackSnippet = '',
@@ -36,7 +37,8 @@ Filter.register(
         const params = {
             salutation: !hideSalutation ? entity.salutation.displayName : '',
             title: entity.title || '',
-            name: entity.name || '',
+            firstName: entity.firstName || '',
+            lastName: entity.lastName || '',
         };
 
         const fullName = Object.values(params).join(' ').replace(/\s+/g, ' ').trim();

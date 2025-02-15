@@ -1,18 +1,17 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-base-filter.html.twig';
 import './sw-base-filter.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-base-filter', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['filter-reset'],
 

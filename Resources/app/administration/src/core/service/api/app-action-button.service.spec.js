@@ -11,21 +11,21 @@ import InvalidActionButtonParameterError from './errors/InvalidActionButtonParam
 function createAppActionButtonService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
     const appActionButtonService = new AppActionButtonService(client, loginService);
     return { appActionButtonService, clientMock };
 }
 
 describe('appActionButtonService', () => {
     it('is registered correctly', async () => {
-        // const appActionButtonService = Cicada.Service('appActionButton');
+        // const appActionButtonService = Shopware.Service('appActionButton');
         const { appActionButtonService } = createAppActionButtonService();
 
         expect(appActionButtonService).toBeInstanceOf(AppActionButtonService);
     });
 
     it('throws an exception if entity is not set for getActionButtonsPerView', async () => {
-        // const appActionButtonService = Cicada.Service('appActionButton');
+        // const appActionButtonService = Shopware.Service('appActionButton');
         const { appActionButtonService } = createAppActionButtonService();
 
         expect(() => {
@@ -34,7 +34,7 @@ describe('appActionButtonService', () => {
     });
 
     it('throws an exception if view is not set for getActionButtonsPerView', async () => {
-        // const appActionButtonService = Cicada.Service('appActionButton');
+        // const appActionButtonService = Shopware.Service('appActionButton');
         const { appActionButtonService } = createAppActionButtonService();
 
         expect(() => {
@@ -43,7 +43,7 @@ describe('appActionButtonService', () => {
     });
 
     it('returns action button data', async () => {
-        // const appActionButtonService = Cicada.Service('appActionButton');
+        // const appActionButtonService = Shopware.Service('appActionButton');
         const { appActionButtonService, clientMock } = createAppActionButtonService();
 
         clientMock.onGet('app-system/action-button/product/detail').reply(200, {
@@ -64,9 +64,9 @@ describe('appActionButtonService', () => {
     });
 
     it('calls the correct api endpoint to run an action', async () => {
-        // const appActionButtonService = Cicada.Service('appActionButton');
+        // const appActionButtonService = Shopware.Service('appActionButton');
         const { appActionButtonService, clientMock } = createAppActionButtonService();
-        const actionButtonId = Cicada.Utils.createId();
+        const actionButtonId = Shopware.Utils.createId();
 
         clientMock.onPost(`app-system/action-button/run/${actionButtonId}`).reply(200, null);
 

@@ -1,5 +1,5 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package discovery
  */
 import { mount } from '@vue/test-utils';
 import Entity from 'src/core/data/entity.data';
@@ -10,21 +10,26 @@ const rootFolderObject = {
 };
 
 const createMediaEntity = (options = {}) => {
-    return new Entity(Cicada.Utils.createId(), 'media', {
+    return new Entity(Shopware.Utils.createId(), 'media', {
         fileName: 'test.png',
         ...options,
     });
 };
 
 const createFolderEntity = (options = {}) => {
-    return new Entity(Cicada.Utils.createId(), 'media_folder', {
+    return new Entity(Shopware.Utils.createId(), 'media_folder', {
         name: 'test',
         parentId: null,
         ...options,
     });
 };
 
+let repositoryFactoryMock;
 async function createWrapper() {
+    repositoryFactoryMock = {
+        search: jest.fn(() => Promise.resolve([])),
+    };
+
     return mount(await wrapTestComponent('sw-media-modal-move', { sync: true }), {
         props: {
             itemsToMove: [createMediaEntity()],
@@ -34,6 +39,11 @@ async function createWrapper() {
                 'sw-icon': true,
                 'sw-media-folder-content': true,
                 'sw-button': true,
+            },
+            provide: {
+                repositoryFactory: {
+                    create: () => repositoryFactoryMock,
+                },
             },
         },
     });
@@ -70,7 +80,7 @@ describe('components/media/sw-media-modal-move', () => {
         const mockedParent = createFolderEntity();
         const mockedChild = createFolderEntity({ parentId: mockedParent.id });
 
-        wrapper.vm.mediaFolderRepository.search = jest.fn(() =>
+        repositoryFactoryMock.search = jest.fn(() =>
             Promise.resolve([
                 mockedParent,
             ]),
@@ -78,7 +88,7 @@ describe('components/media/sw-media-modal-move', () => {
 
         await wrapper.vm.updateParentFolder(mockedChild);
 
-        expect(wrapper.vm.mediaFolderRepository.search).toHaveBeenCalled();
+        expect(repositoryFactoryMock.search).toHaveBeenCalled();
         expect(wrapper.vm.parentFolder).toMatchObject(mockedParent);
     });
 
@@ -88,7 +98,7 @@ describe('components/media/sw-media-modal-move', () => {
         wrapper.vm.createNotificationError = jest.fn();
         wrapper.vm.mediaFolderRepository.search = jest.fn(Promise.reject);
 
-        await wrapper.vm.fetchParentFolder(Cicada.Utils.createId());
+        await wrapper.vm.fetchParentFolder(Shopware.Utils.createId());
 
         expect(wrapper.vm.createNotificationError).toHaveBeenCalled();
     });

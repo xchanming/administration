@@ -8,10 +8,8 @@ import template from './sw-password-field.html.twig';
  * @description Wrapper component for sw-password-field and mt-password-field. Autoswitches between the two components.
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Component.register('sw-password-field', {
+Shopware.Component.register('sw-password-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         value: {
@@ -36,12 +34,12 @@ Cicada.Component.register('sw-password-field', {
     computed: {
         useMeteorComponent() {
             // Use new meteor component in major
-            if (Cicada.Feature.isActive('v6.7.0.0')) {
+            if (Shopware.Feature.isActive('ENABLE_METEOR_COMPONENTS')) {
                 return true;
             }
 
             // Throw warning when deprecated component is used
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'sw-password-field',
                 // eslint-disable-next-line max-len
                 'The old usage of "sw-password-field" is deprecated and will be removed in v6.7.0.0. Please use "mt-password-field" instead.',
@@ -59,26 +57,11 @@ Cicada.Component.register('sw-password-field', {
                 this.$emit('update:modelValue', value);
             },
         },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
     },
 
     methods: {
         getSlots() {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                return {
-                    ...this.$slots,
-                    ...this.$scopedSlots,
-                };
-            }
 
             return this.$slots;
         },

@@ -1,7 +1,7 @@
 import type { PropType } from 'vue';
 import template from './sw-time-ago.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -15,8 +15,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-time-ago', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         date: {
@@ -51,7 +49,7 @@ Component.register('sw-time-ago', {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         fullDatetime(): string {
@@ -129,7 +127,7 @@ Component.register('sw-time-ago', {
                 }
 
                 if (this.lessThanOneHour) {
-                    return this.$tc('global.sw-time-ago.minutesAgo', minutesAgo, { minutesAgo });
+                    return this.$tc('global.sw-time-ago.minutesAgo', { minutesAgo }, minutesAgo);
                 }
             } else {
                 if (this.lessThanOneMinuteFromNow) {
@@ -138,7 +136,7 @@ Component.register('sw-time-ago', {
 
                 if (this.lessThanOneHourFromNow) {
                     const minutesFromNow = Math.abs(minutesAgo);
-                    return this.$tc('global.sw-time-ago.minutesFromNow', minutesFromNow, { minutesFromNow });
+                    return this.$tc('global.sw-time-ago.minutesFromNow', { minutesFromNow }, minutesFromNow);
                 }
             }
 

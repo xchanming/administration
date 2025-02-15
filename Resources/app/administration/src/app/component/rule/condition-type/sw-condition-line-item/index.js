@@ -1,9 +1,9 @@
 import template from './sw-condition-line-item.html.twig';
 import './sw-condition-line-item.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { EntityCollection, Criteria } = Cicada.Data;
+const { EntityCollection, Criteria } = Shopware.Data;
 
 /**
  * @public
@@ -69,7 +69,7 @@ Component.extend('sw-condition-line-item', 'sw-condition-base-line-item', {
         },
 
         productContext() {
-            return { ...Cicada.Context.api, inheritance: true };
+            return { ...Shopware.Context.api, inheritance: true };
         },
     },
 

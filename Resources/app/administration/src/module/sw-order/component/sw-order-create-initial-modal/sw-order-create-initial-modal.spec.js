@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils';
 import 'src/module/sw-order/mixin/cart-notification.mixin';
-import orderStore from 'src/module/sw-order/state/order.store';
 
 /**
  * @sw-package checkout
@@ -70,7 +69,7 @@ const tabs = [
 
 describe('src/module/sw-order/view/sw-order-create-initial-modal', () => {
     beforeAll(() => {
-        Cicada.Service().register('cartStoreService', () => {
+        Shopware.Service().register('cartStoreService', () => {
             return {
                 cancelCart: () => Promise.resolve({}),
                 saveLineItem: () =>
@@ -87,17 +86,15 @@ describe('src/module/sw-order/view/sw-order-create-initial-modal', () => {
             };
         });
 
-        Cicada.Service().register('contextStoreService', () => {
+        Shopware.Service().register('contextStoreService', () => {
             return {
                 updateContext: () => Promise.resolve({}),
             };
         });
-
-        Cicada.State.registerModule('swOrder', orderStore);
     });
 
     afterEach(() => {
-        Cicada.State.commit('swOrder/setCart', {
+        Shopware.Store.get('swOrder').setCart({
             token: null,
             lineItems: [],
             deliveries: [],
@@ -113,7 +110,7 @@ describe('src/module/sw-order/view/sw-order-create-initial-modal', () => {
     });
 
     it('should enable other tabs if customer is selected', async () => {
-        Cicada.State.commit('swOrder/setCustomer', {
+        Shopware.Store.get('swOrder').setCustomer({
             id: '1234',
         });
 
@@ -125,7 +122,7 @@ describe('src/module/sw-order/view/sw-order-create-initial-modal', () => {
     });
 
     it('should show tab content correctly', async () => {
-        Cicada.State.commit('swOrder/setCustomer', {
+        Shopware.Store.get('swOrder').setCustomer({
             id: '1234',
         });
         const wrapper = await createWrapper();
@@ -170,7 +167,7 @@ describe('src/module/sw-order/view/sw-order-create-initial-modal', () => {
     });
 
     it('should cancel cart when click cancel button', async () => {
-        Cicada.State.commit('swOrder/setCartToken', cartToken);
+        Shopware.Store.get('swOrder').setCartToken(cartToken);
 
         const wrapper = await createWrapper();
         const spyCancelCart = jest.spyOn(wrapper.vm, 'cancelCart');
@@ -255,7 +252,7 @@ describe('src/module/sw-order/view/sw-order-create-initial-modal', () => {
     });
 
     it('should able to preview order', async () => {
-        Cicada.State.commit('swOrder/setCart', {
+        Shopware.Store.get('swOrder').setCart({
             token: cartToken,
             lineItems: [],
             deliveries: [
@@ -298,7 +295,7 @@ describe('src/module/sw-order/view/sw-order-create-initial-modal', () => {
             shippingAddressId: '',
         });
 
-        Cicada.State.commit('swOrder/setContext', {
+        Shopware.Store.get('swOrder').setContext({
             context: {
                 currencyId: 'euro',
                 languageIdChain: [

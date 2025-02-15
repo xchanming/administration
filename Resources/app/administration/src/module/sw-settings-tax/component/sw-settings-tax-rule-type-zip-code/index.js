@@ -8,8 +8,6 @@ import template from './sw-settings-tax-rule-type-zip-code.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         taxRule: {
             type: Object,

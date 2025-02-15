@@ -5,12 +5,12 @@ import '../store/cms-page.store';
  * @private
  * @sw-package discovery
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'cms-state',
     defineComponent({
         computed: {
             cmsPageState() {
-                return Cicada.Store.get('cmsPage');
+                return Shopware.Store.get('cmsPage');
             },
 
             selectedBlock: {

@@ -1,7 +1,7 @@
 import template from './sw-tree-input-field.html.twig';
 import './sw-tree-input-field.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -15,8 +15,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-tree-input-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['new-item-create'],
 

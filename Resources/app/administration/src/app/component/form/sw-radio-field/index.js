@@ -1,7 +1,7 @@
 import template from './sw-radio-field.html.twig';
 import './sw-radio-field.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @sw-package framework
@@ -24,8 +24,6 @@ const { Component, Mixin } = Cicada;
  */
 Component.register('sw-radio-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -83,7 +81,7 @@ Component.register('sw-radio-field', {
             const foundIndex = this.options.findIndex((item) => item.value === this.value);
 
             if (foundIndex < 0) {
-                console.warn(`Given value "${this.value}" does not exists in given options`);
+                console.warn(`Given value "${this.value}" does not exist in given options`);
             }
 
             return foundIndex;
@@ -95,7 +93,7 @@ Component.register('sw-radio-field', {
             const selectedIndex = event.target.value;
 
             if (this.options[selectedIndex] === undefined) {
-                console.warn(`Selected index "${this.value}" does not exists in given options`);
+                console.warn(`Selected index "${this.value}" does not exist in given options`);
             }
 
             this.$emit('update:value', this.options[selectedIndex].value);

@@ -5,8 +5,8 @@
 import EventEmitter from 'events';
 import RetryHelper from '../../../core/helper/retry.helper';
 
-const { deepCopyObject } = Cicada.Utils.object;
-const { md5 } = Cicada.Utils.format;
+const { deepCopyObject } = Shopware.Utils.object;
+const { md5 } = Shopware.Utils.format;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default class VariantsGenerator extends EventEmitter {
@@ -17,8 +17,8 @@ export default class VariantsGenerator extends EventEmitter {
         this.productIds = [];
 
         // set dependencies
-        this.syncService = Cicada.Service('syncService');
-        this.cacheService = Cicada.Service('cacheApiService');
+        this.syncService = Shopware.Service('syncService');
+        this.cacheService = Shopware.Service('cacheApiService');
         this.httpClient = this.syncService.httpClient;
 
         // local data

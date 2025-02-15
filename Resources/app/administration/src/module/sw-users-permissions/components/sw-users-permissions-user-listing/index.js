@@ -4,14 +4,12 @@
 import template from './sw-users-permissions-user-listing.html.twig';
 import './sw-users-permissions-user-listing.scss';
 
-const { Data, Mixin, State } = Cicada;
+const { Data, Mixin } = Shopware;
 const { Criteria } = Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'userService',
@@ -53,7 +51,7 @@ export default {
 
         currentUser: {
             get() {
-                return State.get('session').currentUser;
+                return Shopware.Store.get('session').currentUser;
             },
         },
 
@@ -81,12 +79,12 @@ export default {
                     label: this.$tc('sw-users-permissions.users.user-grid.labelUsername'),
                 },
                 {
-                    property: 'name',
-                    label: this.$tc('sw-users-permissions.users.user-grid.labelName'),
+                    property: 'firstName',
+                    label: this.$tc('sw-users-permissions.users.user-grid.labelFirstName'),
                 },
                 {
-                    property: 'phone',
-                    label: this.$tc('sw-users-permissions.users.user-grid.labelPhone'),
+                    property: 'lastName',
+                    label: this.$tc('sw-users-permissions.users.user-grid.labelLastName'),
                 },
                 {
                     property: 'aclRoles',
@@ -137,17 +135,21 @@ export default {
         },
 
         async onConfirmDelete(user) {
-            const username = `${user.name}`;
+            const username = `${user.firstName} ${user.lastName} `;
             const titleDeleteSuccess = this.$tc('global.default.success');
             const messageDeleteSuccess = this.$tc(
                 'sw-users-permissions.users.user-grid.notification.deleteSuccess.message',
-                0,
                 { name: username },
+                0,
             );
             const titleDeleteError = this.$tc('global.default.error');
-            const messageDeleteError = this.$tc('sw-users-permissions.users.user-grid.notification.deleteError.message', 0, {
-                name: username,
-            });
+            const messageDeleteError = this.$tc(
+                'sw-users-permissions.users.user-grid.notification.deleteError.message',
+                {
+                    name: username,
+                },
+                0,
+            );
             if (user.id === this.currentUser.id) {
                 this.createNotificationError({
                     title: this.$tc('global.default.error'),
@@ -179,7 +181,7 @@ export default {
             }
 
             this.confirmPasswordModal = false;
-            const context = { ...Cicada.Context.api };
+            const context = { ...Shopware.Context.api };
             context.authToken.access = verifiedToken;
 
             this.userRepository

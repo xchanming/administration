@@ -1,8 +1,8 @@
 import template from './sw-admin-menu.html.twig';
 import './sw-admin-menu.scss';
 
-const { Component, Mixin } = Cicada;
-const { dom, types } = Cicada.Utils;
+const { Component, Mixin } = Shopware;
+const { dom, types } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -11,8 +11,6 @@ const { dom, types } = Cicada.Utils;
  */
 Component.register('sw-admin-menu', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'menuService',
@@ -65,7 +63,7 @@ Component.register('sw-admin-menu', {
 
     computed: {
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         isExpanded() {
@@ -93,7 +91,7 @@ Component.register('sw-admin-menu', {
         },
 
         currentLocale() {
-            return Cicada.State.get('session').currentLocale;
+            return Shopware.Store.get('session').currentLocale;
         },
 
         currentExpandedMenuEntries() {
@@ -116,7 +114,7 @@ Component.register('sw-admin-menu', {
                 );
 
                 if (levelThreeParent) {
-                    Cicada.Utils.debug.error(
+                    Shopware.Utils.debug.error(
                         new Error(
                             `The navigation entry "${entry.id}" is nested on level 4 or higher.\
 The admin menu only supports up to three levels of nesting.`,
@@ -144,7 +142,7 @@ The admin menu only supports up to three levels of nesting.`,
         },
 
         mainMenuEntries() {
-            const tree = new Cicada.Helper.FlatTreeHelper((first, second) => first.position - second.position);
+            const tree = new Shopware.Helper.FlatTreeHelper((first, second) => first.position - second.position);
 
             this.navigationEntries.forEach((module) => tree.add(module));
 
@@ -179,7 +177,7 @@ The admin menu only supports up to three levels of nesting.`,
                 return '';
             }
 
-            return `${this.currentUser.name}`;
+            return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
         },
 
         avatarUrl() {
@@ -190,18 +188,22 @@ The admin menu only supports up to three levels of nesting.`,
             return null;
         },
 
-        name() {
-            return this.currentUser ? this.currentUser.name : '';
+        firstName() {
+            return this.currentUser ? this.currentUser.firstName : '';
+        },
+
+        lastName() {
+            return this.currentUser ? this.currentUser.lastName : '';
         },
 
         extensionMenuItems() {
-            return Cicada.State.get('menuItem').menuItems;
+            return Shopware.Store.get('menuItem').menuItems;
         },
 
         extensionModuleNavigation() {
             return this.extensionMenuItems.map((extensionMenuItem) => {
                 return {
-                    id: Cicada.Utils.createId(),
+                    id: Shopware.Utils.createId(),
                     label: extensionMenuItem.label,
                     position: extensionMenuItem.position ?? 110,
                     parent: extensionMenuItem.parent ?? 'sw-extension',
@@ -215,7 +217,7 @@ The admin menu only supports up to three levels of nesting.`,
         },
 
         adminMenuStore() {
-            return Cicada.Store.get('adminMenu');
+            return Shopware.Store.get('adminMenu');
         },
     },
 
@@ -246,15 +248,9 @@ The admin menu only supports up to three levels of nesting.`,
             this.collapseMenuOnSmallViewports();
             this.getUser();
 
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                this.$root.$on('toggle-offcanvas', (state) => {
-                    this.isOffCanvasShown = state;
-                });
-            } else {
-                Cicada.Utils.EventBus.on('sw-admin-menu/toggle-offcanvas', (state) => {
-                    this.isOffCanvasShown = state;
-                });
-            }
+            Shopware.Utils.EventBus.on('sw-admin-menu/toggle-offcanvas', (state) => {
+                this.isOffCanvasShown = state;
+            });
 
             this.initNavigation();
         },
@@ -267,7 +263,7 @@ The admin menu only supports up to three levels of nesting.`,
 
         refreshApps() {
             return this.appModulesService.fetchAppModules().then((modules) => {
-                return Cicada.State.commit('cicadaApps/setApps', modules);
+                Shopware.Store.get('shopwareApps').apps = modules;
             });
         },
 
@@ -301,7 +297,7 @@ The admin menu only supports up to three levels of nesting.`,
                 const userData = response.data;
                 delete userData.password;
 
-                Cicada.State.commit('setCurrentUser', userData);
+                Shopware.Store.get('session').setCurrentUser(userData);
 
                 this.isUserLoading = false;
             });
@@ -394,10 +390,9 @@ The admin menu only supports up to three levels of nesting.`,
         onLogoutUser() {
             this.loginService.logout();
             this.adminMenuStore.clearExpandedMenuEntries();
-            Cicada.State.commit('removeCurrentUser');
-            Cicada.State.commit('notification/setNotifications', {});
-            Cicada.State.commit('notification/clearGrowlNotificationsForCurrentUser');
-            Cicada.State.commit('notification/clearNotificationsForCurrentUser');
+            Shopware.Store.get('session').removeCurrentUser();
+            Shopware.Store.get('notification').clearGrowlNotificationsForCurrentUser();
+            Shopware.Store.get('notification').clearNotificationsForCurrentUser();
             this.$router.push({
                 name: 'sw.login.index',
             });

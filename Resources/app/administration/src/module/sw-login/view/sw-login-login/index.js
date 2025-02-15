@@ -5,15 +5,13 @@
 import getErrorCode from 'src/core/data/error-codes/login.error-codes';
 import template from './sw-login-login.html.twig';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-login-login', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'loginService',
@@ -49,7 +47,7 @@ Component.register('sw-login-login', {
 
     created() {
         if (!localStorage.getItem('sw-admin-locale')) {
-            Cicada.State.dispatch('setAdminLocale', navigator.language);
+            Shopware.Store.get('session').setAdminLocale(navigator.language);
         }
     },
 
@@ -104,7 +102,7 @@ Component.register('sw-login-login', {
             const previousRoute = JSON.parse(sessionStorage.getItem('sw-admin-previous-route'));
             sessionStorage.removeItem('sw-admin-previous-route');
 
-            const firstRunWizard = Cicada.Context.app.firstRunWizard;
+            const firstRunWizard = Shopware.Context.app.firstRunWizard;
 
             if (
                 firstRunWizard &&
@@ -148,7 +146,7 @@ Component.register('sw-login-login', {
 
             if (parseInt(error.status, 10) === 429) {
                 const seconds = error?.meta?.parameters?.seconds;
-                this.loginAlertMessage = this.$tc('sw-login.index.messageAuthThrottled', 0, { seconds });
+                this.loginAlertMessage = this.$tc('sw-login.index.messageAuthThrottled', { seconds }, 0);
 
                 setTimeout(() => {
                     this.loginAlertMessage = '';

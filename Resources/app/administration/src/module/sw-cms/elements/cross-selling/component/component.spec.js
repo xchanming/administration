@@ -38,7 +38,7 @@ async function createWrapper(element = defaultElement) {
                     'sw-icon': true,
                 },
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
             },
         },
@@ -52,7 +52,7 @@ describe('module/sw-cms/elements/cross-selling/component', () => {
     });
 
     afterEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('getProductEl applies props to the config object', async () => {

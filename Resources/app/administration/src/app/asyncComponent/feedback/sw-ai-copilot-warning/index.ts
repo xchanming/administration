@@ -5,7 +5,7 @@ import './sw-ai-copilot-warning.scss';
  * @sw-package framework
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
 
     props: {

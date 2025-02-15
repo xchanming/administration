@@ -1,8 +1,8 @@
 import template from './sw-price-field.html.twig';
 import './sw-price-field.scss';
 
-const { Component, Application } = Cicada;
-const { debounce } = Cicada.Utils;
+const { Component, Application } = Shopware;
+const { debounce } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -20,8 +20,6 @@ const { debounce } = Cicada.Utils;
 Component.register('sw-price-field', {
     template,
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -201,10 +199,6 @@ Component.register('sw-price-field', {
         },
 
         attributesWithoutListeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$attrs;
-            }
-
             const attributes = {};
 
             // Filter all listeners from the $attrs object

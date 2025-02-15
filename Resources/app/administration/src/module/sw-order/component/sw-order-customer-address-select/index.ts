@@ -8,18 +8,15 @@ import type Repository from '../../../../core/data/repository.data';
  * @sw-package checkout
  */
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default Component.wrapComponentConfig({
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
-        'feature',
     ],
 
     props: {

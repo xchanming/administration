@@ -1,8 +1,8 @@
 import template from './sw-cms-el-config-product-listing.html.twig';
 import './sw-cms-el-config-product-listing.scss';
 
-const { Mixin } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Criteria, EntityCollection } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -176,7 +174,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -209,7 +207,7 @@ export default {
                 this.productSortings = new EntityCollection(
                     this.productSortingRepository.route,
                     this.productSortingRepository.schema.entity,
-                    Cicada.Context.api,
+                    Shopware.Context.api,
                     this.productSortingsCriteria,
                 );
             } else {

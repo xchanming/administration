@@ -1,9 +1,6 @@
 import template from './sw-extension-adding-failed.html.twig';
 import './sw-extension-adding-failed.scss';
 
-const { Component } = Cicada;
-const { mapState } = Component.getComponentHelper();
-
 /**
  * @sw-package checkout
  * @private
@@ -11,10 +8,8 @@ const { mapState } = Component.getComponentHelper();
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
-        'cicadaExtensionService',
+        'shopwareExtensionService',
     ],
 
     emits: ['close'],
@@ -45,7 +40,9 @@ export default {
     },
 
     computed: {
-        ...mapState('cicadaExtensions', ['myExtensions']),
+        myExtensions() {
+            return Shopware.Store.get('shopwareExtensions').myExtensions;
+        },
 
         extension() {
             return this.myExtensions.data.find((extension) => {
@@ -54,7 +51,7 @@ export default {
         },
 
         isRent() {
-            return this.extension?.storeLicense?.variant === this.cicadaExtensionService.EXTENSION_VARIANT_TYPES.RENT;
+            return this.extension?.storeLicense?.variant === this.shopwareExtensionService.EXTENSION_VARIANT_TYPES.RENT;
         },
 
         headline() {

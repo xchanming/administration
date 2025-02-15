@@ -24,7 +24,7 @@ const defaultPageTypes = [
  * @private
  */
 export default () => {
-    const pageTypeService = Cicada.Service().get('cmsPageTypeService');
+    const pageTypeService = Shopware.Service().get('cmsPageTypeService');
 
     defaultPageTypes.forEach((type: { name: string; icon: string }) => {
         pageTypeService.register(type);

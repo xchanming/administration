@@ -6,15 +6,13 @@ import template from './sw-sales-channel-detail-analytics.html.twig';
 
 import './sw-sales-channel-detail-analytics.scss';
 
-const { Context } = Cicada;
+const { Context } = Shopware;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

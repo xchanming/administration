@@ -1,18 +1,16 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
 import template from './sw-settings-country-detail.html.twig';
 import './sw-settings-country-detail.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -68,7 +66,7 @@ export default {
 
     computed: {
         currentUserId() {
-            return Cicada.State.get('session').currentUser.id;
+            return Shopware.Store.get('session').currentUser.id;
         },
 
         countryRepository() {
@@ -177,9 +175,9 @@ export default {
         },
 
         loadUserConfig() {
-            return this.userConfigRepository.search(this.userConfigCriteria, Cicada.Context.api).then((userConfigs) => {
+            return this.userConfigRepository.search(this.userConfigCriteria, Shopware.Context.api).then((userConfigs) => {
                 if (userConfigs.length === 0) {
-                    this.userConfig = this.userConfigRepository.create(Cicada.Context.api);
+                    this.userConfig = this.userConfigRepository.create(Shopware.Context.api);
                     this.userConfig.userId = this.currentUserId;
                     this.userConfig.key = 'setting-country';
                     this.userConfig.value = [];
@@ -206,10 +204,10 @@ export default {
             const userConfigValue = this.userConfig.value[this.countryId];
 
             return this.countryRepository
-                .save(this.country, Cicada.Context.api)
+                .save(this.country, Shopware.Context.api)
                 .then(() => {
                     if (userConfigValue && Object.keys(userConfigValue).length > 0) {
-                        this.userConfigRepository.save(this.userConfig, Cicada.Context.api).then(() => {
+                        this.userConfigRepository.save(this.userConfig, Shopware.Context.api).then(() => {
                             this.loadUserConfig();
                         });
                     }
@@ -263,7 +261,7 @@ export default {
          * @param value
          */
         onUpdateCountry(path, value) {
-            Cicada.Utils.object.set(this.country, path, value);
+            Shopware.Utils.object.set(this.country, path, value);
         },
     },
 };

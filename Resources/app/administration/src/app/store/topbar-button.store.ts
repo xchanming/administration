@@ -4,7 +4,7 @@
  * @description Apply for upselling service only, no public usage
  */
 
-const topBarButtonStore = Cicada.Store.register({
+const topBarButtonStore = Shopware.Store.register({
     id: 'topBarButton',
 
     state: () => ({

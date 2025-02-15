@@ -1,13 +1,13 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import './acl';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-cache-index', () => import('./page/sw-settings-cache-index'));
-Cicada.Component.register('sw-settings-cache-modal', () => import('./component/sw-settings-cache-modal'));
+Shopware.Component.register('sw-settings-cache-index', () => import('./page/sw-settings-cache-index'));
+Shopware.Component.register('sw-settings-cache-modal', () => import('./component/sw-settings-cache-modal'));
 /* eslint-enable sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations

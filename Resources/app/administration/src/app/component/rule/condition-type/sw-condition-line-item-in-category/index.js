@@ -1,9 +1,9 @@
 import template from './sw-condition-line-item-in-category.html.twig';
 import './sw-condition-line-item-in-category.scss';
 
-const { Component, Context } = Cicada;
+const { Component, Context } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { EntityCollection, Criteria } = Cicada.Data;
+const { EntityCollection, Criteria } = Shopware.Data;
 
 /**
  * @sw-package fundamentals@after-sales

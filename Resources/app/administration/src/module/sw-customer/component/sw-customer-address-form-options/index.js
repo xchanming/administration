@@ -8,8 +8,6 @@ import template from './sw-customer-address-form-options.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['default-address-change'],
 
     props: {

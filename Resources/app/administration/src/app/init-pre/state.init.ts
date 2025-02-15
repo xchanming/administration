@@ -10,9 +10,8 @@ import { createStore } from 'vuex';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initState() {
-    initVuexState(Cicada.State);
-    // @ts-expect-error - vuex modules import is not typed
-    initVuexModules(VuexModules, Cicada.State);
+    initVuexState(Shopware.State);
+    initVuexModules(VuexModules, Shopware.State);
 
     return true;
 }
@@ -36,12 +35,12 @@ function registerProperties(state: FullState, store: Store<VuexRootState>) {
     state._registerProperty('get', <N extends keyof VuexRootState | 'cmsPageState' | 'cmsPage'>(name: N) => {
         /* @deprecated: tag:v6.7.0 - Will be removed without replacement */
         if (name === 'cmsPageState' || name === 'cmsPage') {
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'Core',
-                'Cicada.State.get("cmsPageState") is deprecated! Use Cicada.Store.get("cmsPage") instead.',
+                'Shopware.State.get("cmsPageState") is deprecated! Use Shopware.Store.get("cmsPage") instead.',
             );
 
-            return Cicada.Store.get('cmsPage');
+            return Shopware.Store.get('cmsPage');
         }
 
         // @ts-expect-error
@@ -52,12 +51,12 @@ function registerProperties(state: FullState, store: Store<VuexRootState>) {
         const type = args[0] as unknown as string;
         /* @deprecated: tag:v6.7.0 - Will be removed without replacement */
         if (type.startsWith('cmsPageState/')) {
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'Core',
-                'Cicada.State.get("cmsPageState") is deprecated! Use Cicada.Store.get("cmsPage") instead.',
+                'Shopware.State.get("cmsPageState") is deprecated! Use Shopware.Store.get("cmsPage") instead.',
             );
 
-            const cmsPageStore = Cicada.Store.get('cmsPage');
+            const cmsPageStore = Shopware.Store.get('cmsPage');
             const property = type.substring('cmsPageState/'.length);
 
             // @ts-expect-error - This is unsafe but should work

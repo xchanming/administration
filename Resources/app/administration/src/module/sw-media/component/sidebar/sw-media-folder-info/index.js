@@ -1,7 +1,7 @@
 import template from './sw-media-folder-info.html.twig';
 import './sw-media-folder-info.scss';
 
-const { Component, Mixin, Context } = Cicada;
+const { Component, Mixin, Context } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**
@@ -10,8 +10,6 @@ const { mapPropertyErrors } = Component.getComponentHelper();
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -46,7 +44,7 @@ export default {
         },
 
         createdAt() {
-            return Cicada.Utils.format.date(this.mediaFolder.createdAt);
+            return Shopware.Utils.format.date(this.mediaFolder.createdAt);
         },
 
         ...mapPropertyErrors('mediaFolder', ['name']),

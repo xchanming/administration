@@ -1,17 +1,15 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-custom-field-detail.html.twig';
 import './sw-custom-field-detail.scss';
 
-const { Mixin, Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin, Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -103,19 +101,11 @@ export default {
             this.fieldTypes = this.customFieldDataProviderService.getTypes();
 
             if (!this.currentCustomField.config) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.currentCustomField, 'config', {});
-                } else {
-                    this.currentCustomField.config = {};
-                }
+                this.currentCustomField.config = {};
             }
 
             if (!this.currentCustomField.config.hasOwnProperty('customFieldType')) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.currentCustomField.config, 'customFieldType', '');
-                } else {
-                    this.currentCustomField.config.customFieldType = '';
-                }
+                this.currentCustomField.config.customFieldType = '';
             }
 
             if (!this.currentCustomField.name) {
@@ -123,11 +113,7 @@ export default {
             }
 
             if (!this.currentCustomField.config.hasOwnProperty('customFieldPosition')) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.currentCustomField.config, 'customFieldPosition', 1);
-                } else {
-                    this.currentCustomField.config.customFieldPosition = 1;
-                }
+                this.currentCustomField.config.customFieldPosition = 1;
             }
 
             if (!this.currentCustomField.allowCartExpose) {

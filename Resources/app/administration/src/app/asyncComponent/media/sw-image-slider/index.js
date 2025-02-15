@@ -1,7 +1,7 @@
 import template from './sw-image-slider.html.twig';
 import './sw-image-slider.scss';
 
-const { Filter } = Cicada;
+const { Filter } = Shopware;
 
 /**
  * @description Renders an image slider with possible image descriptions
@@ -12,7 +12,7 @@ const { Filter } = Cicada;
  * <sw-image-slider
  *     :images="[
  *         {
- *             src: 'https://www.xchanming.com/media/unknown/29/03/ce/cicada_logo_white_on_blue.svg',
+ *             src: 'https://www.xchanming.com/media/unknown/29/03/ce/shopware_logo_white_on_blue.svg',
  *             description: 'This Image is awesome!'
  *         },
  *         'https://www.xchanming.com/media/image/5e/98/6d/small-differentiator-illustration-01.png',
@@ -30,8 +30,6 @@ const { Filter } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['image-change'],
 
@@ -330,10 +328,14 @@ export default {
         },
 
         imageAlt(index) {
-            return this.$tc('sw-image-slider.imageAlt', 0, {
-                index: index + 1,
-                total: this.images.length,
-            });
+            return this.$tc(
+                'sw-image-slider.imageAlt',
+                {
+                    index: index + 1,
+                    total: this.images.length,
+                },
+                0,
+            );
         },
 
         goToPreviousImage() {

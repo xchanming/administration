@@ -8,7 +8,7 @@ import { defineComponent } from 'vue';
 /**
  * @private
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'user-settings',
     defineComponent({
         inject: [
@@ -21,7 +21,7 @@ export default Cicada.Mixin.register(
             },
 
             currentUser() {
-                return Cicada.State.get('session').currentUser;
+                return Shopware.Store.get('session').currentUser;
             },
         },
 
@@ -39,7 +39,7 @@ export default Cicada.Mixin.register(
                 }
 
                 return this.userConfigRepository
-                    .search(this.userGridSettingsCriteria(identifier, userId), Cicada.Context.api)
+                    .search(this.userGridSettingsCriteria(identifier, userId), Shopware.Context.api)
                     .then((response) => {
                         if (!response.length) {
                             return null;
@@ -95,12 +95,12 @@ export default Cicada.Mixin.register(
                 }
 
                 if (!userId) {
-                    userId = this.currentUser?.id;
+                    userId = this.currentUser?.id ?? null;
                 }
 
                 let userSettings = await this.getUserSettingsEntity(identifier);
                 if (!userSettings) {
-                    userSettings = this.userConfigRepository.create(Cicada.Context.api);
+                    userSettings = this.userConfigRepository.create(Shopware.Context.api);
                 }
 
                 const entityData = Object.assign(userSettings, {
@@ -109,7 +109,7 @@ export default Cicada.Mixin.register(
                     value: entityValue,
                 });
 
-                return this.userConfigRepository.save(entityData, Cicada.Context.api);
+                return this.userConfigRepository.save(entityData, Shopware.Context.api);
             },
 
             /**
@@ -122,12 +122,12 @@ export default Cicada.Mixin.register(
              */
             userGridSettingsCriteria(identifier: string, userId: string | null = null) {
                 if (!userId) {
-                    userId = this.currentUser?.id;
+                    userId = this.currentUser?.id ?? '';
                 }
 
-                const criteria = new Cicada.Data.Criteria(1, 25);
-                criteria.addFilter(Cicada.Data.Criteria.equals('key', identifier));
-                criteria.addFilter(Cicada.Data.Criteria.equals('userId', userId));
+                const criteria = new Shopware.Data.Criteria(1, 25);
+                criteria.addFilter(Shopware.Data.Criteria.equals('key', identifier));
+                criteria.addFilter(Shopware.Data.Criteria.equals('userId', userId));
 
                 return criteria;
             },

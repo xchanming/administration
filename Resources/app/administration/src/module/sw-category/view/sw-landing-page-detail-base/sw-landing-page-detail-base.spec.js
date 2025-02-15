@@ -2,33 +2,23 @@
  * @sw-package buyers-experience
  */
 import { mount } from '@vue/test-utils';
-import { deepMergeObject } from 'src/core/service/utils/object.utils';
 
-async function createWrapper(state = {}) {
-    if (Cicada.State.get('swCategoryDetail')) {
-        Cicada.State.unregisterModule('swCategoryDetail');
-    }
-
-    Cicada.State.registerModule('swCategoryDetail', {
-        namespaced: true,
-        state: deepMergeObject(
-            {
-                category: {
-                    media: [],
-                    name: 'Computer parts',
-                    footerSalesChannels: [],
-                    navigationSalesChannels: [],
-                    serviceSalesChannels: [],
-                    productAssignmentType: 'product',
-                    isNew: () => false,
-                },
-                landingPage: {
-                    cmsPageId: null,
-                },
-            },
-            state,
-        ),
-    });
+async function createWrapper({
+    landingPage = {
+        cmsPageId: null,
+    },
+} = {}) {
+    Shopware.Store.get('swCategoryDetail').$reset();
+    Shopware.Store.get('swCategoryDetail').category = {
+        media: [],
+        name: 'Computer parts',
+        footerSalesChannels: [],
+        navigationSalesChannels: [],
+        serviceSalesChannels: [],
+        productAssignmentType: 'product',
+        isNew: () => false,
+    };
+    Shopware.Store.get('swCategoryDetail').landingPage = landingPage;
 
     return mount(await wrapTestComponent('sw-landing-page-detail-base', { sync: true }), {
         global: {
@@ -69,7 +59,7 @@ async function createWrapper(state = {}) {
             },
             computed: {
                 landingPage() {
-                    return Cicada.State.get('swCategoryDetail').landingPage;
+                    return Shopware.Store.get('swCategoryDetail').landingPage;
                 },
             },
         },

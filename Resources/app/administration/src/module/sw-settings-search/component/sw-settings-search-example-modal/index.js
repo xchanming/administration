@@ -8,8 +8,6 @@ import './sw-settings-search-example-modal.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['modal-close'],
 
     data() {

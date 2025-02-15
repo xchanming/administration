@@ -6,10 +6,8 @@ import './sw-cms-section-actions.scss';
  * @sw-package discovery
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         section: {
@@ -36,13 +34,6 @@ export default Cicada.Component.wrapComponentConfig({
         },
     },
 
-    data() {
-        return {
-            /* @deprecated: tag:v6.7.0 - Will be removed use cmsPageStateStore instead. */
-            cmsPageState: Cicada.Store.get('cmsPage'),
-        };
-    },
-
     computed: {
         componentClasses() {
             return {
@@ -50,21 +41,11 @@ export default Cicada.Component.wrapComponentConfig({
             };
         },
         cmsPageStateStore() {
-            return Cicada.Store.get('cmsPage');
+            return Shopware.Store.get('cmsPage');
         },
-    },
-
-    created() {
-        this.createdComponent();
     },
 
     methods: {
-        createdComponent() {
-            if (this.cmsPageState.selectedSection) {
-                this.cmsPageStateStore.setSection(this.section);
-            }
-        },
-
         selectSection() {
             if (this.disabled) {
                 return;
@@ -72,11 +53,7 @@ export default Cicada.Component.wrapComponentConfig({
 
             this.cmsPageStateStore.setSection(this.section);
 
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                this.$parent?.$parent?.$emit('page-config-open', 'itemConfig');
-            } else {
-                (this.swCmsSectionEmitPageConfigOpen as (arg: string) => void)?.('itemConfig');
-            }
+            (this.swCmsSectionEmitPageConfigOpen as (arg: string) => void)?.('itemConfig');
         },
     },
 });

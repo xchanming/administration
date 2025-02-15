@@ -1,7 +1,7 @@
 import './sw-label.scss';
 import template from './sw-label.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -16,8 +16,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-label', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'selected',
@@ -132,10 +130,6 @@ Component.register('sw-label', {
             ];
         },
         showDismissable() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return !!this.$listeners.dismiss && this.dismissable;
-            }
-
             return !!this.$props.onDismiss && this.dismissable;
         },
     },

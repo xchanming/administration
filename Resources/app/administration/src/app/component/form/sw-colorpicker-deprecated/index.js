@@ -1,8 +1,8 @@
 import template from './sw-colorpicker.html.twig';
 import './sw-colorpicker.scss';
 
-const { Component, Mixin } = Cicada;
-const debounce = Cicada.Utils.debounce;
+const { Component, Mixin } = Shopware;
+const debounce = Shopware.Utils.debounce;
 
 /**
  * @sw-package framework
@@ -37,8 +37,6 @@ Component.register('sw-colorpicker-deprecated', {
         Mixin.getByName('sw-form-field'),
         Mixin.getByName('remove-api-error'),
     ],
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         value: {

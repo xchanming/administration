@@ -122,7 +122,7 @@ export default {
         },
 
         mediaNameFilter() {
-            return Cicada.Filter.getByName('mediaName');
+            return Shopware.Filter.getByName('mediaName');
         },
     },
 

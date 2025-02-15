@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 
 /**
- * @sw-package discovery
+ * @sw-package checkout
  */
 
 async function createWrapper(privileges = []) {

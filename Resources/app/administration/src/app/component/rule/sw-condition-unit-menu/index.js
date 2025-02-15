@@ -1,6 +1,7 @@
 /**
  * @sw-package fundamentals@after-sales
  */
+
 import template from './sw-condition-unit-menu.html.twig';
 import './sw-condition-unit-menu.scss';
 import convertUnit, { baseUnits } from '../../../../module/sw-settings-rule/utils/unit-conversion.utils';
@@ -8,7 +9,7 @@ import convertUnit, { baseUnits } from '../../../../module/sw-settings-rule/util
 /**
  * @private
  */
-Cicada.Component.register('sw-condition-unit-menu', {
+Shopware.Component.register('sw-condition-unit-menu', {
     template,
 
     emits: [

@@ -1,17 +1,15 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
 import template from './sw-settings-country-list.html.twig';
 import './sw-settings-country-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -65,7 +63,7 @@ export default {
             criteria.addSorting(Criteria.sort(this.sortBy, this.sortDirection, this.naturalSorting));
 
             this.countryRepository
-                .search(criteria, Cicada.Context.api)
+                .search(criteria, Shopware.Context.api)
                 .then((items) => {
                     this.total = items.total;
                     this.country = items;
@@ -82,7 +80,7 @@ export default {
             promise
                 .then(() => {
                     this.createNotificationSuccess({
-                        message: this.$tc('sw-settings-country.detail.messageSaveSuccess', 0, { name: country.name }),
+                        message: this.$tc('sw-settings-country.detail.messageSaveSuccess', { name: country.name }, 0),
                     });
                 })
                 .catch(() => {
@@ -94,7 +92,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').api.languageId = languageId;
             this.getList();
         },
 

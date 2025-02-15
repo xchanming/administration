@@ -4,10 +4,10 @@
 
 /* eslint-disable max-len */
 import { mount } from '@vue/test-utils';
-import uuid from 'src/../test/_helper_/uuid';
+import uuid from 'test/_helper_/uuid';
 
 function createEntityCollection(entities = []) {
-    return new Cicada.Data.EntityCollection('collection', 'collection', {}, null, entities);
+    return new Shopware.Data.EntityCollection('collection', 'collection', {}, null, entities);
 }
 
 async function createWrapper(props) {
@@ -626,7 +626,7 @@ describe('src/app/component/form/sw-custom-field-set-renderer', () => {
     ];
 
     beforeAll(() => {
-        Cicada.Utils.debounce = (fn) => {
+        Shopware.Utils.debounce = (fn) => {
             return fn;
         };
     });
@@ -1830,7 +1830,7 @@ describe('src/app/component/form/sw-custom-field-set-renderer', () => {
                         config: {
                             label: {
                                 'en-GB': 'Set 1 Label GB',
-                                'zh-CN': 'Set 1 Label DE',
+                                'de-DE': 'Set 1 Label DE',
                             },
                         },
                         customFields: [

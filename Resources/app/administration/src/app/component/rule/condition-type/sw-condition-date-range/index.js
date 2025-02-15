@@ -1,7 +1,7 @@
 import template from './sw-condition-date-range.html.twig';
 import './sw-condition-date-range.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**

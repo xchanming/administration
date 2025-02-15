@@ -6,15 +6,12 @@ import template from './sw-product-modal-variant-generation.html.twig';
 import VariantsGenerator from '../../../helper/sw-products-variants-generator';
 import './sw-product-modal-variant-generation.scss';
 
-const { Criteria } = Cicada.Data;
-const { Mixin, Context } = Cicada;
-const { mapState } = Cicada.Component.getComponentHelper();
+const { Criteria } = Shopware.Data;
+const { Mixin, Context } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -78,9 +75,9 @@ export default {
     },
 
     computed: {
-        ...mapState('swProductDetail', [
-            'currencies',
-        ]),
+        currencies() {
+            return Shopware.Store.get('swProductDetail').currencies;
+        },
 
         productRepository() {
             return this.repositoryFactory.create('product');

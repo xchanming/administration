@@ -2,13 +2,14 @@ import { reactive } from 'vue';
 import template from './sw-text-editor.html.twig';
 import './sw-text-editor.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
  *
  * @private
  * @status ready
+ * @deprecated tag:v6.8.0 - Will be removed, use mt-text-editor instead.
  * @example-type static
  * @description <p>A simple text editor which uses the browsers api.
  *              Pass a buttonConfig array to configure the buttons you desire.
@@ -37,8 +38,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-text-editor', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -131,54 +130,54 @@ Component.register('sw-text-editor', {
                 return reactive([
                     {
                         type: 'paragraph',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.format'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.format'),
                         icon: 'regular-style-xs',
                         children: [
                             {
                                 type: 'formatBlock',
-                                name: Cicada.Snippet.tc('sw-text-editor-toolbar.title.paragraph'),
+                                name: Shopware.Snippet.tc('sw-text-editor-toolbar.title.paragraph'),
                                 value: 'p',
                                 tag: 'p',
                             },
                             {
                                 type: 'formatBlock',
-                                name: Cicada.Snippet.tc('sw-text-editor-toolbar.title.h1'),
+                                name: Shopware.Snippet.tc('sw-text-editor-toolbar.title.h1'),
                                 value: 'h1',
                                 tag: 'h1',
                             },
                             {
                                 type: 'formatBlock',
-                                name: Cicada.Snippet.tc('sw-text-editor-toolbar.title.h2'),
+                                name: Shopware.Snippet.tc('sw-text-editor-toolbar.title.h2'),
                                 value: 'h2',
                                 tag: 'h2',
                             },
                             {
                                 type: 'formatBlock',
-                                name: Cicada.Snippet.tc('sw-text-editor-toolbar.title.h3'),
+                                name: Shopware.Snippet.tc('sw-text-editor-toolbar.title.h3'),
                                 value: 'h3',
                                 tag: 'h3',
                             },
                             {
                                 type: 'formatBlock',
-                                name: Cicada.Snippet.tc('sw-text-editor-toolbar.title.h4'),
+                                name: Shopware.Snippet.tc('sw-text-editor-toolbar.title.h4'),
                                 value: 'h4',
                                 tag: 'h4',
                             },
                             {
                                 type: 'formatBlock',
-                                name: Cicada.Snippet.tc('sw-text-editor-toolbar.title.h5'),
+                                name: Shopware.Snippet.tc('sw-text-editor-toolbar.title.h5'),
                                 value: 'h5',
                                 tag: 'h5',
                             },
                             {
                                 type: 'formatBlock',
-                                name: Cicada.Snippet.tc('sw-text-editor-toolbar.title.h6'),
+                                name: Shopware.Snippet.tc('sw-text-editor-toolbar.title.h6'),
                                 value: 'h6',
                                 tag: 'h6',
                             },
                             {
                                 type: 'formatBlock',
-                                name: Cicada.Snippet.tc('sw-text-editor-toolbar.title.blockquote'),
+                                name: Shopware.Snippet.tc('sw-text-editor-toolbar.title.blockquote'),
                                 value: 'blockquote',
                                 tag: 'blockquote',
                             },
@@ -186,88 +185,88 @@ Component.register('sw-text-editor', {
                     },
                     {
                         type: 'foreColor',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.text-color'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.text-color'),
                         value: '',
                         tag: 'font',
                     },
                     {
                         type: 'bold',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.bold'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.bold'),
                         icon: 'regular-bold-xs',
                         tag: 'b',
                     },
                     {
                         type: 'italic',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.italic'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.italic'),
                         icon: 'regular-italic-xs',
                         tag: 'i',
                     },
                     {
                         type: 'underline',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.underline'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.underline'),
                         icon: 'regular-underline-xs',
                         tag: 'u',
                     },
                     {
                         type: 'strikethrough',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.strikethrough'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.strikethrough'),
                         icon: 'regular-strikethrough-xs',
                         tag: 'strike',
                     },
                     {
                         type: 'superscript',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.superscript'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.superscript'),
                         icon: 'regular-superscript-xs',
                         tag: 'sup',
                     },
                     {
                         type: 'subscript',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.subscript'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.subscript'),
                         icon: 'regular-subscript-xs',
                         tag: 'sub',
                     },
                     {
                         type: 'justify',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.textAlign'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.textAlign'),
                         icon: 'regular-align-left-xs',
                         children: [
                             {
                                 type: 'justifyLeft',
-                                title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.alignLeft'),
+                                title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.alignLeft'),
                                 icon: 'regular-align-left',
                             },
                             {
                                 type: 'justifyCenter',
-                                title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.alignCenter'),
+                                title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.alignCenter'),
                                 icon: 'regular-align-center',
                             },
                             {
                                 type: 'justifyRight',
-                                title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.alignRight'),
+                                title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.alignRight'),
                                 icon: 'regular-align-right',
                             },
                             {
                                 type: 'justifyFull',
-                                title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.justify'),
+                                title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.justify'),
                                 icon: 'regular-align-justify',
                             },
                         ],
                     },
                     {
                         type: 'insertUnorderedList',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.insert-unordered-list'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.insert-unordered-list'),
                         icon: 'regular-list-unordered-xs',
                         tag: 'ul',
                     },
                     {
                         type: 'insertOrderedList',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.insert-ordered-list'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.insert-ordered-list'),
                         icon: 'regular-list-numbered-xs',
                         tag: 'ol',
                     },
                     {
                         type: 'link',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.link'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.link'),
                         icon: 'regular-link-xs',
                         expanded: false,
                         newTab: false,
@@ -277,13 +276,13 @@ Component.register('sw-text-editor', {
                     },
                     {
                         type: 'undo',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.undo'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.undo'),
                         icon: 'regular-undo-xs',
                         position: 'middle',
                     },
                     {
                         type: 'redo',
-                        title: Cicada.Snippet.tc('sw-text-editor-toolbar.title.redo'),
+                        title: Shopware.Snippet.tc('sw-text-editor-toolbar.title.redo'),
                         icon: 'regular-redo-xs',
                         position: 'middle',
                     },
@@ -320,7 +319,7 @@ Component.register('sw-text-editor', {
                 nextColWidth: null,
             },
             isTableEdit: false,
-            cmsPageState: Cicada.Store.get('cmsPage'),
+            cmsPageState: Shopware.Store.get('cmsPage'),
             minorElementTags: [
                 '#text',
                 'br',

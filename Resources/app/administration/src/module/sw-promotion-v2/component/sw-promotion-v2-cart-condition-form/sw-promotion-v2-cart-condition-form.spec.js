@@ -3,7 +3,7 @@
  */
 import { mount } from '@vue/test-utils';
 
-Cicada.Service().register('syncService', () => {
+Shopware.Service().register('syncService', () => {
     return {
         httpClient: {
             get() {

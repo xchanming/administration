@@ -2,23 +2,23 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-product-description-reviews', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-product-description-reviews', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-product-description-reviews', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-product-description-reviews', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-product-description-reviews', () => import('./component'));
+Shopware.Component.register('sw-cms-el-product-description-reviews', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'product-description-reviews',
     label: 'sw-cms.elements.productDescriptionReviews.label',
     component: 'sw-cms-el-product-description-reviews',
@@ -32,7 +32,7 @@ Cicada.Service('cmsService').registerCmsElement({
             required: true,
             entity: {
                 name: 'product',
-                criteria: new Cicada.Data.Criteria(1, 25).addAssociation('properties'),
+                criteria: new Shopware.Data.Criteria(1, 25).addAssociation('properties'),
             },
         },
         alignment: {
@@ -40,5 +40,5 @@ Cicada.Service('cmsService').registerCmsElement({
             value: null,
         },
     },
-    collect: Cicada.Service('cmsService').getCollectFunction(),
+    collect: Shopware.Service('cmsService').getCollectFunction(),
 });

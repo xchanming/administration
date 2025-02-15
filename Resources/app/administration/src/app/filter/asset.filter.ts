@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-Cicada.Filter.register('asset', (value: string) => {
+Shopware.Filter.register('asset', (value: string) => {
     if (!value) {
         return '';
     }
@@ -12,7 +12,7 @@ Cicada.Filter.register('asset', (value: string) => {
         value = value.substr(1);
     }
 
-    const assetsPath = Cicada.Context.api.assetsPath || '';
+    const assetsPath = Shopware.Context.api.assetsPath || '';
 
     return `${assetsPath}${value}`;
 });

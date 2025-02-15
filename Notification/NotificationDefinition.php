@@ -1,25 +1,25 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Notification;
+namespace Shopware\Administration\Notification;
 
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityDefinition;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityProtection\EntityProtectionCollection;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityProtection\ReadProtection;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityProtection\WriteProtection;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\BoolField;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\FkField;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\IdField;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\ListField;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\LongTextField;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\StringField;
-use Cicada\Core\Framework\DataAbstractionLayer\FieldCollection;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\System\Integration\IntegrationDefinition;
-use Cicada\Core\System\User\UserDefinition;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityProtection\EntityProtectionCollection;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityProtection\ReadProtection;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityProtection\WriteProtection;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ListField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\System\Integration\IntegrationDefinition;
+use Shopware\Core\System\User\UserDefinition;
 
 #[Package('framework')]
 class NotificationDefinition extends EntityDefinition

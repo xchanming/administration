@@ -402,7 +402,7 @@ describe('src/module/sw-settings-listing/page/sw-settings-listing', () => {
                     },
                     mixins: [
                         notificationMixinMock,
-                        Cicada.Mixin.getByName('sw-inline-snippet'),
+                        Shopware.Mixin.getByName('sw-inline-snippet'),
                     ],
                     stubs: {
                         'sw-page': {

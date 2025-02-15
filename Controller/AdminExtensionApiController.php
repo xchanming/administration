@@ -1,21 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Controller;
+namespace Shopware\Administration\Controller;
 
-use Cicada\Core\Framework\App\ActionButton\AppAction;
-use Cicada\Core\Framework\App\ActionButton\Executor;
-use Cicada\Core\Framework\App\AppCollection;
-use Cicada\Core\Framework\App\AppException;
-use Cicada\Core\Framework\App\Hmac\QuerySigner;
-use Cicada\Core\Framework\App\Payload\AppPayloadServiceHelper;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Cicada\Core\Framework\Feature;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Uuid\Uuid;
-use Cicada\Core\Framework\Validation\DataBag\RequestDataBag;
+use Shopware\Core\Framework\App\ActionButton\AppAction;
+use Shopware\Core\Framework\App\ActionButton\Executor;
+use Shopware\Core\Framework\App\AppCollection;
+use Shopware\Core\Framework\App\AppException;
+use Shopware\Core\Framework\App\Hmac\QuerySigner;
+use Shopware\Core\Framework\App\Payload\AppPayloadServiceHelper;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\Framework\Validation\DataBag\RequestDataBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,10 +53,7 @@ class AdminExtensionApiController extends AbstractController
         }
 
         if (!$app->getAppSecret()) {
-            if (Feature::isActive('v6.7.0.0')) {
-                throw AppException::appSecretMissing($app->getName());
-            }
-            throw AppException::secretMissing();
+            throw AppException::appSecretMissing($app->getName());
         }
 
         $targetUrl = $requestDataBag->getString('url');

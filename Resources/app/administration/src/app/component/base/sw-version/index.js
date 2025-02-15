@@ -5,7 +5,7 @@
 import template from './sw-version.html.twig';
 import './sw-version.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -20,12 +20,10 @@ const { Component } = Cicada;
 Component.register('sw-version', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         version() {
             let output = '';
-            const version = Cicada.Context.app.config.version;
+            const version = Shopware.Context.app.config.version;
 
             // https://regex101.com/r/oRuJjS/1
             const match = version.match(/(\d+)\.?(\d+)\.?(\d+)?\.?(\d+)?-?([a-z]+)?(\d+(.\d+)*)?/i);

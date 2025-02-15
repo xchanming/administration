@@ -5,14 +5,12 @@
 import template from './sw-sales-channel-product-assignment-categories.html.twig';
 import './sw-sales-channel-product-assignment-categories.scss';
 
-const { Component, Context, Mixin } = Cicada;
-const { EntityCollection, Criteria } = Cicada.Data;
+const { Component, Context, Mixin } = Shopware;
+const { EntityCollection, Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-sales-channel-product-assignment-categories', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -212,7 +210,7 @@ Component.register('sw-sales-channel-product-assignment-categories', {
         },
 
         searchCategories(term) {
-            return this.categoryRepository.search(this.categorySearchCriteria(term), Cicada.Context.api);
+            return this.categoryRepository.search(this.categorySearchCriteria(term), Shopware.Context.api);
         },
 
         isSearchItemChecked(itemId) {
@@ -255,7 +253,7 @@ Component.register('sw-sales-channel-product-assignment-categories', {
         },
 
         getProductFromCategories(categories) {
-            return this.productRepository.search(this.productCriteria(categories), Cicada.Context.api);
+            return this.productRepository.search(this.productCriteria(categories), Shopware.Context.api);
         },
     },
 });

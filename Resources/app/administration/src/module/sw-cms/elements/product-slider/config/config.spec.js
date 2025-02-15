@@ -119,7 +119,7 @@ async function createWrapper(customCmsElementConfig) {
 
 describe('module/sw-cms/elements/product-slider/config', () => {
     beforeAll(() => {
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
         });
     });

@@ -1,7 +1,7 @@
 import './sw-select-option.scss';
 import template from './sw-select-option.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework

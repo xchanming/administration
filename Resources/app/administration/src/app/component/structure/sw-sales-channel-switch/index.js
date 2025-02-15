@@ -1,10 +1,10 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package discovery
  */
 import template from './sw-sales-channel-switch.html.twig';
 
-const { Component } = Cicada;
-const { debug } = Cicada.Utils;
+const { Component } = Shopware;
+const { debug } = Shopware.Utils;
 
 /**
  * @private
@@ -18,8 +18,6 @@ const { debug } = Cicada.Utils;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-sales-channel-switch', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['change-sales-channel-id'],
 

@@ -104,7 +104,7 @@ describe('components/sw-entity-many-to-many-select', () => {
                                         checkAssociation(searchCriteria);
                                     }
                                     return Promise.resolve(
-                                        new EntityCollection('', '', Cicada.Context.api, new Criteria(1, 1), [], 0),
+                                        new EntityCollection('', '', Shopware.Context.api, new Criteria(1, 1), [], 0),
                                     );
                                 },
                             };

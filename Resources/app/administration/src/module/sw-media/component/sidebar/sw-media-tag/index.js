@@ -1,14 +1,13 @@
 /**
  * @sw-package discovery
  */
+
 import template from './sw-media-tag.html.twig';
 import './sw-media-tag.scss';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 

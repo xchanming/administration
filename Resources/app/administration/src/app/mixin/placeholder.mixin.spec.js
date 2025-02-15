@@ -13,7 +13,7 @@ async function createWrapper() {
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('placeholder'),
+                Shopware.Mixin.getByName('placeholder'),
             ],
             data() {
                 return {
@@ -31,7 +31,7 @@ describe('src/app/mixin/placeholder.mixin.ts', () => {
     let wrapper;
 
     beforeEach(async () => {
-        Cicada.Context.api.language = {
+        Shopware.Context.api.language = {
             id: '1a2b3c4d5e6f7g8h9i',
             parentId: 'parentLanguageId',
         };

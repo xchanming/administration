@@ -1,5 +1,5 @@
 /**
- * @package fundamentals@framework
+ * @sw-package fundamentals@framework
  */
 import { mount } from '@vue/test-utils';
 import EntityCollection from 'src/core/data/entity-collection.data';
@@ -50,7 +50,7 @@ async function createWrapper(privileges = []) {
                                     id: '87923',
                                     localeId: '1337',
                                 }),
-                            search: () => Promise.resolve(new EntityCollection('', '', Cicada.Context.api, null, [], 0)),
+                            search: () => Promise.resolve(new EntityCollection('', '', Shopware.Context.api, null, [], 0)),
                             getSyncChangeset: () => ({
                                 changeset: [{ changes: { id: '1337' } }],
                             }),
@@ -91,11 +91,11 @@ async function createWrapper(privileges = []) {
 
 describe('src/module/sw-profile/page/sw-profile-index', () => {
     beforeAll(() => {
-        Cicada.Service().register('timezoneService', () => {
+        Shopware.Service().register('timezoneService', () => {
             return new TimezoneService();
         });
 
-        Cicada.Service().register('localeHelper', () => {
+        Shopware.Service().register('localeHelper', () => {
             return {
                 setLocaleWithId: jest.fn(),
             };
@@ -143,18 +143,18 @@ describe('src/module/sw-profile/page/sw-profile-index', () => {
         const wrapper = await createWrapper();
         await flushPromises();
 
-        wrapper.vm.onChangeNewPassword('Cicada');
+        wrapper.vm.onChangeNewPassword('Shopware');
 
-        expect(wrapper.vm.newPassword).toBe('Cicada');
+        expect(wrapper.vm.newPassword).toBe('Shopware');
     });
 
     it('should be able to change new password confirm', async () => {
         const wrapper = await createWrapper();
         await flushPromises();
 
-        wrapper.vm.onChangeNewPasswordConfirm('Cicada');
+        wrapper.vm.onChangeNewPasswordConfirm('Shopware');
 
-        expect(wrapper.vm.newPasswordConfirm).toBe('Cicada');
+        expect(wrapper.vm.newPasswordConfirm).toBe('Shopware');
     });
 
     it('should reset general data if route changes', async () => {

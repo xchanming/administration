@@ -9,7 +9,7 @@ import MockAdapter from 'axios-mock-adapter';
 function getMailApiService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
 
     const mailApiService = new MailApiService(client, loginService);
 
@@ -49,7 +49,7 @@ describe('mailApiService', () => {
                 contentPlain: 'Test',
                 subject: 'Test Subject',
                 senderMail: 'sender@example.com',
-                senderName: 'Sender'
+                senderName: 'Sender',
             };
             const templateData = { test: 'data' };
             const mailTemplateMedia = { getIds: jest.fn().mockReturnValue(['media-id']) };
@@ -62,13 +62,15 @@ describe('mailApiService', () => {
                 mailTemplateMedia,
                 salesChannelId,
                 false,
+                [],
                 templateData,
                 null,
                 null,
-                { languageId: 'language-id' }
+                { languageId: 'language-id' },
             );
 
             expect(clientMock.history.post[0].url).toBe(`/_action/mail-template/send`);
+            expect(clientMock.history.post[0].headers['sw-language-id']).toBe('language-id');
         });
     });
 
@@ -87,13 +89,13 @@ describe('mailApiService', () => {
                 contentPlain: 'Test',
                 subject: 'Test Subject',
                 senderMail: 'sender@example.com',
-                senderName: 'Sender'
+                senderName: 'Sender',
             };
 
             await mailApiService.buildRenderPreview('invoice', mailTemplate);
 
             expect(clientMock.history.post[0].url).toBe(`/_action/mail-template/build`);
-            expect(clientMock.history.post[0].headers['sw-language-id']).toBe(Cicada.Context.api.languageId);
+            expect(clientMock.history.post[0].headers['sw-language-id']).toBe(Shopware.Context.api.languageId);
         });
     });
 });

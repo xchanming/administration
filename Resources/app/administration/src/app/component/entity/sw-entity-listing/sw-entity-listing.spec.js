@@ -10,7 +10,7 @@ async function createWrapper(propsData = {}) {
     // mock entity functions
     const items = [
         { name: 'Apple' },
-        { name: 'Cicada' },
+        { name: 'Shopware' },
         { name: 'Google' },
         { name: 'Microsoft' },
     ];

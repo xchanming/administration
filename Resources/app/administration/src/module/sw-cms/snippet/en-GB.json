@@ -483,7 +483,8 @@
           "label": {
             "action": "Action*",
             "email": "Email address*",
-            "name": "name*",
+            "firstName": "First name*",
+            "lastName": "Last name*",
             "message": "Your message*",
             "newsletterSubmit": "Continue",
             "phone": "Phone number*",
@@ -495,7 +496,8 @@
             "subscribeToNewsletter": "Subscribe to newsletter"
           },
           "placeholder": {
-            "name": "John",
+            "firstName": "John",
+            "lastName": "Doe",
             "email": "john{'@'}doe.com",
             "phone": "+4920 3920173",
             "subject": "Lorem ipsum dolor sit amet.",
@@ -507,7 +509,8 @@
           },
           "newsletter": {
             "label": {
-              "name": "First name",
+              "firstName": "First name",
+              "lastName": "Last name",
               "salutation": "Salutation"
             }
           }
@@ -771,6 +774,7 @@
         "tabLandingPages": "Landing pages",
         "shopPages": {
           "tosPage": "TOS pages",
+          "revocationPage": "Revocation notices",
           "shippingPaymentInfoPage": "Payment and shipping information",
           "privacyPage": "Privacy pages",
           "imprintPage": "Imprint pages",

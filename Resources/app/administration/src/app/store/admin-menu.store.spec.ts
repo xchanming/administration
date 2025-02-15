@@ -13,18 +13,18 @@ describe('admin-menu.store', () => {
 
     beforeAll(() => {
         // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-        Cicada.Service().register('menuService', () => ({
+        Shopware.Service().register('menuService', () => ({
             getNavigationFromApps: jest.fn().mockReturnValue(mockAppModuleDefinitions),
         }));
     });
 
     beforeEach(() => {
         setActivePinia(createPinia());
-        store = Cicada.Store.get('adminMenu');
+        store = Shopware.Store.get('adminMenu');
     });
 
     it('has initial state', () => {
-        expect(store.isExpanded).toBe(false);
+        expect(store.isExpanded).toBe(true);
         expect(store.expandedEntries).toStrictEqual([]);
         expect(store.adminModuleNavigation).toStrictEqual([]);
     });
@@ -58,7 +58,7 @@ describe('admin-menu.store', () => {
     });
 
     it('collapses the sidebar with `collapseSidebar`', () => {
-        expect(store.isExpanded).toBe(false);
+        expect(store.isExpanded).toBe(true);
 
         store.collapseSidebar();
         expect(store.isExpanded).toBe(false);

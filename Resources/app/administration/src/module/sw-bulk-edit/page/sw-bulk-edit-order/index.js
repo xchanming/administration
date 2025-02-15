@@ -1,25 +1,22 @@
 import template from './sw-bulk-edit-order.html.twig';
 import './sw-bulk-edit-order.scss';
-import swBulkEditState from '../../state/sw-bulk-edit.state';
+import '../../store/sw-bulk-edit.store';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { types } = Cicada.Utils;
-const { intersectionBy, chunk, uniqBy } = Cicada.Utils.array;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { types } = Shopware.Utils;
+const { intersectionBy, chunk, uniqBy } = Shopware.Utils.array;
 
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'bulkEditApiFactory',
         'repositoryFactory',
-        'feature',
         'orderDocumentApiService',
     ],
 
@@ -52,7 +49,7 @@ export default {
 
     computed: {
         selectedIds() {
-            return Cicada.State.get('cicadaApps').selectedIds;
+            return Shopware.Store.get('shopwareApps').selectedIds;
         },
 
         stateMachineStateRepository() {
@@ -248,16 +245,8 @@ export default {
         },
     },
 
-    beforeCreate() {
-        Cicada.State.registerModule('swBulkEdit', swBulkEditState);
-    },
-
     created() {
         this.createdComponent();
-    },
-
-    beforeUnmount() {
-        Cicada.State.unregisterModule('swBulkEdit');
     },
 
     methods: {
@@ -266,7 +255,7 @@ export default {
 
             this.isLoading = true;
 
-            this.order = this.orderRepository.create(Cicada.Context.api);
+            this.order = this.orderRepository.create(Shopware.Context.api);
 
             await Promise.all([
                 this.fetchStatusOptions('orders.id'),
@@ -282,17 +271,12 @@ export default {
         },
 
         setRouteMetaModule() {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.$route.meta.$module, 'color', '#A092F0');
-                this.$set(this.$route.meta.$module, 'icon', 'regular-shopping-bag');
-            } else {
-                if (!this.$route.meta.$module) {
-                    this.$route.meta.$module = {};
-                }
-
-                this.$route.meta.$module.color = '#A092F0';
-                this.$route.meta.$module.icon = 'regular-shopping-bag';
+            if (!this.$route.meta.$module) {
+                this.$route.meta.$module = {};
             }
+
+            this.$route.meta.$module.color = '#A092F0';
+            this.$route.meta.$module.icon = 'regular-shopping-bag';
         },
 
         loadBulkEditData() {
@@ -304,46 +288,21 @@ export default {
 
             bulkEditFormGroups.forEach((bulkEditForms) => {
                 bulkEditForms.forEach((bulkEditForm) => {
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(this.bulkEditData, bulkEditForm.name, {
-                            isChanged: false,
-                            type: 'overwrite',
-                            value: null,
-                        });
-                    } else {
-                        this.bulkEditData[bulkEditForm.name] = {
-                            isChanged: false,
-                            type: 'overwrite',
-                            value: null,
-                        };
-                    }
+                    this.bulkEditData[bulkEditForm.name] = {
+                        isChanged: false,
+                        type: 'overwrite',
+                        value: null,
+                    };
                 });
             });
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.bulkEditData, 'customFields', {
-                    type: 'overwrite',
-                    value: null,
-                });
+            this.bulkEditData.customFields = {
+                type: 'overwrite',
+                value: null,
+            };
 
-                this.$set(this.bulkEditData, 'statusMails', {
-                    ...this.bulkEditData.statusMails,
-                    disabled: true,
-                });
-
-                this.$set(this.bulkEditData, 'documents', {
-                    ...this.bulkEditData.documents,
-                    disabled: true,
-                });
-            } else {
-                this.bulkEditData.customFields = {
-                    type: 'overwrite',
-                    value: null,
-                };
-
-                this.bulkEditData.statusMails.disabled = true;
-                this.bulkEditData.documents.disabled = true;
-            }
+            this.bulkEditData.statusMails.disabled = true;
+            this.bulkEditData.documents.disabled = true;
 
             this.order.documents = {
                 documentType: {},
@@ -397,7 +356,7 @@ export default {
                 criteria.addFilter(
                     Criteria.multi('AND', [
                         Criteria.equalsAny(field, ids),
-                        Criteria.equals(versionField, Cicada.Context.api.liveVersionId),
+                        Criteria.equals(versionField, Shopware.Context.api.liveVersionId),
                     ]),
                 );
 
@@ -429,7 +388,7 @@ export default {
             }
 
             return this.stateMachineStateRepository
-                .search(this.toStateMachineStatesCriteria(states), Cicada.Context.api)
+                .search(this.toStateMachineStatesCriteria(states), Shopware.Context.api)
                 .then((response) => {
                     if (!response.length) {
                         return [];
@@ -598,7 +557,7 @@ export default {
         },
 
         onChangeDocument(type, isChanged) {
-            Cicada.State.commit('swBulkEdit/setOrderDocumentsIsChanged', {
+            Shopware.Store.get('swBulkEdit').setOrderDocumentsIsChanged({
                 type,
                 isChanged,
             });

@@ -4,36 +4,36 @@
 import './acl';
 import defaultSearchConfiguration from './default-search-configuration';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-category-tree', () => import('./component/sw-category-tree'));
-Cicada.Component.register('sw-landing-page-tree', () => import('./component/sw-landing-page-tree'));
-Cicada.Component.register('sw-landing-page-view', () => import('./component/sw-landing-page-view'));
-Cicada.Component.register('sw-category-view', () => import('./component/sw-category-view'));
-Cicada.Component.register('sw-category-link-settings', () => import('./component/sw-category-link-settings'));
-Cicada.Component.register('sw-category-layout-card', () => import('./component/sw-category-layout-card'));
-Cicada.Component.register('sw-category-detail-menu', () => import('./component/sw-category-detail-menu'));
-Cicada.Component.register('sw-category-seo-form', () => import('./component/sw-category-seo-form'));
-Cicada.Component.register('sw-category-entry-point-card', () => import('./component/sw-category-entry-point-card'));
-Cicada.Component.register('sw-category-entry-point-modal', () => import('./component/sw-category-entry-point-modal'));
-Cicada.Component.register(
+Shopware.Component.register('sw-category-tree', () => import('./component/sw-category-tree'));
+Shopware.Component.register('sw-landing-page-tree', () => import('./component/sw-landing-page-tree'));
+Shopware.Component.register('sw-landing-page-view', () => import('./component/sw-landing-page-view'));
+Shopware.Component.register('sw-category-view', () => import('./component/sw-category-view'));
+Shopware.Component.register('sw-category-link-settings', () => import('./component/sw-category-link-settings'));
+Shopware.Component.register('sw-category-layout-card', () => import('./component/sw-category-layout-card'));
+Shopware.Component.register('sw-category-detail-menu', () => import('./component/sw-category-detail-menu'));
+Shopware.Component.register('sw-category-seo-form', () => import('./component/sw-category-seo-form'));
+Shopware.Component.register('sw-category-entry-point-card', () => import('./component/sw-category-entry-point-card'));
+Shopware.Component.register('sw-category-entry-point-modal', () => import('./component/sw-category-entry-point-modal'));
+Shopware.Component.register(
     'sw-category-entry-point-overwrite-modal',
     () => import('./component/sw-category-entry-point-overwrite-modal'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-category-sales-channel-multi-select',
     'sw-entity-multi-select',
     () => import('./component/sw-category-sales-channel-multi-select'),
 );
-Cicada.Component.register('sw-category-detail', () => import('./page/sw-category-detail'));
-Cicada.Component.register('sw-category-detail-base', () => import('./view/sw-category-detail-base'));
-Cicada.Component.register('sw-category-detail-cms', () => import('./view/sw-category-detail-cms'));
-Cicada.Component.register('sw-category-detail-custom-entity', () => import('./view/sw-category-detail-custom-entity'));
-Cicada.Component.register('sw-landing-page-detail-base', () => import('./view/sw-landing-page-detail-base'));
-Cicada.Component.register('sw-landing-page-detail-cms', () => import('./view/sw-landing-page-detail-cms'));
-Cicada.Component.register('sw-category-detail-products', () => import('./view/sw-category-detail-products'));
-Cicada.Component.register('sw-category-detail-seo', () => import('./view/sw-category-detail-seo'));
+Shopware.Component.register('sw-category-detail', () => import('./page/sw-category-detail'));
+Shopware.Component.register('sw-category-detail-base', () => import('./view/sw-category-detail-base'));
+Shopware.Component.register('sw-category-detail-cms', () => import('./view/sw-category-detail-cms'));
+Shopware.Component.register('sw-category-detail-custom-entity', () => import('./view/sw-category-detail-custom-entity'));
+Shopware.Component.register('sw-landing-page-detail-base', () => import('./view/sw-landing-page-detail-base'));
+Shopware.Component.register('sw-landing-page-detail-cms', () => import('./view/sw-landing-page-detail-cms'));
+Shopware.Component.register('sw-category-detail-products', () => import('./view/sw-category-detail-products'));
+Shopware.Component.register('sw-category-detail-seo', () => import('./view/sw-category-detail-seo'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations

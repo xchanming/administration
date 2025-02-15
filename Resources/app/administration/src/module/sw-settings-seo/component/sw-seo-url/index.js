@@ -2,17 +2,15 @@
  * @sw-package inventory
  */
 
-import swSeoUrlState from './state';
+import './store';
 import template from './sw-seo-url.html.twig';
 
-const Criteria = Cicada.Data.Criteria;
-const EntityCollection = Cicada.Data.EntityCollection;
+const Criteria = Shopware.Data.Criteria;
+const EntityCollection = Shopware.Data.EntityCollection;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -70,19 +68,19 @@ export default {
 
     computed: {
         seoUrlCollection() {
-            return Cicada.State.get('swSeoUrl').seoUrlCollection;
+            return Shopware.Store.get('swSeoUrl').seoUrlCollection;
         },
 
         currentSeoUrl() {
-            if (!Cicada.State.get('swSeoUrl')) {
+            if (!Shopware.Store.get('swSeoUrl')) {
                 return {};
             }
 
-            return Cicada.State.get('swSeoUrl').currentSeoUrl;
+            return Shopware.Store.get('swSeoUrl').currentSeoUrl;
         },
 
         defaultSeoUrl() {
-            return Cicada.State.get('swSeoUrl').defaultSeoUrl;
+            return Shopware.Store.get('swSeoUrl').defaultSeoUrl;
         },
 
         seoUrlRepository() {
@@ -94,15 +92,15 @@ export default {
         },
 
         isHeadlessSalesChannel() {
-            if (!Cicada.State.get('swSeoUrl')) {
+            if (!Shopware.Store.get('swSeoUrl')) {
                 return true;
             }
 
-            if (Cicada.State.get('swSeoUrl').salesChannelCollection === null) {
+            if (Shopware.Store.get('swSeoUrl').salesChannelCollection === null) {
                 return true;
             }
 
-            const salesChannel = Cicada.State.get('swSeoUrl').salesChannelCollection.find((entry) => {
+            const salesChannel = Shopware.Store.get('swSeoUrl').salesChannelCollection.find((entry) => {
                 return entry.id === this.currentSalesChannelId;
             });
 
@@ -130,31 +128,14 @@ export default {
         },
     },
 
-    beforeCreate() {
-        // register a new module only if doesn't exist
-        if (!Cicada.State.list().includes('swSeoUrl')) {
-            Cicada.State.registerModule('swSeoUrl', swSeoUrlState);
-        }
-    },
-
     created() {
-        if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-            this.$root.$on('seo-url-save-finish', this.clearDefaultSeoUrls);
-        } else {
-            Cicada.Utils.EventBus.on('sw-product-detail-save-finish', this.clearDefaultSeoUrls);
-        }
+        Shopware.Utils.EventBus.on('sw-product-detail-save-finish', this.clearDefaultSeoUrls);
 
         this.createdComponent();
     },
 
     beforeUnmount() {
-        if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-            this.$root.$off('seo-url-save-finish', this.clearDefaultSeoUrls);
-        } else {
-            Cicada.Utils.EventBus.off('sw-product-detail-save-finish', this.clearDefaultSeoUrls);
-        }
-
-        Cicada.State.unregisterModule('swSeoUrl');
+        Shopware.Utils.EventBus.off('sw-product-detail-save-finish', this.clearDefaultSeoUrls);
     },
 
     methods: {
@@ -171,7 +152,7 @@ export default {
             salesChannelCriteria.addAssociation('type');
 
             this.salesChannelRepository.search(salesChannelCriteria).then((salesChannelCollection) => {
-                Cicada.State.commit('swSeoUrl/setSalesChannelCollection', salesChannelCollection);
+                Shopware.Store.get('swSeoUrl').salesChannelCollection = salesChannelCollection;
             });
         },
 
@@ -180,7 +161,7 @@ export default {
             const seoUrlCollection = new EntityCollection(
                 this.seoUrlRepository.route,
                 this.seoUrlRepository.schema.entity,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 new Criteria(1, this.resultLimit),
             );
 
@@ -195,7 +176,7 @@ export default {
             const defaultSeoUrlEntity = this.seoUrlRepository.create();
             Object.assign(defaultSeoUrlEntity, defaultSeoUrlData);
             seoUrlCollection.add(defaultSeoUrlEntity);
-            Cicada.State.commit('swSeoUrl/setDefaultSeoUrl', defaultSeoUrlEntity);
+            Shopware.Store.get('swSeoUrl').defaultSeoUrl = defaultSeoUrlEntity;
 
             this.urls.forEach((entityData) => {
                 const entity = this.seoUrlRepository.create();
@@ -204,12 +185,12 @@ export default {
                 seoUrlCollection.add(entity);
             });
 
-            if (!Cicada.State.get('swSeoUrl').defaultSeoUrl) {
+            if (!Shopware.Store.get('swSeoUrl').defaultSeoUrl) {
                 this.showEmptySeoUrlError = true;
             }
 
-            Cicada.State.commit('swSeoUrl/setSeoUrlCollection', seoUrlCollection);
-            Cicada.State.commit('swSeoUrl/setOriginalSeoUrls', this.urls);
+            Shopware.Store.get('swSeoUrl').seoUrlCollection = seoUrlCollection;
+            Shopware.Store.get('swSeoUrl').originalSeoUrls = this.urls;
             this.clearDefaultSeoUrls();
         },
 
@@ -226,7 +207,7 @@ export default {
         },
 
         refreshCurrentSeoUrl() {
-            const actualLanguageId = Cicada.Context.api.languageId;
+            const actualLanguageId = Shopware.Context.api.languageId;
 
             const currentSeoUrl = this.seoUrlCollection.find((entity) => {
                 return entity.languageId === actualLanguageId && entity.salesChannelId === this.currentSalesChannelId;
@@ -250,12 +231,12 @@ export default {
 
                 this.seoUrlCollection.add(entity);
 
-                Cicada.State.commit('swSeoUrl/setCurrentSeoUrl', entity);
+                Shopware.Store.get('swSeoUrl').currentSeoUrl = entity;
 
                 return;
             }
 
-            Cicada.State.commit('swSeoUrl/setCurrentSeoUrl', currentSeoUrl);
+            Shopware.Store.get('swSeoUrl').currentSeoUrl = currentSeoUrl;
         },
         onSalesChannelChanged(salesChannelId) {
             this.currentSalesChannelId = salesChannelId;

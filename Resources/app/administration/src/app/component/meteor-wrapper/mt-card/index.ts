@@ -1,14 +1,5 @@
-import { MtCard } from '@cicada-ag/meteor-component-library';
+import { MtCard } from '@shopware-ag/meteor-component-library';
 import template from './mt-card.html.twig';
-
-// Use the compatConfig from the Cicada object and disable all compatibilities
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-MtCard.compatConfig = Object.fromEntries(
-    Object.keys(Cicada.compatConfig).map((key) => [
-        key,
-        false,
-    ]),
-);
 
 /**
  * @sw-package framework
@@ -18,10 +9,8 @@ MtCard.compatConfig = Object.fromEntries(
  * @description Wrapper component for mt-card. Adds the component sections
  *  to the slots. Need to be matched with the original mt-card component.
  */
-Cicada.Component.register('mt-card', {
+Shopware.Component.register('mt-card', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     components: {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -36,16 +25,7 @@ Cicada.Component.register('mt-card', {
         },
     },
 
-    computed: {
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
-    },
+    computed: {},
 
     methods: {
         getFilteredSlots() {
@@ -53,14 +33,7 @@ Cicada.Component.register('mt-card', {
                 [key: string]: unknown;
             } = {};
 
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                allSlots = {
-                    ...this.$slots,
-                    ...this.$scopedSlots,
-                };
-            } else {
-                allSlots = this.$slots;
-            }
+            allSlots = this.$slots;
 
             // Create a new object with the slots we want to keep as deleting is not possible because of read only protection
             const filteredSlots = Object.entries(allSlots).reduce(

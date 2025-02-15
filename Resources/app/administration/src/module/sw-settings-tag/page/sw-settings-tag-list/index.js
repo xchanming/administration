@@ -4,14 +4,12 @@
 import template from './sw-settings-tag-list.html.twig';
 import './sw-settings-tag-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -61,7 +59,7 @@ export default {
         },
 
         tagDefinition() {
-            return Cicada.EntityDefinition.get('tag');
+            return Shopware.EntityDefinition.get('tag');
         },
 
         assignmentProperties() {
@@ -362,7 +360,7 @@ export default {
             };
 
             return this.tagRepository
-                .clone(id, behavior, Cicada.Context.api)
+                .clone(id, behavior, Shopware.Context.api)
                 .then(() => {
                     this.duplicateName = null;
                     this.getList();

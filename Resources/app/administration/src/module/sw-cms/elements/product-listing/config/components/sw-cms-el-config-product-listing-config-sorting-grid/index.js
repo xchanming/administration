@@ -1,7 +1,7 @@
 import template from './sw-cms-el-config-product-listing-config-sorting-grid.html.twig';
 import './sw-cms-el-config-product-listing-config-sorting-grid.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Criteria } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 

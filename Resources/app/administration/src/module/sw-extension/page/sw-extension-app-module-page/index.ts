@@ -2,16 +2,14 @@ import type { AppModuleDefinition } from 'src/core/service/api/app-modules.servi
 import template from './sw-extension-app-module-page.html.twig';
 import './sw-extension-app-module-page.scss';
 
-const { State, Context } = Cicada;
+const { Context } = Shopware;
 
 /**
  * @sw-package checkout
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -47,7 +45,7 @@ export default Cicada.Component.wrapComponentConfig({
 
     computed: {
         currentLocale(): string | null {
-            return State.get('session').currentLocale;
+            return Shopware.Store.get('session').currentLocale;
         },
 
         fallbackLocale(): string | null {
@@ -56,7 +54,7 @@ export default Cicada.Component.wrapComponentConfig({
 
         appDefinition(): AppModuleDefinition | null {
             return (
-                State.get('cicadaApps').apps.find((app) => {
+                Shopware.Store.get('shopwareApps').apps.find((app) => {
                     return app.name === this.appName;
                 }) ?? null
             );
@@ -82,7 +80,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         showSmartBar(): boolean {
-            const { hiddenSmartBars } = State.get('extensionSdkModules');
+            const { hiddenSmartBars } = Shopware.Store.get('extensionSdkModules');
 
             // The moduleName is null if the module is navigated from the extension listing page!
             if (!this.moduleName) {

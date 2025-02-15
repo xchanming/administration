@@ -1,18 +1,21 @@
-import SharedAdminWorker from 'src/core/worker/admin-worker.shared-worker';
-import AdminWorker from 'src/core/worker/admin-worker.worker';
+// The eslint import resolver vite does not support shared worker imports
+/* eslint-disable import/no-unresolved */
+import SharedAdminWorker from 'src/core/worker/admin-worker.shared-worker?sharedworker';
+import AdminWorker from 'src/core/worker/admin-worker.worker?worker';
+/* eslint-enable import/no-unresolved */
+
 import WorkerNotificationListener from 'src/core/worker/worker-notification-listener';
 import AdminNotificationWorker from 'src/core/worker/admin-notification-worker';
 import getRefreshTokenHelper from 'src/core/helper/refresh-token.helper';
-import type { ApiContext } from '@cicada-ag/meteor-admin-sdk/es/_internals/data/EntityCollection';
+import type { ApiContext } from '@shopware-ag/meteor-admin-sdk/es/_internals/data/EntityCollection';
 import type { App } from 'vue';
 import type { LoginService } from '../../core/service/login.service';
-import type { ContextState } from '../state/context.store';
-import type {
-    NotificationConfig,
-    NotificationService,
-    NotificationWorkerOptions,
-} from '../../core/factory/worker-notification.factory';
+import type { ContextStore } from '../store/context.store';
+import type { NotificationService, NotificationWorkerOptions } from '../../core/factory/worker-notification.factory';
 import type WorkerNotificationFactory from '../../core/factory/worker-notification.factory';
+import type { NotificationType } from '../store/notification.store';
+
+type ContextAppConfig = ContextStore['app']['config'];
 
 let enabled = false;
 let enabledNotification = false;
@@ -24,29 +27,29 @@ let enabledNotification = false;
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeWorker() {
-    const loginService = Cicada.Service('loginService');
-    const context = Cicada.Context.app;
-    const workerNotificationFactory = Cicada.Application.getContainer('factory').workerNotification;
-    const configService = Cicada.Service('configService');
+    const loginService = Shopware.Service('loginService');
+    const context = Shopware.Context.app;
+    const workerNotificationFactory = Shopware.Application.getContainer('factory').workerNotification;
+    const configService = Shopware.Service('configService');
 
     registerThumbnailMiddleware(workerNotificationFactory);
 
     function getConfig() {
         return configService.getConfig().then((response) => {
-            Object.entries(response as { [key: string]: unknown }).forEach(
+            Object.entries(response as ContextAppConfig).forEach(
                 ([
                     key,
                     value,
                 ]) => {
-                    Cicada.State.commit('context/addAppConfigValue', {
-                        key,
+                    Shopware.Store.get('context').addAppConfigValue({
+                        key: key as keyof ContextAppConfig,
                         value,
                     });
                 },
             );
 
             // Enable worker notification listener regardless of the config
-            enableWorkerNotificationListener(loginService, Cicada.Context.api);
+            enableWorkerNotificationListener(loginService, Shopware.Context.api);
 
             // Enable worker notification listener regardless of the config
             if (!enabledNotification) {
@@ -54,7 +57,7 @@ export default function initializeWorker() {
             }
 
             if (context.config.adminWorker?.enableAdminWorker && !enabled) {
-                enableAdminWorker(loginService, Cicada.Context.api, context.config.adminWorker);
+                enableAdminWorker(loginService, Shopware.Context.api, context.config.adminWorker);
             }
         });
     }
@@ -69,7 +72,7 @@ export default function initializeWorker() {
 function enableAdminWorker(
     loginService: LoginService,
     context: ApiContext,
-    config: ContextState['app']['config']['adminWorker'],
+    config: ContextStore['app']['config']['adminWorker'],
 ) {
     // eslint-disable-next-line max-len,@typescript-eslint/no-unsafe-member-access
     const transports = (JSON.parse(JSON.stringify(config))?.transports || []) as string[];
@@ -102,7 +105,7 @@ function enableAdminWorker(
         getWorker().port.postMessage({ type: 'logout' });
     });
 
-    const importExportService = Cicada.Service('importExport');
+    const importExportService = Shopware.Service('importExport');
 
     importExportService.addOnProgressStartedListener(() => {
         getWorker().port.postMessage({
@@ -126,15 +129,14 @@ function getWorker(): SharedWorker {
     // SharedWorker is not supported in all browsers, especially on mobile devices
     if (typeof SharedWorker === 'undefined') {
         // @ts-expect-error
-        worker = new AdminWorker() as Worker;
+        worker = new AdminWorker();
 
         // hack to make the worker api like a shared worker
         // @ts-expect-error
         worker.port = worker;
         worker.port.start = () => {};
     } else {
-        // @ts-expect-error
-        worker = new SharedAdminWorker() as SharedWorker;
+        worker = new SharedAdminWorker();
     }
 
     worker.port.start();
@@ -160,7 +162,7 @@ function getWorker(): SharedWorker {
     return worker;
 }
 
-function enableWorkerNotificationListener(loginService: LoginService, context: ContextState['api']) {
+function enableWorkerNotificationListener(loginService: LoginService, context: ContextStore['api']) {
     let workerNotificationListener = new WorkerNotificationListener(context);
 
     if (loginService.isLoggedIn()) {
@@ -203,7 +205,7 @@ function enableNotificationWorker(loginService: LoginService) {
 function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) {
     const ids = {};
     factory.register('DalIndexingMessage', {
-        name: 'Cicada\\Core\\Framework\\DataAbstractionLayer\\Indexing\\MessageQueue\\IndexerMessage',
+        name: 'Shopware\\Core\\Framework\\DataAbstractionLayer\\Indexing\\MessageQueue\\IndexerMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification('dalIndexing', ids, next, entry, $root, notification, {
                 title: 'global.default.success',
@@ -215,7 +217,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('EsIndexingMessage', {
-        name: 'Cicada\\Elasticsearch\\Framework\\Indexing\\IndexingMessage',
+        name: 'Shopware\\Elasticsearch\\Framework\\Indexing\\IndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification('esIndexing', ids, next, entry, $root, notification, {
                 title: 'global.default.success',
@@ -226,7 +228,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('generateThumbnailsMessage', {
-        name: 'Cicada\\Core\\Content\\Media\\Message\\GenerateThumbnailsMessage',
+        name: 'Shopware\\Core\\Content\\Media\\Message\\GenerateThumbnailsMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification('thumbnails', ids, next, entry, $root, notification, {
                 title: 'global.notification-center.worker-listener.thumbnailGeneration.title',
@@ -237,7 +239,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('PromotionIndexingMessage', {
-        name: 'Cicada\\Core\\Checkout\\Promotion\\DataAbstractionLayer\\PromotionIndexingMessage',
+        name: 'Shopware\\Core\\Checkout\\Promotion\\DataAbstractionLayer\\PromotionIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification(
                 'promotion',
@@ -257,7 +259,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('ProductStreamIndexingMessage', {
-        name: 'Cicada\\Core\\Content\\ProductStream\\DataAbstractionLayer\\ProductStreamIndexingMessage',
+        name: 'Shopware\\Core\\Content\\ProductStream\\DataAbstractionLayer\\ProductStreamIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification(
                 'productStream',
@@ -277,7 +279,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('CategoryIndexingMessage', {
-        name: 'Cicada\\Core\\Content\\Category\\DataAbstractionLayer\\CategoryIndexingMessage',
+        name: 'Shopware\\Core\\Content\\Category\\DataAbstractionLayer\\CategoryIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification(
                 'category',
@@ -297,7 +299,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('MediaIndexingMessage', {
-        name: 'Cicada\\Core\\Content\\Media\\DataAbstractionLayer\\MediaIndexingMessage',
+        name: 'Shopware\\Core\\Content\\Media\\DataAbstractionLayer\\MediaIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification(
                 'media',
@@ -317,7 +319,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('SalesChannelIndexingMessage', {
-        name: 'Cicada\\Core\\System\\SalesChannel\\DataAbstractionLayer\\SalesChannelIndexingMessage',
+        name: 'Shopware\\Core\\System\\SalesChannel\\DataAbstractionLayer\\SalesChannelIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification(
                 'salesChannel',
@@ -337,7 +339,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('RuleIndexingMessage', {
-        name: 'Cicada\\Core\\Content\\Rule\\DataAbstractionLayer\\RuleIndexingMessage',
+        name: 'Shopware\\Core\\Content\\Rule\\DataAbstractionLayer\\RuleIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification(
                 'rule',
@@ -357,7 +359,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('ProductIndexingMessage', {
-        name: 'Cicada\\Core\\Content\\Product\\DataAbstractionLayer\\ProductIndexingMessage',
+        name: 'Shopware\\Core\\Content\\Product\\DataAbstractionLayer\\ProductIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification(
                 'product',
@@ -377,7 +379,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('ElasticSearchIndexingMessage', {
-        name: 'Cicada\\Elasticsearch\\Framework\\Indexing\\ElasticsearchIndexingMessage',
+        name: 'Shopware\\Elasticsearch\\Framework\\Indexing\\ElasticsearchIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification(
                 'esIndexing',
@@ -397,7 +399,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('ImportExportMessage', {
-        name: 'Cicada\\Core\\Content\\ImportExport\\Message\\ImportExportMessage',
+        name: 'Shopware\\Core\\Content\\ImportExport\\Message\\ImportExportMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification('importExport', ids, next, entry, $root, notification, {
                 title: 'global.notification-center.worker-listener.importExport.title',
@@ -408,7 +410,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('FlowIndexingMessage', {
-        name: 'Cicada\\Core\\Content\\Flow\\Indexing\\FlowIndexingMessage',
+        name: 'Shopware\\Core\\Content\\Flow\\Indexing\\FlowIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification('flow', ids, next, entry, $root, notification, {
                 title: 'global.notification-center.worker-listener.flow.title',
@@ -419,7 +421,7 @@ function registerThumbnailMiddleware(factory: typeof WorkerNotificationFactory) 
     });
 
     factory.register('NewsletterRecipientIndexingMessage', {
-        name: 'Cicada\\Core\\Content\\Newsletter\\DataAbstractionLayer\\NewsletterRecipientIndexingMessage',
+        name: 'Shopware\\Core\\Content\\Newsletter\\DataAbstractionLayer\\NewsletterRecipientIndexingMessage',
         fn: function middleware(next, { entry, $root, notification }) {
             messageQueueNotification('newsletterRecipient', ids, next, entry, $root, notification, {
                 title: 'global.notification-center.worker-listener.newsletterRecipient.title',
@@ -464,7 +466,7 @@ function messageQueueNotification(
         entry.size *= multiplier;
     }
 
-    const config: NotificationConfig = {
+    const config: NotificationType = {
         title: $root.$tc(messages.title),
         message: $root.$tc(messages.message, entry.size),
         variant: 'info',

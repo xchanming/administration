@@ -1,7 +1,7 @@
 import type { InAppPurchaseRequest } from '../../../store/in-app-purchase-checkout.store';
 import template from './sw-in-app-purchase-checkout.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package checkout
@@ -12,18 +12,16 @@ const { Component } = Cicada;
 Component.register('sw-in-app-purchase-checkout', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         entry(): InAppPurchaseRequest | null {
-            const store = Cicada.Store.get('inAppPurchaseCheckout');
+            const store = Shopware.Store.get('inAppPurchaseCheckout');
             return store.entry;
         },
     },
 
     methods: {
         closeModal() {
-            const store = Cicada.Store.get('inAppPurchaseCheckout');
+            const store = Shopware.Store.get('inAppPurchaseCheckout');
             store.dismiss();
         },
     },

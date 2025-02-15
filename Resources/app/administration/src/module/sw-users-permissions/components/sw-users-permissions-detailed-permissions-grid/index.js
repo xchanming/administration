@@ -8,8 +8,6 @@ import './sw-users-permissions-detailed-permissions-grid.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['privileges'],
 
     props: {
@@ -32,7 +30,7 @@ export default {
 
     computed: {
         allEntities() {
-            const entitiesMap = Cicada.Application.getContainer('factory').entityDefinition.getDefinitionRegistry();
+            const entitiesMap = Shopware.Application.getContainer('factory').entityDefinition.getDefinitionRegistry();
 
             return [...entitiesMap.keys()];
         },

@@ -5,16 +5,16 @@ import defaultSearchConfiguration from './default-search-configuration';
  * @sw-package discovery
  */
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-customer-group-list', () => import('./page/sw-settings-customer-group-list'));
-Cicada.Component.register('sw-settings-customer-group-detail', () => import('./page/sw-settings-customer-group-detail'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-settings-customer-group-list', () => import('./page/sw-settings-customer-group-list'));
+Shopware.Component.register('sw-settings-customer-group-detail', () => import('./page/sw-settings-customer-group-detail'));
+Shopware.Component.extend(
     'sw-settings-customer-group-create',
     'sw-settings-customer-group-detail',
     () => import('./page/sw-settings-customer-group-create'),
 );
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module, Feature } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-customer-group', {
@@ -64,7 +64,14 @@ Module.register('sw-settings-customer-group', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: function () {
+            // @deprecated tag:v6.7.0 - Remove condition and function callback
+            if (!Feature.isActive('v6.7.0.0')) {
+                return 'shop';
+            }
+
+            return 'customer';
+        },
         to: 'sw.settings.customer.group.index',
         icon: 'regular-users',
         privilege: 'customer_groups.viewer',

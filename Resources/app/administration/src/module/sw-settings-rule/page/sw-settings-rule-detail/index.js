@@ -1,9 +1,9 @@
 import template from './sw-settings-rule-detail.html.twig';
 import './sw-settings-rule-detail.scss';
 
-const { Component, Mixin, Context } = Cicada;
+const { Component, Mixin, Context } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 /**
  * @private
@@ -11,8 +11,6 @@ const { Criteria, EntityCollection } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'ruleConditionDataProviderService',
@@ -233,7 +231,7 @@ export default {
         loadConditionData() {
             const context = {
                 ...Context.api,
-                languageId: Cicada.State.get('session').languageId,
+                languageId: Shopware.Store.get('session').languageId,
             };
             const criteria = new Criteria();
 
@@ -408,13 +406,17 @@ export default {
                 );
 
                 if (restrictions.isRestricted) {
-                    const message = this.$tc('sw-restricted-rules.restrictedAssignment.equalsAnyViolationTooltip', 0, {
-                        conditions: this.ruleConditionDataProviderService.getTranslatedConditionViolationList(
-                            restrictions.equalsAnyNotMatched,
-                            'sw-restricted-rules.or',
-                        ),
-                        entityLabel: this.$tc(restrictions.assignmentSnippet, 2),
-                    });
+                    const message = this.$tc(
+                        'sw-restricted-rules.restrictedAssignment.equalsAnyViolationTooltip',
+                        {
+                            conditions: this.ruleConditionDataProviderService.getTranslatedConditionViolationList(
+                                restrictions.equalsAnyNotMatched,
+                                'sw-restricted-rules.or',
+                            ),
+                            entityLabel: this.$tc(restrictions.assignmentSnippet, 2),
+                        },
+                        0,
+                    );
 
                     this.createNotificationError({ message });
                     isValid = false;
@@ -451,9 +453,9 @@ export default {
             }
 
             if (!this.validateDateRange()) {
-                Cicada.State.dispatch('error/addApiError', {
+                Shopware.Store.get('error').addApiError({
                     expression: `rule_condition.${this.rule.id}.value`,
-                    error: new Cicada.Classes.CicadaError({
+                    error: new Shopware.Classes.ShopwareError({
                         detail: this.$tc('sw-settings-rule.error-codes.INVALID_DATE_RANGE'),
                         code: 'INVALID_DATE_RANGE',
                     }),
@@ -508,7 +510,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').api.languageId = languageId;
 
             this.isLoading = true;
             this.loadEntityData(this.ruleId).then(() => {
@@ -534,7 +536,7 @@ export default {
 
         showErrorNotification() {
             this.createNotificationError({
-                message: this.$tc('sw-settings-rule.detail.messageSaveError', 0, { name: this.rule.name }),
+                message: this.$tc('sw-settings-rule.detail.messageSaveError', { name: this.rule.name }, 0),
             });
             this.isLoading = false;
         },
@@ -561,7 +563,7 @@ export default {
                     },
                 };
 
-                return this.ruleRepository.clone(this.rule.id, behaviour, Cicada.Context.api).then((duplicatedData) => {
+                return this.ruleRepository.clone(this.rule.id, behaviour, Shopware.Context.api).then((duplicatedData) => {
                     this.$router.push({
                         name: 'sw.settings.rule.detail',
                         params: { id: duplicatedData.id },

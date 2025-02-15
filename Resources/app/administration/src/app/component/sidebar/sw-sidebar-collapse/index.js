@@ -1,11 +1,11 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package framework
  */
 
 import template from './sw-sidebar-collapse.html.twig';
 import './sw-sidebar-collapse.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private

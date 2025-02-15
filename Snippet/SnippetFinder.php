@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Snippet;
+namespace Shopware\Administration\Snippet;
 
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Util\HtmlSanitizer;
-use Cicada\Core\Kernel;
 use Doctrine\DBAL\Connection;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Util\HtmlSanitizer;
+use Shopware\Core\Kernel;
 use Symfony\Component\Finder\Finder;
 
 /**

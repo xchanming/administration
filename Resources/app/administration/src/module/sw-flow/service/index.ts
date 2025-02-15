@@ -1,7 +1,7 @@
 import type { SubContainer } from 'src/global.types';
 import FlowBuilderService from './flow-builder.service';
 
-const { Application } = Cicada;
+const { Application } = Shopware;
 
 /**
  * @private

@@ -6,13 +6,11 @@ import FeatureGridTranslationService from 'src/module/sw-settings-product-featur
 import template from './sw-settings-product-feature-sets-values-card.html.twig';
 import './sw-settings-product-feature-sets-values-card.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -96,7 +94,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -179,11 +177,7 @@ export default {
         },
 
         onPositionChange(features) {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.productFeatureSet, 'features', features);
-            } else {
-                this.productFeatureSet.features = features;
-            }
+            this.productFeatureSet.features = features;
         },
 
         resetPositions() {

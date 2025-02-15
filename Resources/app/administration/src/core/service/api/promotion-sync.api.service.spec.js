@@ -11,7 +11,7 @@ function getPromotionSyncApiService(client = null, loginService = null) {
     }
 
     if (loginService === null) {
-        loginService = createLoginService(client, Cicada.Context.api);
+        loginService = createLoginService(client, Shopware.Context.api);
     }
 
     return new PromotionSyncApiService(client, loginService);

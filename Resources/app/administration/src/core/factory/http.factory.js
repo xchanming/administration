@@ -37,7 +37,7 @@ export const { CancelToken, isCancel, Cancel } = Axios;
  */
 function createClient() {
     const client = Axios.create({
-        baseURL: Cicada.Context.api.apiPath,
+        baseURL: Shopware.Context.api.apiPath,
     });
 
     refreshTokenInterceptor(client);
@@ -87,7 +87,7 @@ function globalErrorHandlingInterceptor(client) {
     client.interceptors.response.use(
         (response) => response,
         (error) => {
-            const { hasOwnProperty } = Cicada.Utils.object;
+            const { hasOwnProperty } = Shopware.Utils.object;
 
             if (hasOwnProperty(error?.config?.headers ?? {}, 'sw-app-integration-id')) {
                 return Promise.reject(error);
@@ -106,11 +106,11 @@ function globalErrorHandlingInterceptor(client) {
             try {
                 handleErrorStates({ status, errors, error, data });
             } catch (e) {
-                Cicada.Utils.debug.error(e);
+                Shopware.Utils.debug.error(e);
 
                 if (errors) {
                     errors.forEach((singleError) => {
-                        Cicada.State.dispatch('notification/createNotification', {
+                        Shopware.Store.get('notification').createNotification({
                             variant: 'error',
                             title: singleError.title,
                             message: singleError.detail,
@@ -127,7 +127,7 @@ function globalErrorHandlingInterceptor(client) {
 }
 
 /**
- * Determines the different status codes and creates a matching error via Cicada.State
+ * Determines the different status codes and creates a matching error via Shopware.State
  * @param {Number} status
  * @param {Array} errors
  * @param {Object} error
@@ -135,7 +135,7 @@ function globalErrorHandlingInterceptor(client) {
  */
 function handleErrorStates({ status, errors, error = null, data }) {
     // Get $tc for translations and bind the Vue component scope to make it working
-    const viewRoot = Cicada.Application.view.root;
+    const viewRoot = Shopware.Application.view.root;
 
     // Handle sync-api errors
     if (status === 400 && (error?.response?.config?.url ?? '').includes('_action/sync')) {
@@ -176,13 +176,13 @@ function handleErrorStates({ status, errors, error = null, data }) {
                 return `${message}<br>"${privilege}"`;
             }, '');
 
-            Cicada.State.dispatch('notification/createNotification', {
+            Shopware.Store.get('notification').createNotification({
                 variant: 'error',
                 system: true,
                 autoClose: false,
                 growl: true,
-                title: Cicada.Snippet.tc('global.error-codes.FRAMEWORK__MISSING_PRIVILEGE_ERROR'),
-                message: `${Cicada.Snippet.tc('sw-privileges.error.description')} <br> ${missingPrivilegesMessage}`,
+                title: Shopware.Snippet.tc('global.error-codes.FRAMEWORK__MISSING_PRIVILEGE_ERROR'),
+                message: `${Shopware.Snippet.tc('sw-privileges.error.description')} <br> ${missingPrivilegesMessage}`,
             });
         });
     }
@@ -194,16 +194,16 @@ function handleErrorStates({ status, errors, error = null, data }) {
             'FRAMEWORK__STORE_SHOP_SECRET_INVALID',
         ].includes(errors[0]?.code)
     ) {
-        Cicada.State.dispatch('notification/createNotification', {
+        Shopware.Store.get('notification').createNotification({
             variant: 'warning',
             system: true,
             autoClose: false,
             growl: true,
-            title: Cicada.Snippet.tc('sw-extension.errors.storeSessionExpired.title'),
-            message: Cicada.Snippet.tc('sw-extension.errors.storeSessionExpired.message'),
+            title: Shopware.Snippet.tc('sw-extension.errors.storeSessionExpired.title'),
+            message: Shopware.Snippet.tc('sw-extension.errors.storeSessionExpired.message'),
             actions: [
                 {
-                    label: Cicada.Snippet.tc('sw-extension.errors.storeSessionExpired.actionLabel'),
+                    label: Shopware.Snippet.tc('sw-extension.errors.storeSessionExpired.actionLabel'),
                     method: () => {
                         viewRoot.$router.push({
                             name: 'sw.extension.my-extensions.account',
@@ -223,16 +223,16 @@ function handleErrorStates({ status, errors, error = null, data }) {
 
             blockingEntities = parameters.usages.reduce((message, usageObject) => {
                 const times = usageObject.count;
-                const timesSnippet = Cicada.Snippet.tc('global.default.xTimesIn', times);
-                const blockingEntitiesSnippet = Cicada.Snippet.tc(`global.entities.${usageObject.entityName}`, times[1]);
+                const timesSnippet = Shopware.Snippet.tc('global.default.xTimesIn', times);
+                const blockingEntitiesSnippet = Shopware.Snippet.tc(`global.entities.${usageObject.entityName}`, times[1]);
                 return `${message}<br>${timesSnippet} <b>${blockingEntitiesSnippet}</b>`;
             }, '');
 
-            Cicada.State.dispatch('notification/createNotification', {
+            Shopware.Store.get('notification').createNotification({
                 variant: 'error',
-                title: Cicada.Snippet.tc('global.default.error'),
-                message: `${Cicada.Snippet.tc('global.notification.messageDeleteFailed', 3, {
-                    entityName: Cicada.Snippet.tc(`global.entities.${entityName}`),
+                title: Shopware.Snippet.tc('global.default.error'),
+                message: `${Shopware.Snippet.tc('global.notification.messageDeleteFailed', 3, {
+                    entityName: Shopware.Snippet.tc(`global.entities.${entityName}`),
                 })}${blockingEntities}`,
             });
         }
@@ -244,7 +244,7 @@ function handleErrorStates({ status, errors, error = null, data }) {
         if (frameworkLanguageNotFound) {
             localStorage.removeItem('sw-admin-current-language');
 
-            Cicada.State.dispatch('notification/createNotification', {
+            Shopware.Store.get('notification').createNotification({
                 variant: 'error',
                 system: true,
                 autoClose: false,
@@ -302,7 +302,7 @@ function refreshTokenInterceptor(client) {
                             resolve(Axios(originalRequest));
                         },
                         (err) => {
-                            if (!Cicada.Application.getApplicationRoot()) {
+                            if (!Shopware.Application.getApplicationRoot()) {
                                 reject(err);
                                 window.location.reload();
                                 return;
@@ -376,10 +376,10 @@ function tracingInterceptor(client) {
      */
     if (process.env.NODE_ENV !== 'test') {
         client.interceptors.request.use((config) => {
-            const currentRoute = Cicada?.Application?.view?.router?.history?.current?.name;
+            const currentRoute = Shopware?.Application?.view?.router?.history?.current?.name;
 
             if (currentRoute) {
-                config.headers['cicada-admin-active-route'] = currentRoute;
+                config.headers['shopware-admin-active-route'] = currentRoute;
             }
 
             return config;

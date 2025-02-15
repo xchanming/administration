@@ -1,8 +1,8 @@
 import template from './sw-cms-el-config-cross-selling.html.twig';
 import './sw-cms-el-config-cross-selling.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Criteria } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -28,7 +26,7 @@ export default {
 
         productSelectContext() {
             return {
-                ...Cicada.Context.api,
+                ...Shopware.Context.api,
                 inheritance: true,
             };
         },
@@ -79,21 +77,13 @@ export default {
             );
             this.element.config.product.value = productId;
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element.data, 'product', product);
-            } else {
-                this.element.data.product = product;
-            }
+            this.element.data.product = product;
         },
 
         deleteProduct() {
             this.element.config.product.value = null;
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element.data, 'product', null);
-            } else {
-                this.element.data.product = null;
-            }
+            this.element.data.product = null;
         },
     },
 };

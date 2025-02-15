@@ -1,7 +1,7 @@
 import template from './sw-description-list.html.twig';
 import './sw-description-list.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -22,8 +22,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-description-list', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         grid: {

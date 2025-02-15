@@ -11,7 +11,7 @@ describe('InAppPurchase', () => {
     });
 
     it('should add new in-app purchases', () => {
-        Cicada.State.get('context').app.config.inAppPurchases = {
+        Shopware.Store.get('context').app.config.inAppPurchases = {
             extension1: [
                 'identifier1',
             ],
@@ -25,7 +25,7 @@ describe('InAppPurchase', () => {
     });
 
     it('should get in-app purchases by identifier id', () => {
-        Cicada.State.get('context').app.config.inAppPurchases = {
+        Shopware.Store.get('context').app.config.inAppPurchases = {
             extension1: [
                 'identifier1',
                 'identifier2',
@@ -56,7 +56,7 @@ describe('InAppPurchase', () => {
     });
 
     it('should return an empty object if no in-app purchases for the given identifier id', () => {
-        Cicada.State.get('context').app.config.inAppPurchases = {
+        Shopware.Store.get('context').app.config.inAppPurchases = {
             extension1: [
                 'identifier1',
             ],
@@ -66,7 +66,7 @@ describe('InAppPurchase', () => {
     });
 
     it('should check if an in-app purchase is active', () => {
-        Cicada.State.get('context').app.config.inAppPurchases = {
+        Shopware.Store.get('context').app.config.inAppPurchases = {
             extension1: [
                 'identifier1',
             ],

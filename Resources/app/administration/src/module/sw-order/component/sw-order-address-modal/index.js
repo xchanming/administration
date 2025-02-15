@@ -5,14 +5,12 @@ import './sw-order-address-modal.scss';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -98,7 +96,7 @@ export default {
         },
 
         salutationFilter() {
-            return Cicada.Filter.getByName('salutation');
+            return Shopware.Filter.getByName('salutation');
         },
     },
 
@@ -123,7 +121,7 @@ export default {
                 .then((customer) => {
                     this.availableAddresses = customer[0].addresses;
 
-                    return Cicada.State.dispatch('error/resetApiErrors');
+                    return Shopware.Store.get('error').resetApiErrors();
                 })
                 .finally(() => {
                     this.isLoading = false;

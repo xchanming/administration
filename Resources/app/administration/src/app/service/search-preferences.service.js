@@ -1,6 +1,7 @@
 /**
  * @sw-package inventory
  */
+
 import { KEY_USER_SEARCH_PREFERENCE } from 'src/app/service/search-ranking.service';
 
 /**
@@ -25,10 +26,10 @@ export default function SearchPreferencesService({ userConfigRepository: _userCo
     function getDefaultSearchPreferences() {
         const defaultSearchPreferences = [];
 
-        Cicada.Module.getModuleRegistry().forEach(({ manifest }) => {
+        Shopware.Module.getModuleRegistry().forEach(({ manifest }) => {
             if (
                 manifest.entity &&
-                Cicada.Service('acl').can(`${manifest.entity}.editor`) &&
+                Shopware.Service('acl').can(`${manifest.entity}.editor`) &&
                 manifest.defaultSearchConfiguration
             ) {
                 defaultSearchPreferences.push({
@@ -46,7 +47,7 @@ export default function SearchPreferencesService({ userConfigRepository: _userCo
      */
     function getUserSearchPreferences() {
         return new Promise((resolve) => {
-            Cicada.Service('userConfigService')
+            Shopware.Service('userConfigService')
                 .search([KEY_USER_SEARCH_PREFERENCE])
                 .then((response) => {
                     resolve(response.data[KEY_USER_SEARCH_PREFERENCE] || null);
@@ -178,11 +179,11 @@ export default function SearchPreferencesService({ userConfigRepository: _userCo
 
         tempSearchPreferencesFields.forEach((field) => {
             field.group.forEach((group) => {
-                const searchPreferencesField = Cicada.Utils.object.set({}, group.fieldName, {
+                const searchPreferencesField = Shopware.Utils.object.set({}, group.fieldName, {
                     _searchable: field._searchable,
                     _score: field._score,
                 });
-                searchPreferencesFields = Cicada.Utils.object.deepMergeObject(
+                searchPreferencesFields = Shopware.Utils.object.deepMergeObject(
                     searchPreferencesFields,
                     searchPreferencesField,
                 );
@@ -196,10 +197,10 @@ export default function SearchPreferencesService({ userConfigRepository: _userCo
      * @private
      */
     function _getUserConfigCriteria() {
-        const criteria = new Cicada.Data.Criteria();
+        const criteria = new Shopware.Data.Criteria();
 
-        criteria.addFilter(Cicada.Data.Criteria.equals('key', KEY_USER_SEARCH_PREFERENCE));
-        criteria.addFilter(Cicada.Data.Criteria.equals('userId', _getCurrentUser()?.id));
+        criteria.addFilter(Shopware.Data.Criteria.equals('key', KEY_USER_SEARCH_PREFERENCE));
+        criteria.addFilter(Shopware.Data.Criteria.equals('userId', _getCurrentUser()?.id));
 
         return criteria;
     }
@@ -208,7 +209,7 @@ export default function SearchPreferencesService({ userConfigRepository: _userCo
      * @private
      */
     function _getCurrentUser() {
-        return Cicada.State.get('session').currentUser;
+        return Shopware.Store.get('session').currentUser;
     }
 
     /**

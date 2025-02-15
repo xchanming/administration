@@ -8,8 +8,6 @@ import './sw-extension-icon.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         src: {
             type: String,

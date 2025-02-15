@@ -1,10 +1,10 @@
 import template from './sw-sidebar.html.twig';
 import './sw-sidebar.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
- * @sw-package buyers-experience
+ * @sw-package framework
  *
  * @private
  * @status ready
@@ -18,13 +18,7 @@ const { Component } = Cicada;
 Component.register('sw-sidebar', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     provide() {
-        if (this.isCompatEnabled('INSTANCE_CHILDREN')) {
-            return {};
-        }
-
         return {
             registerSidebarItem: this.registerSidebarItem,
         };
@@ -104,11 +98,7 @@ Component.register('sw-sidebar', {
             if (this.propagateWidth) {
                 const sidebarWidth = this.$el.querySelector('.sw-sidebar__navigation').offsetWidth;
 
-                if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER') && this.isCompatEnabled('INSTANCE_CHILDREN')) {
-                    this._parent.$emit('mount', sidebarWidth);
-                } else {
-                    this.setSwPageSidebarOffset(sidebarWidth);
-                }
+                this.setSwPageSidebarOffset(sidebarWidth);
             }
         },
 
@@ -117,11 +107,7 @@ Component.register('sw-sidebar', {
                 return;
             }
 
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER') && this.isCompatEnabled('INSTANCE_CHILDREN')) {
-                this._parent.$emit('destroy');
-            } else {
-                this.removeSwPageSidebarOffset();
-            }
+            this.removeSwPageSidebarOffset();
         },
 
         _isItemRegistered(itemToCheck) {
@@ -149,27 +135,18 @@ Component.register('sw-sidebar', {
 
             this.items.push(item);
 
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                // eslint-disable-next-line vue/no-deprecated-events-api
-                this.$on('item-click', item.sidebarButtonClick);
-                item.$on('toggle-active', this.setItemActive);
-                item.$on('close-content', this.closeSidebar);
-            } else {
-                item.registerToggleActiveListener(this.setItemActive);
-                item.registerCloseContentListener(this.closeSidebar);
-            }
+            item.registerToggleActiveListener(this.setItemActive);
+            item.registerCloseContentListener(this.closeSidebar);
         },
 
         setItemActive(clickedItem) {
             this.$emit('item-click', clickedItem);
 
-            if (!this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                this.items.forEach((item) => {
-                    if (item.sidebarButtonClick) {
-                        item.sidebarButtonClick(clickedItem);
-                    }
-                });
-            }
+            this.items.forEach((item) => {
+                if (item.sidebarButtonClick) {
+                    item.sidebarButtonClick(clickedItem);
+                }
+            });
 
             if (clickedItem.hasDefaultSlot) {
                 this.isOpened = this._isAnyItemActive();

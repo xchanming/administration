@@ -1,24 +1,21 @@
 import template from './sw-bulk-edit-customer.html.twig';
 import './sw-bulk-edit-customer.scss';
-import swBulkEditState from '../../state/sw-bulk-edit.state';
+import '../../store/sw-bulk-edit.store';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { types } = Cicada.Utils;
-const { chunk } = Cicada.Utils.array;
-const { cloneDeep } = Cicada.Utils.object;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { types } = Shopware.Utils;
+const { chunk } = Shopware.Utils.array;
+const { cloneDeep } = Shopware.Utils.object;
 
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
-        'feature',
         'bulkEditApiFactory',
         'repositoryFactory',
     ],
@@ -47,7 +44,7 @@ export default {
 
     computed: {
         selectedIds() {
-            return Cicada.State.get('cicadaApps').selectedIds;
+            return Shopware.Store.get('shopwareApps').selectedIds;
         },
 
         customFieldSetRepository() {
@@ -148,28 +145,20 @@ export default {
         },
     },
 
-    beforeCreate() {
-        Cicada.State.registerModule('swBulkEdit', swBulkEditState);
-    },
-
     created() {
         this.createdComponent();
-    },
-
-    beforeUnmount() {
-        Cicada.State.unregisterModule('swBulkEdit');
     },
 
     methods: {
         createdComponent() {
             this.setRouteMetaModule();
-            if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                Cicada.State.commit('context/resetLanguageToDefault');
+            if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                Shopware.Store.get('context').resetLanguageToDefault();
             }
 
             this.isLoading = true;
 
-            this.customer = this.customerRepository.create(Cicada.Context.api);
+            this.customer = this.customerRepository.create(Shopware.Context.api);
 
             this.loadCustomFieldSets()
                 .then(() => {
@@ -188,17 +177,12 @@ export default {
         },
 
         setRouteMetaModule() {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.$route.meta.$module, 'color', '#F88962');
-                this.$set(this.$route.meta.$module, 'icon', 'regular-users');
-            } else {
-                if (!this.$route.meta.$module) {
-                    this.$route.meta.$module = {};
-                }
-
-                this.$route.meta.$module.color = '#F88962';
-                this.$route.meta.$module.icon = 'regular-users';
+            if (!this.$route.meta.$module) {
+                this.$route.meta.$module = {};
             }
+
+            this.$route.meta.$module.color = '#F88962';
+            this.$route.meta.$module.icon = 'regular-users';
         },
 
         defineBulkEditData(name, value = null, type = 'overwrite', isChanged = false) {
@@ -206,19 +190,11 @@ export default {
                 return;
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.bulkEditData, name, {
-                    isChanged: isChanged,
-                    type: type,
-                    value: value,
-                });
-            } else {
-                this.bulkEditData[name] = {
-                    isChanged: isChanged,
-                    type: type,
-                    value: value,
-                };
-            }
+            this.bulkEditData[name] = {
+                isChanged: isChanged,
+                type: type,
+                value: value,
+            };
         },
 
         loadBulkEditData() {
@@ -233,17 +209,10 @@ export default {
                 });
             });
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.bulkEditData, 'customFields', {
-                    type: 'overwrite',
-                    value: null,
-                });
-            } else {
-                this.bulkEditData.customFields = {
-                    type: 'overwrite',
-                    value: null,
-                };
-            }
+            this.bulkEditData.customFields = {
+                type: 'overwrite',
+                value: null,
+            };
         },
 
         loadCustomFieldSets() {
@@ -337,7 +306,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
         },
     },
 };

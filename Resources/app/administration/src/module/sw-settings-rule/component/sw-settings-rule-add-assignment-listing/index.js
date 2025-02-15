@@ -1,9 +1,9 @@
 import template from './sw-settings-rule-add-assignment-listing.html.twig';
 import './sw-settings-rule-add-assignment-listing.scss';
 
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
-const { cloneDeep } = Cicada.Utils.object;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
+const { cloneDeep } = Shopware.Utils.object;
 
 /**
  * @private
@@ -13,8 +13,6 @@ export default {
     template,
 
     emits: ['select-item'],
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         ruleId: {

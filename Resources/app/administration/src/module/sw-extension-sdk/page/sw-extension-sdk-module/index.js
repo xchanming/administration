@@ -1,16 +1,15 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-extension-sdk-module.html.twig';
 import './sw-extension-sdk-module.scss';
 
 /**
  * @private Only to be used by the Admin extension API
  */
-Cicada.Component.register('sw-extension-sdk-module', {
+Shopware.Component.register('sw-extension-sdk-module', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         id: {
@@ -33,7 +32,7 @@ Cicada.Component.register('sw-extension-sdk-module', {
 
     computed: {
         module() {
-            return Cicada.State.get('extensionSdkModules').modules.find((module) => module.id === this.id);
+            return Shopware.Store.get('extensionSdkModules').modules.find((module) => module.id === this.id);
         },
 
         isLoading() {
@@ -53,7 +52,7 @@ Cicada.Component.register('sw-extension-sdk-module', {
         },
 
         smartBarButtons() {
-            return Cicada.State.get('extensionSdkModules').smartBarButtons.filter(
+            return Shopware.Store.get('extensionSdkModules').smartBarButtons.filter(
                 (button) => button.locationId === this.module?.locationId,
             );
         },
@@ -96,7 +95,7 @@ Cicada.Component.register('sw-extension-sdk-module', {
 
     methods: {
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
         },
     },
 });

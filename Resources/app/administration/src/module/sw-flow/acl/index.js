@@ -2,7 +2,7 @@
  * @sw-package after-sales
  */
 
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'settings',
     key: 'flow',
@@ -28,8 +28,8 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'flow_sequence:create',
                 'flow_sequence:delete',
                 'tag:create',
-                Cicada.Service('privileges').getPrivileges('rule.creator'),
-                Cicada.Service('privileges').getPrivileges('mail_templates.creator'),
+                Shopware.Service('privileges').getPrivileges('rule.creator'),
+                Shopware.Service('privileges').getPrivileges('mail_templates.creator'),
             ],
             dependencies: [
                 'flow.viewer',

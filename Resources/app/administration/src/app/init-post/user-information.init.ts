@@ -2,13 +2,13 @@
  * @sw-package framework
  */
 
-import { initializeUserNotifications } from 'src/app/state/notification.store';
+import { initializeUserNotifications } from 'src/app/store/notification.store';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeUserContext() {
     return new Promise<void>((resolve) => {
-        const loginService = Cicada.Service('loginService');
-        const userService = Cicada.Service('userService');
+        const loginService = Shopware.Service('loginService');
+        const userService = Shopware.Service('userService');
 
         // The user isn't logged in
         if (!loginService.isLoggedIn()) {
@@ -27,7 +27,7 @@ export default function initializeUserContext() {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 delete data.password;
 
-                Cicada.State.commit('setCurrentUser', data);
+                Shopware.Store.get('session').setCurrentUser(data as EntitySchema.user);
                 initializeUserNotifications();
                 resolve();
             })

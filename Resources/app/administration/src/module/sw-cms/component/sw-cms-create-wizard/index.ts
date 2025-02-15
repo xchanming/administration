@@ -2,16 +2,14 @@ import { type PropType } from 'vue';
 import template from './sw-cms-create-wizard.html.twig';
 import './sw-cms-create-wizard.scss';
 
-const { Filter } = Cicada;
+const { Filter } = Shopware;
 
 /**
- * @sw-package buyers-experience
+ * @sw-package discovery
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'feature',
@@ -105,17 +103,17 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         cmsPageStore() {
-            return Cicada.Store.get('cmsPage');
+            return Shopware.Store.get('cmsPage');
         },
     },
 
     watch: {
         step(newStep: number) {
             if (this.getStepName(newStep) === 'sectionType') {
-                this.page.sections = new Cicada.Data.EntityCollection(
+                this.page.sections = new Shopware.Data.EntityCollection(
                     `/cms-page/${this.page.id}/sections`,
                     'cms_section',
-                    Cicada.Context.api,
+                    Shopware.Context.api,
                 );
             }
         },

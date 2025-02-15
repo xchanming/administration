@@ -8,8 +8,6 @@ import './sw-settings-search-live-search-keyword.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         text: {
             type: String,

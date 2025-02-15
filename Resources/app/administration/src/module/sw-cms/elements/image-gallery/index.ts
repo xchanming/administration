@@ -2,17 +2,17 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-image-gallery', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-image-gallery', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-image-gallery', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-image-gallery', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-image-gallery', () => import('./component'));
+Shopware.Component.register('sw-cms-el-image-gallery', () => import('./component'));
 
 type ImageGalleryItemConfig = {
     newTab: boolean;
@@ -30,7 +30,7 @@ type ImageGalleryItem = {
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'image-gallery',
     label: 'sw-cms.elements.imageGallery.label',
     component: 'sw-cms-el-image-gallery',

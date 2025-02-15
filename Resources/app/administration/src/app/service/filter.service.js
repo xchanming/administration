@@ -2,9 +2,9 @@
  * @sw-package framework
  */
 
-const { Criteria } = Cicada.Data;
-const { types } = Cicada.Utils;
-const { cloneDeep } = Cicada.Utils.object;
+const { Criteria } = Shopware.Data;
+const { types } = Shopware.Utils;
+const { cloneDeep } = Shopware.Utils.object;
 
 /**
  * @module app/filter-service
@@ -25,13 +25,13 @@ export default class FilterService {
     getStoredFilters(storeKey) {
         const criteria = this._getUserConfigCriteria(storeKey);
 
-        return this._userConfigRepository.search(criteria, Cicada.Context.api).then((response) => {
+        return this._userConfigRepository.search(criteria, Shopware.Context.api).then((response) => {
             if (response.length) {
                 this._filterEntity = response.first();
             } else {
-                const currentUser = Cicada.State.get('session').currentUser;
+                const currentUser = Shopware.Store.get('session').currentUser;
 
-                this._filterEntity = this._userConfigRepository.create(Cicada.Context.api);
+                this._filterEntity = this._userConfigRepository.create(Shopware.Context.api);
                 this._filterEntity.key = storeKey;
                 this._filterEntity.userId = currentUser?.id;
                 this._filterEntity.value = {};
@@ -78,7 +78,7 @@ export default class FilterService {
         this._storedFilters[storeKey] = savedCriteria;
 
         this._pushFiltersToUrl();
-        this._userConfigRepository.save(this._filterEntity, Cicada.Context.api).then(() => {
+        this._userConfigRepository.save(this._filterEntity, Shopware.Context.api).then(() => {
             this.getStoredFilters(storeKey);
         });
 
@@ -110,7 +110,7 @@ export default class FilterService {
     }
 
     _getUserConfigCriteria(storeKey) {
-        const currentUser = Cicada.State.get('session').currentUser;
+        const currentUser = Shopware.Store.get('session').currentUser;
         const criteria = new Criteria(1, 25);
 
         criteria.addFilter(Criteria.equals('key', storeKey));
@@ -123,7 +123,7 @@ export default class FilterService {
         const urlFilterValue = types.isEmpty(this._filterEntity.value) ? null : this._filterEntity.value;
         const urlEncodedValue = encodeURIComponent(JSON.stringify(urlFilterValue));
 
-        const router = Cicada.Application.view.router;
+        const router = Shopware.Application.view.router;
         const route = router?.currentRoute?.value;
 
         const query = { ...route.query };
@@ -138,7 +138,7 @@ export default class FilterService {
             },
         };
 
-        if (!Cicada.Utils.types.isEmpty(routeParams)) {
+        if (!Shopware.Utils.types.isEmpty(routeParams)) {
             newRoute.params = routeParams;
         }
 
@@ -155,7 +155,7 @@ export default class FilterService {
     }
 
     _getQueryFilterValue(storeKey) {
-        const router = Cicada.Application.view.router;
+        const router = Shopware.Application.view.router;
         const route = router?.currentRoute;
 
         return route?.value?.query[storeKey];

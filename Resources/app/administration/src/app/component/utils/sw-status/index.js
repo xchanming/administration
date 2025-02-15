@@ -5,7 +5,7 @@
 import template from './sw-status.html.twig';
 import './sw-status.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -22,8 +22,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-status', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         color: {

@@ -1,8 +1,8 @@
 import template from './sw-desktop.html.twig';
 import './sw-desktop.scss';
 
-const { Component } = Cicada;
-const { hasOwnProperty } = Cicada.Utils.object;
+const { Component } = Shopware;
+const { hasOwnProperty } = Shopware.Utils.object;
 
 /**
  * @sw-package framework
@@ -11,8 +11,6 @@ const { hasOwnProperty } = Cicada.Utils.object;
  */
 Component.register('sw-desktop', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'feature',
@@ -36,11 +34,11 @@ Component.register('sw-desktop', {
         },
 
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         isStaging() {
-            return Cicada.State.get('context').app.config.settings.enableStagingMode === true;
+            return Shopware.Store.get('context').app.config.settings.enableStagingMode === true;
         },
     },
 
@@ -80,7 +78,7 @@ Component.register('sw-desktop', {
         },
 
         updateShowUrlChangedModal() {
-            if (!Cicada.State.get('context').app.config.settings.appsRequireAppUrl) {
+            if (!Shopware.Store.get('context').app.config.settings.appsRequireAppUrl) {
                 this.urlDiff = null;
                 return;
             }

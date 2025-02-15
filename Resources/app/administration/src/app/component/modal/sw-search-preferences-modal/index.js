@@ -6,15 +6,13 @@ import { KEY_USER_SEARCH_PREFERENCE } from 'src/app/service/search-ranking.servi
 import template from './sw-search-preferences-modal.html.twig';
 import './sw-search-preferences-modal.scss';
 
-const { Component, Mixin, Module } = Cicada;
+const { Component, Mixin, Module } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-search-preferences-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'searchPreferencesService',
@@ -181,11 +179,7 @@ Component.register('sw-search-preferences-modal', {
                 .then(() => {
                     this.isLoading = false;
                     this.$emit('modal-close');
-                    if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                        this.$root.$emit('sw-search-preferences-modal-close');
-                    } else {
-                        Cicada.Utils.EventBus.emit('sw-search-preferences-modal-close');
-                    }
+                    Shopware.Utils.EventBus.emit('sw-search-preferences-modal-close');
                 })
                 .catch((error) => {
                     this.isLoading = false;

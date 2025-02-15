@@ -1,12 +1,13 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-entity-advanced-selection-modal.html.twig';
 import './sw-entity-advanced-selection-modal.scss';
 
-const { Component, Mixin } = Cicada;
-const { debounce } = Cicada.Utils;
-const { Criteria } = Cicada.Data;
+const { Component, Mixin } = Shopware;
+const { debounce } = Shopware.Utils;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -18,8 +19,6 @@ const { Criteria } = Cicada.Data;
  */
 Component.register('sw-entity-advanced-selection-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -116,7 +115,7 @@ Component.register('sw-entity-advanced-selection-modal', {
             type: Object,
             required: false,
             default() {
-                return Cicada.Context.api;
+                return Shopware.Context.api;
             },
         },
         // Optional search term which should be applied to the search field.
@@ -156,9 +155,13 @@ Component.register('sw-entity-advanced-selection-modal', {
 
     computed: {
         modalTitle() {
-            return this.$tc('global.sw-entity-advanced-selection-modal.title', 1, {
-                entity: this.entityDisplayText,
-            });
+            return this.$tc(
+                'global.sw-entity-advanced-selection-modal.title',
+                {
+                    entity: this.entityDisplayText,
+                },
+                1,
+            );
         },
 
         entityRepository() {
@@ -166,7 +169,7 @@ Component.register('sw-entity-advanced-selection-modal', {
         },
 
         entityDefinition() {
-            return Cicada.EntityDefinition.get(this.entityName);
+            return Shopware.EntityDefinition.get(this.entityName);
         },
 
         assignmentProperties() {
@@ -269,7 +272,7 @@ Component.register('sw-entity-advanced-selection-modal', {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

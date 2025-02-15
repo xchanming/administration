@@ -5,42 +5,42 @@ import './acl';
  */
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-tax-list', () => import('./page/sw-settings-tax-list'));
-Cicada.Component.register('sw-settings-tax-detail', () => import('./page/sw-settings-tax-detail'));
-Cicada.Component.register('sw-settings-tax-provider-detail', () => import('./page/sw-settings-tax-provider-detail'));
-Cicada.Component.register(
+Shopware.Component.register('sw-settings-tax-list', () => import('./page/sw-settings-tax-list'));
+Shopware.Component.register('sw-settings-tax-detail', () => import('./page/sw-settings-tax-detail'));
+Shopware.Component.register('sw-settings-tax-provider-detail', () => import('./page/sw-settings-tax-provider-detail'));
+Shopware.Component.register(
     'sw-settings-tax-provider-sorting-modal',
     () => import('./component/sw-settings-tax-provider-sorting-modal'),
 );
-Cicada.Component.register('sw-tax-rule-card', () => import('./component/sw-tax-rule-card'));
-Cicada.Component.register('sw-settings-tax-rule-modal', () => import('./component/sw-settings-tax-rule-modal'));
-Cicada.Component.register(
+Shopware.Component.register('sw-tax-rule-card', () => import('./component/sw-tax-rule-card'));
+Shopware.Component.register('sw-settings-tax-rule-modal', () => import('./component/sw-settings-tax-rule-modal'));
+Shopware.Component.register(
     'sw-settings-tax-rule-type-individual-states',
     () => import('./component/sw-settings-tax-rule-type-individual-states'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-tax-rule-type-zip-code',
     () => import('./component/sw-settings-tax-rule-type-zip-code'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-tax-rule-type-zip-code-range',
     () => import('./component/sw-settings-tax-rule-type-zip-code-range'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-tax-rule-type-individual-states-cell',
     () => import('./component/sw-settings-tax-rule-type-individual-states-cell'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-tax-rule-type-zip-code-cell',
     () => import('./component/sw-settings-tax-rule-type-zip-code-cell'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-tax-rule-type-zip-code-range-cell',
     () => import('./component/sw-settings-tax-rule-type-zip-code-range-cell'),
 );
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-tax', {
@@ -102,10 +102,10 @@ Module.register('sw-settings-tax', {
         },
     },
 
-    // settingsItem: {
-    //     group: 'shop',
-    //     to: 'sw.settings.tax.index',
-    //     icon: 'regular-chart-pie',
-    //     privilege: 'tax.viewer',
-    // },
+    settingsItem: {
+        group: 'localization',
+        to: 'sw.settings.tax.index',
+        icon: 'regular-chart-pie',
+        privilege: 'tax.viewer',
+    },
 });

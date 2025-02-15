@@ -8,8 +8,6 @@ import './sw-first-run-wizard-store.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['extensionHelperService'],
 
     emits: [
@@ -46,7 +44,7 @@ export default {
                 label: this.$tc('sw-first-run-wizard.general.buttonBack'),
                 position: 'left',
                 variant: null,
-                action: 'sw.first.run.wizard.index.cicada.account',
+                action: 'sw.first.run.wizard.index.shopware.account',
                 disabled: this.isActivating || this.loadStatus,
             };
 
@@ -86,7 +84,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -120,7 +118,7 @@ export default {
             try {
                 this.extensionStatus = await this.extensionHelperService.getStatusOfExtension('SwagExtensionStore');
             } catch (error) {
-                Cicada.Utils.debug.error(error);
+                Shopware.Utils.debug.error(error);
             } finally {
                 this.loadStatus = false;
             }
@@ -145,7 +143,7 @@ export default {
                         this.error = error.response.data.errors[0];
                     }
 
-                    Cicada.Utils.debug.error(error);
+                    Shopware.Utils.debug.error(error);
                 })
                 .finally(() => {
                     this.isActivating = false;

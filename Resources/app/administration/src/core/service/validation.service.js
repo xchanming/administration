@@ -1,4 +1,4 @@
-const { types } = Cicada.Utils;
+const { types } = Shopware.Utils;
 
 /**
  * @sw-package framework

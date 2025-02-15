@@ -4,7 +4,7 @@ import 'ace-builds/src-noconflict/mode-twig';
 import template from './sw-code-editor.html.twig';
 import './sw-code-editor.scss';
 
-const utils = Cicada.Utils;
+const utils = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -21,8 +21,6 @@ const utils = Cicada.Utils;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'feature',
@@ -191,7 +189,7 @@ export default {
         },
 
         enableHtmlSanitizer() {
-            return Cicada.Context.app.config.settings.enableHtmlSanitizer;
+            return Shopware.Context.app.config.settings.enableHtmlSanitizer;
         },
 
         attrsWithoutClass() {

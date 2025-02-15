@@ -8,8 +8,6 @@ import template from './sw-settings-seo.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     data() {
         return {
             isLoading: false,

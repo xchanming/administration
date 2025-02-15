@@ -5,14 +5,12 @@
 import template from './sw-product-variant-modal.html.twig';
 import './sw-product-variant-modal.scss';
 
-const { Mixin, Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin, Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -309,7 +307,7 @@ export default {
         },
 
         stockColorVariantFilter() {
-            return Cicada.Filter.getByName('stockColorVariant');
+            return Shopware.Filter.getByName('stockColorVariant');
         },
     },
 
@@ -358,7 +356,7 @@ export default {
         },
 
         fetchSystemCurrency() {
-            const systemCurrencyId = Cicada.Context.app.systemCurrencyId;
+            const systemCurrencyId = Shopware.Context.app.systemCurrencyId;
 
             return this.currencyRepository.get(systemCurrencyId).then((response) => {
                 this.currency = response;
@@ -400,11 +398,7 @@ export default {
             });
 
             if (foundVariantIndex >= 0) {
-                if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                    this.$delete(variant.price, foundVariantIndex);
-                } else {
-                    delete variant.price[foundVariantIndex];
-                }
+                delete variant.price[foundVariantIndex];
             }
 
             if (variant.price.length <= 0) {
@@ -427,11 +421,7 @@ export default {
             };
 
             // add new price currency to variant
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(variant.price, variant.price.length, newPrice);
-            } else {
-                variant.price.push(newPrice);
-            }
+            variant.price.push(newPrice);
         },
 
         /**

@@ -4,17 +4,15 @@
 import template from './sw-import-export-edit-profile-modal.html.twig';
 import './sw-import-export-edit-profile-modal.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

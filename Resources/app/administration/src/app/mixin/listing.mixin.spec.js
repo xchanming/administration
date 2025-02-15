@@ -52,7 +52,7 @@ async function createWrapper({
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('listing'),
+                Shopware.Mixin.getByName('listing'),
             ],
             data() {
                 return {
@@ -107,9 +107,9 @@ describe('src/app/mixin/listing.mixin.ts', () => {
         await flushPromises();
 
         if (originalWarn) {
-            Cicada.Utils.debug.warn = originalWarn;
+            Shopware.Utils.debug.warn = originalWarn;
         } else {
-            originalWarn = Cicada.Utils.debug.warn;
+            originalWarn = Shopware.Utils.debug.warn;
         }
     });
 
@@ -551,7 +551,7 @@ describe('src/app/mixin/listing.mixin.ts', () => {
     it('should throw a console warning when no getList method ist defined', async () => {
         await wrapper.unmount();
 
-        Cicada.Utils.debug.warn = jest.fn(() => {});
+        Shopware.Utils.debug.warn = jest.fn(() => {});
 
         wrapper = await createWrapper({
             methods: {},
@@ -559,7 +559,7 @@ describe('src/app/mixin/listing.mixin.ts', () => {
 
         wrapper.vm.getList();
 
-        expect(Cicada.Utils.debug.warn).toHaveBeenCalledWith(
+        expect(Shopware.Utils.debug.warn).toHaveBeenCalledWith(
             'Listing Mixin',
             'When using the listing mixin you have to implement your custom "getList()" method.',
         );

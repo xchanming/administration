@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-Cicada.Filter.register('striphtml', (value: string): string => {
+Shopware.Filter.register('striphtml', (value: string): string => {
     if (!value) {
         return '';
     }

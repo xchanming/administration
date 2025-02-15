@@ -5,13 +5,11 @@
 import template from './sw-product-clone-modal.html.twig';
 import './sw-product-clone-modal.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -76,7 +74,7 @@ export default {
             };
 
             await this.repository.save(this.product);
-            const clone = await this.repository.clone(this.product.id, behavior, Cicada.Context.api);
+            const clone = await this.repository.clone(this.product.id, behavior, Shopware.Context.api);
 
             return { id: clone.id, productNumber: number.number };
         },
@@ -124,7 +122,7 @@ export default {
                 cloneChildren: false,
             };
 
-            this.repository.clone(id, behavior, Cicada.Context.api).then(() => {
+            this.repository.clone(id, behavior, Shopware.Context.api).then(() => {
                 this.cloneProgress += 1;
                 this.duplicateVariant(duplicate, ids, callback);
             });

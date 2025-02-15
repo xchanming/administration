@@ -1,5 +1,5 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
 import './component/sw-settings-country-address-handling';
 import './component/sw-settings-country-new-snippet-modal';
@@ -8,24 +8,24 @@ import './component/sw-settings-country-preview-template';
 
 import './acl';
 
-const { Module } = Cicada;
+const { Module, Feature } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-country-list', () => import('./page/sw-settings-country-list'));
-Cicada.Component.register('sw-settings-country-detail', () => import('./page/sw-settings-country-detail'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-settings-country-list', () => import('./page/sw-settings-country-list'));
+Shopware.Component.register('sw-settings-country-detail', () => import('./page/sw-settings-country-detail'));
+Shopware.Component.extend(
     'sw-settings-country-create',
     'sw-settings-country-detail',
     () => import('./page/sw-settings-country-create'),
 );
-Cicada.Component.register('sw-country-state-detail', () => import('./component/sw-country-state-detail'));
-Cicada.Component.register('sw-settings-country-general', () => import('./component/sw-settings-country-general'));
-Cicada.Component.register('sw-settings-country-state', () => import('./component/sw-settings-country-state'));
-Cicada.Component.register(
+Shopware.Component.register('sw-country-state-detail', () => import('./component/sw-country-state-detail'));
+Shopware.Component.register('sw-settings-country-general', () => import('./component/sw-settings-country-general'));
+Shopware.Component.register('sw-settings-country-state', () => import('./component/sw-settings-country-state'));
+Shopware.Component.register(
     'sw-settings-country-currency-dependent-modal',
     () => import('./component/sw-settings-country-currency-dependent-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-settings-country-currency-hamburger-menu',
     () => import('./component/sw-settings-country-currency-hamburger-menu'),
 );
@@ -147,10 +147,17 @@ Module.register('sw-settings-country', {
         },
     },
 
-    // settingsItem: {
-    //     group: 'shop',
-    //     to: 'sw.settings.country.index',
-    //     icon: 'regular-map',
-    //     privilege: 'country.viewer',
-    // },
+    settingsItem: {
+        group: function () {
+            // @deprecated tag:v6.7.0 - Remove condition and function callback
+            if (!Feature.isActive('v6.7.0.0')) {
+                return 'shop';
+            }
+
+            return 'localization';
+        },
+        to: 'sw.settings.country.index',
+        icon: 'regular-map',
+        privilege: 'country.viewer',
+    },
 });

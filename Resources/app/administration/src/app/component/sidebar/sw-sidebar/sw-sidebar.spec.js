@@ -29,7 +29,7 @@ async function createWrapper() {
 }
 
 /**
- * @sw-package buyers-experience
+ * @sw-package framework
  */
 describe('src/app/component/sidebar/sw-sidebar/index.js', () => {
     /** @type VueWrapper */

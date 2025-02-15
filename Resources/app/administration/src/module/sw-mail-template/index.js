@@ -1,19 +1,19 @@
 import './acl';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-mail-template-list', () => import('./component/sw-mail-template-list'));
-Cicada.Component.register('sw-mail-header-footer-list', () => import('./component/sw-mail-header-footer-list'));
-Cicada.Component.register('sw-mail-template-detail', () => import('./page/sw-mail-template-detail'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-mail-template-list', () => import('./component/sw-mail-template-list'));
+Shopware.Component.register('sw-mail-header-footer-list', () => import('./component/sw-mail-header-footer-list'));
+Shopware.Component.register('sw-mail-template-detail', () => import('./page/sw-mail-template-detail'));
+Shopware.Component.extend(
     'sw-mail-template-create',
     'sw-mail-template-detail',
     () => import('./page/sw-mail-template-create'),
 );
-Cicada.Component.register('sw-mail-template-index', () => import('./page/sw-mail-template-index'));
-Cicada.Component.register('sw-mail-header-footer-detail', () => import('./page/sw-mail-header-footer-detail'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-mail-template-index', () => import('./page/sw-mail-template-index'));
+Shopware.Component.register('sw-mail-header-footer-detail', () => import('./page/sw-mail-header-footer-detail'));
+Shopware.Component.extend(
     'sw-mail-header-footer-create',
     'sw-mail-header-footer-detail',
     () => import('./page/sw-mail-header-footer-create'),
@@ -82,7 +82,7 @@ Module.register('sw-mail-template', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'content',
         to: 'sw.mail.template.index',
         icon: 'regular-envelope',
         privilege: 'mail_templates.viewer',

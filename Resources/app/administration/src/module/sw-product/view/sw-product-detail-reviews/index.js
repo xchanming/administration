@@ -5,15 +5,12 @@
 import template from './sw-product-detail-reviews.html.twig';
 import './sw-product-detail-reviews.scss';
 
-const { Component, Data, Context } = Cicada;
+const { Data, Context } = Shopware;
 const { Criteria } = Data;
-const { mapState, mapGetters } = Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -32,13 +29,13 @@ export default {
     },
 
     computed: {
-        ...mapState('swProductDetail', [
-            'product',
-        ]),
+        product() {
+            return Shopware.Store.get('swProductDetail').product;
+        },
 
-        ...mapGetters('swProductDetail', [
-            'isLoading',
-        ]),
+        isLoading() {
+            return Shopware.Store.get('swProductDetail').isLoading;
+        },
 
         cardTitle() {
             return this.total ? this.$tc('sw-product.reviews.cardTitleReviews') : null;
@@ -85,11 +82,11 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 

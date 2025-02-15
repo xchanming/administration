@@ -1,7 +1,7 @@
 import template from './sw-media-quickinfo.html.twig';
 import './sw-media-quickinfo.scss';
 
-const { Mixin, Context, Utils } = Cicada;
+const { Mixin, Context, Utils } = Shopware;
 const { dom, format } = Utils;
 
 /**
@@ -10,8 +10,6 @@ const { dom, format } = Utils;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'mediaService',
@@ -114,20 +112,20 @@ export default {
         },
 
         /**
-         * @experimental stableVersion:v6.7.0 feature:SPATIAL_BASES
+         * @experimental stableVersion:v6.8.0 feature:SPATIAL_BASES
          */
         fetchSpatialItemConfig() {
             this.systemConfigApiService.getValues('core.media').then((values) => {
                 this.defaultArReady = values['core.media.defaultEnableAugmentedReality'];
             });
 
-            this.mediaRepository.get(this.item.id, Cicada.Context.api).then((entity) => {
+            this.mediaRepository.get(this.item.id, Shopware.Context.api).then((entity) => {
                 this.arReady = entity?.config?.spatial?.arReady;
             });
         },
 
         /**
-         * @experimental stableVersion:v6.7.0 feature:SPATIAL_BASES
+         * @experimental stableVersion:v6.8.0 feature:SPATIAL_BASES
          */
         buildAugmentedRealityTooltip(snippet) {
             const route = { name: 'sw.settings.media.index' };
@@ -239,9 +237,13 @@ export default {
             switch (error.code) {
                 case 'CONTENT__MEDIA_FILE_NAME_IS_TOO_LONG':
                     this.createNotificationError({
-                        message: this.$tc('global.sw-media-media-item.notification.fileNameTooLong.message', 0, {
-                            length: error.meta.parameters.maxLength,
-                        }),
+                        message: this.$tc(
+                            'global.sw-media-media-item.notification.fileNameTooLong.message',
+                            {
+                                length: error.meta.parameters.maxLength,
+                            },
+                            0,
+                        ),
                     });
                     break;
                 default:
@@ -285,7 +287,7 @@ export default {
         },
 
         /**
-         * @experimental stableVersion:v6.7.0 feature:SPATIAL_BASES
+         * @experimental stableVersion:v6.8.0 feature:SPATIAL_BASES
          */
         toggleAR(newValue) {
             const newSpatialConfig = {

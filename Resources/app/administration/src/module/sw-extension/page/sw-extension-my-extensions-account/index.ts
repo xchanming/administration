@@ -5,20 +5,18 @@ import extensionErrorHandler from '../../service/extension-error-handler.service
 import type { MappedError } from '../../service/extension-error-handler.service';
 import type { UserInfo } from '../../../../core/service/api/store.api.service';
 
-const { State, Mixin, Filter } = Cicada;
+const { Store, Mixin, Filter } = Shopware;
 
 /**
  * @sw-package checkout
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'systemConfigApiService',
-        'cicadaExtensionService',
+        'shopwareExtensionService',
         'storeService',
     ],
 
@@ -31,7 +29,7 @@ export default Cicada.Component.wrapComponentConfig({
         unsubscribeStore: (() => void) | null;
         form: {
             password: string;
-            cicadaId: string;
+            shopwareId: string;
         };
     } {
         return {
@@ -39,18 +37,18 @@ export default Cicada.Component.wrapComponentConfig({
             unsubscribeStore: null,
             form: {
                 password: '',
-                cicadaId: '',
+                shopwareId: '',
             },
         };
     },
 
     computed: {
         userInfo(): UserInfo | null {
-            return State.get('cicadaExtensions').userInfo;
+            return Store.get('shopwareExtensions').userInfo;
         },
 
         isLoggedIn(): boolean {
-            return State.get('cicadaExtensions').userInfo !== null;
+            return Store.get('shopwareExtensions').userInfo !== null;
         },
 
         assetFilter() {
@@ -61,9 +59,9 @@ export default Cicada.Component.wrapComponentConfig({
     created() {
         this.createdComponent()
             .then(() => {
-                // component functions are always bound to this
-                // eslint-disable-next-line @typescript-eslint/unbound-method
-                this.unsubscribeStore = State.subscribe(this.showErrorNotification);
+                this.unsubscribeStore = Store.get('shopwareExtensions').$onAction(({ name, args }) =>
+                    this.showErrorNotification({ type: name, payload: args as MappedError[] }),
+                );
             })
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             .catch(() => {});
@@ -79,7 +77,7 @@ export default Cicada.Component.wrapComponentConfig({
         async createdComponent() {
             try {
                 this.isLoading = true;
-                await this.cicadaExtensionService.checkLogin();
+                await this.shopwareExtensionService.checkLogin();
             } finally {
                 this.isLoading = false;
             }
@@ -96,7 +94,7 @@ export default Cicada.Component.wrapComponentConfig({
                     }>,
                 );
             } finally {
-                await this.cicadaExtensionService.checkLogin();
+                await this.shopwareExtensionService.checkLogin();
             }
         },
 
@@ -104,7 +102,7 @@ export default Cicada.Component.wrapComponentConfig({
             this.isLoading = true;
 
             try {
-                await this.storeService.login(this.form.cicadaId, this.form.password);
+                await this.storeService.login(this.form.shopwareId, this.form.password);
 
                 this.$emit('login-success');
 
@@ -119,13 +117,13 @@ export default Cicada.Component.wrapComponentConfig({
                     }>,
                 );
             } finally {
-                await this.cicadaExtensionService.checkLogin();
+                await this.shopwareExtensionService.checkLogin();
                 this.isLoading = false;
             }
         },
 
         showErrorNotification({ type, payload }: { type: string; payload: MappedError[] }) {
-            if (type !== 'cicadaExtensions/pluginErrorsMapped') {
+            if (type !== 'pluginErrorsMapped') {
                 return;
             }
 
@@ -145,7 +143,7 @@ export default Cicada.Component.wrapComponentConfig({
 
         showApiNotification(error: MappedError) {
             // @ts-expect-error
-            const docLink = this.$tc('sw-extension.errors.messageToTheCicadaDocumentation', 0, error.parameters);
+            const docLink = this.$tc('sw-extension.errors.messageToTheShopwareDocumentation', error.parameters, 0);
 
             // Methods from mixins are not recognized
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -159,7 +157,7 @@ export default Cicada.Component.wrapComponentConfig({
         commitErrors(errorResponse: AxiosError<{ errors: StoreApiException[] }>): never {
             if (errorResponse.response) {
                 const mappedErrors = extensionErrorHandler.mapErrors(errorResponse.response.data.errors);
-                Cicada.State.commit('cicadaExtensions/pluginErrorsMapped', mappedErrors);
+                Shopware.Store.get('shopwareExtensions').pluginErrorsMapped(mappedErrors);
             }
 
             throw errorResponse;

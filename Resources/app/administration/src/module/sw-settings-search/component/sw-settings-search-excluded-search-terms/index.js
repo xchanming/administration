@@ -4,13 +4,11 @@
 import template from './sw-settings-search-excluded-search-terms.html.twig';
 import './sw-settings-search-excluded-search-terms.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'excludedSearchTermService',
@@ -73,7 +71,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

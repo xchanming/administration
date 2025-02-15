@@ -1,8 +1,8 @@
 import template from './sw-condition-base-line-item.html.twig';
 import './sw-condition-base-line-item.scss';
 
-const { Component } = Cicada;
-const { EntityCollection } = Cicada.Data;
+const { Component } = Shopware;
+const { EntityCollection } = Shopware.Data;
 
 /**
  * @public

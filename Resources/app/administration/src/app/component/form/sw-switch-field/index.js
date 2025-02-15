@@ -1,6 +1,6 @@
 import template from './sw-switch-field.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -11,8 +11,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-switch-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['update:value'],
 
@@ -35,27 +33,18 @@ Component.register('sw-switch-field', {
 
         useMeteorComponent() {
             // Use new meteor component in major
-            if (Cicada.Feature.isActive('v6.7.0.0')) {
+            if (Shopware.Feature.isActive('ENABLE_METEOR_COMPONENTS')) {
                 return true;
             }
 
             // Throw warning when deprecated component is used
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'sw-switch-field',
                 // eslint-disable-next-line max-len
                 'The old usage of "sw-switch-field" is deprecated and will be removed in v6.7.0.0. Please use "mt-switch" instead.',
             );
 
             return false;
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

@@ -15,17 +15,15 @@ interface GridColumn {
 const {
     Mixin,
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 
 /**
  * @private
  * @sw-package after-sales
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -114,7 +112,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

@@ -1,7 +1,7 @@
 /**
  * @sw-package checkout
  */
-const { Service } = Cicada;
+const { Service } = Shopware;
 
 Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
@@ -54,7 +54,7 @@ Service('privileges').addPrivilegeMappingEntry({
                 'promotion_individual_code:delete',
                 'promotion_setgroup:create',
                 'promotion_setgroup_rule:create',
-                Cicada.Service('privileges').getPrivileges('rule.creator'),
+                Shopware.Service('privileges').getPrivileges('rule.creator'),
             ],
             dependencies: [
                 'promotion.viewer',

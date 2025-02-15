@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-const { Service } = Cicada;
+const { Service } = Shopware;
 const READ_NOTIFICATION = 'notification.lastReadAt';
 
 /**
@@ -19,7 +19,7 @@ export default class AdminNotificationWorker {
     }
 
     start() {
-        if (!Cicada.Context.app.config.adminWorker.enableNotificationWorker) {
+        if (!Shopware.Context.app.config.adminWorker.enableNotificationWorker) {
             return;
         }
 
@@ -61,7 +61,7 @@ export default class AdminNotificationWorker {
     }
 
     createNotification(variant, message) {
-        Cicada.State.dispatch('notification/createNotification', {
+        Shopware.Store.get('notification').createNotification({
             variant,
             message,
         });

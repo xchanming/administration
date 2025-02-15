@@ -1,15 +1,13 @@
 import './sw-arrow-field.scss';
 import { h } from 'vue';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  * @sw-package fundamentals@after-sales
  */
 Component.register('sw-arrow-field', {
-    compatConfig: Cicada.compatConfig,
-
     render() {
         return h(
             'div',

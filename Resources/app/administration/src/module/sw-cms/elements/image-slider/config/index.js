@@ -1,12 +1,12 @@
 import template from './sw-cms-el-config-image-slider.html.twig';
 import './sw-cms-el-config-image-slider.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 const {
     moveItem,
     object: { cloneDeep },
-} = Cicada.Utils;
-const Criteria = Cicada.Data.Criteria;
+} = Shopware.Utils;
+const Criteria = Shopware.Data.Criteria;
 
 /**
  * @private
@@ -14,8 +14,6 @@ const Criteria = Cicada.Data.Criteria;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -200,20 +198,12 @@ export default {
                 });
 
                 if (!this.element.data) {
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(this.element, 'data', { sliderItems });
-                    } else {
-                        this.element.data = { sliderItems };
-                    }
+                    this.element.data = { sliderItems };
 
                     return;
                 }
 
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.element.data, 'sliderItems', sliderItems);
-                } else {
-                    this.element.data.sliderItems = sliderItems;
-                }
+                this.element.data.sliderItems = sliderItems;
             }
         },
 

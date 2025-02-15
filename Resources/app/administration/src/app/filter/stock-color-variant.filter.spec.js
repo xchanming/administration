@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 describe('src/app/filter/stock-color-variant.filter.ts', () => {
-    const stockColorVariantFilter = Cicada.Filter.getByName('stockColorVariant');
+    const stockColorVariantFilter = Shopware.Filter.getByName('stockColorVariant');
 
     it('should contain a filter', () => {
         expect(stockColorVariantFilter).toBeDefined();

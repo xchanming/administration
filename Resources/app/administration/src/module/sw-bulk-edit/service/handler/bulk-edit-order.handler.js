@@ -1,21 +1,21 @@
 import BulkEditBaseHandler from './bulk-edit-base.handler';
 import RetryHelper from '../../../../core/helper/retry.helper';
 
-const { Criteria } = Cicada.Data;
-const { types } = Cicada.Utils;
+const { Criteria } = Shopware.Data;
+const { types } = Shopware.Utils;
 
 /**
  * @class
  * @extends BulkEditBaseHandler
- * @sw-package inventory
+ * @sw-package checkout
  */
 class BulkEditOrderHandler extends BulkEditBaseHandler {
     constructor() {
         super();
         this.name = 'BulkEditOrderHandler';
         this.entityIds = [];
-        this.orderStateMachineService = Cicada.Service('orderStateMachineService');
-        this.orderRepository = Cicada.Service('repositoryFactory').create('order');
+        this.orderStateMachineService = Shopware.Service('orderStateMachineService');
+        this.orderRepository = Shopware.Service('repositoryFactory').create('order');
         this.entityName = 'order';
     }
 
@@ -23,7 +23,7 @@ class BulkEditOrderHandler extends BulkEditBaseHandler {
         this.entityIds = entityIds;
 
         let promises = [];
-        const shouldTriggerFlows = Cicada.State.get('swBulkEdit').isFlowTriggered;
+        const shouldTriggerFlows = Shopware.Store.get('swBulkEdit').isFlowTriggered;
 
         const orders = await this.orderRepository.search(this.getCriteria());
 
@@ -92,7 +92,7 @@ class BulkEditOrderHandler extends BulkEditBaseHandler {
                 {},
                 {
                     'single-operation': 1,
-                    'sw-language-id': Cicada.Context.api.languageId,
+                    'sw-language-id': Shopware.Context.api.languageId,
                 },
             );
         });

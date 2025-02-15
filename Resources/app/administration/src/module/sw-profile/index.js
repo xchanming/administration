@@ -4,12 +4,15 @@
 import './extension/sw-admin-menu';
 import './acl';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-profile-index', () => import('./page/sw-profile-index'));
-Cicada.Component.register('sw-profile-index-general', () => import('./view/sw-profile-index-general'));
-Cicada.Component.register('sw-profile-index-search-preferences', () => import('./view/sw-profile-index-search-preferences'));
+Shopware.Component.register('sw-profile-index', () => import('./page/sw-profile-index'));
+Shopware.Component.register('sw-profile-index-general', () => import('./view/sw-profile-index-general'));
+Shopware.Component.register(
+    'sw-profile-index-search-preferences',
+    () => import('./view/sw-profile-index-search-preferences'),
+);
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations

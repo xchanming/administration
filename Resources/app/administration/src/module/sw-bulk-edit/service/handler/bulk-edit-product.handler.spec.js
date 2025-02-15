@@ -95,7 +95,7 @@ describe('module/sw-bulk-edit/service/handler/bulk-edit-product.handler', () => 
             {},
             {
                 'single-operation': 1,
-                'sw-language-id': Cicada.Context.api.languageId,
+                'sw-language-id': Shopware.Context.api.languageId,
             },
         );
         expect(result).toBe(true);
@@ -1323,9 +1323,9 @@ describe('module/sw-bulk-edit/service/handler/bulk-edit-product.handler', () => 
                 },
             };
 
-            Cicada.EntityDefinition = EntityDefinitionFactory;
+            Shopware.EntityDefinition = EntityDefinitionFactory;
             Object.keys(mockEntitySchema).forEach((entity) => {
-                Cicada.EntityDefinition.add(entity, mockEntitySchema[entity]);
+                Shopware.EntityDefinition.add(entity, mockEntitySchema[entity]);
             });
 
             const spy = jest.spyOn(console, 'warn').mockImplementation();

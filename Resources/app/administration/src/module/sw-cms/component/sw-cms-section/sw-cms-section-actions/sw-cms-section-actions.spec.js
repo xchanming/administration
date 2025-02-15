@@ -23,7 +23,7 @@ async function createWrapper() {
 
 describe('module/sw-cms/component/sw-cms-section-actions', () => {
     beforeAll(() => {
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
             state: () => ({
                 selectedSection: {},

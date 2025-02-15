@@ -4,7 +4,7 @@
 
 import template from './sw-login-recovery-recovery.html.twig';
 
-const { Component, Mixin, State } = Cicada;
+const { Component, Mixin } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**
@@ -12,8 +12,6 @@ const { mapPropertyErrors } = Component.getComponentHelper();
  */
 Component.register('sw-login-recovery-recovery', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'userRecoveryService',
@@ -93,9 +91,9 @@ Component.register('sw-login-recovery-recovery', {
                         this.$router.push({ name: 'sw.login.index' });
                     })
                     .catch((error) => {
-                        State.dispatch('error/addApiError', {
+                        Shopware.Store.get('error').addApiError({
                             expression: `user.${this.hash}.password`,
-                            error: new Cicada.Classes.CicadaError(error.response.data.errors[0]),
+                            error: new Shopware.Classes.ShopwareError(error.response.data.errors[0]),
                         });
 
                         this.createNotificationError({

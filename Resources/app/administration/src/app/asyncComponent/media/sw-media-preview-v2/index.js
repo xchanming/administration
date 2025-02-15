@@ -1,8 +1,8 @@
 import template from './sw-media-preview-v2.html.twig';
 import './sw-media-preview-v2.scss';
 
-const { Context, Filter } = Cicada;
-const { fileReader } = Cicada.Utils;
+const { Context, Filter } = Shopware;
+const { fileReader } = Shopware.Utils;
 
 /**
  * @status ready
@@ -20,8 +20,6 @@ const { fileReader } = Cicada.Utils;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-vimeo-video', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-vimeo-video', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-vimeo-video', () => import('./component'));
+Shopware.Component.register('sw-cms-block-vimeo-video', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'vimeo-video',
     label: 'sw-cms.blocks.video.vimeoVideo.label',
     category: 'video',

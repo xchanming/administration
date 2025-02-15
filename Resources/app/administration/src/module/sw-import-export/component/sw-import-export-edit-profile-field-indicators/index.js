@@ -9,8 +9,6 @@ import './sw-import-export-edit-profile-field-indicators.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         profile: {
             type: Object,

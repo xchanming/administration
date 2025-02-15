@@ -1,8 +1,8 @@
 import template from './sw-avatar.html.twig';
 import './sw-avatar.scss';
 
-const { Component } = Cicada;
-const { cloneDeep } = Cicada.Utils.object;
+const { Component } = Shopware;
+const { cloneDeep } = Shopware.Utils.object;
 
 const colors = [
     '#FFD700',
@@ -30,9 +30,9 @@ const colors = [
  * <div style="display: flex; align-items: center;">
  * <sw-avatar color="#dd4800"
  *            size="48px"
- *            name="John"
+ *            firstName="John"
  *            style="margin: 0 10px;"
- *            ></sw-avatar>
+ *            lastName="Doe"></sw-avatar>
  *
  * <sw-avatar size="48px"
  *            imageUrl="https://randomuser.me/api/portraits/women/68.jpg"></sw-avatar>
@@ -46,8 +46,6 @@ const colors = [
 Component.register('sw-avatar', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         color: {
             type: String,
@@ -59,7 +57,12 @@ Component.register('sw-avatar', {
             required: false,
             default: null,
         },
-        name: {
+        firstName: {
+            type: String,
+            required: false,
+            default: '',
+        },
+        lastName: {
             type: String,
             required: false,
             default: '',
@@ -110,7 +113,10 @@ Component.register('sw-avatar', {
         },
 
         avatarInitials() {
-            return this.name ? this.name[0] : '';
+            const firstNameLetter = this.firstName ? this.firstName[0] : '';
+            const lastNameLetter = this.lastName ? this.lastName[0] : '';
+
+            return firstNameLetter + lastNameLetter;
         },
 
         avatarInitialsSize() {
@@ -143,7 +149,10 @@ Component.register('sw-avatar', {
                 };
             }
 
-            const nameLength = this.name ? this.name.length : 0;
+            const firstNameLength = this.firstName ? this.firstName.length : 0;
+            const lastNameLength = this.lastName ? this.lastName.length : 0;
+
+            const nameLength = firstNameLength + lastNameLength;
             const color = colors[nameLength % colors.length];
 
             return {

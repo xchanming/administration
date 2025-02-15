@@ -1,7 +1,7 @@
 import template from './sw-extension-review.html.twig';
 import './sw-extension-review.scss';
 
-const { date } = Cicada.Utils.format;
+const { date } = Shopware.Utils.format;
 
 /**
  * @sw-package checkout
@@ -9,8 +9,6 @@ const { date } = Cicada.Utils.format;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         review: {

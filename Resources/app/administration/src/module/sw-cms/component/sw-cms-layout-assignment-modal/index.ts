@@ -1,20 +1,18 @@
-import EntityCollection from '@cicada-ag/meteor-admin-sdk/es/_internals/data/EntityCollection';
+import EntityCollection from '@shopware-ag/meteor-admin-sdk/es/_internals/data/EntityCollection';
 import { difference } from 'lodash';
 import { type PropType } from 'vue';
 import template from './sw-cms-layout-assignment-modal.html.twig';
 import './sw-cms-layout-assignment-modal.scss';
 
-const { cloneDeep } = Cicada.Utils.object;
-const { Criteria } = Cicada.Data;
+const { cloneDeep } = Shopware.Utils.object;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -25,12 +23,12 @@ export default Cicada.Component.wrapComponentConfig({
     emits: ['modal-close'],
 
     mixins: [
-        Cicada.Mixin.getByName('notification'),
+        Shopware.Mixin.getByName('notification'),
     ],
 
     props: {
         page: {
-            type: Object as PropType<EntitySchema.Entity<'cms_page'>>,
+            type: Object as PropType<Entity<'cms_page'>>,
             required: true,
         },
     },
@@ -57,7 +55,7 @@ export default Cicada.Component.wrapComponentConfig({
             hasCategoriesWithAssignedLayouts: false,
             hasProductsWithAssignedLayouts: false,
             hasLandingPagesWithAssignedLayouts: false,
-            previousProducts: [] as EntitySchema.Entity<'product'>[],
+            previousProducts: [] as Entity<'product'>[],
             previousProductIds: [] as string[],
             categoryIndex: 1,
             isCategoriesLoading: false,
@@ -76,8 +74,20 @@ export default Cicada.Component.wrapComponentConfig({
                     value: 'core.basicInformation.tosPage',
                 },
                 {
+                    label: this.$tc('sw-cms.components.cmsLayoutAssignmentModal.shopPages.revocationPage'),
+                    value: 'core.basicInformation.revocationPage',
+                },
+                {
+                    label: this.$tc('sw-cms.components.cmsLayoutAssignmentModal.shopPages.shippingPaymentInfoPage'),
+                    value: 'core.basicInformation.shippingPaymentInfoPage',
+                },
+                {
                     label: this.$tc('sw-cms.components.cmsLayoutAssignmentModal.shopPages.privacyPage'),
                     value: 'core.basicInformation.privacyPage',
+                },
+                {
+                    label: this.$tc('sw-cms.components.cmsLayoutAssignmentModal.shopPages.imprintPage'),
+                    value: 'core.basicInformation.imprintPage',
                 },
                 {
                     label: this.$tc('sw-cms.components.cmsLayoutAssignmentModal.shopPages.404Page'),
@@ -130,7 +140,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         categoryRepository() {
@@ -175,7 +185,7 @@ export default Cicada.Component.wrapComponentConfig({
                     return;
                 }
 
-                this.selectedShopPages[salesChannelId]?.forEach((name) => {
+                this.selectedShopPages[salesChannelId].forEach((name) => {
                     shopPages[salesChannelId][name] = this.page.id;
                 });
             });
@@ -186,7 +196,7 @@ export default Cicada.Component.wrapComponentConfig({
                     return;
                 }
 
-                this.previousShopPages[salesChannelId]?.forEach((name) => {
+                this.previousShopPages[salesChannelId].forEach((name) => {
                     if (shopPages[salesChannelId][name] === undefined) {
                         shopPages[salesChannelId][name] = null;
                         deletions += 1;
@@ -235,16 +245,8 @@ export default Cicada.Component.wrapComponentConfig({
                     });
 
                     if (pages.length > 0) {
-                        if (this.isCompatEnabled('INSTANCE_SET')) {
-                            this.$set(this.selectedShopPages, this.shopPageSalesChannelId!, pages);
-                        } else {
-                            this.selectedShopPages[this.shopPageSalesChannelId!] = pages;
-                        }
-                    } else if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(this.selectedShopPages, this.shopPageSalesChannelId!, null);
-                    } else {
-                        this.selectedShopPages[this.shopPageSalesChannelId!] = null;
-                    }
+                        this.selectedShopPages[this.shopPageSalesChannelId!] = pages;
+                    } else this.selectedShopPages[this.shopPageSalesChannelId!] = null;
 
                     this.previousShopPages = cloneDeep(this.selectedShopPages);
                 })
@@ -406,7 +408,7 @@ export default Cicada.Component.wrapComponentConfig({
             this.page.categories = new EntityCollection(
                 this.page.categories!.source,
                 this.page.categories!.entity,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 null,
                 this.previousCategories ?? [],
             );
@@ -416,7 +418,7 @@ export default Cicada.Component.wrapComponentConfig({
             this.page.landingPages = new EntityCollection(
                 this.page.landingPages!.source,
                 this.page.landingPages!.entity,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 null,
                 this.previousLandingPages ?? [],
             );
@@ -434,7 +436,7 @@ export default Cicada.Component.wrapComponentConfig({
             this.page.products = new EntityCollection(
                 this.page.products!.source,
                 this.page.products!.entity,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 null,
                 this.previousProducts,
             );

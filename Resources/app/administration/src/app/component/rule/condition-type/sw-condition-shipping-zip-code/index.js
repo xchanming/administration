@@ -1,7 +1,7 @@
 import template from './sw-condition-shipping-zip-code.html.twig';
 import './sw-condition-shipping-zip-code.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**

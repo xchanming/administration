@@ -1,5 +1,3 @@
-import flowState from 'src/module/sw-flow/state/flow.state';
-
 import EntityCollection from 'src/core/data/entity-collection.data';
 
 import { mount } from '@vue/test-utils';
@@ -41,10 +39,6 @@ async function createWrapper() {
 }
 
 describe('module/sw-flow/component/modals/sw-flow-event-change-confirm-modal', () => {
-    Cicada.State.registerModule('swFlowState', {
-        ...flowState,
-    });
-
     it('should show element correctly', async () => {
         const wrapper = await createWrapper();
 
@@ -57,13 +51,12 @@ describe('module/sw-flow/component/modals/sw-flow-event-change-confirm-modal', (
         const wrapper = await createWrapper();
         await flushPromises();
 
-        Cicada.State.commit(
-            'swFlowState/setSequences',
+        Shopware.Store.get('swFlow').setSequences(
             new EntityCollection(
                 '/flow_sequence',
                 'flow_sequence',
                 null,
-                { isCicadaContext: true },
+                { isShopwareContext: true },
                 [
                     {
                         id: '2',
@@ -84,14 +77,14 @@ describe('module/sw-flow/component/modals/sw-flow-event-change-confirm-modal', (
             ),
         );
 
-        let sequencesState = Cicada.State.getters['swFlowState/sequences'];
+        let sequencesState = Shopware.Store.get('swFlow').sequences;
         expect(sequencesState).toHaveLength(1);
 
         const buttonConfirm = wrapper.find(btnConfirmClass);
         await buttonConfirm.trigger('click');
         await flushPromises();
 
-        sequencesState = Cicada.State.getters['swFlowState/sequences'];
+        sequencesState = Shopware.Store.get('swFlow').sequences;
         expect(sequencesState).toHaveLength(0);
 
         expect(wrapper.emitted()['modal-confirm']).toBeTruthy();

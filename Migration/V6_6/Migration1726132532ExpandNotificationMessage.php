@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Migration\V6_6;
+namespace Shopware\Administration\Migration\V6_6;
 
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Migration\MigrationStep;
 use Doctrine\DBAL\Connection;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Migration\MigrationStep;
 
 /**
  * @internal

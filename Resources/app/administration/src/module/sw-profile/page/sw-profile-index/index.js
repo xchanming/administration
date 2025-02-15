@@ -4,17 +4,15 @@
 import { email } from 'src/core/service/validation.service';
 import { KEY_USER_SEARCH_PREFERENCE } from 'src/app/service/search-ranking.service';
 import template from './sw-profile-index.html.twig';
-import swProfileState from '../../state/sw-profile.state';
+import '../../store/sw-profile.store';
 
-const { Component, Mixin, State } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapState, mapPropertyErrors } = Component.getComponentHelper();
+const { Component, Mixin, Store } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'userService',
@@ -58,9 +56,7 @@ export default {
     },
 
     computed: {
-        ...mapState('swProfile', [
-            'searchPreferences',
-        ]),
+        searchPreferences: () => Shopware.Store.get('swProfile').searchPreferences,
 
         ...mapPropertyErrors('user', [
             'email',
@@ -69,10 +65,10 @@ export default {
 
         userSearchPreferences: {
             get() {
-                return State.get('swProfile').userSearchPreferences;
+                return Store.get('swProfile').userSearchPreferences;
             },
             set(userSearchPreferences) {
-                State.commit('swProfile/setUserSearchPreferences', userSearchPreferences);
+                Store.get('swProfile').userSearchPreferences = userSearchPreferences;
             },
         },
 
@@ -97,7 +93,7 @@ export default {
         },
 
         languageId() {
-            return Cicada.State.get('session').languageId;
+            return Shopware.Store.get('session').languageId;
         },
     },
 
@@ -127,20 +123,12 @@ export default {
         },
     },
 
-    beforeCreate() {
-        State.registerModule('swProfile', swProfileState);
-    },
-
     created() {
         this.createdComponent();
     },
 
     beforeMount() {
         this.beforeMountComponent();
-    },
-
-    beforeUnmount() {
-        State.unregisterModule('swProfile');
     },
 
     methods: {
@@ -152,7 +140,7 @@ export default {
             });
 
             this.userPromise = this.getUserData();
-            this.timezoneOptions = Cicada.Service('timezoneService').getTimezoneOptions();
+            this.timezoneOptions = Shopware.Service('timezoneService').getTimezoneOptions();
 
             const promises = [
                 languagePromise,
@@ -189,7 +177,7 @@ export default {
         },
 
         loadLanguages() {
-            const factoryContainer = Cicada.Application.getContainer('factory');
+            const factoryContainer = Shopware.Application.getContainer('factory');
             const localeFactory = factoryContainer.locale;
             const registeredLocales = Array.from(localeFactory.getLocaleRegistry().keys());
 
@@ -209,7 +197,7 @@ export default {
                     this.languages.push(lang);
 
                     localeIds.push(lang.localeId);
-                    if (lang.locale.code === Cicada.Context.app.fallbackLocale) {
+                    if (lang.locale.code === Shopware.Context.app.fallbackLocale) {
                         fallbackId = lang.localeId;
                     }
                 });
@@ -309,12 +297,12 @@ export default {
                         this.isLoading = false;
                         this.isSaveSuccessful = true;
 
-                        Cicada.Service('localeHelper').setLocaleWithId(this.user.localeId);
+                        Shopware.Service('localeHelper').setLocaleWithId(this.user.localeId);
                     })
                     .catch((error) => {
-                        State.dispatch('error/addApiError', {
+                        Shopware.Store.get('error').addApiError({
                             expression: `user.${this.user?.id}.password`,
-                            error: new Cicada.Classes.CicadaError(error.response.data.errors[0]),
+                            error: new Shopware.Classes.ShopwareError(error.response.data.errors[0]),
                         });
                         this.createNotificationError({
                             message: this.$tc('sw-profile.index.notificationSaveErrorMessage'),
@@ -330,7 +318,7 @@ export default {
                 .save(this.user, context)
                 .then(async () => {
                     await this.updateCurrentUser();
-                    Cicada.Service('localeHelper').setLocaleWithId(this.user.localeId);
+                    Shopware.Service('localeHelper').setLocaleWithId(this.user.localeId);
 
                     if (this.newPassword) {
                         // re-issue a valid jwt token, as all user tokens were invalidated on password change
@@ -366,7 +354,7 @@ export default {
                 const data = response.data;
                 delete data.password;
 
-                return Cicada.State.commit('setCurrentUser', data);
+                return Shopware.Store.get('session').setCurrentUser(data);
             });
         },
 

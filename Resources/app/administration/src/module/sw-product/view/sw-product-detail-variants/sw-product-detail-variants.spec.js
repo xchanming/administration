@@ -5,9 +5,8 @@ import { mount } from '@vue/test-utils';
 import 'src/app/component/utils/sw-loader';
 import 'src/app/component/base/sw-button';
 import 'src/app/component/base/sw-empty-state';
-import productStore from 'src/module/sw-product/page/sw-product-detail/state';
 import 'src/module/sw-product/component/sw-product-variants/sw-product-variants-overview';
-import CicadaDiscountCampaignService from 'src/app/service/discount-campaign.service';
+import ShopwareDiscountCampaignService from 'src/app/service/discount-campaign.service';
 import Criteria from 'src/core/data/criteria.data';
 
 async function createWrapper(privileges = []) {
@@ -72,10 +71,10 @@ async function createWrapper(privileges = []) {
                   </div>
                 `,
                 },
-                'sw-empty-state': await Cicada.Component.build('sw-empty-state'),
+                'sw-empty-state': await Shopware.Component.build('sw-empty-state'),
                 'sw-context-menu-item': true,
-                'sw-loader': await Cicada.Component.build('sw-loader'),
-                'sw-button': await Cicada.Component.build('sw-button'),
+                'sw-loader': await Shopware.Component.build('sw-loader'),
+                'sw-button': await Shopware.Component.build('sw-button'),
                 'sw-modal': true,
                 'sw-skeleton': true,
                 'sw-product-variants-overview': true,
@@ -93,114 +92,105 @@ async function createWrapper(privileges = []) {
 
 describe('src/module/sw-product/view/sw-product-detail-variants', () => {
     beforeAll(() => {
-        Cicada.Service().register('cicadaDiscountCampaignService', () => {
-            return new CicadaDiscountCampaignService();
+        Shopware.Service().register('shopwareDiscountCampaignService', () => {
+            return new ShopwareDiscountCampaignService();
         });
 
-        Cicada.State.registerModule('swProductDetail', {
-            ...productStore,
-            state: {
-                ...productStore.state,
-                variants: [],
-                parentProduct: {
-                    media: [],
-                    reviews: [
-                        {
-                            id: '1a2b3c',
-                            entity: 'review',
-                            customerId: 'd4c3b2a1',
-                            productId: 'd4c3b2a1',
-                            salesChannelId: 'd4c3b2a1',
-                        },
-                    ],
+        const store = Shopware.Store.get('swProductDetail');
+        store.$reset();
+        store.parentProduct = {
+            media: [],
+            reviews: [
+                {
+                    id: '1a2b3c',
+                    entity: 'review',
+                    customerId: 'd4c3b2a1',
+                    productId: 'd4c3b2a1',
+                    salesChannelId: 'd4c3b2a1',
                 },
-                product: {
-                    isNew: () => false,
-                    getEntityName: () => 'product',
-                    media: [],
-                    reviews: [
-                        {
-                            id: '1a2b3c',
-                            entity: 'review',
-                            customerId: 'd4c3b2a1',
-                            productId: 'd4c3b2a1',
-                            salesChannelId: 'd4c3b2a1',
-                        },
-                    ],
-                    purchasePrices: [
-                        {
-                            currencyId: '1',
-                            linked: true,
-                            gross: 0,
-                            net: 0,
-                        },
-                    ],
-                    price: [
-                        {
-                            currencyId: '1',
-                            linked: true,
-                            gross: 100,
-                            net: 84.034,
-                        },
-                    ],
-                    configuratorSettings: [],
-                    children: [],
+            ],
+        };
+        store.product = {
+            isNew: () => false,
+            getEntityName: () => 'product',
+            media: [],
+            reviews: [
+                {
+                    id: '1a2b3c',
+                    entity: 'review',
+                    customerId: 'd4c3b2a1',
+                    productId: 'd4c3b2a1',
+                    salesChannelId: 'd4c3b2a1',
                 },
-                loading: {
-                    product: false,
-                    media: false,
+            ],
+            purchasePrices: [
+                {
+                    currencyId: '1',
+                    linked: true,
+                    gross: 0,
+                    net: 0,
                 },
-                modeSettings: [
-                    'general_information',
-                    'prices',
-                    'deliverability',
-                    'visibility_structure',
-                    'media',
-                    'labelling',
-                ],
-                advancedModeSetting: {
-                    value: {
-                        settings: [
-                            {
-                                key: 'general_information',
-                                label: 'sw-product.detailBase.cardTitleProductInfo',
-                                enabled: true,
-                                name: 'general',
-                            },
-                            {
-                                key: 'prices',
-                                label: 'sw-product.detailBase.cardTitlePrices',
-                                enabled: true,
-                                name: 'general',
-                            },
-                            {
-                                key: 'deliverability',
-                                label: 'sw-product.detailBase.cardTitleDeliverabilityInfo',
-                                enabled: true,
-                                name: 'general',
-                            },
-                            {
-                                key: 'visibility_structure',
-                                label: 'sw-product.detailBase.cardTitleVisibilityStructure',
-                                enabled: true,
-                                name: 'general',
-                            },
-                            {
-                                key: 'labelling',
-                                label: 'sw-product.detailBase.cardTitleSettings',
-                                enabled: true,
-                                name: 'general',
-                            },
-                        ],
-                        advancedMode: {
-                            enabled: true,
-                            label: 'sw-product.general.textAdvancedMode',
-                        },
+            ],
+            price: [
+                {
+                    currencyId: '1',
+                    linked: true,
+                    gross: 100,
+                    net: 84.034,
+                },
+            ],
+            configuratorSettings: [],
+            children: [],
+        };
+        store.modeSettings = [
+            'general_information',
+            'prices',
+            'deliverability',
+            'visibility_structure',
+            'media',
+            'labelling',
+        ];
+        store.advancedModeSetting = {
+            value: {
+                settings: [
+                    {
+                        key: 'general_information',
+                        label: 'sw-product.detailBase.cardTitleProductInfo',
+                        enabled: true,
+                        name: 'general',
                     },
+                    {
+                        key: 'prices',
+                        label: 'sw-product.detailBase.cardTitlePrices',
+                        enabled: true,
+                        name: 'general',
+                    },
+                    {
+                        key: 'deliverability',
+                        label: 'sw-product.detailBase.cardTitleDeliverabilityInfo',
+                        enabled: true,
+                        name: 'general',
+                    },
+                    {
+                        key: 'visibility_structure',
+                        label: 'sw-product.detailBase.cardTitleVisibilityStructure',
+                        enabled: true,
+                        name: 'general',
+                    },
+                    {
+                        key: 'labelling',
+                        label: 'sw-product.detailBase.cardTitleSettings',
+                        enabled: true,
+                        name: 'general',
+                    },
+                ],
+                advancedMode: {
+                    enabled: true,
+                    label: 'sw-product.general.textAdvancedMode',
                 },
-                creationStates: 'is-physical',
             },
-        });
+        };
+        store.creationStates = 'is-physical';
     });
 
     it('should be a Vue.JS component', async () => {
@@ -242,41 +232,6 @@ describe('src/module/sw-product/view/sw-product-detail-variants', () => {
         expect(wrapper.vm.currentProductStates).toEqual([
             'is-foo',
             'is-bar',
-        ]);
-    });
-
-    it('should return an empty array if product has no configurator settings', async () => {
-        const wrapper = await createWrapper();
-        await wrapper.setData({
-            productEntity: {
-                configuratorSettings: null,
-            },
-        });
-
-        expect(wrapper.vm.selectedGroups).toEqual([]);
-    });
-
-    it('should return an array of group ids if the product has configurator settings', async () => {
-        const wrapper = await createWrapper();
-        await wrapper.setData({
-            groups: [
-                {
-                    id: 'second-group',
-                },
-            ],
-            productEntity: {
-                configuratorSettings: [
-                    { option: { groupId: 'first-group' } },
-                    { option: { groupId: 'second-group' } },
-                    { option: { groupId: 'second-group' } },
-                ],
-            },
-        });
-
-        expect(wrapper.vm.selectedGroups).toEqual([
-            {
-                id: 'second-group',
-            },
         ]);
     });
 

@@ -1,8 +1,8 @@
 import template from './sw-grid.html.twig';
 import './sw-grid.scss';
 
-const { Component } = Cicada;
-const { dom } = Cicada.Utils;
+const { Component } = Shopware;
+const { dom } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -31,8 +31,6 @@ const { dom } = Cicada.Utils;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-grid', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     provide() {
         return {
@@ -220,12 +218,6 @@ Component.register('sw-grid', {
 
         registerInlineEditingEvents() {
             // New way is using the provide/inject
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                // eslint-disable-next-line vue/no-deprecated-events-api
-                this.$on('sw-row-inline-edit-start', this.inlineEditingStart);
-                // eslint-disable-next-line vue/no-deprecated-events-api
-                this.$on('sw-row-inline-edit-cancel', this.disableActiveInlineEditing);
-            }
         },
 
         inlineEditingStart(id) {
@@ -330,7 +322,7 @@ Component.register('sw-grid', {
                 // means not having a proper unique identifier for each row likely causes issues.
                 // For example the child components may not be properly destroyed and created and just
                 // "patched" in place with a completely different item / row
-                Cicada.Utils.debug.error(
+                Shopware.Utils.debug.error(
                     'sw-grid item without `id` property',
                     item,
                     'more info here: https://vuejs.org/api/built-in-special-attributes.html#key',

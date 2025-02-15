@@ -1,9 +1,9 @@
-import type { NotificationType } from 'src/app/mixin/notification.mixin';
+import type { NotificationVariant } from 'src/app/store/notification.store';
 import type { PropType } from 'vue';
 import template from './sw-alert-deprecated.html.twig';
 import './sw-alert-deprecated.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 type AppearanceType = 'default' | 'notification' | 'system';
 type CssClassesObject = { [key: string]: boolean };
 type CssClasses = Array<string | CssClassesObject> | CssClassesObject;
@@ -26,11 +26,9 @@ type CssClasses = Array<string | CssClassesObject> | CssClassesObject;
 Component.register('sw-alert-deprecated', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         variant: {
-            type: String as PropType<NotificationType>,
+            type: String as PropType<NotificationVariant>,
             required: false,
             default: 'info',
             validValues: [

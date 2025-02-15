@@ -7,23 +7,20 @@ import CUSTOMER from '../../constant/sw-customer.constant';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { CicadaError } = Cicada.Classes;
-const { mapPageErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { ShopwareError } = Shopware.Classes;
+const { mapPageErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
         'customerGroupRegistrationService',
         'acl',
         'customerValidationService',
-        'feature',
     ],
 
     mixins: [
@@ -105,7 +102,7 @@ export default {
                 .addAssociation('requestedGroup')
                 .addAssociation('boundSalesChannel');
 
-            criteria.getAssociation('addresses').addSorting(Criteria.sort('name'), 'ASC', false);
+            criteria.getAssociation('addresses').addSorting(Criteria.sort('firstName'), 'ASC', false);
 
             return criteria;
         },
@@ -178,14 +175,14 @@ export default {
         async loadCustomer() {
             const defaultSalutationId = await this.getDefaultSalutation();
 
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-customer-detail__customer',
                 path: 'customer',
                 scope: this,
             });
             this.isLoading = true;
 
-            this.customerRepository.get(this.customerId, Cicada.Context.api, this.defaultCriteria).then((customer) => {
+            this.customerRepository.get(this.customerId, Shopware.Context.api, this.defaultCriteria).then((customer) => {
                 this.customer = customer;
                 if (!this.customer?.salutationId) {
                     this.customer.salutationId = defaultSalutationId;
@@ -225,7 +222,7 @@ export default {
                 })
                 .then((emailIsValid) => {
                     if (this.errorEmailCustomer) {
-                        Cicada.State.dispatch('error/addApiError', {
+                        Shopware.Store.get('error').addApiError({
                             expression: `customer.${this.customer.id}.email`,
                             error: null,
                         });
@@ -235,9 +232,9 @@ export default {
                 })
                 .catch((exception) => {
                     this.emailIsValid = false;
-                    Cicada.State.dispatch('error/addApiError', {
+                    Shopware.Store.get('error').addApiError({
                         expression: `customer.${this.customer.id}.email`,
-                        error: new CicadaError(exception.response.data.errors[0]),
+                        error: new ShopwareError(exception.response.data.errors[0]),
                     });
                 });
         },
@@ -294,9 +291,13 @@ export default {
                 .then(() => {
                     this.isSaveSuccessful = true;
                     this.createNotificationSuccess({
-                        message: this.$tc('sw-customer.detail.messageSaveSuccess', 0, {
-                            name: `${this.customer.title}`,
-                        }),
+                        message: this.$tc(
+                            'sw-customer.detail.messageSaveSuccess',
+                            {
+                                name: `${this.customer.firstName} ${this.customer.lastName}`,
+                            },
+                            0,
+                        ),
                     });
                 })
                 .catch((exception) => {
@@ -327,7 +328,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
             this.createdComponent();
         },
 
@@ -337,9 +338,9 @@ export default {
             const passwordNotEquals = passwordNew !== passwordConfirm;
 
             if (passwordSet && passwordNotEquals) {
-                Cicada.State.dispatch('error/addApiError', {
+                Shopware.Store.get('error').addApiError({
                     expression: `customer.${this.customer.id}.passwordConfirm`,
-                    error: new CicadaError({
+                    error: new ShopwareError({
                         detail: this.$tc('sw-customer.error.passwordDoNotMatch'),
                         code: 'password_not_match',
                     }),
@@ -389,9 +390,9 @@ export default {
 
         createErrorMessageForCompanyField() {
             this.isLoading = false;
-            Cicada.State.dispatch('error/addApiError', {
+            Shopware.Store.get('error').addApiError({
                 expression: `customer.${this.customer.id}.company`,
-                error: new CicadaError({
+                error: new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 }),
             });

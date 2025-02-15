@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Framework\Search;
+namespace Shopware\Administration\Framework\Search;
 
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Struct\Collection;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Struct\Collection;
 
 /**
  * @extends Collection<Criteria>

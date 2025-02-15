@@ -4,12 +4,10 @@
  * @private
  */
 export default {
-    compatConfig: Cicada.compatConfig,
-
     methods: {
         createdComponent() {
             this.isLoading = true;
-            Cicada.State.commit('context/resetLanguageToDefault');
+            Shopware.Store.get('context').resetLanguageToDefault();
             this.customerGroup = this.customerGroupRepository.create();
             this.isLoading = false;
         },

@@ -4,19 +4,16 @@
 import template from './sw-promotion-v2-individual-codes-behavior.html.twig';
 import './sw-promotion-v2-individual-codes-behavior.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'acl',
         'repositoryFactory',
         'promotionCodeApiService',
-        'feature',
     ],
 
     emits: [
@@ -90,11 +87,11 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
@@ -241,7 +238,7 @@ export default {
 
         createRoutingErrorNotification(name) {
             this.createNotificationError({
-                message: this.$tc('sw-promotion-v2.detail.base.codes.individual.routingError', 0, { name }),
+                message: this.$tc('sw-promotion-v2.detail.base.codes.individual.routingError', { name }, 0),
             });
         },
     },

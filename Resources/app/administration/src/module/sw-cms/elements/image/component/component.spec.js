@@ -18,7 +18,7 @@ async function createWrapper() {
         {
             global: {
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
             },
             props: {

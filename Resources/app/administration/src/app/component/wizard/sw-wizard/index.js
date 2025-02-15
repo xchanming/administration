@@ -1,7 +1,7 @@
 import './sw-wizard.scss';
 import template from './sw-wizard.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -29,8 +29,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-wizard', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

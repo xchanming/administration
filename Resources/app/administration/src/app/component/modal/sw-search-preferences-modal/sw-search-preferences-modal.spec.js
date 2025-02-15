@@ -52,7 +52,7 @@ describe('src/app/component/modal/sw-search-preferences-modal', () => {
     let wrapper;
 
     beforeEach(async () => {
-        Cicada.Application.view.deleteReactive = () => {};
+        Shopware.Application.view.deleteReactive = () => {};
         wrapper = await createWrapper();
         await flushPromises();
     });

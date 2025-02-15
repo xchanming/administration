@@ -8,15 +8,13 @@ import './sw-manufacturer-detail.scss';
 const {
     Mixin,
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -129,7 +127,7 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-manufacturer-detail__manufacturer',
                 path: 'manufacturer',
                 scope: this,
@@ -139,7 +137,7 @@ export default {
                 return;
             }
 
-            Cicada.State.commit('context/resetLanguageToDefault');
+            Shopware.Store.get('context').resetLanguageToDefault();
             this.manufacturer = this.manufacturerRepository.create();
         },
 

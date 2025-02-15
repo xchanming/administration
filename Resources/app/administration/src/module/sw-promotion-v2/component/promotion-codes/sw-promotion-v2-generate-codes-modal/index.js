@@ -4,13 +4,11 @@
 import template from './sw-promotion-v2-generate-codes-modal.html.twig';
 import './sw-promotion-v2-generate-codes-modal.scss';
 
-const debounce = Cicada.Utils.debounce;
+const debounce = Shopware.Utils.debounce;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'promotionCodeApiService',

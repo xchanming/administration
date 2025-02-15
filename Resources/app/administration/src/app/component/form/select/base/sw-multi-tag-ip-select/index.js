@@ -1,7 +1,7 @@
 import template from './sw-multi-tag-ip-select.html.twig';
 
-const { Component } = Cicada;
-const { string } = Cicada.Utils;
+const { Component } = Shopware;
+const { string } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -37,7 +37,7 @@ Component.extend('sw-multi-tag-ip-select', 'sw-multi-tag-select', {
             type: String,
             required: false,
             default() {
-                return 'CICADA_INVALID_IP';
+                return 'SHOPWARE_INVALID_IP';
             },
         },
     },

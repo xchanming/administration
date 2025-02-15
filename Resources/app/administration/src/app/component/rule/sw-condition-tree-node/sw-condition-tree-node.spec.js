@@ -1,6 +1,7 @@
 /**
  * @sw-package fundamentals@after-sales
  */
+
 import { mount, config } from '@vue/test-utils';
 
 const subComponent = {

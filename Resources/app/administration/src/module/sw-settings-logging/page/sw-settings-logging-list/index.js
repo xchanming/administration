@@ -1,18 +1,16 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 
 import './sw-settings-logging-list.scss';
 import template from './sw-settings-logging-list.html.twig';
 
-const { Mixin, Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin, Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -69,7 +67,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 

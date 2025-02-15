@@ -1,7 +1,7 @@
 import template from './sw-product-image.html.twig';
 import './sw-product-image.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -15,8 +15,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-product-image', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'sw-product-image-cover',

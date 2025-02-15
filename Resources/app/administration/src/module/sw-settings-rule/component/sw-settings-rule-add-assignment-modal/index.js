@@ -2,8 +2,8 @@ import EntityCollection from 'src/core/data/entity-collection.data';
 import template from './sw-settings-rule-add-assignment-modal.html.twig';
 import './sw-settings-rule-assignment-modal.scss';
 
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -11,8 +11,6 @@ const { Criteria } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -41,7 +39,7 @@ export default {
             isLoading: true,
             selection: {},
             criteriaLimit: 10,
-            currentLanguageId: Cicada.Context.api.languageId,
+            currentLanguageId: Shopware.Context.api.languageId,
         };
     },
 

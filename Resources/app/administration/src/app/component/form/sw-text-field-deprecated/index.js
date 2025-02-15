@@ -1,7 +1,7 @@
 import { inject } from 'vue';
 import template from './sw-text-field-deprecated.html.twig';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @sw-package framework
@@ -17,8 +17,6 @@ Component.register('sw-text-field-deprecated', {
     template,
 
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -83,40 +81,11 @@ Component.register('sw-text-field-deprecated', {
 
     computed: {
         hasPrefix() {
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                return this.$scopedSlots.hasOwnProperty('prefix');
-            }
-
             return this.$slots.hasOwnProperty('prefix');
         },
 
         hasSuffix() {
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                return this.$scopedSlots.hasOwnProperty('suffix');
-            }
-
             return this.$slots.hasOwnProperty('suffix');
-        },
-
-        additionalListeners() {
-            if (!this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return {};
-            }
-
-            const additionalListeners = { ...this.$listeners };
-
-            delete additionalListeners.input;
-            delete additionalListeners.change;
-
-            return additionalListeners;
-        },
-
-        listeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
 
         filteredInputAttributes() {

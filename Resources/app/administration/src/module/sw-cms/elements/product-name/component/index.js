@@ -1,6 +1,6 @@
 import './sw-cms-el-product-name.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private

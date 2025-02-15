@@ -1,7 +1,7 @@
 import template from './sw-media-modal-delete.html.twig';
 import './sw-media-modal-delete.scss';
 
-const { Context, Mixin, Filter } = Cicada;
+const { Context, Mixin, Filter } = Shopware;
 
 /**
  * @status ready
@@ -15,8 +15,6 @@ const { Context, Mixin, Filter } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -216,7 +214,7 @@ export default {
             };
 
             if (this.notificationId !== null) {
-                await Cicada.State.dispatch('notification/updateNotification', {
+                await Shopware.Store.get('notification').updateNotification({
                     uuid: this.notificationId,
                     ...notification,
                 });
@@ -228,7 +226,7 @@ export default {
                 return;
             }
 
-            const newNotificationId = await Cicada.State.dispatch('notification/createNotification', {
+            const newNotificationId = await Shopware.Store.get('notification').createNotification({
                 variant: 'success',
                 ...notification,
             });
@@ -248,6 +246,7 @@ export default {
                 'productMedia',
                 'productManufacturers',
                 'mailTemplateMedia',
+                'documentBaseConfigs',
                 'paymentMethods',
                 'shippingMethods',
                 'cmsBlocks',

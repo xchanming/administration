@@ -9,7 +9,7 @@ import MockAdapter from 'axios-mock-adapter';
 function createNotificationsService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
     const notificationsService = new NotificationsService(client, loginService);
     return { notificationsService, clientMock };
 }

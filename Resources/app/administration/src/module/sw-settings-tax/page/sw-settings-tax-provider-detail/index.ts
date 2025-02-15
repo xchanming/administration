@@ -3,8 +3,8 @@ import type CriteriaType from 'src/core/data/criteria.data';
 import template from './sw-settings-tax-provider-detail.html.twig';
 import './sw-settings-tax-provider-detail.scss';
 
-const { Component, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package checkout
@@ -13,8 +13,6 @@ const { Criteria } = Cicada.Data;
  */
 export default Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

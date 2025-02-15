@@ -1,7 +1,7 @@
 import template from './sw-cms-el-config-vimeo-video.html.twig';
 import './sw-cms-el-config-vimeo-video.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['element-update'],
 
@@ -108,13 +106,6 @@ export default {
         },
 
         updateElementData(media = null) {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element.data, 'previewMediaId', media === null ? null : media.id);
-                this.$set(this.element.data, 'previewMedia', media);
-
-                return;
-            }
-
             this.element.data.previewMediaId = media === null ? null : media.id;
             this.element.data.previewMedia = media;
         },

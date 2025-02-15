@@ -10,7 +10,7 @@ import { defineComponent } from 'vue';
 /**
  * @private
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'position',
     defineComponent({
         methods: {
@@ -21,7 +21,7 @@ export default Cicada.Mixin.register(
             getNewPosition<EntityName extends keyof EntitySchema.Entities>(
                 repository: Repository<EntityName>,
                 criteria: Criteria,
-                context: typeof Cicada.Context.api,
+                context: typeof Shopware.Context.api,
                 field = 'position',
             ) {
                 criteria.addAggregation(Criteria.max('maxPosition', field)).addSorting(Criteria.sort(field, 'DESC'));

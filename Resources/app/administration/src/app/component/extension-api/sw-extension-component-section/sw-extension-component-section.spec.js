@@ -46,7 +46,7 @@ describe('src/app/component/extension-api/sw-extension-component-section', () =>
     });
 
     beforeEach(async () => {
-        Cicada.State.get('extensionComponentSections').identifier = {};
+        Shopware.Store.get('extensionComponentSections').identifier = {};
     });
 
     it('should be a Vue.js component', async () => {
@@ -55,7 +55,7 @@ describe('src/app/component/extension-api/sw-extension-component-section', () =>
     });
 
     it('should not render tabs in card section', async () => {
-        Cicada.State.commit('extensionComponentSections/addSection', {
+        Shopware.Store.get('extensionComponentSections').addSection({
             component: 'card',
             positionId: 'test-position',
             props: {
@@ -72,7 +72,7 @@ describe('src/app/component/extension-api/sw-extension-component-section', () =>
     });
 
     it('should render tabs in card section', async () => {
-        Cicada.State.commit('extensionComponentSections/addSection', {
+        Shopware.Store.get('extensionComponentSections').addSection({
             component: 'card',
             positionId: 'test-position',
             props: {
@@ -107,7 +107,7 @@ describe('src/app/component/extension-api/sw-extension-component-section', () =>
     });
 
     it('should switch tab when clicking', async () => {
-        Cicada.State.commit('extensionComponentSections/addSection', {
+        Shopware.Store.get('extensionComponentSections').addSection({
             component: 'card',
             positionId: 'test-position',
             props: {
@@ -148,7 +148,7 @@ describe('src/app/component/extension-api/sw-extension-component-section', () =>
         'dev',
         'prod',
     ])('should be deprecated in %s env', async (env) => {
-        Cicada.State.commit('extensionComponentSections/addSection', {
+        Shopware.Store.get('extensionComponentSections').addSection({
             component: 'card',
             positionId: 'test-position',
             props: {
@@ -162,14 +162,14 @@ describe('src/app/component/extension-api/sw-extension-component-section', () =>
         const mock = jest.fn();
         if (env === 'prod') {
             // In prod the deprecation will be thrown via warn
-            Cicada.Utils.debug.warn = mock;
+            Shopware.Utils.debug.warn = mock;
 
             // Save previous env to restore later and set env to prod
             restoreEnv = process.env;
             process.env = 'prod';
         } else {
             // In dev the deprecation will be thrown via warn
-            Cicada.Utils.debug.error = mock;
+            Shopware.Utils.debug.error = mock;
         }
 
         wrapper = await createWrapper({

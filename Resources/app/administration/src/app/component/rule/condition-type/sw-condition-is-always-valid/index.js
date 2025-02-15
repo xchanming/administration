@@ -1,6 +1,6 @@
 import template from './sw-condition-always-valid.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**

@@ -1,9 +1,9 @@
 import template from './sw-flow-change-customer-group-modal.html.twig';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Store } = Shopware;
+const { Criteria } = Shopware.Data;
 const { mapState } = Component.getComponentHelper();
-const { CicadaError } = Cicada.Classes;
+const { ShopwareError } = Shopware.Classes;
 
 /**
  * @private
@@ -11,8 +11,6 @@ const { CicadaError } = Cicada.Classes;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -47,7 +45,7 @@ export default {
             return criteria;
         },
 
-        ...mapState('swFlowState', ['customerGroups']),
+        ...mapState(() => Store.get('swFlow'), ['customerGroups']),
     },
 
     watch: {
@@ -68,7 +66,7 @@ export default {
 
             if (!this.customerGroups.length) {
                 this.customerGroupRepository.search(this.customerGroupCriteria).then((data) => {
-                    Cicada.State.commit('swFlowState/setCustomerGroups', data);
+                    Shopware.Store.get('swFlow').customerGroups = data;
                 });
             }
         },
@@ -79,7 +77,7 @@ export default {
 
         onAddAction() {
             if (!this.customerGroupId) {
-                this.fieldError = new CicadaError({
+                this.fieldError = new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
 

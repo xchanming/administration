@@ -3,10 +3,10 @@
  */
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-newsletter', () => import('./page/sw-settings-newsletter'));
+Shopware.Component.register('sw-settings-newsletter', () => import('./page/sw-settings-newsletter'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-newsletter', {
@@ -32,7 +32,7 @@ Module.register('sw-settings-newsletter', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'content',
         to: 'sw.settings.newsletter.index',
         icon: 'regular-inbox',
         privilege: 'system.system_config',

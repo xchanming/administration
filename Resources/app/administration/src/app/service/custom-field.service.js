@@ -1,6 +1,6 @@
-const { remove } = Cicada.Utils.array;
-const { Service } = Cicada;
-const { Criteria } = Cicada.Data;
+const { remove } = Shopware.Utils.array;
+const { Service } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package framework
@@ -164,7 +164,7 @@ export default function createCustomFieldService() {
     function getCustomFieldSets(entityName) {
         const customFieldSetRepository = Service('repositoryFactory').create('custom_field_set');
 
-        return customFieldSetRepository.search(customFieldSetCriteria(entityName), Cicada.Context.api).then((sets) => {
+        return customFieldSetRepository.search(customFieldSetCriteria(entityName), Shopware.Context.api).then((sets) => {
             return sets.filter((set) => set.customFields.length > 0);
         });
     }

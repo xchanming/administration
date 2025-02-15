@@ -76,11 +76,11 @@ export default function createRouter(Router, View, moduleFactory, LoginService) 
         const assetPath = getAssetPath();
 
         router.beforeEach((to) => {
-            Cicada.Service('userActivityService').updateLastUserActivity();
+            Shopware.Service('userActivityService').updateLastUserActivity();
 
             setModuleFavicon(to, assetPath);
             const loggedIn = LoginService.isLoggedIn();
-            const tokenHandler = new Cicada.Helper.RefreshTokenHelper();
+            const tokenHandler = new Shopware.Helper.RefreshTokenHelper();
             const loginAllowlist = [
                 '/login/',
                 '/login',
@@ -137,7 +137,7 @@ export default function createRouter(Router, View, moduleFactory, LoginService) 
             }
 
             // User tries to access a route which needs a special privilege
-            if (to.meta.privilege && !Cicada.Service('acl').can(to.meta.privilege)) {
+            if (to.meta.privilege && !Shopware.Service('acl').can(to.meta.privilege)) {
                 return { name: 'sw.privilege.error.index' };
             }
 
@@ -304,7 +304,7 @@ export default function createRouter(Router, View, moduleFactory, LoginService) 
      * @returns {Object} route - Converted route definition
      */
     function convertRouteComponentToViewComponent(route) {
-        const hasOwnProperty = Cicada.Utils.object.hasOwnProperty;
+        const hasOwnProperty = Shopware.Utils.object.hasOwnProperty;
 
         if (hasOwnProperty(route, 'components') && Object.keys(route.components).length) {
             const componentList = {};
@@ -367,11 +367,11 @@ export default function createRouter(Router, View, moduleFactory, LoginService) 
      * @returns {Vue|null} - View component or null
      */
     function getViewComponent(componentName) {
-        return Cicada.Application.view.getComponentForRoute(componentName);
+        return Shopware.Application.view.getComponentForRoute(componentName);
     }
 
     function getAssetPath() {
-        return Cicada.Context.api.assetsPath;
+        return Shopware.Context.api.assetsPath;
     }
 
     function setModuleFavicon(routeDestination, assetsPath) {

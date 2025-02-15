@@ -4,11 +4,11 @@
 
 const addPrivilegeMappingEntryMock = jest.fn();
 
-const originalCicadaService = Cicada.Service;
+const originalShopwareService = Shopware.Service;
 
 describe('src/module/sw-settings-rule/acl/index.js', () => {
     beforeAll(() => {
-        Cicada.Service = () => {
+        Shopware.Service = () => {
             return {
                 addPrivilegeMappingEntry: addPrivilegeMappingEntryMock,
             };
@@ -23,7 +23,7 @@ describe('src/module/sw-settings-rule/acl/index.js', () => {
     });
 
     afterAll(() => {
-        Cicada.Service = originalCicadaService;
+        Shopware.Service = originalShopwareService;
     });
 
     it('should register privilege mapping entry', () => {

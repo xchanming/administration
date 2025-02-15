@@ -9,10 +9,10 @@ import adminModules from './_mocks/adminModules.json';
 import testApps from './_mocks/testApps.json';
 
 describe('src/app/service/menu.service', () => {
-    const menuService = createMenuService(Cicada.Module);
+    const menuService = createMenuService(Shopware.Module);
 
     function clearModules() {
-        Cicada.Module.getModuleRegistry().clear();
+        Shopware.Module.getModuleRegistry().clear();
     }
 
     beforeEach(async () => {
@@ -22,7 +22,7 @@ describe('src/app/service/menu.service', () => {
     describe('adminModuleNavigation', () => {
         it('returns an unordered list of all navigation entries', async () => {
             adminModules.forEach((module) => {
-                Cicada.Module.register(module.name, module);
+                Shopware.Module.register(module.name, module);
             });
 
             const navigationEntries = menuService.getNavigationFromAdminModules();
@@ -47,7 +47,7 @@ describe('src/app/service/menu.service', () => {
         });
 
         it('ignores modules with empty navigation', async () => {
-            Cicada.Module.register('empty-navigation', {
+            Shopware.Module.register('empty-navigation', {
                 name: 'empty-navigation',
                 routes: { index: { path: '/', component: 'sw-index' } },
                 navigation: [],
@@ -57,7 +57,7 @@ describe('src/app/service/menu.service', () => {
         });
 
         it('ignores modules if navigation is null', async () => {
-            Cicada.Module.register('null-navigation', {
+            Shopware.Module.register('null-navigation', {
                 name: 'null-navigation',
                 routes: { index: { path: '/', component: 'sw-index' } },
                 navigation: null,
@@ -110,8 +110,8 @@ describe('src/app/service/menu.service', () => {
         });
 
         it('respects the current locale for apps', async () => {
-            Cicada.Context.app.fallbackLocale = 'en-GB';
-            Cicada.State.get('session').currentLocale = 'zh-CN';
+            Shopware.Context.app.fallbackLocale = 'en-GB';
+            Shopware.Store.get('session').currentLocale = 'de-DE';
 
             const navigation = menuService.getNavigationFromApps(testApps);
             expect(navigation).toEqual([
@@ -147,8 +147,8 @@ describe('src/app/service/menu.service', () => {
         });
 
         it('uses fallback locale for apps if current locale is not translated', async () => {
-            Cicada.Context.app.fallbackLocale = 'en-GB';
-            Cicada.State.get('session').currentLocale = 'ru-RU';
+            Shopware.Context.app.fallbackLocale = 'en-GB';
+            Shopware.Store.get('session').currentLocale = 'ru-RU';
 
             const navigation = menuService.getNavigationFromApps(testApps);
             expect(navigation).toEqual([

@@ -71,8 +71,8 @@ describe('module/sw-settings-tax/component/sw-settings-tax-rule-type-individual-
 
     it('fetches country states at creation', async () => {
         const states = [
-            Cicada.Utils.createId(),
-            Cicada.Utils.createId(),
+            Shopware.Utils.createId(),
+            Shopware.Utils.createId(),
         ];
 
         const wrapper = await createWrapper({
@@ -100,7 +100,7 @@ describe('module/sw-settings-tax/component/sw-settings-tax-rule-type-individual-
         expect(wrapper.vm.individualStates).toBeInstanceOf(Array);
         expect(wrapper.vm.individualStates).toHaveLength(0);
 
-        const stateId = Cicada.Utils.createId();
+        const stateId = Shopware.Utils.createId();
 
         await wrapper.setProps({
             taxRule: {

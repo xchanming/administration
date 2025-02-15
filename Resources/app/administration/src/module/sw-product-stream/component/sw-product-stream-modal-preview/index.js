@@ -5,8 +5,8 @@
 import template from './sw-product-stream-modal-preview.html.twig';
 import './sw-product-stream-modal-preview.scss';
 
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
 const PRODUCT_COMPARISON_SALES_CHANNEL_TYPE_ID = 'ed535e5722134ac1aa6524f73e26881b';
 
 /**
@@ -14,8 +14,6 @@ const PRODUCT_COMPARISON_SALES_CHANNEL_TYPE_ID = 'ed535e5722134ac1aa6524f73e2688
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -126,11 +124,11 @@ export default {
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
 
         stockColorVariantFilter() {
-            return Cicada.Filter.getByName('stockColorVariant');
+            return Shopware.Filter.getByName('stockColorVariant');
         },
     },
 
@@ -267,7 +265,7 @@ export default {
             criteria.addAssociation('currency');
 
             return this.salesChannelRepository
-                .get(this.selectedSalesChannel, Cicada.Context.api, this.salesChannelCriteria)
+                .get(this.selectedSalesChannel, Shopware.Context.api, this.salesChannelCriteria)
                 .then((salesChannel) => {
                     this.selectedCurrencyIsoCode = salesChannel.currency.isoCode;
                     this.selectedCurrencyId = salesChannel.currencyId;

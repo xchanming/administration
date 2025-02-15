@@ -1,23 +1,21 @@
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
 import template from './sw-bulk-edit-order-documents-generate-delivery-note.html.twig';
 
-const { State } = Cicada;
+const { Store } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         generateData: {
             get() {
-                return State.get('swBulkEdit').orderDocuments?.delivery_note?.value;
+                return Store.get('swBulkEdit').orderDocuments?.delivery_note?.value;
             },
             set(generateData) {
-                State.commit('swBulkEdit/setOrderDocumentsValue', {
+                Store.get('swBulkEdit').setOrderDocumentsValue({
                     type: 'delivery_note',
                     value: generateData,
                 });

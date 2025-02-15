@@ -1,10 +1,11 @@
 /**
  * @sw-package framework
  */
+
 import './sw-wizard-dot-navigation.scss';
 import template from './sw-wizard-dot-navigation.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * See `sw-wizard` for an example.
@@ -13,8 +14,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-wizard-dot-navigation', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         pages: {

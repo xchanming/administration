@@ -1,9 +1,9 @@
 import template from './sw-category-detail-products.html.twig';
 import './sw-category-detail-products.scss';
 
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
-const CicadaError = Cicada.Classes.CicadaError;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
+const ShopwareError = Shopware.Classes.ShopwareError;
 
 /**
  * @sw-package discovery
@@ -11,8 +11,6 @@ const CicadaError = Cicada.Classes.CicadaError;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -41,7 +39,7 @@ export default {
 
     computed: {
         category() {
-            return Cicada.State.get('swCategoryDetail').category;
+            return Shopware.Store.get('swCategoryDetail').category;
         },
 
         productStreamRepository() {
@@ -97,7 +95,7 @@ export default {
 
         productStreamInvalidError() {
             if (this.productStreamInvalid) {
-                return new CicadaError({
+                return new ShopwareError({
                     code: 'PRODUCT_STREAM_INVALID',
                     detail: this.$tc('sw-category.base.products.dynamicProductGroupInvalidMessage'),
                 });
@@ -128,13 +126,17 @@ export default {
                 name: 'sw.product.stream.index',
             };
 
-            const helpText = this.$tc('sw-category.base.products.dynamicProductGroupHelpText.label', 0, {
-                link: `<sw-internal-link
+            const helpText = this.$tc(
+                'sw-category.base.products.dynamicProductGroupHelpText.label',
+                {
+                    link: `<sw-internal-link
                            :router-link=${JSON.stringify(link)}
                            :inline="true">
                            ${this.$tc('sw-category.base.products.dynamicProductGroupHelpText.linkText')}
                        </sw-internal-link>`,
-            });
+                },
+                0,
+            );
 
             try {
                 // eslint-disable-next-line no-new
@@ -152,7 +154,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

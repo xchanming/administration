@@ -1,4 +1,4 @@
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package discovery
@@ -6,7 +6,7 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function createMediaDefaultFolderService() {
     const cache = {};
-    const repository = Cicada.Service('repositoryFactory').create('media_default_folder');
+    const repository = Shopware.Service('repositoryFactory').create('media_default_folder');
 
     return {
         getDefaultFolderId: (entityName) => {
@@ -20,7 +20,7 @@ export default function createMediaDefaultFolderService() {
             criteria.addFilter(Criteria.equals('entity', entityName));
 
             cache[entityName] = repository
-                .search(criteria, Cicada.Context.api)
+                .search(criteria, Shopware.Context.api)
                 .then((data) => {
                     return data.first().folder.id;
                 })

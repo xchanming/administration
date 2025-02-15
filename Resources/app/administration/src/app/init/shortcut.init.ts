@@ -1,14 +1,15 @@
 /**
  * @sw-package framework
  */
+
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeShortcutService() {
-    const factoryContainer = Cicada.Application.getContainer('factory');
+    const factoryContainer = Shopware.Application.getContainer('factory');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const shortcutFactory = factoryContainer.shortcut;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const shortcutService = Cicada.Service('shortcutService');
-    const loginService = Cicada.Service('loginService');
+    const shortcutService = Shopware.Service('shortcutService');
+    const loginService = Shopware.Service('loginService');
 
     // Register default Shortcuts
     const defaultShortcuts = defaultShortcutMap();

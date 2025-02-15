@@ -5,10 +5,8 @@ import './sw-ai-copilot-badge.scss';
  * @sw-package framework
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         label: {

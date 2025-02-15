@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Dashboard;
+namespace Shopware\Administration\Dashboard;
 
-use Cicada\Core\Checkout\Cart\Price\CashRounding;
-use Cicada\Core\Checkout\Order\Aggregate\OrderTransaction\OrderTransactionStates;
-use Cicada\Core\Defaults;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Uuid\Uuid;
 use Doctrine\DBAL\Connection;
+use Shopware\Core\Checkout\Cart\Price\CashRounding;
+use Shopware\Core\Checkout\Order\Aggregate\OrderTransaction\OrderTransactionStates;
+use Shopware\Core\Defaults;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Uuid\Uuid;
 
 /**
  * @internal
@@ -26,7 +26,7 @@ class OrderAmountService
     /**
      * @return list<array{date:string, amount:float, count:int}>
      */
-    public function load(Context $context, string $since, bool $paid, string $timezone = 'Asia/Shanghai'): array
+    public function load(Context $context, string $since, bool $paid, string $timezone = 'UTC'): array
     {
         $query = $this->connection->createQueryBuilder();
 

@@ -1,4 +1,4 @@
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package framework

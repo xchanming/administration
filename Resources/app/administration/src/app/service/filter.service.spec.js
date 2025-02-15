@@ -29,7 +29,7 @@ describe('app/service/filter.service.js', () => {
             return orgPush.call(router, location).catch(() => {});
         };
 
-        Cicada.Application.view = {
+        Shopware.Application.view = {
             router,
         };
 
@@ -56,11 +56,11 @@ describe('app/service/filter.service.js', () => {
             },
         ]);
 
-        Cicada.State.get('session').currentUser = {
+        Shopware.Store.get('session').setCurrentUser({
             currentUser: {
                 id: '123',
             },
-        };
+        });
 
         filterService = new FilterService({
             userConfigRepository: {
@@ -107,7 +107,7 @@ describe('app/service/filter.service.js', () => {
 
         expect(data).toEqual(filterResult);
 
-        const query = JSON.parse(decodeURIComponent(Cicada.Application.view.router.currentRoute.value.query.test));
+        const query = JSON.parse(decodeURIComponent(Shopware.Application.view.router.currentRoute.value.query.test));
         expect(query).toEqual(filterResult);
     });
 
@@ -121,7 +121,7 @@ describe('app/service/filter.service.js', () => {
                 },
             }),
         );
-        await Cicada.Application.view.router.push({
+        await Shopware.Application.view.router.push({
             query: {
                 test: urlEncodedValue,
             },
@@ -145,7 +145,7 @@ describe('app/service/filter.service.js', () => {
                 },
             }),
         );
-        await Cicada.Application.view.router.push({
+        await Shopware.Application.view.router.push({
             query: {
                 test: urlEncodedValue,
             },

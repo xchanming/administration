@@ -3,22 +3,22 @@ import './acl';
 import defaultSearchConfiguration from './default-search-configuration';
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-plugin-box', () => import('./component/sw-plugin-box'));
-Cicada.Component.register(
+Shopware.Component.register('sw-plugin-box', () => import('./component/sw-plugin-box'));
+Shopware.Component.register(
     'sw-settings-payment-sorting-modal',
     () => import('./component/sw-settings-payment-sorting-modal'),
 );
-Cicada.Component.register('sw-payment-card', () => import('./component/sw-payment-card'));
-Cicada.Component.register('sw-settings-payment-overview', () => import('./page/sw-settings-payment-overview'));
-Cicada.Component.register('sw-settings-payment-detail', () => import('./page/sw-settings-payment-detail'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-payment-card', () => import('./component/sw-payment-card'));
+Shopware.Component.register('sw-settings-payment-overview', () => import('./page/sw-settings-payment-overview'));
+Shopware.Component.register('sw-settings-payment-detail', () => import('./page/sw-settings-payment-detail'));
+Shopware.Component.extend(
     'sw-settings-payment-create',
     'sw-settings-payment-detail',
     () => import('./page/sw-settings-payment-create'),
 );
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /**
  * @sw-package checkout
@@ -62,7 +62,7 @@ Module.register('sw-settings-payment', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'commerce',
         to: 'sw.settings.payment.overview',
         icon: 'regular-credit-card',
         privilege: 'payment.viewer',

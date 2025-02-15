@@ -4,7 +4,7 @@
 
 import template from './sw-step-display.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -33,8 +33,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-step-display', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     provide() {
         return {

@@ -8,8 +8,6 @@ import './sw-landing-page-detail-cms.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         isLoading: {
             type: Boolean,
@@ -19,11 +17,11 @@ export default {
 
     computed: {
         landingPage() {
-            return Cicada.State.get('swCategoryDetail').landingPage;
+            return Shopware.Store.get('swCategoryDetail').landingPage;
         },
 
         cmsPage() {
-            return Cicada.Store.get('cmsPage').currentPage;
+            return Shopware.Store.get('cmsPage').currentPage;
         },
     },
 };

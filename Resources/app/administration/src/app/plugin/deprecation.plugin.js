@@ -1,6 +1,6 @@
 import { getCurrentInstance } from 'vue';
 
-const { warn } = Cicada.Utils.debug;
+const { warn } = Shopware.Utils.debug;
 
 /**
  * @sw-package framework
@@ -227,7 +227,7 @@ class DeprecationPlugin {
                     typeof deprecationValue === 'string' ? deprecationValue : deprecationValue.version;
 
                 let warningText = `The component "${componentName}" was used with the deprecated property "${propName}".`;
-                warningText += ` The property will be removed in Cicada ${deprecationVersion} \n`;
+                warningText += ` The property will be removed in Shopware ${deprecationVersion} \n`;
 
                 if (deprecationValue.comment) {
                     warningText += `\n ${deprecationValue.comment}`;
@@ -252,7 +252,7 @@ class DeprecationPlugin {
 
         const { version, comment } = deprecationInformation;
         const componentName = component.$options.name;
-        const warningText = `The component "${componentName}" is deprecated and will be removed in Cicada ${version} \n`;
+        const warningText = `The component "${componentName}" is deprecated and will be removed in Shopware ${version} \n`;
 
         warn(componentName, warningText + comment);
         warn(componentName, this.getComponentTrace(component));

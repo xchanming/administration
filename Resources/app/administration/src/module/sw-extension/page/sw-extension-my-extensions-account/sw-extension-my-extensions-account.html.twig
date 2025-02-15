@@ -1,4 +1,3 @@
-<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_extension_my_extensions_account %}
 <div v-if="isLoading">
     <sw-skeleton />
@@ -61,8 +60,8 @@
 
                 <div class="sw-extension-my-extensions-account__wrapper-content-login-form">
                     <sw-text-field
-                        v-model:value="form.cicadaId"
-                        class="sw-extension-my-extensions-account__cicada-id-field"
+                        v-model:value="form.shopwareId"
+                        class="sw-extension-my-extensions-account__shopware-id-field"
                         required
                         :label="$tc('sw-extension.my-extensions.account.mailLabel')"
                         :placeholder="$tc('sw-extension.my-extensions.account.mailPlaceholder')"

@@ -7,10 +7,8 @@ import type MediaUploadResult from '../../../shared/MediaUploadResult';
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -23,7 +21,7 @@ export default Cicada.Component.wrapComponentConfig({
     ],
 
     mixins: [
-        Cicada.Mixin.getByName('cms-state'),
+        Shopware.Mixin.getByName('cms-state'),
     ],
 
     props: {
@@ -43,7 +41,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         cmsPageState() {
-            return Cicada.Store.get('cmsPage');
+            return Shopware.Store.get('cmsPage');
         },
 
         cmsBlocks() {

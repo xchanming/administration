@@ -3,7 +3,7 @@
  */
 import { mount } from '@vue/test-utils';
 
-Cicada.Mixin.register('cms-element', {
+Shopware.Mixin.register('cms-element', {
     props: {
         element: {
             type: Object,

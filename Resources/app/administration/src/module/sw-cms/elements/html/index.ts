@@ -2,23 +2,23 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-html', () => import('./component'));
+Shopware.Component.register('sw-cms-el-html', () => import('./component'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-html', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-html', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-html', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-html', () => import('./config'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'html',
     label: 'sw-cms.elements.html.label',
     component: 'sw-cms-el-html',

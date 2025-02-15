@@ -3,7 +3,7 @@ import template from './sw-cms-section.html.twig';
 import './sw-cms-section.scss';
 import type CmsVisibility from '../../shared/CmsVisibility';
 
-const { Component, Mixin, Filter } = Cicada;
+const { Component, Mixin, Filter } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 type SlotsErrorObject = {
@@ -26,10 +26,8 @@ type SlotConfigErrorObject = {
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'cmsService',
@@ -135,7 +133,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         sectionMobileAndHidden() {
-            const view = Cicada.Store.get('cmsPage').currentCmsDeviceView;
+            const view = Shopware.Store.get('cmsPage').currentCmsDeviceView;
             return view === 'mobile' && this.section.mobileBehavior === 'hidden';
         },
 
@@ -178,7 +176,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         isVisible() {
-            const view = Cicada.Store.get('cmsPage').currentCmsDeviceView;
+            const view = Shopware.Store.get('cmsPage').currentCmsDeviceView;
 
             const visibility = this.section.visibility as CmsVisibility;
 
@@ -239,12 +237,12 @@ export default Cicada.Component.wrapComponentConfig({
             this.openBlockBar();
         },
 
-        onBlockSelection(block: EntitySchema.Entity<'cms_block'>) {
-            Cicada.Store.get('cmsPage').setBlock(block);
+        onBlockSelection(block: Entity<'cms_block'>) {
+            Shopware.Store.get('cmsPage').setBlock(block);
             this.$emit('page-config-open', 'itemConfig');
         },
 
-        onBlockDuplicate(block: EntitySchema.Entity<'cms_block'>, section: EntitySchema.Entity<'cms_section'>) {
+        onBlockDuplicate(block: Entity<'cms_block'>, section: Entity<'cms_section'>) {
             this.$emit('block-duplicate', block, section);
         },
 
@@ -252,7 +250,7 @@ export default Cicada.Component.wrapComponentConfig({
             this.section.blocks!.remove(blockId);
 
             if (this.selectedBlock && this.selectedBlock.id === blockId) {
-                Cicada.Store.get('cmsPage').removeSelectedBlock();
+                Shopware.Store.get('cmsPage').removeSelectedBlock();
             }
 
             this.updateBlockPositions();
@@ -272,14 +270,14 @@ export default Cicada.Component.wrapComponentConfig({
             return this.blockTypes.includes(type);
         },
 
-        hasBlockErrors(block: EntitySchema.Entity<'cms_block'>) {
+        hasBlockErrors(block: Entity<'cms_block'>) {
             return [
                 this.hasUniqueBlockErrors(block),
                 this.hasSlotConfigErrors(block),
             ].some((error) => error);
         },
 
-        hasUniqueBlockErrors(block: EntitySchema.Entity<'cms_block'>) {
+        hasUniqueBlockErrors(block: Entity<'cms_block'>) {
             const errorElements = (this.pageSlotsError as SlotsErrorObject)?.parameters?.elements;
 
             if (!errorElements) {
@@ -289,7 +287,7 @@ export default Cicada.Component.wrapComponentConfig({
             return errorElements.some((errorType) => errorType.blockIds.includes(block.id));
         },
 
-        hasSlotConfigErrors(block: EntitySchema.Entity<'cms_block'>) {
+        hasSlotConfigErrors(block: Entity<'cms_block'>) {
             const errorElements = (this.pageSlotconfigError as SlotConfigErrorObject)?.parameters?.elements;
 
             if (!errorElements) {

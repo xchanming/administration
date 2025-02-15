@@ -3,6 +3,7 @@
  */
 
 import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
 
 const advancedModeSettings = {
     value: {
@@ -169,8 +170,8 @@ describe('module/sw-product/page/sw-product-detail', () => {
     let wrapper;
 
     beforeAll(() => {
-        Cicada.Store.unregister('cmsPage');
-        Cicada.Store.register({
+        Shopware.Store.unregister('cmsPage');
+        Shopware.Store.register({
             id: 'cmsPage',
             actions: {
                 resetCmsPageState: () => {},
@@ -187,9 +188,8 @@ describe('module/sw-product/page/sw-product-detail', () => {
     });
 
     it('should show advanced mode settings', async () => {
-        await Cicada.State.commit('swProductDetail/setProduct', {
-            parentId: '',
-        });
+        Shopware.Store.get('swProductDetail').product = { parentId: '' };
+        await nextTick();
         const contextButton = wrapper.find('.sw-product-settings-mode');
         expect(contextButton.exists()).toBe(true);
     });
@@ -207,6 +207,8 @@ describe('module/sw-product/page/sw-product-detail', () => {
             '.sw-product-detail__tab-reviews',
         ];
 
+        await nextTick();
+
         tabItemClassName.forEach((item) => {
             expect(wrapper.find(item).exists()).toBe(true);
         });
@@ -214,21 +216,19 @@ describe('module/sw-product/page/sw-product-detail', () => {
 
     it('should show item tabs when advanced mode deactivate', async () => {
         wrapper.vm.userModeSettingsRepository.save = jest.fn(() => Promise.resolve());
-        await Cicada.State.commit('swProductDetail/setProduct', {
-            parentId: '',
-        });
+        Shopware.Store.get('swProductDetail').product = { parentId: '' };
         await wrapper.setProps({
             productId: '1234',
         });
 
-        await Cicada.State.commit('swProductDetail/setAdvancedModeSetting', {
+        Shopware.Store.get('swProductDetail').advancedModeSetting = {
             value: {
                 ...advancedModeSettings.value,
                 advancedMode: {
                     enabled: false,
                 },
             },
-        });
+        };
 
         const tabItemClassName = [
             '.sw-product-detail__tab-variants',
@@ -237,6 +237,8 @@ describe('module/sw-product/page/sw-product-detail', () => {
             '.sw-product-detail__tab-cross-selling',
             '.sw-product-detail__tab-reviews',
         ];
+
+        await nextTick();
 
         tabItemClassName.forEach((item) => {
             expect(wrapper.find(item).attributes().style).toBe('display: none;');
@@ -311,7 +313,7 @@ describe('module/sw-product/page/sw-product-detail', () => {
         });
 
         await wrapper.vm.loadCurrencies();
-        await wrapper.vm.$nextTick();
+        await nextTick();
 
         expect(wrapper.vm.product.purchasePrices).toStrictEqual([
             {
@@ -368,7 +370,10 @@ describe('module/sw-product/page/sw-product-detail', () => {
     });
 
     it('should show correct config when there is system config data', async () => {
-        wrapper.vm.salesChannelRepository.search = jest.fn(() => {
+        await flushPromises();
+        await wrapper.unmount();
+
+        wrapper = await createWrapper(() => {
             return Promise.resolve([
                 {
                     id: '98432def39fc4624b33213a56b8c944d',
@@ -385,7 +390,7 @@ describe('module/sw-product/page/sw-product-detail', () => {
         wrapper.vm.getCmsPageOverrides = jest.fn(() => {
             return null;
         });
-        await Cicada.State.commit('swProductDetail/setProduct', {
+        Shopware.Store.get('swProductDetail').product = {
             isNew: jest.fn(() => true),
             prices: [],
             price: [
@@ -408,10 +413,10 @@ describe('module/sw-product/page/sw-product-detail', () => {
                     },
                 },
             ],
-        });
+        };
 
         // make it a download product which requires downloads
-        Cicada.State.commit('swProductDetail/setCreationStates', 'is-download');
+        Shopware.Store.get('swProductDetail').creationStates = 'is-download';
 
         wrapper.vm.saveProduct = jest.fn(() => {
             return Promise.resolve();

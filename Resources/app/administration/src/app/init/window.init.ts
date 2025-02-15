@@ -11,11 +11,11 @@ import type { Router } from 'vue-router';
  */
 export default function initializeWindow(): void {
     // Handle incoming window requests from the ExtensionAPI
-    Cicada.ExtensionAPI.handle('windowReload', () => {
+    Shopware.ExtensionAPI.handle('windowReload', () => {
         window.location.reload();
     });
 
-    Cicada.ExtensionAPI.handle('windowRedirect', ({ newTab, url }) => {
+    Shopware.ExtensionAPI.handle('windowRedirect', ({ newTab, url }) => {
         if (newTab) {
             window.open(url, '_blank');
         } else {
@@ -23,8 +23,8 @@ export default function initializeWindow(): void {
         }
     });
 
-    Cicada.ExtensionAPI.handle('windowRouterPush', async ({ name, params, path, replace }) => {
-        const $router = Cicada.Application.view?.router as unknown as Router;
+    Shopware.ExtensionAPI.handle('windowRouterPush', async ({ name, params, path, replace }) => {
+        const $router = Shopware.Application.view?.router as unknown as Router;
 
         if (!$router) {
             return;

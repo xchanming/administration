@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 /**
  * @sw-package checkout
  */
-async function createWrapper(privileges = [], isCicadaDefaultTax = true) {
+async function createWrapper(privileges = [], isShopwareDefaultTax = true) {
     return mount(
         await wrapTestComponent('sw-settings-tax-detail', {
             sync: true,
@@ -12,7 +12,7 @@ async function createWrapper(privileges = [], isCicadaDefaultTax = true) {
             global: {
                 renderStubDefaultSlot: true,
                 mocks: {
-                    $te: () => isCicadaDefaultTax,
+                    $te: () => isShopwareDefaultTax,
                 },
                 provide: {
                     repositoryFactory: {

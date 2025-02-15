@@ -1,6 +1,6 @@
 import template from './sw-email-field-deprecated.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework

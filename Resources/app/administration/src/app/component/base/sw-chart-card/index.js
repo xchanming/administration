@@ -22,10 +22,8 @@ const defaultRanges = [
  * All further attributes on this component are passed down to the child "sw-chart".
  * Please refer to the documentation of "sw-chart" for proper configuration.
  */
-Cicada.Component.register('sw-chart-card', {
+Shopware.Component.register('sw-chart-card', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['sw-chart-card-range-update'],
 

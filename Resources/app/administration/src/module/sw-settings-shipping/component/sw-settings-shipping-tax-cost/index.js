@@ -1,8 +1,8 @@
 import template from './sw-settings-shipping-tax-cost.html.twig';
 
-const { Criteria } = Cicada.Data;
-const { Mixin } = Cicada;
-const { mapPropertyErrors, mapState, mapGetters } = Cicada.Component.getComponentHelper();
+const { Criteria } = Shopware.Data;
+const { Mixin } = Shopware;
+const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
 
 /**
  * @sw-package checkout
@@ -10,8 +10,6 @@ const { mapPropertyErrors, mapState, mapGetters } = Cicada.Component.getComponen
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('placeholder'),
@@ -32,17 +30,17 @@ export default {
     },
 
     computed: {
-        ...mapState('swShippingDetail', [
-            'shippingMethod',
-            'currencies',
-        ]),
-
-        ...mapGetters('swShippingDetail', [
-            'defaultCurrency',
-            'usedRules',
-            'unrestrictedPriceMatrixExists',
-            'newPriceMatrixExists',
-        ]),
+        ...mapState(
+            () => Shopware.Store.get('swShippingDetail'),
+            [
+                'shippingMethod',
+                'currencies',
+                'defaultCurrency',
+                'usedRules',
+                'unrestrictedPriceMatrixExists',
+                'newPriceMatrixExists',
+            ],
+        ),
 
         ...mapPropertyErrors('shippingMethod', [
             'taxType',

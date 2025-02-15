@@ -1,7 +1,7 @@
 import template from './sw-cms-el-buy-box.html.twig';
 import './sw-cms-el-buy-box.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('cms-element'),
@@ -65,17 +63,13 @@ export default {
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
 
     watch: {
         pageType(newPageType) {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element, 'locked', newPageType === 'product_detail');
-            } else {
-                this.element.locked = newPageType === 'product_detail';
-            }
+            this.element.locked = newPageType === 'product_detail';
         },
     },
 
@@ -88,11 +82,7 @@ export default {
             this.initElementConfig('buy-box');
             this.initElementData('buy-box');
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element, 'locked', this.isProductPageType);
-            } else {
-                this.element.locked = this.isProductPageType;
-            }
+            this.element.locked = this.isProductPageType;
         },
     },
 };

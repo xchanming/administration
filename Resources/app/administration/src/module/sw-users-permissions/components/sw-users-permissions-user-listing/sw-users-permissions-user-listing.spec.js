@@ -81,12 +81,12 @@ describe('module/sw-users-permissions/components/sw-users-permissions-user-listi
                 label: 'sw-users-permissions.users.user-grid.labelUsername',
             },
             {
-                property: 'name',
-                label: 'sw-users-permissions.users.user-grid.labelName',
+                property: 'firstName',
+                label: 'sw-users-permissions.users.user-grid.labelFirstName',
             },
             {
-                property: 'phone',
-                label: 'sw-users-permissions.users.user-grid.labelPhone',
+                property: 'lastName',
+                label: 'sw-users-permissions.users.user-grid.labelLastName',
             },
             {
                 property: 'aclRoles',
@@ -109,15 +109,15 @@ describe('module/sw-users-permissions/components/sw-users-permissions-user-listi
                 {
                     localeId: '12345',
                     username: 'maxmuster',
-                    name: 'Max',
-                    phone: '18000000000',
+                    firstName: 'Max',
+                    lastName: 'Mustermann',
                     email: 'max@mustermann.com',
                 },
                 {
                     localeId: '7dc07b43229843d387bb5f59233c2d66',
                     username: 'admin',
-                    name: 'admin',
-                    phone: null,
+                    firstName: '',
+                    lastName: 'admin',
                     email: 'info@xchanming.com',
                 },
             ],
@@ -127,15 +127,15 @@ describe('module/sw-users-permissions/components/sw-users-permissions-user-listi
             {
                 localeId: '12345',
                 username: 'maxmuster',
-                name: 'Max',
-                phone: '18000000000',
+                firstName: 'Max',
+                lastName: 'Mustermann',
                 email: 'max@mustermann.com',
             },
             {
                 localeId: '7dc07b43229843d387bb5f59233c2d66',
                 username: 'admin',
-                name: 'admin',
-                phone: null,
+                firstName: '',
+                lastName: 'admin',
                 email: 'info@xchanming.com',
             },
         ]);

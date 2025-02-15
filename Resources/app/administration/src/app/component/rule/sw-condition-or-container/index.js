@@ -1,7 +1,7 @@
 import template from './sw-condition-or-container.html.twig';
 import './sw-condition-or-container.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @private
@@ -15,8 +15,6 @@ const { Component, Mixin } = Cicada;
  */
 Component.register('sw-condition-or-container', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['acl'],
 

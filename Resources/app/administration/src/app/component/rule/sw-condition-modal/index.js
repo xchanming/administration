@@ -1,8 +1,8 @@
 import template from './sw-condition-modal.html.twig';
 import './sw-condition-modal.scss';
 
-const { Component } = Cicada;
-const { EntityCollection } = Cicada.Data;
+const { Component } = Shopware;
+const { EntityCollection } = Shopware.Data;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { EntityCollection } = Cicada.Data;
  */
 Component.register('sw-condition-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 

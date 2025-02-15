@@ -8,8 +8,6 @@ import './sw-settings-snippet-sidebar.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'sw-sidebar-close',
         'sw-sidebar-open',

@@ -4,12 +4,10 @@
 
 import template from './sw-admin-menu-extension.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 Component.override('sw-admin-menu', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['acl'],
 

@@ -9,8 +9,6 @@ import './sw-product-add-properties-modal.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['repositoryFactory'],
 
     emits: [
@@ -43,7 +41,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

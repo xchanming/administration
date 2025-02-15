@@ -49,7 +49,7 @@ describe('sw-settings-snippet-sidebar', () => {
 
         await wrapper.setProps({
             filterSettings: {
-                Cicada: true,
+                Shopware: true,
                 System: true,
             },
         });
@@ -67,11 +67,11 @@ describe('sw-settings-snippet-sidebar', () => {
 
         await wrapper.setProps({
             filterSettings: {
-                Cicada: true,
+                Shopware: true,
                 System: true,
             },
             authorFilters: [
-                'Cicada',
+                'Shopware',
                 'System',
             ],
         });
@@ -102,7 +102,7 @@ describe('sw-settings-snippet-sidebar', () => {
     it('should be able to reset all filters', async () => {
         await wrapper.setProps({
             filterSettings: {
-                Cicada: true,
+                Shopware: true,
                 System: true,
             },
         });

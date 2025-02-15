@@ -1,9 +1,9 @@
 /**
  * @sw-package checkout
  */
-const { merge, cloneDeep } = Cicada.Utils.object;
-const { Criteria } = Cicada.Data;
-const { Service, Module } = Cicada;
+const { merge, cloneDeep } = Shopware.Utils.object;
+const { Criteria } = Shopware.Data;
+const { Service, Module } = Shopware;
 
 /**
  * @module app/service/search-ranking

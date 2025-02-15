@@ -18,7 +18,7 @@ export default class ChangesetGenerator {
      * @param entity
      */
     getPrimaryKeyData(entity) {
-        const definition = Cicada.EntityDefinition.get(entity.getEntityName());
+        const definition = Shopware.EntityDefinition.get(entity.getEntityName());
         const pkFields = definition.getPrimaryKeyFields();
         const pkData = {};
 
@@ -48,7 +48,7 @@ export default class ChangesetGenerator {
      * @returns {null}
      */
     recursion(entity, deletionQueue) {
-        const definition = Cicada.EntityDefinition.get(entity.getEntityName());
+        const definition = Shopware.EntityDefinition.get(entity.getEntityName());
         const changes = {};
 
         const origin = entity.getOrigin();

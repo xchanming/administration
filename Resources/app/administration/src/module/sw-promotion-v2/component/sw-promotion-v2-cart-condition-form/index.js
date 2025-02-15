@@ -4,19 +4,16 @@
 import './sw-promotion-v2-cart-condition-form.scss';
 import template from './sw-promotion-v2-cart-condition-form.html.twig';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'acl',
         'promotionSyncService',
-        'feature',
     ],
 
     props: {
@@ -139,9 +136,9 @@ export default {
 
         deleteSetGroup(group) {
             // add to delete list for the save process
-            const deleteIds = Cicada.State.get('swPromotionDetail').setGroupIdsDelete;
+            const deleteIds = Shopware.Store.get('swPromotionDetail').setGroupIdsDelete;
             deleteIds.push(group.id);
-            Cicada.State.commit('swPromotionDetail/setSetGroupIdsDelete', deleteIds);
+            Shopware.Store.get('swPromotionDetail').setGroupIdsDelete = deleteIds;
 
             // remove also from entity for the view rendering
             this.promotion.setgroups = this.promotion.setgroups.filter((setGroup) => {

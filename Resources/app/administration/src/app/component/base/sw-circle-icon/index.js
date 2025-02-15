@@ -1,7 +1,7 @@
 import template from './sw-circle-icon.html.twig';
 import './sw-circle-icon.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -22,8 +22,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-circle-icon', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         size: {

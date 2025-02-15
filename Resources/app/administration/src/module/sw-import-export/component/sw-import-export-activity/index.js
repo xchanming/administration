@@ -4,17 +4,15 @@
 import template from './sw-import-export-activity.html.twig';
 import './sw-import-export-activity.scss';
 
-const { Mixin } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
-const { format } = Cicada.Utils;
+const { Mixin } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
+const { format } = Shopware.Utils;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -82,7 +80,7 @@ export default {
         },
 
         activityCriteria() {
-            const criteria = new Cicada.Data.Criteria();
+            const criteria = new Shopware.Data.Criteria();
 
             if (this.type === 'import') {
                 criteria.addFilter(
@@ -202,7 +200,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
@@ -308,10 +306,10 @@ export default {
                 const config = {
                     message: this.$tc(
                         this.stateText?.[log.activity]?.[log.state] ?? '',
-                        log.state === 'failed' && log.invalidRecordsLog ? 2 : 1,
                         {
                             profile: log.profileName,
                         },
+                        log.state === 'failed' && log.invalidRecordsLog ? 2 : 1,
                     ),
                 };
 

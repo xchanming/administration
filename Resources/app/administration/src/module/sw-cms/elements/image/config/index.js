@@ -1,7 +1,7 @@
 import template from './sw-cms-el-config-image.html.twig';
 import './sw-cms-el-config-image.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -90,22 +88,13 @@ export default {
         updateElementData(media = null) {
             const mediaId = media === null ? null : media.id;
             if (!this.element.data) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.element, 'data', { mediaId, media });
-                } else {
-                    this.element.data = { mediaId, media };
-                }
+                this.element.data = { mediaId, media };
 
                 return;
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element.data, 'mediaId', mediaId);
-                this.$set(this.element.data, 'media', media);
-            } else {
-                this.element.data.mediaId = mediaId;
-                this.element.data.media = media;
-            }
+            this.element.data.mediaId = mediaId;
+            this.element.data.media = media;
         },
 
         onOpenMediaModal() {

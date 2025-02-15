@@ -38,28 +38,13 @@ describe('module/sw-first-run-wizard/view/sw-first-run-wizard-modal', () => {
     const frwRedirectLocal = 'sw.first.run.wizard.index.mailer.local';
 
     beforeAll(() => {
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
-        }
-
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
-                app: {
-                    config: {
-                        settings: {
-                            disableExtensionManagement: false,
-                        },
-                    },
-                },
-                api: {
-                    assetPath: 'http://localhost:8000/bundles/administration/',
-                    authToken: {
-                        token: 'testToken',
-                    },
-                },
-            },
-        });
+        Shopware.Store.get('context').app.config = {
+            settings: { disableExtensionManagement: false },
+        };
+        Shopware.Store.get('context').api = {
+            assetPath: 'http://localhost:8000/bundles/administration/',
+            authToken: { token: 'testToken' },
+        };
     });
 
     it('should emit the button config and the title on creation', async () => {

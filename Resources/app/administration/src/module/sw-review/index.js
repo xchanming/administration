@@ -3,11 +3,11 @@
  */
 import './acl';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-review-list', () => import('./page/sw-review-list'));
-Cicada.Component.register('sw-review-detail', () => import('./page/sw-review-detail'));
+Shopware.Component.register('sw-review-list', () => import('./page/sw-review-list'));
+Shopware.Component.register('sw-review-detail', () => import('./page/sw-review-detail'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations

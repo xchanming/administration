@@ -3,7 +3,7 @@ import type { Extension } from '../../service/extension-store-action.service';
 import template from './sw-extension-config.html.twig';
 import './sw-extension-config.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 type ComponentData = {
     salesChannelId: string | null;
@@ -15,10 +15,8 @@ type ComponentData = {
  * @sw-package checkout
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     beforeRouteEnter(to, from, next) {
         next((vm) => {
@@ -28,7 +26,7 @@ export default Cicada.Component.wrapComponentConfig({
     },
 
     inject: [
-        'cicadaExtensionService',
+        'shopwareExtensionService',
     ],
 
     mixins: [
@@ -56,11 +54,11 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         myExtensions(): Extension[] {
-            return Cicada.State.get('cicadaExtensions').myExtensions.data;
+            return Shopware.Store.get('shopwareExtensions').myExtensions.data;
         },
 
         defaultThemeAsset(): string {
-            return Cicada.Filter.getByName('asset')('administration/static/img/theme/default_theme_preview.jpg');
+            return Shopware.Filter.getByName('asset')('administration/static/img/theme/default_theme_preview.jpg');
         },
 
         image(): string {
@@ -87,7 +85,7 @@ export default Cicada.Component.wrapComponentConfig({
     methods: {
         async createdComponent(): Promise<void> {
             if (!this.myExtensions.length) {
-                await this.cicadaExtensionService.updateExtensionData();
+                await this.shopwareExtensionService.updateExtensionData();
             }
 
             this.refreshExtension();

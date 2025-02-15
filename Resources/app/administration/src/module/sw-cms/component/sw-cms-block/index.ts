@@ -3,16 +3,14 @@ import template from './sw-cms-block.html.twig';
 import './sw-cms-block.scss';
 import type CmsVisibility from '../../shared/CmsVisibility';
 
-const { Filter, Store } = Cicada;
+const { Filter, Store } = Shopware;
 
 /**
  * @sw-package discovery
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['block-overlay-click'],
 

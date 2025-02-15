@@ -153,7 +153,7 @@ export default class EntityHydrator {
             return this.cache[cacheKey] as unknown as Entity<EntityName>;
         }
 
-        const schema = Cicada.EntityDefinition.get(entityName);
+        const schema = Shopware.EntityDefinition.get(entityName);
         // currently translation can not be hydrated
         if (!schema) {
             return null;

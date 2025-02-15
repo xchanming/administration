@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@after-sales
+ * @sw-package framework
  */
 class CacheApiService {
     constructor(httpClient, loginService) {

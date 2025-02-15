@@ -22,7 +22,7 @@ export default class EntityFactory {
     create(entityName, id, context) {
         id = id || utils.createId();
 
-        const definition = Cicada.EntityDefinition.get(entityName);
+        const definition = Shopware.EntityDefinition.get(entityName);
 
         if (!definition) {
             warn('Entity factory', `No schema found for entity ${entityName}`);

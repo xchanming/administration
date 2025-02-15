@@ -1,57 +1,60 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import './acl';
 
-const { Module } = Cicada;
+const { Module, Feature } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-settings-custom-field-set-create',
     'sw-settings-custom-field-set-detail',
     () => import('./page/sw-settings-custom-field-set-create'),
 );
-Cicada.Component.register('sw-settings-custom-field-set-list', () => import('./page/sw-settings-custom-field-set-list'));
-Cicada.Component.register('sw-settings-custom-field-set-detail', () => import('./page/sw-settings-custom-field-set-detail'));
-Cicada.Component.register(
+Shopware.Component.register('sw-settings-custom-field-set-list', () => import('./page/sw-settings-custom-field-set-list'));
+Shopware.Component.register(
+    'sw-settings-custom-field-set-detail',
+    () => import('./page/sw-settings-custom-field-set-detail'),
+);
+Shopware.Component.register(
     'sw-custom-field-translated-labels',
     () => import('./component/sw-custom-field-translated-labels'),
 );
-Cicada.Component.register('sw-custom-field-set-detail-base', () => import('./component/sw-custom-field-set-detail-base'));
-Cicada.Component.register('sw-custom-field-list', () => import('./component/sw-custom-field-list'));
-Cicada.Component.register('sw-custom-field-detail', () => import('./component/sw-custom-field-detail'));
-Cicada.Component.register('sw-custom-field-type-base', () => import('./component/sw-custom-field-type-base'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-custom-field-set-detail-base', () => import('./component/sw-custom-field-set-detail-base'));
+Shopware.Component.register('sw-custom-field-list', () => import('./component/sw-custom-field-list'));
+Shopware.Component.register('sw-custom-field-detail', () => import('./component/sw-custom-field-detail'));
+Shopware.Component.register('sw-custom-field-type-base', () => import('./component/sw-custom-field-type-base'));
+Shopware.Component.extend(
     'sw-custom-field-type-select',
     'sw-custom-field-type-base',
     () => import('./component/sw-custom-field-type-select'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-custom-field-type-entity',
     'sw-custom-field-type-select',
     () => import('./component/sw-custom-field-type-entity'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-custom-field-type-text',
     'sw-custom-field-type-base',
     () => import('./component/sw-custom-field-type-text'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-custom-field-type-number',
     'sw-custom-field-type-base',
     () => import('./component/sw-custom-field-type-number'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-custom-field-type-date',
     'sw-custom-field-type-base',
     () => import('./component/sw-custom-field-type-date'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-custom-field-type-checkbox',
     'sw-custom-field-type-base',
     () => import('./component/sw-custom-field-type-checkbox'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-custom-field-type-text-editor',
     'sw-custom-field-type-base',
     () => import('./component/sw-custom-field-type-text-editor'),
@@ -97,7 +100,14 @@ Module.register('sw-settings-custom-field', {
     },
 
     settingsItem: {
-        group: 'system',
+        group: function () {
+            // @deprecated tag:v6.7.0 - Remove condition and function callback
+            if (!Feature.isActive('v6.7.0.0')) {
+                return 'system';
+            }
+
+            return 'content';
+        },
         to: 'sw.settings.custom.field.index',
         icon: 'regular-bars-square',
         privilege: 'custom_field.viewer',

@@ -55,7 +55,7 @@ export default class Sanitizer {
      */
     static addMiddleware(middlewareName, middlewareFn = () => {}) {
         if (!middlewareNames.includes(middlewareName)) {
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'Sanitizer',
                 `No middleware found for name "${middlewareName}",
                 the following are available: ${middlewareNames.join(', ')}`,
@@ -76,7 +76,7 @@ export default class Sanitizer {
      */
     static removeMiddleware(middlewareName) {
         if (!middlewareNames.includes(middlewareName)) {
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'Sanitizer',
                 `No middleware found for name "${middlewareName}",
                 the following are available: ${middlewareNames.join(', ')}`,

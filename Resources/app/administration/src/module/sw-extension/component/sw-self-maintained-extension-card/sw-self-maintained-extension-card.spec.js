@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CicadaService from 'src/module/sw-extension/service/cicada-extension.service';
+import ShopwareService from 'src/module/sw-extension/service/shopware-extension.service';
 
 async function createWrapper() {
     return mount(
@@ -29,7 +29,7 @@ async function createWrapper() {
                             return {};
                         },
                     },
-                    cicadaExtensionService: new CicadaService({}, {}, {}, {}),
+                    shopwareExtensionService: new ShopwareService({}, {}, {}, {}),
                     cacheApiService: {
                         clear() {
                             return Promise.resolve();
@@ -58,13 +58,13 @@ async function createWrapper() {
  */
 describe('src/module/sw-extension/component/sw-self-maintained-extension-card', () => {
     beforeAll(() => {
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
+        if (Shopware.Store.get('context')) {
+            Shopware.Store.unregister('context');
         }
 
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
+        Shopware.Store.register({
+            id: 'context',
+            state: () => ({
                 app: {
                     config: {
                         settings: {
@@ -78,7 +78,7 @@ describe('src/module/sw-extension/component/sw-self-maintained-extension-card', 
                         token: 'testToken',
                     },
                 },
-            },
+            }),
         });
     });
 
@@ -115,13 +115,13 @@ describe('src/module/sw-extension/component/sw-self-maintained-extension-card', 
             },
         });
 
-        wrapper.vm.cicadaExtensionService.activateExtension = jest.fn(() => Promise.resolve());
+        wrapper.vm.shopwareExtensionService.activateExtension = jest.fn(() => Promise.resolve());
 
         wrapper.vm.clearCacheAndReloadPage = jest.fn(() => Promise.resolve());
 
         await wrapper.vm.activateExtension();
 
-        expect(wrapper.vm.cicadaExtensionService.activateExtension).toHaveBeenCalled();
+        expect(wrapper.vm.shopwareExtensionService.activateExtension).toHaveBeenCalled();
         expect(wrapper.vm.clearCacheAndReloadPage).toHaveBeenCalled();
         expect(wrapper.vm.extension.active).toBe(true);
         expect(wrapper.vm.isLoading).toBe(false);
@@ -130,13 +130,13 @@ describe('src/module/sw-extension/component/sw-self-maintained-extension-card', 
     it('deactivateExtension should install and reload the page', async () => {
         const wrapper = await createWrapper();
 
-        wrapper.vm.cicadaExtensionService.deactivateExtension = jest.fn(() => Promise.resolve());
+        wrapper.vm.shopwareExtensionService.deactivateExtension = jest.fn(() => Promise.resolve());
 
         wrapper.vm.clearCacheAndReloadPage = jest.fn(() => Promise.resolve());
 
         await wrapper.vm.deactivateExtension();
 
-        expect(wrapper.vm.cicadaExtensionService.deactivateExtension).toHaveBeenCalled();
+        expect(wrapper.vm.shopwareExtensionService.deactivateExtension).toHaveBeenCalled();
         expect(wrapper.vm.isLoading).toBe(false);
     });
 

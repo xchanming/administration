@@ -8,8 +8,8 @@
       "INVALID_MEDIA_URL": "Please enter a valid URL to upload a file.",
       "CONTENT__MISSING_RULE_TYPE_EXCEPTION": "You must choose a type for this rule.",
       "CONTENT__INVALID_CATEGORY_TYPE_AS_ENTRY_POINT": "The type can not be assigned while category is an entry point.",
-      "CICADA_INVALID_IP": "Please enter a valid IP address.",
-      "CICADA_INVALID_IP_CIDR": "Please enter a valid IP address or a valid IP-address with CIDR mask.",
+      "SHOPWARE_INVALID_IP": "Please enter a valid IP address.",
+      "SHOPWARE_INVALID_IP_CIDR": "Please enter a valid IP address or a valid IP-address with CIDR mask.",
       "INVALID_URL": "Please enter a valid url.",
       "INVALID_MAIL": "Please enter a valid email address.",
       "FRAMEWORK__RATE_LIMIT_EXCEEDED": "Too many requests. Please wait {seconds} seconds before trying again.",
@@ -140,8 +140,8 @@
         "updatesAvailableTitle": "Update(s) available",
         "updatesAvailableMessage": "Download the latest versions of your extensions now."
       },
-      "cicada-updates-listener": {
-        "updatesAvailableTitle": "A new Cicada version {version} is available",
+      "shopware-updates-listener": {
+        "updatesAvailableTitle": "A new Shopware version {version} is available",
         "updatesAvailableMessage": "Start the auto-updater to begin the update",
         "updateNow": "Open update"
       }
@@ -149,12 +149,12 @@
     "sw-admin-menu": {
       "linkLogout": "Logout",
       "linkMinimizeMenu": "Collapse menu",
-      "textCicadaAdmin": "Cicada Administration",
+      "textShopwareAdmin": "Shopware Administration",
       "textProjectName": "Administration",
       "administrator": "Administrator",
       "navigation": {
         "label": "Main navigation",
-        "mainMenuItemCatalogue": "Products",
+        "mainMenuItemCatalogue": "Catalogues",
         "mainMenuItemContent": "Content",
         "mainMenuItemMarketing": "Marketing"
       }
@@ -595,7 +595,7 @@
     "sw-search-bar": {
       "messageNoResults": "No results found for \"{term}\".",
       "messageNoTypeResults": "No type found.",
-      "placeholderSearchField": "products, customers, orders...",
+      "placeholderSearchField": "Find products, customers, orders...",
       "placeholderTypeSearchField": "Search \"{entity}\"...",
       "placeholderShortcutInfo": "Hint: Press the \"f\" key to get to the search bar faster.",
       "placeholderSearchShortcutInfo": "<strong>Tip:</strong> Press <span>f</span> to open the search from anywhere.",
@@ -821,102 +821,11 @@
         "customerBirthdayRule": "Customer date of birth",
         "customerCreatedByAdminRule": "Customer created by admin",
         "customerSalutationRule": "Customer salutation",
-        "customerDefaultPaymentMethodRule": "Customer with default payment method",
         "lineItemPropertyValueRule": "Item with property value",
         "lineItemVariantValueRule": "Item with variant value"
       }
     },
     "sw-condition-generic": {
-      "customerDaysSinceLastLogin": {
-        "daysPassed": {
-          "placeholder": "@:sw-product.settingsForm.placeholderTime"
-        }
-      },
-      "customerDaysSinceFirstLogin": {
-        "daysPassed": {
-          "placeholder": "@:sw-product.settingsForm.placeholderTime"
-        }
-      },
-      "customerDaysSinceLastOrder": {
-        "daysPassed": {
-          "placeholder": "@:sw-product.settingsForm.placeholderTime"
-        }
-      },
-      "customerEmail": {
-        "email": {
-          "placeholder": "@:global.sw-condition.condition.emailRule.placeholder"
-        }
-      },
-      "cartLineItemDimensionWidth": {
-        "amount": {
-          "placeholder": "@:sw-product.settingsForm.placeholderWidth"
-        }
-      },
-      "cartLineItemDimensionHeight": {
-        "amount": {
-          "placeholder": "@:sw-product.settingsForm.placeholderHeight"
-        }
-      },
-      "cartLineItemDimensionLength": {
-        "amount": {
-          "placeholder": "@:sw-product.settingsForm.placeholderLength"
-        }
-      },
-      "cartTaxDisplay": {
-        "taxDisplay": {
-          "options": {
-            "gross": "@:global.sw-condition.condition.cartTaxDisplay.gross",
-            "net": "@:global.sw-condition.condition.cartTaxDisplay.net"
-          }
-        }
-      },
-      "dayOfWeek": {
-        "dayOfWeek": {
-          "options": {
-            "1": "@:global.day-of-week.monday",
-            "2": "@:global.day-of-week.tuesday",
-            "3": "@:global.day-of-week.wednesday",
-            "4": "@:global.day-of-week.thursday",
-            "5": "@:global.day-of-week.friday",
-            "6": "@:global.day-of-week.saturday",
-            "7": "@:global.day-of-week.sunday"
-          }
-        }
-      },
-      "cartLineItemOfType": {
-        "lineItemType": {
-          "options": {
-            "product": "@:global.sw-condition.condition.lineItemOfTypeRule.product",
-            "promotion": "@:global.sw-condition.condition.lineItemOfTypeRule.discount_surcharge"
-          }
-        }
-      },
-      "promotionCodeOfType": {
-        "promotionCodeType": {
-          "options": {
-            "global": "@:global.sw-condition.condition.promotionCodeOfTypeRule.global",
-            "fixed": "@:global.sw-condition.condition.promotionCodeOfTypeRule.fixed",
-            "individual": "@:global.sw-condition.condition.promotionCodeOfTypeRule.individual"
-          }
-        }
-      },
-      "cartLineItemProductStates": {
-        "productState": {
-          "options": {
-            "is-physical": "Physical",
-            "is-download": "Digital"
-          }
-        }
-      },
-      "cartTotalPurchasePrice": {
-        "type": {
-          "options": {
-            "gross": "Gross",
-            "net": "Net"
-          },
-          "placeholder": "Select operator..."
-        }
-      },
       "units": {
         "dimension": "mm",
         "weight": "kg",
@@ -969,32 +878,6 @@
           "mm3": "mm³",
           "in3": "in³",
           "ft3": "ft³"
-        }
-      },
-      "orderCreatedByAdmin": {
-        "shouldOrderBeCreatedByAdmin": {
-          "placeholder": "Select condition..."
-        }
-      },
-      "adminSalesChannelSource": {
-        "hasAdminSalesChannelSource": {
-          "placeholder": "Select condition..."
-        }
-      },
-      "orderTransactionStatus": {
-        "stateIds": {
-          "placeholder": "Select state..."
-        },
-        "operator": {
-          "placeholder": "Select operator..."
-        }
-      },
-      "orderStatus": {
-        "stateIds": {
-          "placeholder": "Select state..."
-        },
-        "operator": {
-          "placeholder": "Select operator..."
         }
       }
     },
@@ -1188,11 +1071,11 @@
       "documentation": {
         "headline": "Do you need help?",
         "linkText": "See documentation",
-        "linkUrl": "https://docs.xchanming.com/en/cicada-6-en"
+        "linkUrl": "https://docs.xchanming.com/en/shopware-6-en"
       },
       "support": {
         "headline": "We’re here for you!",
-        "paragraph": "Found nothing helpful in our documentation? Contact the Cicada support and we’ll take a look at your problem.",
+        "paragraph": "Found nothing helpful in our documentation? Contact the Shopware support and we’ll take a look at your problem.",
         "linkText": "Create support request",
         "linkUrl": "https://account.xchanming.com/shops/support"
       }
@@ -1263,6 +1146,41 @@
       "code-switch": "Switch edit modes"
     }
   },
+  "mt-text-editor-toolbar-button-link": {
+    "label": "Link"
+  },
+  "sw-text-editor-toolbar-button-link": {
+    "modalTitle": "Insert/Edit link",
+    "linkTo": "Link to",
+    "linkUrl": "URL",
+    "linkPhone": "Phone number",
+    "linkPhonePrefix": "tel:",
+    "linkDetail": "Product",
+    "linkEmail": "Email",
+    "linkEmailPlaceholder": "Enter email address...",
+    "detailPlaceholder": "Select a product...",
+    "categoryPlaceholder": "Select a category...",
+    "displayAsButton": "Display as button",
+    "openInNewTab": "Open in new tab",
+    "applyLink": "Apply",
+    "linkType": "Link type",
+    "removeLink": "Remove link",
+    "linkOptions": {
+      "link": "URL",
+      "product": "Product",
+      "category": "Category",
+      "media": "File",
+      "email": "Email",
+      "phoneNumber": "Phone number"
+    },
+    "buttonVariantPrimary": "Primary",
+    "buttonVariantSecondary": "Secondary",
+    "buttonVariantPrimarySmall": "Primary (small)",
+    "buttonVariantSecondarySmall": "Secondary (small)"
+  },
+  "sw-text-editor-toolbar-button-cms-data-mapping": {
+    "label": "Insert variable"
+  },
   "sw-tree": {
     "general": {
       "placeholderSearch": "Search...",
@@ -1327,7 +1245,7 @@
   "sw-license-violation": {
     "title": "Extension warning",
     "reload": "Reload",
-    "alertText": "We have detected a license violation for at least one of your extensions in this installation. To fix the license violation and avoid legal consequences, book a subscription or buy/rent the extension (according to inflicted violation type). You do not use the extension anymore? Then delete it via the \"Delete extension permanently\" button or via My Extensions. If none of these measures are taken, cicada AG reserves the right to charge penalty fees for any license violation.",
+    "alertText": "We have detected a license violation for at least one of your extensions in this installation. To fix the license violation and avoid legal consequences, book a subscription or buy/rent the extension (according to inflicted violation type). You do not use the extension anymore? Then delete it via the \"Delete extension permanently\" button or via My Extensions. If none of these measures are taken, shopware AG reserves the right to charge penalty fees for any license violation.",
     "deletePlugin": "Delete extension permanently",
     "messageDeleteConfirm": "Do you want to delete the extension \"{pluginName}\" completely?",
     "checkboxMessage": "I have taken notice of this message and eventually accruing consequences.",
@@ -1352,8 +1270,37 @@
     "configLoadErrorMessage": "Encountered an error while loading the configuration: | There were errors loading the configuration:"
   },
   "locale": {
-    "zh-CN": "Chinese",
-    "en-GB": "English (GB)"
+    "de-DE": "German",
+    "en-GB": "English (GB)",
+    "bg-BG": "Bulgarian",
+    "bs-BA": "Bosnian",
+    "cs-CZ": "Czech",
+    "da-DK": "Danish",
+    "el-GR": "Greek",
+    "en-US": "English (US)",
+    "es-ES": "Spanish",
+    "fi-FI": "Finnish",
+    "fr-FR": "French",
+    "hi-IN": "Hindi",
+    "hr-HR": "Croatian",
+    "hu-HU": "Hungarian",
+    "id-ID": "Indonesian",
+    "it-IT": "Italian",
+    "ko-KR": "Korean",
+    "lv-LV": "Latvian",
+    "nl-NL": "Dutch",
+    "nn-NO": "Norwegian",
+    "pl-PL": "Polish",
+    "pt-PT": "Portuguese",
+    "ro-RO": "Romanian",
+    "ru-RU": "Russian",
+    "sk-SK": "Slovak",
+    "sl-SI": "Slovene",
+    "sr-RS": "Serbian",
+    "sv-SE": "Swedish",
+    "tr-TR": "Turkish",
+    "uk-UA": "Ukrainian",
+    "vi-VN": "Vietnamese"
   },
   "sw-image-slider": {
     "imageAlt": "Image {index} / {total}"
@@ -1526,7 +1473,7 @@
         "textGetSupport": "Try contacting your hoster to get support.",
         "textDetails": "Technical details: Wrong APP_URL configuration.",
         "labelLearnMoreButton": "Learn more",
-        "linkToDocsArticle": "https://docs.xchanming.com/en/cicada-6-en/tutorials-and-faq/notes-to-the-APP-URL"
+        "linkToDocsArticle": "https://docs.xchanming.com/en/shopware-6-en/tutorials-and-faq/notes-to-the-APP-URL"
       }
     }
   },
@@ -1603,7 +1550,7 @@
     "text": "AI responses can be inaccurate or misleading."
   },
   "sw-in-app-purchase-checkout": {
-    "exsTitle": "Activate the Cicada Extension Store"
+    "exsTitle": "Activate the Shopware Extension Store"
   },
   "help-center": {
     "sidebar": {

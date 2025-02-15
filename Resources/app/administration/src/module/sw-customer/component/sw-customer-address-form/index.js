@@ -6,15 +6,13 @@ import CUSTOMER from '../../constant/sw-customer.constant';
  * @sw-package checkout
  */
 
-const { Defaults, EntityDefinition } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Defaults, EntityDefinition } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -64,7 +62,8 @@ export default {
             'department',
             'salutationId',
             'title',
-            'name',
+            'firstName',
+            'lastName',
             'street',
             'additionalAddressLine1',
             'additionalAddressLine2',
@@ -75,11 +74,11 @@ export default {
             'vatId',
             'countryStateId',
             'salutationId',
-            'cityId',
+            'city',
             'street',
             'zipcode',
-            'name',
-            'DistrictId',
+            'lastName',
+            'firstName',
         ]),
 
         countryId: {
@@ -106,35 +105,6 @@ export default {
             const criteria = new Criteria(1, 25);
             criteria
                 .addFilter(Criteria.equals('countryId', this.countryId))
-                .addFilter(Criteria.equals('parentId', null))
-                .addSorting(Criteria.sort('position', 'ASC', true))
-                .addSorting(Criteria.sort('name', 'ASC'));
-            return criteria;
-        },
-
-        stateCityCriteria() {
-            if (!this.countryId || !this.address.countryStateId) {
-                return null;
-            }
-
-            const criteria = new Criteria(1, 25);
-            criteria
-                .addFilter(Criteria.equals('countryId', this.countryId))
-                .addFilter(Criteria.equals('parentId', this.address.countryStateId))
-                .addSorting(Criteria.sort('position', 'ASC', true))
-                .addSorting(Criteria.sort('name', 'ASC'));
-            return criteria;
-        },
-
-        stateDistrictCriteria() {
-            if (!this.countryId || !this.address.countryStateId || !this.address.cityId) {
-                return null;
-            }
-
-            const criteria = new Criteria(1, 25);
-            criteria
-                .addFilter(Criteria.equals('countryId', this.countryId))
-                .addFilter(Criteria.equals('parentId', this.address.cityId))
                 .addSorting(Criteria.sort('position', 'ASC', true))
                 .addSorting(Criteria.sort('name', 'ASC'));
             return criteria;
@@ -191,18 +161,11 @@ export default {
             this.customer.company = newVal;
         },
 
-        'address.countryStateId'(newVal,oldId) {
-            if (typeof oldId !== 'undefined') {
-                this.address.districtId = null;
-                this.address.cityId = null;
-            }
-        },
-
         'country.forceStateInRegistration'(newVal) {
             if (!newVal) {
-                Cicada.State.dispatch('error/removeApiError', {
-                    expression: `${this.address.getEntityName()}.${this.address.id}.countryStateId`,
-                });
+                Shopware.Store.get('error').removeApiError(
+                    `${this.address.getEntityName()}.${this.address.id}.countryStateId`,
+                );
             }
 
             const definition = EntityDefinition.get(this.address.getEntityName());
@@ -212,9 +175,7 @@ export default {
 
         'country.postalCodeRequired'(newVal) {
             if (!newVal) {
-                Cicada.State.dispatch('error/removeApiError', {
-                    expression: `${this.address.getEntityName()}.${this.address.id}.zipcode`,
-                });
+                Shopware.Store.get('error').removeApiError(`${this.address.getEntityName()}.${this.address.id}.zipcode`);
             }
 
             const definition = EntityDefinition.get(this.address.getEntityName());

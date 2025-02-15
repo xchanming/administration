@@ -36,7 +36,7 @@ function getCollection() {
         '/test-entity',
         'testEntity',
         null,
-        { isCicadaContext: true },
+        { isShopwareContext: true },
         fixture,
         fixture.length,
         null,

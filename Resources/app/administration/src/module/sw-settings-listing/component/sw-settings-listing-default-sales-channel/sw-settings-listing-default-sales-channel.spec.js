@@ -7,7 +7,7 @@ describe('src/module/sw-settings-listing/component/sw-settings-listing-default-s
     let defaultSalesChannelData = {};
 
     function createEntityCollection(entities = []) {
-        return new Cicada.Data.EntityCollection('sales_channel', 'sales_channel', {}, null, entities);
+        return new Shopware.Data.EntityCollection('sales_channel', 'sales_channel', {}, null, entities);
     }
 
     async function createWrapper() {

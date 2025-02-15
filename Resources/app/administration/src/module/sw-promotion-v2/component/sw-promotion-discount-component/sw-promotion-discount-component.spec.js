@@ -3,7 +3,7 @@
  */
 import { mount } from '@vue/test-utils';
 
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 async function createWrapper() {
     return mount(
@@ -130,10 +130,10 @@ async function createWrapper() {
                     ],
                     discounts: [],
                     individualCodes: [],
-                    personaRules: new EntityCollection('', 'rule', Cicada.Context.api, new Criteria(1, 25)),
+                    personaRules: new EntityCollection('', 'rule', Shopware.Context.api, new Criteria(1, 25)),
                     personaCustomers: [],
-                    orderRules: new EntityCollection('', 'rule', Cicada.Context.api, new Criteria(1, 25)),
-                    cartRules: new EntityCollection('', 'rule', Cicada.Context.api, new Criteria(1, 25)),
+                    orderRules: new EntityCollection('', 'rule', Shopware.Context.api, new Criteria(1, 25)),
+                    cartRules: new EntityCollection('', 'rule', Shopware.Context.api, new Criteria(1, 25)),
                     translations: [],
                     hasOrders: false,
                 },
@@ -150,7 +150,7 @@ async function createWrapper() {
                     usageKey: 'ALL',
                     apiAlias: null,
                     id: 'discountId',
-                    discountRules: new EntityCollection('', 'rule', Cicada.Context.api, new Criteria(1, 25)),
+                    discountRules: new EntityCollection('', 'rule', Shopware.Context.api, new Criteria(1, 25)),
                     promotionDiscountPrices: [],
                 },
             },
@@ -160,7 +160,7 @@ async function createWrapper() {
 
 describe('src/module/sw-promotion-v2/component/sw-promotion-discount-component', () => {
     beforeAll(() => {
-        Cicada.Service().register('syncService', () => {
+        Shopware.Service().register('syncService', () => {
             return {
                 httpClient: {
                     get() {

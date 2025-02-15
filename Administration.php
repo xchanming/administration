@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration;
+namespace Shopware\Administration;
 
-use Cicada\Administration\DependencyInjection\AdministrationMigrationCompilerPass;
-use Cicada\Core\Framework\Bundle;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Parameter\AdditionalBundleParameters;
 use Pentatrion\ViteBundle\PentatrionViteBundle;
+use Shopware\Administration\DependencyInjection\AdministrationMigrationCompilerPass;
+use Shopware\Core\Framework\Bundle;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Parameter\AdditionalBundleParameters;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

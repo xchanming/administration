@@ -4,7 +4,7 @@ import ApiService from '../api.service';
  * Gateway for the API end point "snippet"
  * @class
  * @extends ApiService
- * @sw-package fundamentals@after-sales
+ * @sw-package discovery
  */
 class SnippetApiService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = 'snippet') {

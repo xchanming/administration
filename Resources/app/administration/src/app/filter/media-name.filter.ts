@@ -1,7 +1,7 @@
 /**
  * @sw-package discovery
  */
-Cicada.Filter.register(
+Shopware.Filter.register(
     'mediaName',
     (
         value: {

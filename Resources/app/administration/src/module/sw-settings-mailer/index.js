@@ -2,12 +2,12 @@
  * @sw-package after-sales
  */
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-mailer-smtp', () => import('./component/sw-settings-mailer-smtp'));
-Cicada.Component.register('sw-settings-mailer', () => import('./page/sw-settings-mailer'));
+Shopware.Component.register('sw-settings-mailer-smtp', () => import('./component/sw-settings-mailer-smtp'));
+Shopware.Component.register('sw-settings-mailer', () => import('./page/sw-settings-mailer'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Module.register('sw-settings-mailer', {
+Shopware.Module.register('sw-settings-mailer', {
     type: 'core',
     name: 'settings-mailer',
     title: 'sw-settings-mailer.general.mainMenuItemGeneral',

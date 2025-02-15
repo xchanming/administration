@@ -24,7 +24,7 @@ async function createWrapper() {
                 },
             },
             props: {
-                name: 'Cicada',
+                name: 'Shopware',
             },
         },
     );
@@ -50,6 +50,6 @@ describe('sw-settings-snippet-filter-switch', () => {
         expect(wrapper.vm.value).toBe(true);
 
         const fieldSwitchInput = wrapper.find('.sw-field--switch__input input');
-        expect(fieldSwitchInput.attributes('name')).toBe('Cicada');
+        expect(fieldSwitchInput.attributes('name')).toBe('Shopware');
     });
 });

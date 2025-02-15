@@ -4,18 +4,18 @@ import CMS from '../../../constant/sw-cms.constant';
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-image-slider', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-image-slider', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-image-slider', () => import('./component'));
+Shopware.Component.register('sw-cms-block-image-slider', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'image-slider',
     label: 'sw-cms.blocks.image.imageSlider.label',
     category: 'image',

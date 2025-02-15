@@ -4,16 +4,14 @@
 import template from './sw-import-export-exporter.html.twig';
 import './sw-import-export-exporter.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'importExport',

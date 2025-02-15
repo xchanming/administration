@@ -4,15 +4,13 @@
 
 import template from './sw-login-recovery-info.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-login-recovery-info', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['is-not-loading'],
 

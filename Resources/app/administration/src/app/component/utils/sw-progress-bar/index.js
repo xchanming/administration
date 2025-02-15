@@ -5,7 +5,7 @@
 import template from './sw-progress-bar.html.twig';
 import './sw-progress-bar.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -18,8 +18,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-progress-bar', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['userActivityService'],
 

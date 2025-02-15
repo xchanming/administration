@@ -1,4 +1,4 @@
-const ApiService = Cicada.Classes.ApiService;
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * @sw-package fundamentals@after-sales
@@ -17,19 +17,19 @@ class FirstRunWizardApiService extends ApiService {
     getBasicHeaders(additionalHeaders = {}) {
         return {
             ...super.getBasicHeaders(additionalHeaders),
-            'sw-language-id': Cicada.Context.api.languageId,
+            'sw-language-id': Shopware.Context.api.languageId,
         };
     }
 
     /**
-     * Check cicadaId
+     * Check shopwareId
      *
      * @param {Object} [payload = {}]
      * @param {Object} [additionalParams = {}]
      * @param {Object} [additionalHeaders = {}]
      * @returns {Promise<T>}
      */
-    checkCicadaId(payload = {}, additionalParams = {}, additionalHeaders = {}) {
+    checkShopwareId(payload = {}, additionalParams = {}, additionalHeaders = {}) {
         const params = additionalParams;
         const headers = this.getBasicHeaders(additionalHeaders);
 

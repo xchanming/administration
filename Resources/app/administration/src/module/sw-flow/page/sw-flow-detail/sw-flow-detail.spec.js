@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
-import flowState from 'src/module/sw-flow/state/flow.state';
 import EntityCollection from 'src/core/data/entity-collection.data';
 import FlowBuilderService from 'src/module/sw-flow/service/flow-builder.service';
+import { createPinia } from 'pinia';
 
 /**
  * @sw-package after-sales
@@ -13,7 +13,7 @@ class MockFlowBuilderService extends FlowBuilderService {
     });
 }
 
-Cicada.Service().register('flowBuilderService', () => {
+Shopware.Service().register('flowBuilderService', () => {
     return new MockFlowBuilderService();
 });
 
@@ -61,7 +61,7 @@ function getSequencesCollection(collection = []) {
         '/flow_sequence',
         'flow_sequence',
         null,
-        { isCicadaContext: true },
+        { isShopwareContext: true },
         collection,
         collection.length,
         null,
@@ -72,19 +72,48 @@ const mockBusinessEvents = [
     {
         name: 'checkout.customer.before.login',
         mailAware: true,
-        aware: ['Cicada\\Core\\Framework\\Event\\SalesChannelAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\SalesChannelAware'],
     },
     {
         name: 'checkout.customer.changed-payment-method',
         mailAware: false,
-        aware: ['Cicada\\Core\\Framework\\Event\\SalesChannelAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\SalesChannelAware'],
     },
     {
         name: 'checkout.customer.deleted',
         mailAware: true,
-        aware: ['Cicada\\Core\\Framework\\Event\\SalesChannelAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\SalesChannelAware'],
     },
 ];
+
+const flowSequenceRepositorySyncDeletedMock = jest.fn((sequencesIds) => {
+    const ids = [];
+    sequencesIds.forEach((sequenceId) => {
+        ids.push(sequenceId);
+    });
+
+    // eslint-disable-next-line jest/no-standalone-expect
+    expect(ids).toEqual([
+        '2',
+        '4',
+    ]);
+});
+
+const flowSequenceRepositorySyncMock = jest.fn((sequences) => {
+    // eslint-disable-next-line jest/no-standalone-expect
+    expect(sequences).toHaveLength(2);
+
+    const ids = [];
+    sequences.forEach((sequence) => {
+        ids.push(sequence.id);
+    });
+
+    // eslint-disable-next-line jest/no-standalone-expect
+    expect(ids).toEqual([
+        '1',
+        '3',
+    ]);
+});
 
 async function createWrapper(query = {}, config = {}, flowId = null, saveSuccess = true, param = {}) {
     return mount(
@@ -96,35 +125,14 @@ async function createWrapper(query = {}, config = {}, flowId = null, saveSuccess
                 flowId: flowId,
             },
             global: {
+                plugins: [createPinia()],
                 provide: {
                     repositoryFactory: {
                         create: (entity) => {
                             if (entity === 'flow_sequence') {
                                 return {
-                                    sync: jest.fn((sequences) => {
-                                        expect(sequences).toHaveLength(2);
-
-                                        const ids = [];
-                                        sequences.forEach((sequence) => {
-                                            ids.push(sequence.id);
-                                        });
-
-                                        expect(ids).toEqual([
-                                            '1',
-                                            '3',
-                                        ]);
-                                    }),
-                                    syncDeleted: jest.fn((sequencesIds) => {
-                                        const ids = [];
-                                        sequencesIds.forEach((sequenceId) => {
-                                            ids.push(sequenceId);
-                                        });
-
-                                        expect(ids).toEqual([
-                                            '2',
-                                            '4',
-                                        ]);
-                                    }),
+                                    sync: flowSequenceRepositorySyncMock,
+                                    syncDeleted: flowSequenceRepositorySyncDeletedMock,
                                     create: () => {
                                         return {};
                                     },
@@ -172,7 +180,7 @@ async function createWrapper(query = {}, config = {}, flowId = null, saveSuccess
                             };
                         },
                     },
-                    flowBuilderService: Cicada.Service('flowBuilderService'),
+                    flowBuilderService: Shopware.Service('flowBuilderService'),
                     ruleConditionDataProviderService: {
                         getRestrictedRules: () => Promise.resolve([]),
                     },
@@ -233,20 +241,9 @@ async function createWrapper(query = {}, config = {}, flowId = null, saveSuccess
 
 describe('module/sw-flow/page/sw-flow-detail', () => {
     beforeAll(() => {
-        Cicada.State.registerModule('swFlowState', {
-            ...flowState,
-            state: {
-                flow: {
-                    eventName: '',
-                    sequences: getSequencesCollection([{ ...sequenceFixture }]),
-                },
-                invalidSequences: [],
-                appActions: [],
-                triggerEvents: [],
-            },
-        });
+        Shopware.Store.get('swFlow').setSequences(getSequencesCollection(sequencesFixture));
 
-        Cicada.Service().register('businessEventService', () => {
+        Shopware.Service().register('businessEventService', () => {
             return {
                 getBusinessEvents: () => Promise.resolve(mockBusinessEvents),
             };
@@ -283,18 +280,18 @@ describe('module/sw-flow/page/sw-flow-detail', () => {
             isNew: () => true,
         };
 
-        Cicada.State.commit('swFlowState/setFlow', {
+        Shopware.Store.get('swFlow').setFlow({
             ...flow,
             getOrigin: () => flow,
         });
 
-        let sequencesState = Cicada.State.getters['swFlowState/sequences'];
+        let sequencesState = Shopware.Store.get('swFlow').sequences;
         expect(sequencesState).toHaveLength(4);
 
         const saveButton = wrapper.find('.sw-flow-detail__save');
         await saveButton.trigger('click');
 
-        sequencesState = Cicada.State.getters['swFlowState/sequences'];
+        sequencesState = Shopware.Store.get('swFlow').sequences;
         expect(sequencesState).toHaveLength(2);
     });
 
@@ -309,12 +306,12 @@ describe('module/sw-flow/page/sw-flow-detail', () => {
             sequences: getSequencesCollection(sequencesFixture),
         };
 
-        Cicada.State.commit('swFlowState/setFlow', {
+        Shopware.Store.get('swFlow').setFlow({
             ...flow,
             getOrigin: () => flow,
         });
 
-        const sequencesState = Cicada.State.getters['swFlowState/sequences'];
+        const sequencesState = Shopware.Store.get('swFlow').sequences;
         expect(sequencesState).toHaveLength(4);
 
         const saveButton = wrapper.find('.sw-flow-detail__save');
@@ -347,12 +344,12 @@ describe('module/sw-flow/page/sw-flow-detail', () => {
             },
         };
 
-        Cicada.State.commit('swFlowState/setFlow', {
+        Shopware.Store.get('swFlow').setFlow({
             ...flowTemplate,
             getOrigin: () => flowTemplate,
         });
 
-        const sequencesState = Cicada.State.getters['swFlowState/sequences'];
+        const sequencesState = Shopware.Store.get('swFlow').sequences;
         expect(sequencesState).toHaveLength(4);
 
         await flushPromises();
@@ -373,7 +370,7 @@ describe('module/sw-flow/page/sw-flow-detail', () => {
 
         wrapper.vm.createNotificationWarning = jest.fn();
 
-        Cicada.State.commit('swFlowState/setFlow', {
+        Shopware.Store.get('swFlow').setFlow({
             eventName: 'checkout.customer',
             name: 'Flow 1',
             sequences: getSequencesCollection([
@@ -384,14 +381,14 @@ describe('module/sw-flow/page/sw-flow-detail', () => {
             ]),
         });
 
-        let invalidSequences = Cicada.State.get('swFlowState').invalidSequences;
+        let invalidSequences = Shopware.Store.get('swFlow').invalidSequences;
         expect(invalidSequences).toEqual([]);
 
         const saveButton = wrapper.find('.sw-flow-detail__save');
         await saveButton.trigger('click');
         await flushPromises();
 
-        invalidSequences = Cicada.State.get('swFlowState').invalidSequences;
+        invalidSequences = Shopware.Store.get('swFlow').invalidSequences;
         expect(invalidSequences).toEqual(['1']);
 
         expect(wrapper.vm.createNotificationWarning).toHaveBeenCalled();
@@ -452,7 +449,7 @@ describe('module/sw-flow/page/sw-flow-detail', () => {
 
         await flushPromises();
 
-        const sequencesState = Cicada.State.getters['swFlowState/sequences'];
+        const sequencesState = Shopware.Store.get('swFlow').sequences;
         expect(sequencesState).toHaveLength(1);
 
         const saveButton = wrapper.find('.sw-flow-detail__save');
@@ -514,7 +511,7 @@ describe('module/sw-flow/page/sw-flow-detail', () => {
             },
         ];
 
-        jest.spyOn(Cicada.Utils, 'createId')
+        jest.spyOn(Shopware.Utils, 'createId')
             .mockReturnValueOnce('d2b3a82c22284566b6a56fb47d577bfd_new')
             .mockReturnValueOnce('900a915617054a5b8acbfda1a35831fa_new')
             .mockReturnValueOnce('f1beccf9c40244e6ace2726d2afc476c_new');
@@ -573,12 +570,12 @@ describe('module/sw-flow/page/sw-flow-detail', () => {
             },
         );
 
-        Cicada.State.commit('swFlowState/setSequences', getSequencesCollection(sequencesFixture));
+        Shopware.Store.get('swFlow').setSequences(getSequencesCollection(sequencesFixture));
 
         await wrapper.vm.getRuleDataForFlowTemplate();
         await flushPromises();
 
-        const sequences = Cicada.State.getters['swFlowState/sequences'];
+        const sequences = Shopware.Store.get('swFlow').sequences;
         expect(sequences).toHaveLength(4);
         expect(sequences[0]).toHaveProperty('rule');
         expect(sequences[0].rule).toEqual({ id: '1111', name: 'test rule' });

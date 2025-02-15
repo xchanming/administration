@@ -75,16 +75,8 @@ async function createWrapper() {
 
 describe('module/sw-category/view/sw-category-detail-products.spec', () => {
     beforeEach(async () => {
-        if (Cicada.State.get('swCategoryDetail')) {
-            Cicada.State.unregisterModule('swCategoryDetail');
-        }
-
-        Cicada.State.registerModule('swCategoryDetail', {
-            namespaced: true,
-            state: {
-                category: categoryMock,
-            },
-        });
+        Shopware.Store.get('swCategoryDetail').$reset();
+        Shopware.Store.get('swCategoryDetail').category = categoryMock;
     });
 
     it('should render stream select when changing the assignment type to stream', async () => {

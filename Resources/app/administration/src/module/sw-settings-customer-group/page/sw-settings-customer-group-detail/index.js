@@ -4,18 +4,16 @@ import template from './sw-settings-customer-group-detail.html.twig';
 /**
  * @sw-package discovery
  */
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
-const { CicadaError } = Cicada.Classes;
-const types = Cicada.Utils.types;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
+const { ShopwareError } = Shopware.Classes;
+const types = Shopware.Utils.types;
 const domainPlaceholderId = '124c71d524604ccbad6042edce3ac799';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -89,7 +87,7 @@ export default {
             }
 
             criteria.addFilter(Criteria.equals('pathInfo', `/customer-group-registration/${this.customerGroupId}`));
-            criteria.addFilter(Criteria.equals('languageId', Cicada.Context.api.languageId));
+            criteria.addFilter(Criteria.equals('languageId', Shopware.Context.api.languageId));
             criteria.addFilter(Criteria.equals('isCanonical', true));
             criteria.addAssociation('salesChannel.domains');
             criteria.addGroupField('seoPathInfo');
@@ -195,7 +193,7 @@ export default {
             const criteria = new Criteria(1, 25);
             criteria.addAssociation('registrationSalesChannels');
 
-            this.customerGroupRepository.get(this.customerGroupId, Cicada.Context.api, criteria).then((customerGroup) => {
+            this.customerGroupRepository.get(this.customerGroupId, Shopware.Context.api, criteria).then((customerGroup) => {
                 this.customerGroup = customerGroup;
                 this.isLoading = false;
             });
@@ -237,7 +235,7 @@ export default {
 
         validateSaveRequest() {
             if (
-                Cicada.Context.api.languageId === Cicada.Context.api.systemLanguageId &&
+                Shopware.Context.api.languageId === Shopware.Context.api.systemLanguageId &&
                 this.customerGroup.registrationActive &&
                 types.isEmpty(this.customerGroup.registrationTitle)
             ) {
@@ -245,7 +243,7 @@ export default {
                     message: this.$tc('global.notification.notificationSaveErrorMessageRequiredFieldsInvalid'),
                 });
 
-                this.registrationTitleError = new CicadaError({
+                this.registrationTitleError = new ShopwareError({
                     code: 'CUSTOMER_GROUP_REGISTERATION_MISSING_TITLE',
                     detail: this.$tc('global.notification.notificationSaveErrorMessageRequiredFieldsInvalid'),
                 });

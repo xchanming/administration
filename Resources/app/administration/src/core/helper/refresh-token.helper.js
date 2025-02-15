@@ -60,7 +60,7 @@ class RefreshTokenHelper {
      * @returns {Promise<String>}
      */
     fireRefreshTokenRequest() {
-        const loginService = Cicada.Service('loginService');
+        const loginService = Shopware.Service('loginService');
         this.isRefreshing = true;
 
         return loginService

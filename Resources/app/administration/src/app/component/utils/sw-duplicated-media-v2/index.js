@@ -1,8 +1,8 @@
 import template from './sw-duplicated-media-v2.html.twig';
 import './sw-duplicated-media-v2.scss';
 
-const { Component, Context, Filter } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Context, Filter } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package framework
@@ -16,8 +16,6 @@ const LOCAL_STORAGE_SAVE_SELECTION = 'sw-duplicate-media-resolve-save-selection'
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-duplicated-media-v2', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

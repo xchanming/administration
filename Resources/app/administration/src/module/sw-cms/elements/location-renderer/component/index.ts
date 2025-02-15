@@ -3,7 +3,7 @@ import template from './sw-cms-el-location-renderer.html.twig';
 import './sw-cms-el-location-renderer.scss';
 import type { ElementDataProp } from '../index';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @private
@@ -11,8 +11,6 @@ const { Component, Mixin } = Cicada;
  */
 Component.register('sw-cms-el-location-renderer', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('cms-element'),
@@ -88,13 +86,13 @@ Component.register('sw-cms-el-location-renderer', {
 
             // This is just for avoiding breaking changes for older implementations.
             // The important part is the publisher with the element id.
-            this.unpublishData = Cicada.ExtensionAPI.publishData({
+            this.unpublishData = Shopware.ExtensionAPI.publishData({
                 id: this.publishingKey,
                 path: 'element',
                 scope: this,
             });
 
-            this.unpublishDataWithElementId = Cicada.ExtensionAPI.publishData({
+            this.unpublishDataWithElementId = Shopware.ExtensionAPI.publishData({
                 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                 id: `${this.publishingKey}__${this.element.id}`,
                 path: 'element',

@@ -4,13 +4,13 @@
 import { mount } from '@vue/test-utils';
 import swCmsElConfigProductListingConfigDeleteModal from 'src/module/sw-cms/elements/product-listing/config/components/sw-cms-el-config-product-listing-config-delete-modal';
 
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-cms-el-config-product-listing-config-delete-modal',
     swCmsElConfigProductListingConfigDeleteModal,
 );
 async function createWrapper() {
     // Not found in componentregistry
-    return mount(await Cicada.Component.build('sw-cms-el-config-product-listing-config-delete-modal'), {
+    return mount(await Shopware.Component.build('sw-cms-el-config-product-listing-config-delete-modal'), {
         global: {
             renderStubDefaultSlot: true,
             stubs: {

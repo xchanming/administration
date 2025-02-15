@@ -1,4 +1,4 @@
-const { Application, State } = Cicada;
+const { Application, Store } = Shopware;
 
 /**
  * @private
@@ -167,23 +167,23 @@ export default function createLicenseViolationsService(storeService) {
     }
 
     async function forceDeletePlugin(extension) {
-        const cicadaExtensionService = Cicada.Service('cicadaExtensionService');
-        const cacheService = Cicada.Service('cacheApiService');
+        const shopwareExtensionService = Shopware.Service('shopwareExtensionService');
+        const cacheService = Shopware.Service('cacheApiService');
 
         try {
             const isActive = extension.active;
             const isInstalled = extension.installedAt !== null;
 
             if (isActive) {
-                await cicadaExtensionService.deactivateExtension(extension.name, extension.type);
+                await shopwareExtensionService.deactivateExtension(extension.name, extension.type);
                 await cacheService.clear();
             }
 
             if (isInstalled) {
-                await cicadaExtensionService.uninstallExtension(extension.name, extension.type);
+                await shopwareExtensionService.uninstallExtension(extension.name, extension.type);
             }
 
-            await cicadaExtensionService.removeExtension(extension.name, extension.type);
+            await shopwareExtensionService.removeExtension(extension.name, extension.type);
 
             return true;
         } catch (error) {
@@ -205,7 +205,7 @@ export default function createLicenseViolationsService(storeService) {
             method: () => ignorePlugin(warning.name, getIgnoredPlugins()),
         };
 
-        State.dispatch('notification/createGrowlNotification', {
+        Store.get('notification').createGrowlNotification({
             title: plugin.label,
             message: warning.text,
             autoClose: false,

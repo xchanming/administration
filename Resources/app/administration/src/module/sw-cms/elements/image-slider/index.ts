@@ -2,17 +2,17 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-image-slider', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-image-slider', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-image-slider', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-image-slider', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-image-slider', () => import('./component'));
+Shopware.Component.register('sw-cms-el-image-slider', () => import('./component'));
 
 type ImageSliderItemConfig = {
     newTab: boolean;
@@ -30,7 +30,7 @@ type ImageSliderItem = {
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'image-slider',
     label: 'sw-cms.elements.imageSlider.label',
     component: 'sw-cms-el-image-slider',

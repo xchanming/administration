@@ -5,14 +5,12 @@
 import template from './sw-property-detail.html.twig';
 import './sw-property-detail.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -123,7 +121,7 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-property-group-detail__propertyGroup',
                 path: 'propertyGroup',
                 scope: this,
@@ -136,7 +134,7 @@ export default {
             this.isLoading = true;
 
             this.propertyRepository
-                .get(this.groupId, Cicada.Context.api, this.defaultCriteria)
+                .get(this.groupId, Shopware.Context.api, this.defaultCriteria)
                 .then((currentGroup) => {
                     this.propertyGroup = currentGroup;
                     this.isLoading = false;

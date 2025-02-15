@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
-import type Criteria from '@cicada-ag/meteor-admin-sdk/es/data/Criteria';
+import type Criteria from '@shopware-ag/meteor-admin-sdk/es/data/Criteria';
 
-const { Application } = Cicada;
+const { Application } = Shopware;
 
 type AnyEntity = Entity<keyof EntitySchema.Entities>;
 
@@ -29,7 +29,7 @@ type CmsSlotData = {
     context?: unknown;
 };
 
-type RuntimeSlot = EntitySchema.Entity<'cms_slot'> & {
+type RuntimeSlot = Entity<'cms_slot'> & {
     config: CmsSlotConfig;
     data: {
         [key: string]: CmsSlotData;
@@ -161,7 +161,7 @@ class CmsService {
             config.enrich = CmsElementEnrich;
         }
 
-        Cicada.Application.view?.setReactive(this.elementRegistry, config.name, config);
+        Shopware.Application.view?.setReactive(this.elementRegistry, config.name, config);
 
         return true;
     }
@@ -201,7 +201,7 @@ class CmsService {
     }
 
     public getEntityMappingTypes(entityName: string) {
-        const schema = Cicada.EntityDefinition.has(entityName) ? Cicada.EntityDefinition.get(entityName) : undefined;
+        const schema = Shopware.EntityDefinition.has(entityName) ? Shopware.EntityDefinition.get(entityName) : undefined;
 
         if (schema === null || typeof schema === 'undefined') {
             return {};
@@ -217,19 +217,19 @@ class CmsService {
     }
 
     private async addCustomFieldsToMappingTypes(entityName: string, mappings: EntityMappings): Promise<void> {
-        const customFieldRepository = Cicada.Service('repositoryFactory').create('custom_field');
-        const criteria = new Cicada.Data.Criteria(1, 50);
-        criteria.addFilter(Cicada.Data.Criteria.equals('customFieldSet.relations.entityName', entityName));
-        criteria.addFilter(Cicada.Data.Criteria.equals('active', 1));
+        const customFieldRepository = Shopware.Service('repositoryFactory').create('custom_field');
+        const criteria = new Shopware.Data.Criteria(1, 50);
+        criteria.addFilter(Shopware.Data.Criteria.equals('customFieldSet.relations.entityName', entityName));
+        criteria.addFilter(Shopware.Data.Criteria.equals('active', 1));
         criteria.addFilter(
-            Cicada.Data.Criteria.multi('OR', [
-                Cicada.Data.Criteria.equals('type', 'text'),
-                Cicada.Data.Criteria.equals('type', 'datetime'),
-                Cicada.Data.Criteria.equals('type', 'html'),
+            Shopware.Data.Criteria.multi('OR', [
+                Shopware.Data.Criteria.equals('type', 'text'),
+                Shopware.Data.Criteria.equals('type', 'datetime'),
+                Shopware.Data.Criteria.equals('type', 'html'),
             ]),
         );
 
-        const customFields = await customFieldRepository.search(criteria, Cicada.Context.api);
+        const customFields = await customFieldRepository.search(criteria, Shopware.Context.api);
         customFields.forEach((customField: Entity<'custom_field'>) => {
             const propSchema: Property = {
                 type: customField.type,
@@ -350,7 +350,7 @@ class CmsService {
             this.addToMappingEntity(mappings, propSchema, pathPrefix, property);
 
             if (deep) {
-                const schema = Cicada.EntityDefinition.get(propSchema.entity);
+                const schema = Shopware.EntityDefinition.get(propSchema.entity);
 
                 if (schema) {
                     this.handlePropertyMappings(schema.properties, mappings, `${pathPrefix}.${property}`, false);
@@ -415,7 +415,7 @@ class CmsService {
         const entityData: CmsSlotData = {
             value: [],
             key: configKey,
-            searchCriteria: new Cicada.Data.Criteria(1, 25),
+            searchCriteria: new Shopware.Data.Criteria(1, 25),
             ...entity,
         };
 
@@ -436,7 +436,7 @@ class CmsService {
             entityData.value = [configValue];
         }
 
-        entityData.searchCriteria = entity?.criteria ? entity.criteria : new Cicada.Data.Criteria(1, 25);
+        entityData.searchCriteria = entity?.criteria ? entity.criteria : new Shopware.Data.Criteria(1, 25);
 
         return entityData;
     }
@@ -475,7 +475,7 @@ function CmsElementCollect(slot: RuntimeSlot) {
 
 function CmsElementCollectWithInheritance(slot: RuntimeSlot) {
     const context = {
-        ...Cicada.Context.api,
+        ...Shopware.Context.api,
         inheritance: true,
     };
 
@@ -502,7 +502,7 @@ function CmsElementCollectWithInheritance(slot: RuntimeSlot) {
             const entityData: CmsSlotData = {
                 value: [value].flat(),
                 key: configKey,
-                searchCriteria: entity.criteria ? entity.criteria : new Cicada.Data.Criteria(1, 25),
+                searchCriteria: entity.criteria ? entity.criteria : new Shopware.Data.Criteria(1, 25),
                 ...entity,
             };
 

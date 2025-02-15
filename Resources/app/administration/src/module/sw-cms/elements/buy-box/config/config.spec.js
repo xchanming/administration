@@ -50,7 +50,7 @@ async function createWrapper() {
                     'sw-select-field': true,
                 },
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                     repositoryFactory: {
                         create: () => {
                             return {
@@ -72,7 +72,7 @@ describe('module/sw-cms/elements/buy-box/config', () => {
     });
 
     afterEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('should show product selector if page type is not product detail', async () => {
@@ -85,7 +85,7 @@ describe('module/sw-cms/elements/buy-box/config', () => {
     });
 
     it('should show alert information if page type is product detail', async () => {
-        Cicada.Store.get('cmsPage').setCurrentPage({
+        Shopware.Store.get('cmsPage').setCurrentPage({
             type: 'product_detail',
         });
         const wrapper = await createWrapper();

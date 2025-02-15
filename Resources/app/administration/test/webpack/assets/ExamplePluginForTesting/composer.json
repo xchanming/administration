@@ -1,7 +1,7 @@
 {
   "name": "swag/plugin-skeleton",
   "description": "Skeleton plugin",
-  "type": "cicada-platform-plugin",
+  "type": "shopware-platform-plugin",
   "license": "MIT",
   "autoload": {
     "psr-4": {
@@ -9,9 +9,9 @@
     }
   },
   "extra": {
-    "cicada-plugin-class": "ExamplePluginForTesting\\ExamplePluginForTesting",
+    "shopware-plugin-class": "ExamplePluginForTesting\\ExamplePluginForTesting",
     "label": {
-      "zh-CN": "Skeleton plugin",
+      "de-DE": "Skeleton plugin",
       "en-GB": "Skeleton plugin"
     }
   }

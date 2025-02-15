@@ -1,11 +1,12 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-range-filter.html.twig';
 import './sw-range-filter.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -36,16 +37,7 @@ Component.register('sw-range-filter', {
         },
     },
 
-    computed: {
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
-    },
+    computed: {},
 
     watch: {
         value: {

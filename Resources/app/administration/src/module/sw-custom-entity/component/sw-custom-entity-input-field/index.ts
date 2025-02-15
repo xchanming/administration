@@ -5,10 +5,8 @@ import template from './sw-custom-entity-input-field.html.twig';
  * @private
  * @sw-package framework
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

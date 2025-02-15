@@ -5,13 +5,11 @@
 import './sw-sales-channel-defaults-select.scss';
 import template from './sw-sales-channel-defaults-select.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -120,7 +118,7 @@ export default {
         },
 
         propertyNameKebabCase() {
-            return Cicada.Utils.string.kebabCase(this.propertyName);
+            return Shopware.Utils.string.kebabCase(this.propertyName);
         },
 
         multiSelectClass() {
@@ -132,7 +130,7 @@ export default {
         },
 
         defaultsValueError() {
-            return Cicada.State.getters['error/getApiError'](this.salesChannel, this.defaultPropertyName);
+            return Shopware.Store.get('error').getApiError(this.salesChannel, this.defaultPropertyName);
         },
 
         labelProperty() {
@@ -182,9 +180,13 @@ export default {
                 const domain = this.getDomainUsingValue(removed);
                 if (domain !== null) {
                     this.createNotificationError({
-                        message: this.$tc('sw-sales-channel.sw-sales-channel-defaults-select.messageError', 0, {
-                            url: domain.url,
-                        }),
+                        message: this.$tc(
+                            'sw-sales-channel.sw-sales-channel-defaults-select.messageError',
+                            {
+                                url: domain.url,
+                            },
+                            0,
+                        ),
                     });
                     return;
                 }

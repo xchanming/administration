@@ -1,15 +1,15 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@framework
  */
 import './acl';
 
-const { Module } = Cicada;
+const { Module, Feature } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-currency-list', () => import('./page/sw-settings-currency-list'));
-Cicada.Component.register('sw-settings-currency-detail', () => import('./page/sw-settings-currency-detail'));
-Cicada.Component.register('sw-settings-price-rounding', () => import('./component/sw-settings-price-rounding'));
-Cicada.Component.register(
+Shopware.Component.register('sw-settings-currency-list', () => import('./page/sw-settings-currency-list'));
+Shopware.Component.register('sw-settings-currency-detail', () => import('./page/sw-settings-currency-detail'));
+Shopware.Component.register('sw-settings-price-rounding', () => import('./component/sw-settings-price-rounding'));
+Shopware.Component.register(
     'sw-settings-currency-country-modal',
     () => import('./component/sw-settings-currency-country-modal'),
 );
@@ -61,7 +61,14 @@ Module.register('sw-settings-currency', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: function () {
+            // @deprecated tag:v6.7.0 - Remove condition and function callback
+            if (!Feature.isActive('v6.7.0.0')) {
+                return 'shop';
+            }
+
+            return 'localization';
+        },
         to: 'sw.settings.currency.index',
         icon: 'regular-euro',
         privilege: 'currencies.viewer',

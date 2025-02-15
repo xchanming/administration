@@ -1,10 +1,10 @@
 import template from './sw-settings-country-preview-template.html.twig';
 import './sw-settings-country-preview-template.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  *
  * @private
  */

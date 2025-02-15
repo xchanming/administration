@@ -8,8 +8,6 @@ import './sw-settings-mailer-smtp.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'host-changed',
         'port-changed',

@@ -6,22 +6,22 @@ import template from './sw-icon-deprecated.html.twig';
 import './sw-icon-deprecated.scss';
 
 // Prefetch specific icons to avoid loading them asynchronously to improve performance
-import '@cicada-ag/meteor-icon-kit/icons/regular/tachometer.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/products.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/shopping-bag.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/users.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/content.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/megaphone.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/plug.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/cog.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/bell.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/question-circle.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/search-s.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/chevron-down-xs.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/chevron-up-xs.svg';
-import '@cicada-ag/meteor-icon-kit/icons/regular/chevron-circle-left.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/tachometer.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/products.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/shopping-bag.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/users.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/content.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/megaphone.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/plug.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/cog.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/bell.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/question-circle.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/search-s.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/chevron-down-xs.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/chevron-up-xs.svg';
+import '@shopware-ag/meteor-icon-kit/icons/regular/chevron-circle-left.svg';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -44,8 +44,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-icon-deprecated', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'feature',
@@ -117,15 +115,6 @@ Component.register('sw-icon-deprecated', {
                 height: size,
             };
         },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
     },
 
     watch: {
@@ -158,27 +147,15 @@ Component.register('sw-icon-deprecated', {
          * This throws an exception if the import is not found. Catch this in an override to add custom icons;
          * or override and do custom logic based on the `variant`, `iconName` or `iconFullName`.
          *
-         * Loosely based on an idea from https://cicadacommunity.slack.com/archives/C04P3QBG8S2/p1683098652206189
+         * Loosely based on an idea from https://shopwarecommunity.slack.com/archives/C04P3QBG8S2/p1683098652206189
          *
          * @return Promise for possible override fallback logic
          */
         loadIconSvgData(variant, iconName, iconFullName) {
-            if (this.feature.isActive('ADMIN_VITE')) {
-                // eslint-disable-next-line max-len
-                return import(
-                    `./../../../../../node_modules/@cicada-ag/meteor-icon-kit/icons/${variant}/${iconName}.svg?raw`
-                ).then((iconSvgData) => {
-                    if (iconSvgData.default) {
-                        this.iconSvgData = iconSvgData.default;
-                    } else {
-                        // note this only happens if the import exists but does not export a default
-                        console.error(`The SVG file for the icon name ${iconFullName} could not be found and loaded.`);
-                        this.iconSvgData = '';
-                    }
-                });
-            }
-
-            return import(`@cicada-ag/meteor-icon-kit/icons/${variant}/${iconName}.svg`).then((iconSvgData) => {
+            // eslint-disable-next-line max-len
+            return import(
+                `./../../../../../node_modules/@shopware-ag/meteor-icon-kit/icons/${variant}/${iconName}.svg?raw`
+            ).then((iconSvgData) => {
                 if (iconSvgData.default) {
                     this.iconSvgData = iconSvgData.default;
                 } else {

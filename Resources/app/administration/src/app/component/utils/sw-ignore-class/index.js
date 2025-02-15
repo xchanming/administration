@@ -25,8 +25,6 @@
  *     Your normal content
  * </sw-ignore-class>
  */
-Cicada.Component.register('sw-ignore-class', {
+Shopware.Component.register('sw-ignore-class', {
     template: '<div><slot></slot></div>',
-
-    compatConfig: Cicada.compatConfig,
 });

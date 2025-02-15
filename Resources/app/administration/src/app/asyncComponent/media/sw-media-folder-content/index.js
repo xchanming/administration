@@ -1,8 +1,8 @@
 import template from './sw-media-folder-content.html.twig';
 import './sw-media-folder-content.scss';
 
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package discovery
@@ -10,8 +10,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'filterItems',
@@ -47,7 +45,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

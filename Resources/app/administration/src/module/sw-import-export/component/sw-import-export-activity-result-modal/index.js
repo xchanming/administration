@@ -4,13 +4,11 @@
 import template from './sw-import-export-activity-result-modal.html.twig';
 import './sw-import-export-activity-result-modal.scss';
 
-const { format } = Cicada.Utils;
+const { format } = Shopware.Utils;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['importExport'],
 
@@ -54,7 +52,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 

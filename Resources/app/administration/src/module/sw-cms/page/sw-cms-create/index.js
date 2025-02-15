@@ -1,7 +1,7 @@
 import template from './sw-cms-create.html.twig';
 
-const { Mixin } = Cicada;
-const utils = Cicada.Utils;
+const { Mixin } = Shopware;
+const utils = Shopware.Utils;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const utils = Cicada.Utils;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('placeholder'),
@@ -42,19 +40,19 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.Store.get('adminMenu').collapseSidebar();
+            Shopware.Store.get('adminMenu').collapseSidebar();
 
-            const isSystemDefaultLanguage = Cicada.State.getters['context/isSystemDefaultLanguage'];
+            const isSystemDefaultLanguage = Shopware.Store.get('context').isSystemDefaultLanguage;
             if (!isSystemDefaultLanguage) {
-                Cicada.State.commit('context/resetLanguageToDefault');
+                Shopware.Store.get('context').resetLanguageToDefault();
                 this.$store.commit('cmsPageState/setIsSystemDefaultLanguage', isSystemDefaultLanguage);
             }
 
             this.page = this.pageRepository.create();
-            this.page.sections = new Cicada.Data.EntityCollection(
+            this.page.sections = new Shopware.Data.EntityCollection(
                 `/cms-page/${this.page.id}/sections`,
                 'cms_section',
-                Cicada.Context.api,
+                Shopware.Context.api,
             );
         },
 

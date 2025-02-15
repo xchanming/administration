@@ -1,17 +1,15 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
 import template from './sw-settings-language-list.html.twig';
 import './sw-settings-language-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -151,7 +149,9 @@ export default {
         },
 
         isDefault(languageId) {
-            return Cicada.Context.api.systemLanguageId ? Cicada.Context.api.systemLanguageId.includes(languageId) : false;
+            return Shopware.Context.api.systemLanguageId
+                ? Shopware.Context.api.systemLanguageId.includes(languageId)
+                : false;
         },
 
         tooltipDelete(languageId) {

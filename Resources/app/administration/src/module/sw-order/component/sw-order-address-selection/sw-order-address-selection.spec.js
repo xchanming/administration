@@ -4,8 +4,8 @@ import { mount } from '@vue/test-utils';
  * @sw-package checkout
  */
 
-const { Context } = Cicada;
-const { EntityCollection } = Cicada.Data;
+const { Context } = Shopware;
+const { EntityCollection } = Shopware.Data;
 
 async function createWrapper(propsData) {
     return mount(await wrapTestComponent('sw-order-address-selection', { sync: true }), {
@@ -24,7 +24,7 @@ async function createWrapper(propsData) {
                         <slot></slot></li>`,
                     methods: {
                         onClickResult() {
-                            Cicada.Utils.EventBus.emit('item-select', this.item);
+                            Shopware.Utils.EventBus.emit('item-select', this.item);
                         },
                     },
                     computed: {
@@ -85,9 +85,7 @@ async function createWrapper(propsData) {
                                     {
                                         street: 'Stehr Divide',
                                         zipcode: '64885-2245',
-                                        city: {
-                                            name:'Faheyshire'
-                                        },
+                                        city: 'Faheyshire',
                                         id: '652e9e571cc94bd898077f256dcf629f',
                                         country: {
                                             translated: {
@@ -112,9 +110,7 @@ async function createWrapper(propsData) {
             address: {
                 street: 'Denesik Bridge',
                 zipcode: '05132',
-                city: {
-                    name: 'Bernierstad',
-                },
+                city: 'Bernierstad',
                 company: 'Muster SE',
                 department: 'People & Culture',
                 id: '38e8895864a649a1b2ec806dad02ab87',
@@ -140,9 +136,10 @@ describe('src/module/sw-order/component/sw-order-address-selection', () => {
     let wrapper;
 
     beforeAll(() => {
-        Cicada.State.registerModule('swOrderDetail', {
-            namespaced: true,
-            state: {
+        Shopware.Store.unregister('swOrderDetail');
+        Shopware.Store.register({
+            id: 'swOrderDetail',
+            state: () => ({
                 isLoading: false,
                 isSavedSuccessful: false,
                 versionContext: {},
@@ -151,9 +148,7 @@ describe('src/module/sw-order/component/sw-order-address-selection', () => {
                         {
                             street: 'Denesik Bridge',
                             zipcode: '05132',
-                            city: {
-                                name: 'Bernierstad',
-                            },
+                            city: 'Bernierstad',
                             id: '38e8895864a649a1b2ec806dad02ab87',
                             country: {
                                 translated: {
@@ -167,7 +162,7 @@ describe('src/module/sw-order/component/sw-order-address-selection', () => {
                         customerId: '63e27affb5804538b5b06cb4e344b130',
                     },
                 },
-            },
+            }),
         });
     });
 
@@ -196,9 +191,7 @@ describe('src/module/sw-order/component/sw-order-address-selection', () => {
         expect(wrapper.vm.currentAddress).toEqual({
             street: 'Denesik Bridge',
             zipcode: '05132',
-            city: {
-                name: 'Bernierstad',
-            },
+            city: 'Bernierstad',
             company: 'Muster SE',
             id: '38e8895864a649a1b2ec806dad02ab87',
             country: {

@@ -4,16 +4,14 @@
 import template from './sw-import-export-activity-log-info-modal.html.twig';
 import './sw-import-export-activity-log-info-modal.scss';
 
-const { Mixin } = Cicada;
-const { format } = Cicada.Utils;
+const { Mixin } = Shopware;
+const { format } = Shopware.Utils;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['importExport'],
 
@@ -45,7 +43,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 

@@ -4,7 +4,6 @@
  * @description Apply for upselling service only, no public usage
  */
 
-
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export type TeaserPopoverConfig = {
     positionId: string;
@@ -38,7 +37,7 @@ export type TeaserSalesChannelConfig = {
     };
 };
 
-const teaserPopoverStore = Cicada.Store.register({
+const teaserPopoverStore = Shopware.Store.register({
     id: 'teaserPopover',
 
     state: () => ({

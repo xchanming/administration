@@ -1,7 +1,7 @@
 import template from './sw-tagged-field.html.twig';
 import './sw-tagged-field.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -15,8 +15,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-tagged-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -33,7 +31,7 @@ Component.register('sw-tagged-field', {
             type: String,
             required: false,
             default() {
-                return Cicada.Snippet.tc('global.sw-tagged-field.text-default-placeholder');
+                return Shopware.Snippet.tc('global.sw-tagged-field.text-default-placeholder');
             },
         },
 
@@ -67,17 +65,6 @@ Component.register('sw-tagged-field', {
                 'sw-tagged-field__input--full-width': !this.hasValues,
                 'sw-tagged-field__input--hidden': this.hasValues && !this.hasFocus,
             };
-        },
-
-        /**
-         * @deprecated tag:v6.7.0 - Will be removed
-         */
-        listeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

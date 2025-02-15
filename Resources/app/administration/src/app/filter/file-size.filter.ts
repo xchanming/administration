@@ -5,12 +5,12 @@
 /**
  * @private
  */
-Cicada.Filter.register('fileSize', (value: number, locale: string) => {
+Shopware.Filter.register('fileSize', (value: number, locale: string) => {
     if (!value) {
         return '';
     }
 
-    return Cicada.Utils.format.fileSize(value, locale);
+    return Shopware.Utils.format.fileSize(value, locale);
 });
 
 /* @private */

@@ -19,7 +19,7 @@ interface UserInfoResponse {
 
 /**
  * @private
- * @sw-package fundamentals@after-sales
+ * @sw-package framework
  * Gateway for the API end point "store"
  */
 export default class StoreApiService extends ApiService {
@@ -29,11 +29,11 @@ export default class StoreApiService extends ApiService {
         this.name = 'storeService';
     }
 
-    public async login(cicadaId: string, password: string) {
+    public async login(shopwareId: string, password: string) {
         const headers = this.getBasicHeaders();
         const params = this.getBasicParams();
 
-        await this.httpClient.post(`/_action/${this.getApiBasePath()}/login`, { cicadaId, password }, { params, headers });
+        await this.httpClient.post(`/_action/${this.getApiBasePath()}/login`, { shopwareId, password }, { params, headers });
     }
 
     public async checkLogin() {
@@ -88,6 +88,6 @@ export default class StoreApiService extends ApiService {
 
 /**
  * @private
- * @sw-package fundamentals@after-sales
+ * @sw-package framework
  */
 export type { StoreApiService, UserInfo };

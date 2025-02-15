@@ -6,16 +6,13 @@ import './sw-order-address-selection.scss';
  * @sw-package checkout
  */
 
-const { EntityDefinition, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapState } = Cicada.Component.getComponentHelper();
-const { cloneDeep } = Cicada.Utils.object;
+const { EntityDefinition, Mixin, Store } = Shopware;
+const { Criteria } = Shopware.Data;
+const { cloneDeep } = Shopware.Utils.object;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -67,10 +64,9 @@ export default {
     },
 
     computed: {
-        ...mapState('swOrderDetail', [
-            'order',
-            'versionContext',
-        ]),
+        order: () => Store.get('swOrderDetail').order,
+
+        versionContext: () => Store.get('swOrderDetail').versionContext,
 
         orderCustomer() {
             return this.order.orderCustomer;
@@ -155,7 +151,7 @@ export default {
                 return;
             }
 
-            const currentAddress = this.addressRepository.create(Cicada.Context.api, id);
+            const currentAddress = this.addressRepository.create(Shopware.Context.api, id);
 
             this.currentAddress = Object.assign(currentAddress, this.customer.addresses.get(id));
         },
@@ -202,7 +198,7 @@ export default {
 
             const address =
                 this.customer.addresses.get(this.currentAddress.id) ??
-                this.addressRepository.create(Cicada.Context.api, this.currentAddress.id);
+                this.addressRepository.create(Shopware.Context.api, this.currentAddress.id);
 
             Object.assign(address, this.currentAddress);
 
@@ -264,7 +260,7 @@ export default {
             }
 
             return this.customerRepository
-                .get(this.orderCustomer.customerId, Cicada.Context.api, this.customerCriteria)
+                .get(this.orderCustomer.customerId, Shopware.Context.api, this.customerCriteria)
                 .then((customer) => {
                     this.customer = customer;
                 });
@@ -285,7 +281,7 @@ export default {
                     .filter((v) => v)
                     .join(' - '),
                 address.street,
-                `${address.zipcode ?? ''} ${address.city?.name}`.trim(),
+                `${address.zipcode ?? ''} ${address.city}`.trim(),
                 address?.countryState?.translated?.name,
                 address?.country?.translated?.name,
             ];

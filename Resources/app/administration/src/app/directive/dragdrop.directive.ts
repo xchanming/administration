@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-const { types } = Cicada.Utils;
+const { types } = Shopware.Utils;
 
 interface DropConfig<DATA = unknown> {
     dragGroup: number | string;
@@ -439,7 +439,7 @@ function mergeConfigs(defaultConfig: DragConfig | DropConfig, binding: { value: 
  *
  * See the {DragConfig} for all possible config options.
  */
-Cicada.Directive.register('draggable', {
+Shopware.Directive.register('draggable', {
     mounted(el: DragHTMLElement, binding: { value: unknown }) {
         const dragConfig = mergeConfigs(defaultDragConfig, binding) as DragConfig;
         el.dragConfig = dragConfig;
@@ -499,7 +499,7 @@ Cicada.Directive.register('draggable', {
  *
  * See the {dropConfig} for all possible config options.
  */
-Cicada.Directive.register('droppable', {
+Shopware.Directive.register('droppable', {
     mounted(el: HTMLElement, binding: { value: unknown }) {
         const dropConfig = mergeConfigs(defaultDropConfig, binding) as DropConfig;
 

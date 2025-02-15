@@ -3,7 +3,6 @@
  */
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHashHistory } from 'vue-router';
-import swCategoryState from 'src/module/sw-category/page/sw-category-detail/state';
 
 async function createWrapper() {
     const routes = [
@@ -74,20 +73,16 @@ describe('src/module/sw-category/component/sw-landing-page-tree', () => {
             'landing_page.editor',
         ];
 
-        if (Cicada.State.get('swCategoryDetail')) {
-            Cicada.State.unregisterModule('swCategoryDetail');
-        }
+        Shopware.Store.get('swCategoryDetail').$reset();
 
-        Cicada.State.registerModule('swCategoryDetail', swCategoryState);
-
-        // this is normally set by the cicada runtime
+        // this is normally set by the shopware runtime
         // but needed for this unit tests because the component relies on this value.
-        oldSystemLanguageId = Cicada.Context.api.systemLanguageId;
-        Cicada.Context.api.systemLanguageId = '1a2b3c';
+        oldSystemLanguageId = Shopware.Context.api.systemLanguageId;
+        Shopware.Context.api.systemLanguageId = '1a2b3c';
     });
 
     afterEach(async () => {
-        Cicada.Context.api.systemLanguageId = oldSystemLanguageId;
+        Shopware.Context.api.systemLanguageId = oldSystemLanguageId;
     });
 
     it('should not be able to sort the items', async () => {

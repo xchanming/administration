@@ -2,23 +2,23 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-cross-selling', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-cross-selling', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-cross-selling', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-cross-selling', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-cross-selling', () => import('./component'));
+Shopware.Component.register('sw-cms-el-cross-selling', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'cross-selling',
     label: 'sw-cms.elements.crossSelling.label',
     component: 'sw-cms-el-cross-selling',
@@ -31,7 +31,7 @@ Cicada.Service('cmsService').registerCmsElement({
             required: true,
             entity: {
                 name: 'product',
-                criteria: new Cicada.Data.Criteria(1, 25).addAssociation('crossSellings.assignedProducts.product'),
+                criteria: new Shopware.Data.Criteria(1, 25).addAssociation('crossSellings.assignedProducts.product'),
             },
         },
         displayMode: {
@@ -47,5 +47,5 @@ Cicada.Service('cmsService').registerCmsElement({
             value: '300px',
         },
     },
-    collect: Cicada.Service('cmsService').getCollectFunction(),
+    collect: Shopware.Service('cmsService').getCollectFunction(),
 });

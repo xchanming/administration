@@ -5,17 +5,15 @@
 import template from './sw-product-stream-detail.html.twig';
 import './sw-product-stream-detail.scss';
 
-const { Mixin, Context } = Cicada;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
-const { Criteria } = Cicada.Data;
+const { Mixin, Context } = Shopware;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -165,7 +163,7 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-product-stream-detail__productStream',
                 path: 'productStream',
                 scope: this,
@@ -255,7 +253,7 @@ export default {
                 this.isLoading = true;
 
                 return this.productStreamRepository
-                    .clone(this.productStream.id, behavior, Cicada.Context.api)
+                    .clone(this.productStream.id, behavior, Shopware.Context.api)
                     .then((clone) => {
                         const route = {
                             name: 'sw.product.stream.detail',

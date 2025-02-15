@@ -66,8 +66,8 @@ async function createWrapper(
                                         return Promise.resolve({
                                             localeId: '7dc07b43229843d387bb5f59233c2d66',
                                             username: 'admin',
-                                            name: '',
-                                            phone: '18000000000',
+                                            firstName: '',
+                                            lastName: 'admin',
                                             email: 'info@xchanming.com',
                                             accessKeys: {
                                                 entity: 'product',
@@ -80,7 +80,7 @@ async function createWrapper(
                             if (entityName === 'language') {
                                 return {
                                     search: () =>
-                                        Promise.resolve(new EntityCollection('', '', Cicada.Context.api, null, [], 0)),
+                                        Promise.resolve(new EntityCollection('', '', Shopware.Context.api, null, [], 0)),
                                     get: () => Promise.resolve(),
                                 };
                             }
@@ -182,15 +182,15 @@ async function createWrapper(
 
 describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', () => {
     beforeAll(() => {
-        Cicada.Service().register('timezoneService', () => {
+        Shopware.Service().register('timezoneService', () => {
             return new TimezoneService();
         });
 
-        jest.spyOn(Cicada.ExtensionAPI, 'publishData').mockImplementation(() => {});
+        jest.spyOn(Shopware.ExtensionAPI, 'publishData').mockImplementation(() => {});
     });
 
     beforeEach(async () => {
-        Cicada.State.get('session').languageId = '123456789';
+        Shopware.Store.get('session').languageId = '123456789';
         wrapper = await createWrapper();
     });
 
@@ -198,7 +198,7 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
         // Unmount need to be called here manually because the publishData cleanup does
         // not work with automatic unmount
         await wrapper.unmount();
-        Cicada.State.get('session').languageId = '';
+        Shopware.Store.get('session').languageId = '';
     });
 
     it('should be a Vue.js component', async () => {
@@ -209,8 +209,8 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
         await wrapper.setData({ isLoading: false });
         await flushPromises();
 
-        const fieldFirstName = wrapper.findComponent('.sw-settings-user-detail__grid-name');
-        const fieldLastName = wrapper.findComponent('.sw-settings-user-detail__grid-phone');
+        const fieldFirstName = wrapper.findComponent('.sw-settings-user-detail__grid-firstName');
+        const fieldLastName = wrapper.findComponent('.sw-settings-user-detail__grid-lastName');
         const fieldEmail = wrapper.findComponent('.sw-settings-user-detail__grid-eMail');
         const fieldUsername = wrapper.findComponent('.sw-settings-user-detail__grid-username');
         const fieldProfilePicture = wrapper.findComponent('.sw-settings-user-detail__grid-profile-picture');
@@ -226,7 +226,7 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
         expect(fieldLanguage.exists()).toBeTruthy();
 
         expect(fieldFirstName.attributes('value')).toBe('');
-        expect(fieldLastName.attributes('value')).toBe('18000000000');
+        expect(fieldLastName.attributes('value')).toBe('admin');
         expect(fieldEmail.attributes('value')).toBe('info@xchanming.com');
         expect(fieldUsername.attributes('value')).toBe('admin');
         expect(fieldProfilePicture.attributes('value')).toBeUndefined();
@@ -239,32 +239,32 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
             user: {
                 localeId: '12345',
                 username: 'maxmuster',
-                name: 'Max',
-                phone: '18000000000',
+                firstName: 'Max',
+                lastName: 'Mustermann',
                 email: 'max@mustermann.com',
             },
             isLoading: false,
         });
         await flushPromises();
 
-        const fieldName = wrapper.findComponent('.sw-settings-user-detail__grid-name');
-        const fieldPhone = wrapper.findComponent('.sw-settings-user-detail__grid-phone');
+        const fieldFirstName = wrapper.findComponent('.sw-settings-user-detail__grid-firstName');
+        const fieldLastName = wrapper.findComponent('.sw-settings-user-detail__grid-lastName');
         const fieldEmail = wrapper.findComponent('.sw-settings-user-detail__grid-eMail');
         const fieldUsername = wrapper.findComponent('.sw-settings-user-detail__grid-username');
         const fieldProfilePicture = wrapper.findComponent('.sw-settings-user-detail__grid-profile-picture');
         const fieldPassword = wrapper.findComponent('.sw-settings-user-detail__grid-password');
         const fieldLanguage = wrapper.findComponent('.sw-settings-user-detail__grid-language');
 
-        expect(fieldName.exists()).toBeTruthy();
-        expect(fieldPhone.exists()).toBeTruthy();
+        expect(fieldFirstName.exists()).toBeTruthy();
+        expect(fieldLastName.exists()).toBeTruthy();
         expect(fieldEmail.exists()).toBeTruthy();
         expect(fieldUsername.exists()).toBeTruthy();
         expect(fieldProfilePicture.exists()).toBeTruthy();
         expect(fieldPassword.exists()).toBeTruthy();
         expect(fieldLanguage.exists()).toBeTruthy();
 
-        expect(fieldName.attributes('value')).toBe('Max');
-        expect(fieldPhone.attributes('value')).toBe('18000000000');
+        expect(fieldFirstName.attributes('value')).toBe('Max');
+        expect(fieldLastName.attributes('value')).toBe('Mustermann');
         expect(fieldEmail.attributes('value')).toBe('max@mustermann.com');
         expect(fieldUsername.attributes('value')).toBe('maxmuster');
         expect(fieldProfilePicture.attributes('value')).toBeUndefined();
@@ -279,8 +279,8 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
                 admin: true,
                 localeId: '12345',
                 username: 'maxmuster',
-                name: 'Max',
-                phone: '18000000000',
+                firstName: 'Max',
+                lastName: 'Mustermann',
                 email: 'max@mustermann.com',
             },
             isLoading: false,
@@ -302,8 +302,8 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
                 admin: false,
                 localeId: '12345',
                 username: 'maxmuster',
-                name: 'Max',
-                phone: '18000000000',
+                firstName: 'Max',
+                lastName: 'Mustermann',
                 email: 'max@mustermann.com',
             },
             isLoading: false,
@@ -321,8 +321,8 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
                 admin: false,
                 localeId: '12345',
                 username: 'maxmuster',
-                name: 'Max',
-                phone: '18000000000',
+                firstName: 'Max',
+                lastName: 'Mustermann',
                 email: 'max@mustermann.com',
             },
             integrations: [
@@ -331,8 +331,8 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
         });
         await flushPromises();
 
-        const fieldFirstName = wrapper.findComponent('.sw-settings-user-detail__grid-name');
-        const fieldLastName = wrapper.findComponent('.sw-settings-user-detail__grid-phone');
+        const fieldFirstName = wrapper.findComponent('.sw-settings-user-detail__grid-firstName');
+        const fieldLastName = wrapper.findComponent('.sw-settings-user-detail__grid-lastName');
         const fieldEmail = wrapper.findComponent('.sw-settings-user-detail__grid-eMail');
         const fieldUsername = wrapper.findComponent('.sw-settings-user-detail__grid-username');
         const fieldProfilePicture = wrapper.findComponent('.sw-settings-user-detail__grid-profile-picture');
@@ -361,8 +361,8 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
                 admin: false,
                 localeId: '12345',
                 username: 'maxmuster',
-                name: 'Max',
-                phone: '18000000000',
+                firstName: 'Max',
+                lastName: 'Mustermann',
                 email: 'max@mustermann.com',
             },
             integrations: [
@@ -370,8 +370,8 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
             ],
         });
 
-        const fieldFirstName = wrapper.find('.sw-settings-user-detail__grid-name');
-        const fieldLastName = wrapper.find('.sw-settings-user-detail__grid-phone');
+        const fieldFirstName = wrapper.find('.sw-settings-user-detail__grid-firstName');
+        const fieldLastName = wrapper.find('.sw-settings-user-detail__grid-lastName');
         const fieldEmail = wrapper.find('.sw-settings-user-detail__grid-eMail');
         const fieldUsername = wrapper.find('.sw-settings-user-detail__grid-username');
         const fieldProfilePicture = wrapper.find('.sw-settings-user-detail__grid-profile-picture');
@@ -530,15 +530,15 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-detail', (
     });
 
     it('should publish current user and editing user', async () => {
-        expect(Cicada.ExtensionAPI.publishData).toHaveBeenCalledTimes(2);
+        expect(Shopware.ExtensionAPI.publishData).toHaveBeenCalledTimes(2);
 
-        expect(Cicada.ExtensionAPI.publishData).toHaveBeenNthCalledWith(1, {
+        expect(Shopware.ExtensionAPI.publishData).toHaveBeenNthCalledWith(1, {
             id: 'sw-users-permissions-user-detail__currentUser',
             path: 'currentUser',
             scope: expect.anything(),
         });
 
-        expect(Cicada.ExtensionAPI.publishData).toHaveBeenNthCalledWith(2, {
+        expect(Shopware.ExtensionAPI.publishData).toHaveBeenNthCalledWith(2, {
             id: 'sw-users-permissions-user-detail__user',
             path: 'user',
             scope: expect.anything(),

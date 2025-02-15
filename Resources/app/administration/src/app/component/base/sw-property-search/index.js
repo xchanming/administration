@@ -5,17 +5,15 @@
 import template from './sw-property-search.html.twig';
 import './sw-property-search.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
-const utils = Cicada.Utils;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
+const utils = Shopware.Utils;
 
 /**
  * @private
  */
 Component.register('sw-property-search', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -122,7 +120,7 @@ Component.register('sw-property-search', {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -150,9 +148,6 @@ Component.register('sw-property-search', {
             }
 
             // Info: there is no component available with this event so it can be removed safely
-            if (this.isCompatEnabled('INSTANCE_CHILDREN')) {
-                this.$parent.$on('options-load', this.addOptionCount);
-            }
         },
 
         destroyedComponent() {
@@ -251,7 +246,7 @@ Component.register('sw-property-search', {
             this.currentGroup = null;
 
             this.propertyGroupOptionRepository
-                .search(this.propertyGroupOptionCriteria, Cicada.Context.api)
+                .search(this.propertyGroupOptionCriteria, Shopware.Context.api)
                 .then((groupOptions) => {
                     this.groupOptions = groupOptions;
                     this.optionTotal = groupOptions.total;
@@ -278,7 +273,7 @@ Component.register('sw-property-search', {
         },
 
         loadGroups() {
-            this.propertyGroupRepository.search(this.propertyGroupCriteria, Cicada.Context.api).then((groups) => {
+            this.propertyGroupRepository.search(this.propertyGroupCriteria, Shopware.Context.api).then((groups) => {
                 this.groups = groups;
                 this.groupTotal = groups.total;
                 this.addOptionCount();
@@ -287,7 +282,7 @@ Component.register('sw-property-search', {
 
         loadOptions() {
             this.propertyGroupOptionRepository
-                .search(this.propertyGroupOptionCriteria, Cicada.Context.api)
+                .search(this.propertyGroupOptionCriteria, Shopware.Context.api)
                 .then((groupOptions) => {
                     this.groupOptions = groupOptions;
                     this.optionTotal = groupOptions.total;
@@ -321,11 +316,7 @@ Component.register('sw-property-search', {
                     return option.groupId === group.id && !option.isDeleted;
                 });
 
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(group, 'optionCount', optionCount.length);
-                } else {
-                    group.optionCount = optionCount.length;
-                }
+                group.optionCount = optionCount.length;
             });
         },
     },

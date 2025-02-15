@@ -8,8 +8,6 @@ import './sw-cms-el-preview-html.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     data() {
         return {
             demoValue: `

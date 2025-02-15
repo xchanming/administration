@@ -3,14 +3,12 @@
  */
 import template from './sw-settings-search.html.twig';
 
-const { Mixin } = Cicada;
-const { EntityCollection, Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { EntityCollection, Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -60,14 +58,14 @@ export default {
         productSearchConfigsCriteria() {
             const criteria = new Criteria(1, 25);
             criteria.addAssociation('configFields');
-            criteria.addFilter(Criteria.equals('languageId', Cicada.Context.api.languageId));
+            criteria.addFilter(Criteria.equals('languageId', Shopware.Context.api.languageId));
             return criteria;
         },
 
         productDefaultConfigsCriteria() {
             const criteria = new Criteria(1, 25);
             criteria.addAssociation('configFields');
-            criteria.addFilter(Criteria.equals('languageId', Cicada.Context.api.systemLanguageId));
+            criteria.addFilter(Criteria.equals('languageId', Shopware.Context.api.systemLanguageId));
             return criteria;
         },
 
@@ -150,7 +148,7 @@ export default {
             defaultConfig.andLogic = this.defaultConfig.andLogic;
             defaultConfig.minSearchLength = this.defaultConfig.minSearchLength;
             defaultConfig.excludedTerms = [];
-            defaultConfig.languageId = Cicada.Context.api.languageId;
+            defaultConfig.languageId = Shopware.Context.api.languageId;
             return defaultConfig;
         },
 
@@ -162,7 +160,7 @@ export default {
             const configFieldCollection = new EntityCollection(
                 this.productSearchFieldRepository.route,
                 this.productSearchFieldRepository.entityName,
-                Cicada.Context.api,
+                Shopware.Context.api,
             );
             this.defaultConfig.configFields.forEach((item) => {
                 const newConfigField = this.productSearchFieldRepository.create();

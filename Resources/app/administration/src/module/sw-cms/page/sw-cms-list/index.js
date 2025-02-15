@@ -4,14 +4,12 @@
 import template from './sw-cms-list.html.twig';
 import './sw-cms-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -149,7 +147,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
@@ -159,7 +157,7 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.Store.get('adminMenu').collapseSidebar();
+            Shopware.Store.get('adminMenu').collapseSidebar();
 
             if (this.acl.can('user_config:read')) {
                 this.loadGridUserSettings();
@@ -254,17 +252,6 @@ export default {
             criteria.addAggregation(linkedLayoutsFilter);
         },
 
-        /**
-         * @deprecated tag:v6.7.0 - Will be removed
-         */
-        addPageAggregations(criteria) {
-            return criteria
-                .addAggregation(Criteria.terms('products', 'id', null, null, Criteria.count('productCount', 'products.id')))
-                .addAggregation(
-                    Criteria.terms('categories', 'id', null, null, Criteria.count('categoryCount', 'categories.id')),
-                );
-        },
-
         showDefaultLayoutContextMenu(cmsPage) {
             if (!this.acl.can('system_config:read')) {
                 return false;
@@ -349,7 +336,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
             this.resetList();
         },
 
@@ -471,7 +458,7 @@ export default {
 
             this.isLoading = true;
             this.pageRepository
-                .clone(page.id, behavior, Cicada.Context.api)
+                .clone(page.id, behavior, Shopware.Context.api)
                 .then(() => {
                     this.resetList();
                     this.isLoading = false;
@@ -496,7 +483,7 @@ export default {
             this.showDeleteModal = false;
         },
 
-        saveCmsPage(page, context = Cicada.Context.api) {
+        saveCmsPage(page, context = Shopware.Context.api) {
             this.isLoading = true;
             return this.pageRepository
                 .save(page, context)

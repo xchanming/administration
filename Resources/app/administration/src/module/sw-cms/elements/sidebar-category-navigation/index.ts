@@ -2,23 +2,23 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-category-navigation', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-category-navigation', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-category-navigation', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-category-navigation', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-category-navigation', () => import('./component'));
+Shopware.Component.register('sw-cms-el-category-navigation', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'category-navigation',
     label: 'sw-cms.elements.sidebarCategoryNavigation.label',
     component: 'sw-cms-el-category-navigation',

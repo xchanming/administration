@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 import { mount } from '@vue/test-utils';
 
 async function createWrapper() {
@@ -45,13 +46,13 @@ async function createWrapper() {
 
 describe('module/sw-extension/page/sw-extension-my-extensions-index', () => {
     beforeAll(() => {
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
+        if (Shopware.Store.get('context')) {
+            Shopware.Store.unregister('context');
         }
 
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
+        Shopware.Store.register({
+            id: 'context',
+            state: () => ({
                 app: {
                     config: {
                         settings: {
@@ -65,7 +66,7 @@ describe('module/sw-extension/page/sw-extension-my-extensions-index', () => {
                         token: 'testToken',
                     },
                 },
-            },
+            }),
         });
     });
 
@@ -76,7 +77,7 @@ describe('module/sw-extension/page/sw-extension-my-extensions-index', () => {
     });
 
     it('upload button should be not there when allowed runtime extension management', async () => {
-        Cicada.State.get('context').app.config.settings.disableExtensionManagement = true;
+        Shopware.Store.get('context').app.config.settings.disableExtensionManagement = true;
         const wrapper = await createWrapper();
 
         expect(wrapper.find('.sw-extension-file-upload').exists()).toBe(false);

@@ -48,7 +48,7 @@ export default class RepositoryFactory {
             route = `/${entityName.replace(/_/g, '-')}`;
         }
 
-        const definition = Cicada.EntityDefinition.get(entityName);
+        const definition = Shopware.EntityDefinition.get(entityName);
 
         return new Repository<EntityName>(
             route,

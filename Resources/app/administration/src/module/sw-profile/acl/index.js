@@ -1,7 +1,7 @@
 /**
  * @sw-package fundamentals@framework
  */
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'additional_permissions',
     parent: null,
     key: 'user',

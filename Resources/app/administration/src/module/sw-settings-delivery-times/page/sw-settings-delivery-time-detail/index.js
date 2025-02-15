@@ -4,15 +4,13 @@ import template from './sw-settings-delivery-time-detail.html.twig';
  * @sw-package discovery
  */
 
-const { Component, Mixin } = Cicada;
-const CicadaError = Cicada.Classes.CicadaError;
+const { Component, Mixin } = Shopware;
+const ShopwareError = Shopware.Classes.ShopwareError;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -100,7 +98,7 @@ export default {
 
         invalidMinError() {
             if (this.isInvalidMinField) {
-                return new CicadaError({ code: 'DELIVERY_TIME_MIN_INVALID' });
+                return new ShopwareError({ code: 'DELIVERY_TIME_MIN_INVALID' });
             }
             return null;
         },
@@ -182,7 +180,7 @@ export default {
             this.isSaveSuccessful = false;
 
             return this.deliveryTimeRepository
-                .save(this.deliveryTime, Cicada.Context.api)
+                .save(this.deliveryTime, Shopware.Context.api)
                 .then(() => {
                     this.isLoading = false;
                     this.isSaveSuccessful = true;

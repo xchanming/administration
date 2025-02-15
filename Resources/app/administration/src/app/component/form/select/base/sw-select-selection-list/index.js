@@ -1,7 +1,7 @@
 import template from './sw-select-selection-list.html.twig';
 import './sw-select-selection-list.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -13,8 +13,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-select-selection-list', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

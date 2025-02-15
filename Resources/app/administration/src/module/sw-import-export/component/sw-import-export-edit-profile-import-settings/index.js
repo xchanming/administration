@@ -8,8 +8,6 @@ import './sw-import-export-edit-profile-import-settings.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         profile: {
             type: Object,

@@ -45,8 +45,8 @@ async function createWrapper(props = {}) {
                     'sw-icon': true,
                 },
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
-                    cmsElementFavorites: Cicada.Service('cmsElementFavorites'),
+                    cmsService: Shopware.Service('cmsService'),
+                    cmsElementFavorites: Shopware.Service('cmsElementFavorites'),
                 },
             },
         },
@@ -58,7 +58,7 @@ jest.useFakeTimers();
 describe('module/sw-cms/component/sw-cms-slot', () => {
     beforeAll(async () => {
         await setupCmsEnvironment();
-        const cmsService = Cicada.Service('cmsService');
+        const cmsService = Shopware.Service('cmsService');
 
         const buildConfig = (name, parameters = {}) => {
             return {
@@ -130,11 +130,11 @@ describe('module/sw-cms/component/sw-cms-slot', () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        const store = Cicada.Store.get('cmsPage');
+        const store = Shopware.Store.get('cmsPage');
         store.resetCmsPageState();
         store.currentPageType = 'product_list';
 
-        const cmsElementFavorites = Cicada.Service('cmsElementFavorites');
+        const cmsElementFavorites = Shopware.Service('cmsElementFavorites');
         cmsElementFavorites.getFavoriteElementNames().forEach((favorite) => {
             cmsElementFavorites.update(false, favorite);
         });
@@ -208,7 +208,7 @@ describe('module/sw-cms/component/sw-cms-slot', () => {
     });
 
     it('should collect grouped CMS elements, depending on favorites', async () => {
-        const store = Cicada.Store.get('cmsPage');
+        const store = Shopware.Store.get('cmsPage');
         store.currentPageType = 'product_detail';
 
         const wrapper = await createWrapper();

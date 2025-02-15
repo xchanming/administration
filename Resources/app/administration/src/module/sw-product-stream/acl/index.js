@@ -1,7 +1,7 @@
 /**
  * @sw-package inventory
  */
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'catalogues',
     key: 'product_stream',

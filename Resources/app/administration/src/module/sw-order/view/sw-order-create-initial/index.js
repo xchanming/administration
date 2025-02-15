@@ -4,16 +4,12 @@ import template from './sw-order-create-initial.html.twig';
  * @sw-package checkout
  */
 
-const { State, Data, Service } = Cicada;
+const { Store, Data, Service } = Shopware;
 const { Criteria } = Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
-
-    inject: ['feature'],
 
     computed: {
         customerRepository() {
@@ -35,6 +31,7 @@ export default {
                 .addAssociation('defaultShippingAddress.countryState')
                 .addAssociation('defaultShippingAddress.salutation')
                 .addAssociation('tags');
+
             return criteria;
         },
     },
@@ -51,9 +48,9 @@ export default {
                 return;
             }
 
-            const customer = await this.customerRepository.get(customerId, Cicada.Context.api, this.customerCriteria);
+            const customer = await this.customerRepository.get(customerId, Shopware.Context.api, this.customerCriteria);
             if (customer) {
-                State.commit('swOrder/setCustomer', customer);
+                Store.get('swOrder').setCustomer(customer);
             }
         },
 

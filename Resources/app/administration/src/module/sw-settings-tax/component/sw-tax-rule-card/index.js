@@ -5,19 +5,16 @@ import './sw-tax-rule-card.scss';
  * @sw-package checkout
  */
 
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'acl',
-        'feature',
     ],
 
     props: {
@@ -118,11 +115,11 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
@@ -198,7 +195,7 @@ export default {
         getTypeCellComponent(taxRule) {
             const subComponentName = taxRule.type.technicalName.replace(/_/g, '-');
 
-            return Cicada.Component.getComponentRegistry().get(`sw-settings-tax-rule-type-${subComponentName}-cell`);
+            return Shopware.Component.getComponentRegistry().get(`sw-settings-tax-rule-type-${subComponentName}-cell`);
         },
     },
 };

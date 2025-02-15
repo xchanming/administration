@@ -1,5 +1,5 @@
 /**
- * @sw-package framework
+ * @sw-package inventory
  */
 import SearchPreferencesService from 'src/app/service/search-preferences.service';
 import orderDefaultSearchConfiguration from 'src/module/sw-order/default-search-configuration';
@@ -7,7 +7,7 @@ import orderDefaultSearchConfiguration from 'src/module/sw-order/default-search-
 describe('searchPreferencesService', () => {
     it('is registered correctly', () => {
         let searchPreferencesService = new SearchPreferencesService({
-            userConfigRepository: Cicada.Service('repositoryFactory').create('user_config'),
+            userConfigRepository: Shopware.Service('repositoryFactory').create('user_config'),
         });
         searchPreferencesService = {
             createUserSearchPreferences: jest.fn(),
@@ -31,7 +31,7 @@ describe('searchPreferencesService', () => {
     describe('processSearchPreferences', () => {
         it('returns data correctly', async () => {
             const searchPreferencesService = new SearchPreferencesService({
-                userConfigRepository: Cicada.Service('repositoryFactory').create('user_config'),
+                userConfigRepository: Shopware.Service('repositoryFactory').create('user_config'),
             });
             const searchPreferences = await searchPreferencesService.processSearchPreferences([
                 orderDefaultSearchConfiguration,

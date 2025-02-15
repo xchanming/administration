@@ -5,16 +5,14 @@
 import './sw-meteor-single-select.scss';
 import template from './sw-meteor-single-select.html.twig';
 
-const { Component, Mixin } = Cicada;
-const { debounce, get } = Cicada.Utils;
+const { Component, Mixin } = Shopware;
+const { debounce, get } = Shopware.Utils;
 
 /**
  * @private
  */
 Component.register('sw-meteor-single-select', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

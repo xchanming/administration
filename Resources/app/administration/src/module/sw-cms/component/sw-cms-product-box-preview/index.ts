@@ -5,10 +5,8 @@ import './sw-cms-product-box-preview.scss';
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         hasText: {
@@ -22,7 +20,7 @@ export default Cicada.Component.wrapComponentConfig({
 
     computed: {
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 });

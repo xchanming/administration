@@ -9,9 +9,9 @@ import 'src/app/store/teaser-popover.store';
 import type { TeaserSalesChannelConfig, TeaserPopoverConfig } from 'src/app/store/teaser-popover.store';
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeTeaserPopovers(): void {
-    const store = Cicada.Store.get('teaserPopover');
+    const store = Shopware.Store.get('teaserPopover');
 
-    Cicada.ExtensionAPI.handle(
+    Shopware.ExtensionAPI.handle(
         // @ts-expect-error - There are no types for this as it is private API
         '__upsellingTeaserPopover',
         (configuration: TeaserSalesChannelConfig | TeaserPopoverConfig) => {

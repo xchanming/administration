@@ -13,9 +13,9 @@ async function createWrapper(category = {}) {
         response: {
             data: [
                 {
-                    id: Cicada.Utils.createId(),
+                    id: Shopware.Utils.createId(),
                     attributes: {
-                        id: Cicada.Utils.createId(),
+                        id: Shopware.Utils.createId(),
                     },
                     relationships: [],
                 },

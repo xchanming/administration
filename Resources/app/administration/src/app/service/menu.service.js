@@ -73,8 +73,8 @@ export default function createMenuService(moduleFactory) {
     }
 
     function getTranslatedLabel(label) {
-        const locale = Cicada.State.get('session').currentLocale;
-        const fallbackLocale = Cicada.Context.app.fallbackLocale;
+        const locale = Shopware.Store.get('session').currentLocale;
+        const fallbackLocale = Shopware.Context.app.fallbackLocale;
 
         return label[locale] || label[fallbackLocale];
     }

@@ -38,23 +38,16 @@ const customEntityRepositoryMock = {
 };
 
 async function createWrapper() {
-    if (Cicada.State.get('swCategoryDetail')) {
-        Cicada.State.unregisterModule('swCategoryDetail');
-    }
+    Shopware.Store.get('swCategoryDetail').$reset();
 
-    Cicada.State.registerModule('swCategoryDetail', {
-        namespaced: true,
-        state: {
-            category: {
-                isNew: () => false,
-                customEntityTypeId: customEntity1.id,
-                extensions: {
-                    customEntityName1SwCategories: customEntity1.instanceRepository,
-                    customEntityName2SwCategories: customEntity2.instanceRepository,
-                },
-            },
+    Shopware.Store.get('swCategoryDetail').category = {
+        isNew: () => false,
+        customEntityTypeId: customEntity1.id,
+        extensions: {
+            customEntityName1SwCategories: customEntity1.instanceRepository,
+            customEntityName2SwCategories: customEntity2.instanceRepository,
         },
-    });
+    };
 
     return mount(
         await wrapTestComponent('sw-category-detail-custom-entity', {

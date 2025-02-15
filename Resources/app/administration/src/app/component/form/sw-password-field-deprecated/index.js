@@ -11,7 +11,7 @@ import './sw-password-field.scss';
  * @component-example
  * <sw-password-field type="password" label="Name" placeholder="placeholder goes here..."></sw-password-field>
  */
-Cicada.Component.extend('sw-password-field-deprecated', 'sw-text-field-deprecated', {
+Shopware.Component.extend('sw-password-field-deprecated', 'sw-text-field-deprecated', {
     template,
 
     emits: [

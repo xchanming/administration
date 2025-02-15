@@ -5,16 +5,14 @@
 import './sw-single-select.scss';
 import template from './sw-single-select.html.twig';
 
-const { Component, Mixin } = Cicada;
-const { debounce, get } = Cicada.Utils;
+const { Component, Mixin } = Shopware;
+const { debounce, get } = Shopware.Utils;
 
 /**
  * @private
  */
 Component.register('sw-single-select', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -153,15 +151,6 @@ Component.register('sw-single-select', {
          */
         visibleResults() {
             return this.results.filter((result) => !result.hidden);
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

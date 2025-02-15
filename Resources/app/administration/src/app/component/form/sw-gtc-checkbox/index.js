@@ -7,10 +7,8 @@ import template from './sw-gtc-checkbox.html.twig';
 /**
  * @private
  */
-Cicada.Component.register('sw-gtc-checkbox', {
+Shopware.Component.register('sw-gtc-checkbox', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

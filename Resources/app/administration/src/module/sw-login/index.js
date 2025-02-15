@@ -8,10 +8,10 @@ import './view/sw-login-recovery';
 import './view/sw-login-recovery-info';
 import './view/sw-login-recovery-recovery';
 
-import deDE from './snippet/zh-CN.json';
+import zhCN from './snippet/zh-CN.json';
 import enGB from './snippet/en-GB.json';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-login', {
@@ -24,7 +24,7 @@ Module.register('sw-login', {
     color: '#F19D12',
 
     snippets: {
-        'zh-CN': deDE,
+        'zh-CN': zhCN,
         'en-GB': enGB,
     },
 

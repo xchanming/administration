@@ -1,16 +1,14 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-custom-field-translated-labels.html.twig';
 import './sw-custom-field-translated-labels.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['acl'],
 
@@ -67,20 +65,14 @@ export default {
         initializeConfiguration() {
             Object.keys(this.propertyNames).forEach((property) => {
                 if (!this.config.hasOwnProperty(property)) {
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(this.config, property, {
-                            [this.fallbackLocale]: null,
-                        });
-                    } else {
-                        this.config[property] = { [this.fallbackLocale]: null };
-                    }
+                    this.config[property] = { [this.fallbackLocale]: null };
                 }
             });
         },
 
         getLabel(label, locale) {
             const snippet = this.getInlineSnippet(label);
-            const language = this.$tc(`locale.${locale}`);
+            const language = this.$tc(`locale.${locale.value ?? locale}`);
 
             return `${snippet} (${language})`;
         },

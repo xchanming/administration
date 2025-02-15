@@ -3,8 +3,8 @@ import template from './sw-promotion-discount-component.html.twig';
 import './sw-promotion-discount-component.scss';
 import DiscountHandler from './handler';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 const discountHandler = new DiscountHandler();
 
 /**
@@ -15,12 +15,9 @@ const discountHandler = new DiscountHandler();
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'acl',
-        'feature',
         'ruleConditionDataProviderService',
     ],
 
@@ -272,7 +269,7 @@ export default {
             for (i = 1; i <= maxCount; i += 1) {
                 appliers.push({
                     key: i,
-                    name: this.$tc('sw-promotion-v2.detail.conditions.filter.applier.SELECT', 0, { count: i }),
+                    name: this.$tc('sw-promotion-v2.detail.conditions.filter.applier.SELECT', { count: i }, 0),
                 });
             }
 
@@ -291,7 +288,7 @@ export default {
             for (i = 1; i < 10; i += 1) {
                 counts.push({
                     key: i,
-                    name: this.$tc('sw-promotion-v2.detail.conditions.filter.counter.SELECT', 0, { count: i }),
+                    name: this.$tc('sw-promotion-v2.detail.conditions.filter.counter.SELECT', { count: i }, 0),
                 });
             }
 
@@ -331,7 +328,7 @@ export default {
     },
     methods: {
         createdComponent() {
-            this.syncService = Cicada.Service('syncService');
+            this.syncService = Shopware.Service('syncService');
             this.httpClient = this.syncService.httpClient;
 
             this.currencyRepository.search(new Criteria(1, 25)).then((response) => {
@@ -434,7 +431,7 @@ export default {
                 setPrice = discountHandler.getMinValue();
             }
             // now create the value with the calculated and translated value
-            const newAdvancedCurrencyPrices = this.advancedPricesRepo.create(Cicada.Context.api);
+            const newAdvancedCurrencyPrices = this.advancedPricesRepo.create(Shopware.Context.api);
             newAdvancedCurrencyPrices.discountId = this.discount.id;
             newAdvancedCurrencyPrices.price = setPrice;
             newAdvancedCurrencyPrices.currencyId = currency.id;

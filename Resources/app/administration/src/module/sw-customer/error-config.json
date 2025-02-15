@@ -2,7 +2,8 @@
   "sw.customer.detail.base": {
     "customer": [
       "salutationId",
-      "name",
+      "firstName",
+      "lastName",
       "email",
       "groupId",
       "salesChannelId",

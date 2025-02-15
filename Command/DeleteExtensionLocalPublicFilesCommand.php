@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Command;
+namespace Shopware\Administration\Command;
 
-use Cicada\Core\Framework\Bundle;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Bundle;
+use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

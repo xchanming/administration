@@ -1,7 +1,7 @@
 import template from './sw-condition-line-item-with-quantity.html.twig';
 import './sw-condition-line-item-with-quantity.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**

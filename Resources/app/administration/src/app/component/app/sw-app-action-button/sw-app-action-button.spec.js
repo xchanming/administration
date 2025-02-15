@@ -27,7 +27,7 @@ async function createWrapper(action) {
     });
 }
 
-const appActionId = Cicada.Utils.createId();
+const appActionId = Shopware.Utils.createId();
 
 const baseAction = {
     id: appActionId,
@@ -35,7 +35,7 @@ const baseAction = {
     app: 'TestApp',
     icon: 'someBase64Icon',
     label: {
-        'zh-CN': 'Product hinzufügen',
+        'de-DE': 'Product hinzufügen',
         'en-GB': 'Add product',
     },
     url: 'http://test-url/actions/product/add',

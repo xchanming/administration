@@ -1,7 +1,8 @@
 /**
  * @sw-package discovery
  */
-const ApiService = Cicada.Classes.ApiService;
+
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * Gateway for the API end point "recommenations"
@@ -17,7 +18,7 @@ class RecommendationsApiService extends ApiService {
     getBasicHeaders(additionalHeaders = {}) {
         return {
             ...super.getBasicHeaders(additionalHeaders),
-            'sw-language-id': Cicada.Context.api.languageId,
+            'sw-language-id': Shopware.Context.api.languageId,
         };
     }
 

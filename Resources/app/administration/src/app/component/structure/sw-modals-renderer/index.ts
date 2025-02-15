@@ -1,8 +1,8 @@
-import type { buttonProps } from '@cicada-ag/meteor-admin-sdk/es/ui/modal';
-import type { ModalItemEntry } from 'src/app/state/modals.store';
+import type { buttonProps } from '@shopware-ag/meteor-admin-sdk/es/ui/modal';
+import type { ModalItemEntry } from 'src/app/store/modals.store';
 import template from './sw-modals-renderer.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -13,17 +13,15 @@ const { Component } = Cicada;
 Component.register('sw-modals-renderer', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         modals(): ModalItemEntry[] {
-            return Cicada.State.get('modals').modals;
+            return Shopware.Store.get('modals').modals;
         },
     },
 
     methods: {
         closeModal(locationId: string) {
-            Cicada.State.commit('modals/closeModal', locationId);
+            Shopware.Store.get('modals').closeModal(locationId);
         },
 
         buttonProps(button: buttonProps) {

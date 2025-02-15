@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils';
 
-import flowState from 'src/module/sw-flow/state/flow.state';
 import EntityCollection from 'src/core/data/entity-collection.data';
 
 /**
@@ -46,7 +45,7 @@ function getSequencesCollection(collection = []) {
         '/flow_sequence',
         'flow_sequence',
         null,
-        { isCicadaContext: true },
+        { isShopwareContext: true },
         collection,
         collection.length,
         null,
@@ -71,15 +70,7 @@ describe('src/module/sw-flow/component/sw-flow-sequence-selector', () => {
     let wrapper;
 
     beforeAll(() => {
-        Cicada.State.registerModule('swFlowState', {
-            ...flowState,
-            state: {
-                flow: {
-                    eventName: '',
-                    sequences: getSequencesCollection([{ ...sequenceFixture }]),
-                },
-            },
-        });
+        Shopware.Store.get('swFlow').setSequences(getSequencesCollection([{ ...sequenceFixture }]));
     });
 
     it('should able to show the error content', async () => {
@@ -103,7 +94,7 @@ describe('src/module/sw-flow/component/sw-flow-sequence-selector', () => {
         await button.trigger('click');
         await flushPromises();
 
-        const sequencesState = await Cicada.State.getters['swFlowState/sequences'];
+        const sequencesState = await Shopware.Store.get('swFlow').sequences;
 
         expect(sequencesState).toHaveLength(0);
     });

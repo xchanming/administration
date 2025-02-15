@@ -4,6 +4,7 @@
  * You can activate acl roles in the each test like this:
  * global.activeAclRoles = ['product.editor'];
  */
+
 global.activeAclRoles = [];
 
 const aclService = {

@@ -5,15 +5,12 @@
 import template from './sw-product-detail-variants.html.twig';
 import './sw-product-detail-variants.scss';
 
-const { Criteria, EntityCollection } = Cicada.Data;
-const { uniqBy } = Cicada.Utils.array;
-const { mapState, mapGetters } = Cicada.Component.getComponentHelper();
+const { Criteria, EntityCollection } = Shopware.Data;
+const { uniqBy } = Shopware.Utils.array;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -38,18 +35,21 @@ export default {
     },
 
     computed: {
-        ...mapState('swProductDetail', [
-            'product',
-            'variants',
-        ]),
+        product() {
+            return Shopware.Store.get('swProductDetail').product;
+        },
 
-        ...mapState('context', {
-            contextLanguageId: (state) => state.api.languageId,
-        }),
+        variants() {
+            return Shopware.Store.get('swProductDetail').variants;
+        },
 
-        ...mapGetters('swProductDetail', {
-            isStoreLoading: 'isLoading',
-        }),
+        isStoreLoading() {
+            return Shopware.Store.get('swProductDetail').isLoading;
+        },
+
+        contextLanguageId() {
+            return Shopware.Store.get('context').api.languageId;
+        },
 
         productRepository() {
             return this.repositoryFactory.create('product');
@@ -69,34 +69,12 @@ export default {
                 : this.product.properties;
         },
 
-        /**
-         * @deprecated tag:v6.7.0 - Unused computed will be removed.
-         */
-        selectedGroups() {
-            if (!this.productEntity.configuratorSettings) {
-                return [];
-            }
-
-            // get groups for selected options
-            const groupIds = this.productEntity.configuratorSettings.reduce((result, element) => {
-                if (result.indexOf(element.option.groupId) < 0) {
-                    result.push(element.option.groupId);
-                }
-
-                return result;
-            }, []);
-
-            return this.groups.filter((group) => {
-                return groupIds.indexOf(group.id) >= 0;
-            });
-        },
-
         currentProductStates() {
             return this.activeTab.split(',');
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -169,7 +147,7 @@ export default {
                 criteria.addAssociation('configuratorSettings.option');
                 criteria.addAssociation('prices');
 
-                this.productRepository.get(this.product.id, Cicada.Context.api, criteria).then((product) => {
+                this.productRepository.get(this.product.id, Shopware.Context.api, criteria).then((product) => {
                     this.productEntity = product;
                     this.productEntityLoaded = true;
 

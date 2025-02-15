@@ -5,14 +5,12 @@ import utils from 'src/core/service/util.service';
 import template from './sw-settings-tag-detail-assignments.html.twig';
 import './sw-settings-tag-detail-assignments.scss';
 
-const { Context, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context, Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -80,11 +78,11 @@ export default {
 
     computed: {
         tagDefinition() {
-            return Cicada.EntityDefinition.get('tag');
+            return Shopware.EntityDefinition.get('tag');
         },
 
         isInheritable() {
-            return Cicada.EntityDefinition.get(this.selectedEntity)?.properties?.tags?.flags?.inherited === true;
+            return Shopware.EntityDefinition.get(this.selectedEntity)?.properties?.tags?.flags?.inherited === true;
         },
 
         assignmentAssociations() {
@@ -205,20 +203,12 @@ export default {
             );
 
             Object.values(this.toBeAdded[this.selectedAssignment]).forEach((toBeAdded) => {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(selection, toBeAdded.id, toBeAdded);
-                } else {
-                    selection[toBeAdded.id] = toBeAdded;
-                }
+                selection[toBeAdded.id] = toBeAdded;
             });
 
             Object.values(this.toBeDeleted[this.selectedAssignment]).forEach((toBeDeleted) => {
                 if (selection.hasOwnProperty(toBeDeleted.id)) {
-                    if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                        this.$delete(selection, toBeDeleted.id);
-                    } else {
-                        delete selection[toBeDeleted.id];
-                    }
+                    delete selection[toBeDeleted.id];
                 }
             });
 
@@ -435,21 +425,13 @@ export default {
         countIncrease(propertyName) {
             if (this.counts.hasOwnProperty(propertyName)) {
                 this.counts[propertyName] += 1;
-            } else if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.counts, propertyName, 1);
-            } else {
-                this.counts[propertyName] = 1;
-            }
+            } else this.counts[propertyName] = 1;
         },
 
         countDecrease(propertyName) {
             if (this.counts.hasOwnProperty(propertyName) && this.counts[propertyName] !== 0) {
                 this.counts[propertyName] -= 1;
-            } else if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.counts, propertyName, 0);
-            } else {
-                this.counts[propertyName] = 0;
-            }
+            } else this.counts[propertyName] = 0;
 
             if (!this.showSelected) {
                 return;

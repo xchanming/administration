@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 import type { Plugin } from 'vue';
 
 const DevtoolHelperPlugin: Plugin = {

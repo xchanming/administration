@@ -14,7 +14,7 @@ async function createWrapper(customOptions = {}) {
                 'sw-icon': {
                     template: '<div class="sw-icon" @click="$emit(\'click\')"></div>',
                 },
-                'sw-button': await Cicada.Component.build('sw-button'),
+                'sw-button': await Shopware.Component.build('sw-button'),
                 'mt-button': true,
                 'sw-button-deprecated': true,
             },

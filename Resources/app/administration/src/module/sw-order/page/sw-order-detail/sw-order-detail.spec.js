@@ -1,10 +1,20 @@
 import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
 
 /**
  * @sw-package checkout
  */
 
 async function createWrapper(order = {}) {
+    const repositoryFactoryMock = {
+        search: () => Promise.resolve([]),
+        hasChanges: () => false,
+        deleteVersion: () => Promise.resolve([]),
+        createVersion: () => Promise.resolve({ versionId: 'newVersionId' }),
+        get: () => Promise.resolve(order),
+        save: () => Promise.resolve({}),
+    };
+
     return mount(await wrapTestComponent('sw-order-detail', { sync: true }), {
         global: {
             mocks: {
@@ -66,20 +76,13 @@ async function createWrapper(order = {}) {
             },
             provide: {
                 repositoryFactory: {
-                    create: () => ({
-                        search: () => Promise.resolve([]),
-                        hasChanges: () => false,
-                        deleteVersion: () => Promise.resolve([]),
-                        createVersion: () => Promise.resolve({ versionId: 'newVersionId' }),
-                        get: () => Promise.resolve(order),
-                        save: () => Promise.resolve({}),
-                    }),
+                    create: () => repositoryFactoryMock,
                 },
                 orderService: {},
             },
         },
         props: {
-            orderId: Cicada.Utils.createId(),
+            orderId: Shopware.Utils.createId(),
         },
     });
 }
@@ -105,7 +108,7 @@ describe('src/module/sw-order/page/sw-order-detail', () => {
             oldVersionContext.versionId,
             oldVersionContext,
         );
-        expect(wrapper.vm.versionContext).toBe(Cicada.Context.api);
+        expect(wrapper.vm.versionContext).toBe(Shopware.Context.api);
         expect(wrapper.vm.hasNewVersionId).toBe(false);
     });
 
@@ -118,9 +121,10 @@ describe('src/module/sw-order/page/sw-order-detail', () => {
         wrapper = await createWrapper();
         await wrapper.setData({ identifier: '1', createdById: '2' });
 
-        await Cicada.State.commit('swOrderDetail/setOrder', {
+        Shopware.Store.get('swOrderDetail').order = {
             orderNumber: 1,
-        });
+        };
+        await nextTick();
 
         expect(wrapper.find('.sw-order-detail__manual-order-label').exists()).toBeTruthy();
     });
@@ -173,6 +177,7 @@ describe('src/module/sw-order/page/sw-order-detail', () => {
             'addresses',
             'deliveries',
             'transactions',
+            'documents',
             'tags',
             'billingAddress',
         ].forEach((association) => expect(criteria.hasAssociation(association)).toBe(true));
@@ -461,6 +466,6 @@ describe('src/module/sw-order/page/sw-order-detail', () => {
         });
 
         expect(createNewVersionIdMock).toHaveBeenCalled();
-        expect(Cicada.State.getters['swOrderDetail/isLoading']).toBe(false);
+        expect(Shopware.Store.get('swOrderDetail').isLoading).toBe(false);
     });
 });

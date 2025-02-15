@@ -1,6 +1,6 @@
 import template from './sw-collapse.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -17,8 +17,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-collapse', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         expandOnLoading: {

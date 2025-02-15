@@ -5,9 +5,10 @@ import './sw-flow-mail-send-modal.scss';
 const {
     Component,
     Utils,
-    Classes: { CicadaError },
-} = Cicada;
-const { Criteria } = Cicada.Data;
+    Classes: { ShopwareError },
+    Store,
+} = Shopware;
+const { Criteria } = Shopware.Data;
 const { mapState } = Component.getComponentHelper();
 
 /**
@@ -16,8 +17,6 @@ const { mapState } = Component.getComponentHelper();
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -219,11 +218,14 @@ export default {
             return !(this.replyTo === null || this.replyTo === 'contactFormMail');
         },
 
-        ...mapState('swFlowState', [
-            'mailTemplates',
-            'triggerEvent',
-            'triggerActions',
-        ]),
+        ...mapState(
+            () => Store.get('swFlow'),
+            [
+                'mailTemplates',
+                'triggerEvent',
+                'triggerActions',
+            ],
+        ),
     },
 
     created() {
@@ -362,10 +364,10 @@ export default {
 
             const currentMailTemplate = this.mailTemplates.find((item) => item.id === id);
             if (!currentMailTemplate && mailTemplate) {
-                Cicada.State.commit('swFlowState/setMailTemplates', [
+                Shopware.Store.get('swFlow').mailTemplates = [
                     ...this.mailTemplates,
                     mailTemplate,
-                ]);
+                ];
             }
         },
 
@@ -438,19 +440,8 @@ export default {
 
             // Recheck error in current item
             if (!item.name && !item.email) {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.recipients, index, {
-                        ...item,
-                        errorName: null,
-                    });
-                    this.$set(this.recipients, index, {
-                        ...item,
-                        errorMail: null,
-                    });
-                } else {
-                    this.recipients[index] = { ...item, errorName: null };
-                    this.recipients[index] = { ...item, errorMail: null };
-                }
+                this.recipients[index] = { ...item, errorName: null };
+                this.recipients[index] = { ...item, errorMail: null };
             } else {
                 this.validateRecipient(item, index);
             }
@@ -466,7 +457,7 @@ export default {
 
         mailTemplateError(mailTemplate) {
             if (!mailTemplate) {
-                return new CicadaError({
+                return new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
             }
@@ -476,7 +467,7 @@ export default {
 
         setNameError(name) {
             const error = !name
-                ? new CicadaError({
+                ? new ShopwareError({
                       code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                   })
                 : null;
@@ -488,13 +479,13 @@ export default {
             let error = null;
 
             if (!mail) {
-                error = new CicadaError({
+                error = new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
             }
 
             if (!emailValidation(mail)) {
-                error = new CicadaError({
+                error = new ShopwareError({
                     code: 'INVALID_MAIL',
                 });
             }
@@ -506,19 +497,11 @@ export default {
             const errorName = this.setNameError(item.name);
             const errorMail = this.setMailError(item.email);
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.recipients, itemIndex, {
-                    ...item,
-                    errorName,
-                    errorMail,
-                });
-            } else {
-                this.recipients[itemIndex] = {
-                    ...item,
-                    errorName,
-                    errorMail,
-                };
-            }
+            this.recipients[itemIndex] = {
+                ...item,
+                errorName,
+                errorMail,
+            };
 
             return errorName || errorMail;
         },

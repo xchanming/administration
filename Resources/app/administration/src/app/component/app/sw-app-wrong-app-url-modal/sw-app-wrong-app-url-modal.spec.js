@@ -9,7 +9,7 @@ let stubs = {};
 
 describe('sw-app-wrong-app-url-modal', () => {
     let wrapper = null;
-    const deleteNotificationMock = jest.fn();
+    let removeNotificationSpy;
 
     async function createWrapper() {
         stubs = {
@@ -61,13 +61,13 @@ describe('sw-app-wrong-app-url-modal', () => {
     }
 
     beforeAll(() => {
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
+        if (Shopware.Store.get('context')) {
+            Shopware.Store.unregister('context');
         }
 
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
+        Shopware.Store.register({
+            id: 'context',
+            state: () => ({
                 app: {
                     config: {
                         settings: {
@@ -79,19 +79,10 @@ describe('sw-app-wrong-app-url-modal', () => {
                 api: {
                     assetPath: 'http://localhost:8000/bundles/administration/',
                 },
-            },
+            }),
         });
-        Cicada.State.unregisterModule('notification');
 
-        Cicada.State.registerModule('notification', {
-            namespaced: true,
-            mutations: {
-                removeNotification: deleteNotificationMock,
-            },
-            actions: {
-                createNotification: jest.fn(),
-            },
-        });
+        removeNotificationSpy = jest.spyOn(Shopware.Store.get('notification'), 'removeNotification');
     });
 
     it('should be a Vue.js component', async () => {
@@ -101,56 +92,56 @@ describe('sw-app-wrong-app-url-modal', () => {
     });
 
     it('should show modal', async () => {
-        Cicada.State.get('context').app.config.settings.appUrlReachable = false;
-        Cicada.State.get('context').app.config.settings.appsRequireAppUrl = true;
+        Shopware.Store.get('context').app.config.settings.appUrlReachable = false;
+        Shopware.Store.get('context').app.config.settings.appsRequireAppUrl = true;
         localStorage.removeItem(STORAGE_KEY_WAS_WRONG_APP_MODAL_SHOWN);
 
         wrapper = await createWrapper();
 
         const modal = wrapper.findComponent(stubs['sw-modal']);
         expect(modal.isVisible()).toBe(true);
-        expect(deleteNotificationMock).toHaveBeenCalledTimes(0);
+        expect(removeNotificationSpy).toHaveBeenCalledTimes(0);
     });
 
     it('should not show modal if APP_URL is reachable', async () => {
-        Cicada.State.get('context').app.config.settings.appUrlReachable = true;
-        Cicada.State.get('context').app.config.settings.appsRequireAppUrl = true;
+        Shopware.Store.get('context').app.config.settings.appUrlReachable = true;
+        Shopware.Store.get('context').app.config.settings.appsRequireAppUrl = true;
         localStorage.removeItem(STORAGE_KEY_WAS_WRONG_APP_MODAL_SHOWN);
 
         wrapper = await createWrapper();
 
         const modal = wrapper.findComponent(stubs['sw-modal']);
         expect(modal.exists()).toBe(false);
-        expect(deleteNotificationMock).toHaveBeenCalledTimes(1);
+        expect(removeNotificationSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should not show modal if no apps are require app url, but it should show notification', async () => {
-        Cicada.State.get('context').app.config.settings.appUrlReachable = false;
-        Cicada.State.get('context').app.config.settings.appsRequireAppUrl = false;
+        Shopware.Store.get('context').app.config.settings.appUrlReachable = false;
+        Shopware.Store.get('context').app.config.settings.appsRequireAppUrl = false;
         localStorage.removeItem(STORAGE_KEY_WAS_WRONG_APP_MODAL_SHOWN);
 
         wrapper = await createWrapper();
 
         const modal = wrapper.findComponent(stubs['sw-modal']);
         expect(modal.exists()).toBe(false);
-        expect(deleteNotificationMock).toHaveBeenCalledTimes(0);
+        expect(removeNotificationSpy).toHaveBeenCalledTimes(0);
     });
 
     it('should not show modal if it was shown, but it should show notification', async () => {
-        Cicada.State.get('context').app.config.settings.appUrlReachable = false;
-        Cicada.State.get('context').app.config.settings.appsRequireAppUrl = false;
+        Shopware.Store.get('context').app.config.settings.appUrlReachable = false;
+        Shopware.Store.get('context').app.config.settings.appsRequireAppUrl = false;
         localStorage.setItem(STORAGE_KEY_WAS_WRONG_APP_MODAL_SHOWN, true);
 
         wrapper = await createWrapper();
 
         const modal = wrapper.findComponent(stubs['sw-modal']);
         expect(modal.exists()).toBe(false);
-        expect(deleteNotificationMock).toHaveBeenCalledTimes(0);
+        expect(removeNotificationSpy).toHaveBeenCalledTimes(0);
     });
 
     it('should create notification and set localstorage on close', async () => {
-        Cicada.State.get('context').app.config.settings.appUrlReachable = false;
-        Cicada.State.get('context').app.config.settings.appsRequireAppUrl = true;
+        Shopware.Store.get('context').app.config.settings.appUrlReachable = false;
+        Shopware.Store.get('context').app.config.settings.appsRequireAppUrl = true;
         localStorage.removeItem(STORAGE_KEY_WAS_WRONG_APP_MODAL_SHOWN);
 
         wrapper = await createWrapper();
@@ -161,7 +152,7 @@ describe('sw-app-wrong-app-url-modal', () => {
         modal.vm.$emit('modal-close');
 
         expect(wrapper.emitted('modal-close')).toBeTruthy();
-        expect(deleteNotificationMock).toHaveBeenCalledTimes(0);
+        expect(removeNotificationSpy).toHaveBeenCalledTimes(0);
     });
 
     it('should return filters from filter registry', async () => {

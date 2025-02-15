@@ -37,7 +37,7 @@ async function createWrapper(customProps = {}) {
                 create: () => {
                     return {
                         apiAlias: null,
-                        children: new EntityCollection('', 'rule_condition', Cicada.Context.api),
+                        children: new EntityCollection('', 'rule_condition', Shopware.Context.api),
                         customFields: null,
                         id: 'id1',
                         parentId: null,
@@ -103,7 +103,7 @@ describe('src/app/component/rule/sw-condition-tree', () => {
             return new EntityCollection(null, 'rule_condition', null, new Criteria(), [
                 {
                     apiAlias: null,
-                    children: new EntityCollection('', 'rule_condition', Cicada.Context.api),
+                    children: new EntityCollection('', 'rule_condition', Shopware.Context.api),
                     customFields: null,
                     id: 'first-initial_condition_id',
                     parentId: null,
@@ -113,7 +113,7 @@ describe('src/app/component/rule/sw-condition-tree', () => {
                 },
                 {
                     apiAlias: null,
-                    children: new EntityCollection('', 'rule_condition', Cicada.Context.api),
+                    children: new EntityCollection('', 'rule_condition', Shopware.Context.api),
                     customFields: null,
                     id: 'second-initial_condition_id',
                     parentId: null,
@@ -182,10 +182,10 @@ describe('src/app/component/rule/sw-condition-tree', () => {
 
     describe('provides', () => {
         function createInitialOrContainer() {
-            return new EntityCollection(null, 'rule_condition', Cicada.Context.api, new Criteria(), [
+            return new EntityCollection(null, 'rule_condition', Shopware.Context.api, new Criteria(), [
                 {
                     id: 'id1',
-                    children: new EntityCollection('', 'rule_condition', Cicada.Context.api),
+                    children: new EntityCollection('', 'rule_condition', Shopware.Context.api),
                     type: 'orContainer',
                     parentId: null,
                 },
@@ -457,7 +457,7 @@ describe('src/app/component/rule/sw-condition-tree', () => {
         function createInitialTree() {
             return {
                 id: 'parent-id',
-                children: new EntityCollection('', 'rule_condition', Cicada.Context.api, null, [
+                children: new EntityCollection('', 'rule_condition', Shopware.Context.api, null, [
                     {
                         id: 'id-first-child',
                         position: 0,

@@ -14,7 +14,7 @@ import VueRouter from 'vue-router';
 import AsyncComponentFactory from 'src/core/factory/async-component.factory';
 import ModuleFactory from 'src/core/factory/module.factory';
 import initializeRouter from 'src/app/init/router.init';
-import setupCicadaDevtools from 'src/app/adapter/view/sw-vue-devtools';
+import setupShopwareDevtools from 'src/app/adapter/view/sw-vue-devtools';
 import { h, defineComponent } from 'vue';
 
 // Mock performance api for vue devtools
@@ -26,7 +26,7 @@ jest.mock('src/app/adapter/view/sw-vue-devtools', () => {
     return jest.fn();
 });
 
-Cicada.Service().register('localeHelper', () => {
+Shopware.Service().register('localeHelper', () => {
     return {
         setLocaleWithId: jest.fn(),
     };
@@ -51,28 +51,28 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
         delete config.global.mocks.$router;
         delete config.global.mocks.$route;
 
-        if (!Cicada.Service('loginService')) {
-            Cicada.Service().register('loginService', () => {
+        if (!Shopware.Service('loginService')) {
+            Shopware.Service().register('loginService', () => {
                 return {
                     isLoggedIn: () => true,
                 };
             });
         }
 
-        if (!Cicada.Service('localeToLanguageService')) {
-            Cicada.Service().register('localeToLanguageService', () => {
+        if (!Shopware.Service('localeToLanguageService')) {
+            Shopware.Service().register('localeToLanguageService', () => {
                 return {
                     localeToLanguage: () => Promise.resolve(),
                 };
             });
         }
 
-        Cicada.State.get('system').locales = [
+        Shopware.Store.get('system').locales = [
             'en-GB',
             'de-DE',
         ];
 
-        Cicada.State.commit('setAdminLocale', {
+        Shopware.Store.get('session').setAdminLocaleState({
             locales: [
                 'en-GB',
                 'de-DE',
@@ -113,39 +113,33 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
         // Mock function
         vueAdapter.setLocaleFromUser = jest.fn();
 
-        vueAdapter.initLocales({
-            subscribe: () => {},
-            dispatch: () => {},
-            state: { session: { currentLocale: 'en-GB' } },
-        });
+        vueAdapter.initLocales();
+        Shopware.Store.get('session').currentLocale = 'en-GB';
 
         expect(vueAdapter.setLocaleFromUser).toHaveBeenCalled();
     });
 
-    it('setLocaleFromUser should not set the user when user does not exists', async () => {
-        vueAdapter.setLocaleFromUser({
-            state: { session: { currentUser: null } },
-        });
+    it('setLocaleFromUser should not set the user when user does not exist', async () => {
+        vueAdapter.setLocaleFromUser();
+        Shopware.Store.get('session').removeCurrentUser();
 
-        expect(Cicada.Service('localeHelper').setLocaleWithId).not.toHaveBeenCalled();
+        expect(Shopware.Service('localeHelper').setLocaleWithId).not.toHaveBeenCalled();
     });
 
-    it('setLocaleFromUser should set the user when user does not exists', async () => {
-        vueAdapter.setLocaleFromUser({
-            state: { session: { currentUser: { localeId: '12345' } } },
-        });
+    it('setLocaleFromUser should set the user when user does not exist', async () => {
+        Shopware.Store.get('session').setCurrentUser({ localeId: '12345' });
+        vueAdapter.setLocaleFromUser();
 
-        expect(Cicada.Service('localeHelper').setLocaleWithId).toHaveBeenCalled();
+        expect(Shopware.Service('localeHelper').setLocaleWithId).toHaveBeenCalled();
     });
 
     it('setLocaleFromUser should call the service with the user id from the store', async () => {
         const expectedId = '12345678';
+        Shopware.Store.get('session').setCurrentUser({ localeId: expectedId });
 
-        vueAdapter.setLocaleFromUser({
-            state: { session: { currentUser: { localeId: expectedId } } },
-        });
+        vueAdapter.setLocaleFromUser();
 
-        expect(Cicada.Service('localeHelper').setLocaleWithId).toHaveBeenCalledWith(expectedId);
+        expect(Shopware.Service('localeHelper').setLocaleWithId).toHaveBeenCalledWith(expectedId);
     });
 
     it('initLocales should watch for user changes and recall the "setLocaleWithId"', async () => {
@@ -154,31 +148,27 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
         });
 
         // Mock current user in state
-        Cicada.State.get('session').currentUser = {
+        Shopware.Store.get('session').setCurrentUser({
             localeId: 'english-id',
-        };
+        });
 
         // create vueAdapter with custom application
         vueAdapter = new VueAdapter(application);
 
-        vueAdapter.initLocales({
-            subscribe: () => {},
-            dispatch: () => {},
-            state: { session: { currentLocale: 'en-GB' } },
-        });
+        vueAdapter.initLocales();
 
         // Change the user
-        Cicada.State.get('session').currentUser = {
+        Shopware.Store.get('session').setCurrentUser({
             localeId: 'german-id',
-        };
+        });
 
         await flushPromises();
 
-        expect(Cicada.Service('localeHelper').setLocaleWithId).toHaveBeenCalledWith('german-id');
+        expect(Shopware.Service('localeHelper').setLocaleWithId).toHaveBeenCalledWith('german-id');
     });
 
     it('should resolve mixins by explicit Mixin get by name call', async () => {
-        Cicada.Mixin.register('foo1', {
+        Shopware.Mixin.register('foo1', {
             methods: {
                 fooBar() {
                     return this.title;
@@ -186,7 +176,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.register('test-component1', {
+        Shopware.Component.register('test-component1', {
             template: '<div></div>',
             name: 'test-component1',
             data() {
@@ -195,7 +185,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
                 };
             },
             mixins: [
-                Cicada.Mixin.getByName('foo1'),
+                Shopware.Mixin.getByName('foo1'),
             ],
             methods: {
                 bar() {
@@ -204,7 +194,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.markComponentAsSync('test-component1');
+        Shopware.Component.markComponentAsSync('test-component1');
         const buildComp = await vueAdapter.createComponent('test-component1');
 
         const wrapper = shallowMount(await buildComp);
@@ -216,7 +206,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
     });
 
     it('should resolve mixins by explicit Mixin get by name call with override', async () => {
-        Cicada.Mixin.register('foo2', {
+        Shopware.Mixin.register('foo2', {
             methods: {
                 fooBar() {
                     return this.title;
@@ -224,7 +214,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.register('test-component2', {
+        Shopware.Component.register('test-component2', {
             template: '<div></div>',
             name: 'test-component2',
             data() {
@@ -233,7 +223,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
                 };
             },
             mixins: [
-                Cicada.Mixin.getByName('foo2'),
+                Shopware.Mixin.getByName('foo2'),
             ],
             methods: {
                 bar() {
@@ -242,7 +232,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.override('test-component2', {
+        Shopware.Component.override('test-component2', {
             data() {
                 return {
                     title: 'testComponentOverride',
@@ -255,7 +245,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.markComponentAsSync('test-component2');
+        Shopware.Component.markComponentAsSync('test-component2');
         const buildComp = await vueAdapter.createComponent('test-component2');
         const wrapper = shallowMount(await buildComp);
 
@@ -268,7 +258,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
     });
 
     it('should resolve mixins by string', async () => {
-        Cicada.Mixin.register('foo3', {
+        Shopware.Mixin.register('foo3', {
             methods: {
                 fooBar() {
                     return this.title;
@@ -276,7 +266,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.register('test-component3', {
+        Shopware.Component.register('test-component3', {
             template: '<div></div>',
             name: 'test-component3',
             data() {
@@ -292,7 +282,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.markComponentAsSync('test-component3');
+        Shopware.Component.markComponentAsSync('test-component3');
         const buildComp = await vueAdapter.createComponent('test-component3');
         const wrapper = shallowMount(await buildComp);
 
@@ -302,7 +292,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
     });
 
     it('should resolve mixins by string with override', async () => {
-        Cicada.Mixin.register('foo4', {
+        Shopware.Mixin.register('foo4', {
             methods: {
                 fooBar() {
                     return this.title;
@@ -310,7 +300,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.register('test-component4', {
+        Shopware.Component.register('test-component4', {
             template: '<div></div>',
             name: 'test-component4',
             data() {
@@ -326,7 +316,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.override('test-component4', {
+        Shopware.Component.override('test-component4', {
             data() {
                 return {
                     title: 'testComponentOverride4',
@@ -337,7 +327,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.markComponentAsSync('test-component4');
+        Shopware.Component.markComponentAsSync('test-component4');
         const buildComp = await vueAdapter.createComponent('test-component4');
         const wrapper = shallowMount(await buildComp);
 
@@ -348,7 +338,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
     });
 
     it('should resolve mixins for component in combination with overrides', async () => {
-        Cicada.Mixin.register('foo-with-data', {
+        Shopware.Mixin.register('foo-with-data', {
             data() {
                 return {
                     sortBy: null,
@@ -361,7 +351,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.register('test-component-foobar-with-mixin', {
+        Shopware.Component.register('test-component-foobar-with-mixin', {
             template: '<div></div>',
             name: 'test-component',
             data() {
@@ -380,7 +370,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.markComponentAsSync('test-component-foobar-with-mixin');
+        Shopware.Component.markComponentAsSync('test-component-foobar-with-mixin');
         const buildComp = await vueAdapter.createComponent('test-component-foobar-with-mixin');
         let wrapper = shallowMount(await buildComp);
 
@@ -389,9 +379,9 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
         expect(wrapper.vm.fooBar()).toBe('date');
 
         // add an override to the component
-        Cicada.Component.override('test-component-foobar-with-mixin', {});
+        Shopware.Component.override('test-component-foobar-with-mixin', {});
 
-        Cicada.Component.markComponentAsSync('test-component-foobar-with-mixin');
+        Shopware.Component.markComponentAsSync('test-component-foobar-with-mixin');
         const buildOverrideComp = await vueAdapter.createComponent('test-component-foobar-with-mixin');
         wrapper = shallowMount(await buildOverrideComp);
 
@@ -401,7 +391,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
     });
 
     it('should extend mixins', async () => {
-        Cicada.Mixin.register('swFoo', {
+        Shopware.Mixin.register('swFoo', {
             methods: {
                 fooBar() {
                     return this.title;
@@ -409,7 +399,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Mixin.register('swBar', {
+        Shopware.Mixin.register('swBar', {
             methods: {
                 biz() {
                     return this.title;
@@ -420,7 +410,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.register('extendable-component', {
+        Shopware.Component.register('extendable-component', {
             template: '{% block foo %}<div>aaaaa</div>{% endblock %}',
             name: 'extendable-component',
             data() {
@@ -436,7 +426,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.extend('sw-test-component-extended', 'extendable-component', {
+        Shopware.Component.extend('sw-test-component-extended', 'extendable-component', {
             template: '{% block foo %}<div>bbbbb</div>{% endblock %}',
             mixins: [
                 'swBar',
@@ -453,7 +443,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.markComponentAsSync('sw-test-component-extended');
+        Shopware.Component.markComponentAsSync('sw-test-component-extended');
         const buildComp = await vueAdapter.createComponent('sw-test-component-extended');
         const wrapper = shallowMount(await buildComp);
 
@@ -467,7 +457,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
 
     it('should allow multi-inheritance with multiple mixins and lifecycle hooks are only executed once', async () => {
         const lifecycleSpy = jest.fn();
-        Cicada.Mixin.register('first-mixin', {
+        Shopware.Mixin.register('first-mixin', {
             created() {
                 lifecycleSpy();
             },
@@ -478,7 +468,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Mixin.register('second-mixin', {
+        Shopware.Mixin.register('second-mixin', {
             methods: {
                 bar() {
                     return 'bar';
@@ -486,22 +476,22 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             },
         });
 
-        Cicada.Component.register('base-component', {
+        Shopware.Component.register('base-component', {
             template: '<div class="base-component"></div>',
         });
 
-        Cicada.Component.override('base-component', {
+        Shopware.Component.override('base-component', {
             mixins: ['first-mixin'],
         });
 
-        Cicada.Component.override('base-component', {
+        Shopware.Component.override('base-component', {
             mixins: [
                 'second-mixin',
                 'first-mixin',
             ],
         });
 
-        Cicada.Component.markComponentAsSync('base-component');
+        Shopware.Component.markComponentAsSync('base-component');
         const buildComp = await vueAdapter.createComponent('base-component');
         const wrapper = shallowMount(await buildComp);
 
@@ -541,12 +531,24 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
         beforeAll(() => {
             global.allowedErrors.push({
                 method: 'warn',
+                hurensohn: true,
                 msgCheck: (_, msg) => {
                     if (typeof msg !== 'string') {
                         return false;
                     }
 
                     return msg.includes('plugin is already installed');
+                },
+            });
+
+            global.allowedErrors.push({
+                method: 'warn',
+                msgCheck: (msg) => {
+                    if (typeof msg !== 'string') {
+                        return false;
+                    }
+
+                    return msg.includes('plugin must either be a function');
                 },
             });
         });
@@ -573,12 +575,12 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
 
             application.addInitializer('router', initializeRouter);
 
-            const locale = Cicada.Application.getContainer('factory').locale;
+            const locale = Shopware.Application.getContainer('factory').locale;
             if (!locale.getLocaleByName('en-GB')) {
                 locale.register('en-GB', {
                     global: {
                         'sw-admin-menu': {
-                            textCicadaAdmin: 'Text Cicada Admin',
+                            textShopwareAdmin: 'Text Shopware Admin',
                         },
                         my: {
                             mock: {
@@ -589,14 +591,14 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
                 });
             }
 
-            if (!Cicada.Filter.getByName('my-mock-filter')) {
-                Cicada.Filter.register('my-mock-filter', () => {
+            if (!Shopware.Filter.getByName('my-mock-filter')) {
+                Shopware.Filter.register('my-mock-filter', () => {
                     return 'mocked';
                 });
             }
 
-            if (!Cicada.Directive.getByName('my-mock-directive')) {
-                Cicada.Directive.register('my-mock-directive', () => {
+            if (!Shopware.Directive.getByName('my-mock-directive')) {
+                Shopware.Directive.register('my-mock-directive', () => {
                     return {
                         bind() {},
                         inserted() {},
@@ -624,14 +626,14 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
             });
 
             // add main component
-            if (!Cicada.Component.getComponentRegistry().has('sw-admin')) {
-                Cicada.Component.register('sw-admin', {
+            if (!Shopware.Component.getComponentRegistry().has('sw-admin')) {
+                Shopware.Component.register('sw-admin', {
                     template: '<div class="sw-admin"></div>',
                 });
             }
 
-            // add VueAdapter to Cicada object
-            Cicada.Application.setViewAdapter(vueAdapter);
+            // add VueAdapter to Shopware object
+            Shopware.Application.setViewAdapter(vueAdapter);
 
             await vueAdapter.initDependencies();
 
@@ -679,7 +681,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
                 'Test',
             );
 
-            expect(result).toBe('Test | Mock title | Text Cicada Admin');
+            expect(result).toBe('Test | Mock title | Text Shopware Admin');
         });
 
         it('should add the store to the rootComponent', () => {
@@ -700,14 +702,12 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
                 'mt-colorpicker',
                 'mt-datepicker',
                 'mt-email-field',
-                'mt-external-link',
                 'mt-number-field',
                 'mt-password-field',
                 'mt-select',
                 'mt-switch',
                 'mt-text-field',
                 'mt-textarea',
-                'mt-url-field',
                 'mt-icon',
                 'mt-data-table',
                 'mt-pagination',
@@ -724,7 +724,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
         });
 
         it('should setup the devtools in development environment', async () => {
-            expect(setupCicadaDevtools).toHaveBeenCalled();
+            expect(setupShopwareDevtools).toHaveBeenCalled();
         });
 
         it('should return the wrapper', async () => {
@@ -743,7 +743,7 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
         it('should update the i18n global locale to update the locale in UI when the locale in the session store changes', async () => {
             const expectedLocale = 'de-DE';
 
-            Cicada.State.commit('setAdminLocale', {
+            Shopware.Store.get('session').setAdminLocaleState({
                 locales: [
                     'en-GB',
                     'de-DE',
@@ -751,6 +751,8 @@ describe('ASYNC app/adapter/view/vue.adapter.js', () => {
                 locale: expectedLocale,
                 languageId: '12345678',
             });
+
+            await flushPromises();
 
             expect(vueAdapter.i18n.global.locale).toEqual(expectedLocale);
         });

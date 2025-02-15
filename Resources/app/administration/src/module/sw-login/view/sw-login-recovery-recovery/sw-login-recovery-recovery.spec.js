@@ -48,8 +48,8 @@ describe('src/module/sw-login/view/sw-login-recovery-recovery', () => {
         wrapper.vm.userRecoveryService.updateUserPassword = jest.fn(() => Promise.resolve());
 
         await wrapper.setData({
-            newPassword: 'cicada',
-            newPasswordConfirm: 'cicada',
+            newPassword: 'shopware',
+            newPasswordConfirm: 'shopware',
         });
         await wrapper.vm.updatePassword();
 

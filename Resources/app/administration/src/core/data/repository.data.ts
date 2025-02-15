@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 /* eslint-disable @typescript-eslint/only-throw-error */
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import Criteria from './criteria.data';
@@ -98,13 +99,13 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     get schema(): EntityDefinition<any> {
-        return Cicada.EntityDefinition.get(this.entityName);
+        return Shopware.EntityDefinition.get(this.entityName);
     }
 
     /**
      * Sends a search request to the server to find entity ids for the provided criteria.
      */
-    searchIds(criteria: Criteria, context = Cicada.Context.api): Promise<IdSearchResult> {
+    searchIds(criteria: Criteria, context = Shopware.Context.api): Promise<IdSearchResult> {
         const headers = this.buildHeaders(context);
 
         let url = `/search-ids${this.route}`;
@@ -121,7 +122,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Sends a search request for the repository entity.
      */
-    search(criteria: Criteria, context = Cicada.Context.api): Promise<EntityCollection<EntityName>> {
+    search(criteria: Criteria, context = Shopware.Context.api): Promise<EntityCollection<EntityName>> {
         const headers = this.buildHeaders(context);
 
         let url = `/search${this.route}`;
@@ -139,7 +140,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Short hand to fetch a single entity from the server
      */
-    get(id: string, context = Cicada.Context.api, criteria: Criteria | null = null): Promise<Entity<EntityName> | null> {
+    get(id: string, context = Shopware.Context.api, criteria: Criteria | null = null): Promise<Entity<EntityName> | null> {
         criteria = criteria || new Criteria(1, 1);
         criteria.setIds([id]);
 
@@ -153,7 +154,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
      * If the entity is marked as new, the repository will send a POST create. Updates will be send as PATCH request.
      * Deleted associations will be send as additional request
      */
-    save(entity: Entity<EntityName>, context = Cicada.Context.api): Promise<void | AxiosResponse> {
+    save(entity: Entity<EntityName>, context = Shopware.Context.api): Promise<void | AxiosResponse> {
         if (this.options.useSync === true) {
             return this.saveWithSync(entity, context);
         }
@@ -168,7 +169,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
         const { changes, deletionQueue } = this.changesetGenerator.generate(entity) as Changeset;
 
         if (!this.options.keepApiErrors) {
-            await this.errorResolver.resetApiErrors();
+            this.errorResolver.resetApiErrors();
         }
 
         await this.sendDeletions(deletionQueue, context);
@@ -208,7 +209,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
         }
 
         if (!this.options.keepApiErrors) {
-            await this.errorResolver.resetApiErrors();
+            this.errorResolver.resetApiErrors();
         }
 
         return this.httpClient.post('_action/sync', operations, { headers }).catch((errorResponse: ErrorResponse) => {
@@ -232,7 +233,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Clones an existing entity
      */
-    clone(entityId: string, behavior: $TSDangerUnknownObject, context = Cicada.Context.api): Promise<unknown> {
+    clone(entityId: string, behavior: $TSDangerUnknownObject, context = Shopware.Context.api): Promise<unknown> {
         if (!entityId) {
             return Promise.reject(new Error('Missing required argument: id'));
         }
@@ -258,7 +259,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Detects changes of all provided entities and send the changes to the server
      */
-    saveAll(entities: EntityCollection<EntityName>, context = Cicada.Context.api): Promise<unknown> {
+    saveAll(entities: EntityCollection<EntityName>, context = Shopware.Context.api): Promise<unknown> {
         const promises: Promise<unknown>[] = [];
 
         entities.forEach((entity) => {
@@ -271,11 +272,15 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Detects changes of all provided entities and send the changes to the server
      */
-    async sync(entities: EntityCollection<EntityName>, context = Cicada.Context.api, failOnError = true): Promise<unknown> {
+    async sync(
+        entities: EntityCollection<EntityName>,
+        context = Shopware.Context.api,
+        failOnError = true,
+    ): Promise<unknown> {
         const { changeset, deletions } = this.getSyncChangeset(entities);
 
         if (!this.options.keepApiErrors) {
-            await this.errorResolver.resetApiErrors();
+            this.errorResolver.resetApiErrors();
         }
 
         await this.sendDeletions(deletions, context);
@@ -308,7 +313,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * @private
      */
-    sendUpserts(changeset: $TSDangerUnknownObject[], failOnError: boolean, context = Cicada.Context.api): Promise<void> {
+    sendUpserts(changeset: $TSDangerUnknownObject[], failOnError: boolean, context = Shopware.Context.api): Promise<void> {
         if (changeset.length <= 0) {
             return Promise.resolve();
         }
@@ -402,7 +407,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
      * where the base route contains already the owner key, e.g. /product/{id}/categories
      * The provided id contains the associated entity id.
      */
-    assign(id: string, context = Cicada.Context.api): Promise<AxiosResponse> {
+    assign(id: string, context = Shopware.Context.api): Promise<AxiosResponse> {
         const headers = this.buildHeaders(context);
 
         return this.httpClient.post(`${this.route}`, { id }, { headers });
@@ -411,7 +416,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Sends a delete request for the provided id.
      */
-    delete(id: string, context = Cicada.Context.api): Promise<AxiosResponse> {
+    delete(id: string, context = Shopware.Context.api): Promise<AxiosResponse> {
         const headers = this.buildHeaders(context);
 
         const url = `${this.route}/${id}`;
@@ -432,7 +437,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     iterateIds(
         criteria: Criteria,
         callback: (ids: string[]) => Promise<void>,
-        context = Cicada.Context.api,
+        context = Shopware.Context.api,
     ): Promise<unknown> {
         if (criteria.getLimit() === null) {
             criteria.setLimit(50);
@@ -461,7 +466,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Sends a delete request for a set of ids
      */
-    syncDeleted(ids: string[], context = Cicada.Context.api): Promise<void> {
+    syncDeleted(ids: string[], context = Shopware.Context.api): Promise<void> {
         const headers = this.buildHeaders(context);
 
         headers['fail-on-error'] = true;
@@ -517,7 +522,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
      * Creates a new entity for the local schema.
      * To Many association are initialed with a collection with the corresponding remote api route
      */
-    create(context = Cicada.Context.api, id: string | null = null): Entity<EntityName> {
+    create(context = Shopware.Context.api, id: string | null = null): Entity<EntityName> {
         return this.entityFactory.create(this.entityName, id, context) as unknown as Entity<EntityName>;
     }
 
@@ -528,7 +533,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
      */
     createVersion(
         entityId: string,
-        context = Cicada.Context.api,
+        context = Shopware.Context.api,
         versionId: string | null = null,
         versionName: string | null = null,
     ): Promise<apiContext> {
@@ -559,7 +564,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
      * Sends a request to the server to merge all changes of the provided version id.
      * The changes are squashed into a single change and the remaining version will be removed.
      */
-    mergeVersion(versionId: string, context = Cicada.Context.api): Promise<AxiosResponse> {
+    mergeVersion(versionId: string, context = Shopware.Context.api): Promise<AxiosResponse> {
         const headers = this.buildHeaders(context);
 
         const url = `_action/version/merge/${this.entityName.replace(/_/g, '-')}/${versionId}`;
@@ -570,7 +575,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Deletes the provided version from the server. All changes to this version are reverted
      */
-    deleteVersion(entityId: string, versionId: string, context = Cicada.Context.api): Promise<AxiosResponse> {
+    deleteVersion(entityId: string, versionId: string, context = Shopware.Context.api): Promise<AxiosResponse> {
         const headers = this.buildHeaders(context);
 
         const url = `/_action/version/${versionId}/${this.entityName.replace(/_/g, '-')}/${entityId}`;
@@ -584,7 +589,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     sendChanges(
         entity: Entity<EntityName>,
         changes: Changeset,
-        context = Cicada.Context.api,
+        context = Shopware.Context.api,
     ): Promise<AxiosResponse | void> {
         const headers = this.buildHeaders(context);
 
@@ -625,7 +630,7 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Process the deletion queue
      */
-    sendDeletions(queue: DeletionQueue, context = Cicada.Context.api): Promise<AxiosResponse[]> {
+    sendDeletions(queue: DeletionQueue, context = Shopware.Context.api): Promise<AxiosResponse[]> {
         const headers = this.buildHeaders(context);
         const requests = queue.map((deletion) => {
             return this.httpClient.delete(`${deletion.route}/${deletion.key}`, { headers }).catch((errorResponse) => {
@@ -640,14 +645,14 @@ export default class Repository<EntityName extends keyof EntitySchema.Entities> 
     /**
      * Builds the request header for read and write operations
      */
-    buildHeaders(context = Cicada.Context.api): {
+    buildHeaders(context = Shopware.Context.api): {
         Accept: string;
         Authorization: string;
         'Content-Type': string;
         'sw-api-compatibility': boolean;
         [key: string]: string | number | boolean;
     } {
-        const { hasOwnProperty } = Cicada.Utils.object;
+        const { hasOwnProperty } = Shopware.Utils.object;
         const compatibility = hasOwnProperty(this.options, 'compatibility') ? this.options.compatibility : true;
         const appId = hasOwnProperty(this.options, 'sw-app-integration-id') ? this.options['sw-app-integration-id'] : false;
 

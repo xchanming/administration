@@ -1,6 +1,7 @@
 /**
  * @sw-package discovery
  */
+
 import './text';
 import './image';
 import './image-slider';

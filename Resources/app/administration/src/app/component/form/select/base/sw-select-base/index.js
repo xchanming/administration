@@ -1,7 +1,7 @@
 import template from './sw-select-base.html.twig';
 import './sw-select-base.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -13,8 +13,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-select-base', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -53,15 +51,6 @@ Component.register('sw-select-base', {
     computed: {
         swFieldClasses() {
             return { 'has--focus': this.expanded };
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

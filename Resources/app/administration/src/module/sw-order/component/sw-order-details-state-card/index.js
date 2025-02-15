@@ -5,13 +5,11 @@ import './sw-order-details-state-card.scss';
  * @sw-package checkout
  */
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -206,10 +204,13 @@ export default {
             this.showStateChangeModal = false;
         },
 
-        onLeaveModalConfirm() {
+        onLeaveModalConfirm(docIds, sendMail = true) {
             this.showStateChangeModal = false;
 
-            this.stateTransitionMethod(this.entity.id, this.currentActionName)
+            this.stateTransitionMethod(this.entity.id, this.currentActionName, {
+                documentIds: docIds,
+                sendMail,
+            })
                 .then(() => {
                     this.getLastChange();
 

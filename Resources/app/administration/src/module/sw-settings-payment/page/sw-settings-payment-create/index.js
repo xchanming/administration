@@ -9,8 +9,8 @@ export default {
 
     methods: {
         createdComponent() {
-            if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                Cicada.State.commit('context/resetLanguageToDefault');
+            if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                Shopware.Store.get('context').resetLanguageToDefault();
             }
 
             this.paymentMethod = this.paymentMethodRepository.create();

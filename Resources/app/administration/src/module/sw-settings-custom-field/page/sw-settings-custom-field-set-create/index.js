@@ -1,10 +1,10 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-settings-custom-field-set-create.html.twig';
 
-const { Criteria } = Cicada.Data;
-const utils = Cicada.Utils;
+const { Criteria } = Shopware.Data;
+const utils = Shopware.Utils;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
@@ -21,14 +21,10 @@ export default {
     methods: {
         async createdComponent() {
             this.isLoading = true;
-            this.set = await this.customFieldSetRepository.create(Cicada.Context.api, this.$route.params.id);
+            this.set = await this.customFieldSetRepository.create(Shopware.Context.api, this.$route.params.id);
             this.set.name = 'custom_';
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.set, 'config', {});
-            } else {
-                this.set.config = {};
-            }
+            this.set.config = {};
 
             this.setId = this.set.id;
             this.isLoading = false;

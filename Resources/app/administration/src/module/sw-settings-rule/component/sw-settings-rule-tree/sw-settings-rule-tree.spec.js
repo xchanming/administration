@@ -5,7 +5,7 @@ import getTreeItems from 'src/app/component/tree/sw-tree/fixtures/treeItems';
  * @sw-package fundamentals@after-sales
  */
 
-const { cloneDeep } = Cicada.Utils.object;
+const { cloneDeep } = Shopware.Utils.object;
 const bigItems = getTreeItems();
 
 const items = [

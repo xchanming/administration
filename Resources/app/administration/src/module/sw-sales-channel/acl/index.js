@@ -2,7 +2,7 @@
  * @sw-package discovery
  */
 
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: null,
     key: 'sales_channel',
@@ -11,7 +11,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
             privileges: [
                 'sales_channel:read',
                 'sales_channel_type:read',
-                Cicada.Service('privileges').getPrivileges('payment.viewer'),
+                Shopware.Service('privileges').getPrivileges('payment.viewer'),
                 'shipping_method:read',
                 'country:read',
                 'currency:read',
@@ -25,7 +25,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'custom_field_set_relation:read',
                 'category:read',
                 'customer_group:read',
-                Cicada.Service('privileges').getPrivileges('media.viewer'),
+                Shopware.Service('privileges').getPrivileges('media.viewer'),
                 'product_export:read',
                 'product_stream:read',
                 'product_visibility:read',

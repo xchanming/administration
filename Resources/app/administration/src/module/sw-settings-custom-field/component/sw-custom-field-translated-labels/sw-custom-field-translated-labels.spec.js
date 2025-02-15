@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
 
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 
-const de = 'zh-CN';
+const de = 'de-DE';
 const en = 'en-GB';
 
 const config = {
@@ -117,7 +117,7 @@ describe('src/module/sw-settings-custom-field/component/sw-custom-field-translat
         await wrapper.findAll('.sw-custom-field-translated-labels__translated-labels-field')[1].trigger('click');
         expect(wrapper.findAll('.sw-custom-field-translated-labels__translated-content-field')).toHaveLength(2);
         expect(wrapper.findAll('.sw-custom-field-translated-labels__translated-content-field')[0].attributes('label')).toBe(
-            'label1 (locale.zh-CN)',
+            'label1 (locale.de-DE)',
         );
     });
 

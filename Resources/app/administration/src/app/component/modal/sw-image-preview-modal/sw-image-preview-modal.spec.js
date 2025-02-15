@@ -493,7 +493,7 @@ describe('src/app/component/modal/sw-image-preview-modal', () => {
         wrapper.vm.getActiveImage = jest.fn().mockImplementation(() => Promise.resolve());
 
         await wrapper.vm.$forceUpdate();
-        await wrapper.vm.$nextTick();
+        await flushPromises();
 
         expect(btnZoomIn.attributes('disabled')).toBe('');
         expect(btnZoomOut.attributes('disabled')).toBe('');

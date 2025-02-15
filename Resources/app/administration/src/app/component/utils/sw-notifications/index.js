@@ -5,7 +5,7 @@
 import template from './sw-notifications.html.twig';
 import './sw-notifications.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -16,8 +16,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-notifications', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -48,7 +46,7 @@ Component.register('sw-notifications', {
 
     computed: {
         notifications() {
-            return Object.values(Cicada.State.getters['notification/getGrowlNotificationsObject']);
+            return Object.values(Shopware.Store.get('notification').growlNotifications);
         },
 
         notificationsStyle() {
@@ -78,12 +76,12 @@ Component.register('sw-notifications', {
 
     methods: {
         onClose(notification) {
-            Cicada.State.commit('notification/removeGrowlNotification', notification);
+            Shopware.Store.get('notification').removeGrowlNotification(notification);
         },
 
         handleAction(action, notification) {
-            // Allow external links for example to the cicada account or store
-            if (Cicada.Utils.string.isUrl(action.route)) {
+            // Allow external links for example to the shopware account or store
+            if (Shopware.Utils.string.isUrl(action.route)) {
                 window.open(action.route);
                 return;
             }

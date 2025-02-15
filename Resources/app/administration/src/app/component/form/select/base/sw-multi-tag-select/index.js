@@ -1,8 +1,8 @@
 import template from './sw-multi-tag-select.html.twig';
 import './sw-multi-tag-select.scss';
 
-const { Component, Mixin } = Cicada;
-const { get } = Cicada.Utils;
+const { Component, Mixin } = Shopware;
+const { get } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -19,8 +19,6 @@ const { get } = Cicada.Utils;
  */
 Component.register('sw-multi-tag-select', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -130,15 +128,6 @@ Component.register('sw-multi-tag-select', {
             }
 
             return Math.max(0, this.totalValuesCount - this.limit);
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

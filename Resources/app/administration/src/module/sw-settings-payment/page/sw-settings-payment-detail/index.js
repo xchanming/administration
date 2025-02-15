@@ -1,10 +1,10 @@
 import template from './sw-settings-payment-detail.html.twig';
 import './sw-settings-payment-detail.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { warn } = Cicada.Utils.debug;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { warn } = Shopware.Utils.debug;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 /**
  * @sw-package checkout
@@ -13,13 +13,10 @@ const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'acl',
         'customFieldDataProviderService',
-        'feature',
     ],
 
     mixins: [
@@ -253,7 +250,7 @@ export default {
             this.createNotificationError({
                 title: this.$tc('global.default.error'),
                 // eslint-disable-next-line max-len
-                message: `${this.$tc('sw-settings-payment.detail.messageSaveError', 0, { name: this.paymentMethod.name })} ${errorDetails}`,
+                message: `${this.$tc('sw-settings-payment.detail.messageSaveError', { name: this.paymentMethod.name }, 0)} ${errorDetails}`,
             });
         },
 

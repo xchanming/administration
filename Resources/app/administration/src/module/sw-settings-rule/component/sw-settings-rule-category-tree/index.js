@@ -1,7 +1,7 @@
 import template from './sw-settings-rule-category-tree.html.twig';
 import './sw-settings-rule-category-tree.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Criteria } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -108,7 +106,7 @@ export default {
             }
 
             // search for categories
-            return this.categoryRepository.search(categoryCriteria, Cicada.Context.api).then((searchResult) => {
+            return this.categoryRepository.search(categoryCriteria, Shopware.Context.api).then((searchResult) => {
                 // when requesting root categories, replace the data
                 if (parentId === null) {
                     this.categories = searchResult;

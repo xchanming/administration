@@ -1,7 +1,8 @@
 /**
  * @sw-package framework
  */
-import Criteria from '@cicada-ag/meteor-admin-sdk/es/data/Criteria';
+
+import Criteria from '@shopware-ag/meteor-admin-sdk/es/data/Criteria';
 
 /**
  * @private

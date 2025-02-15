@@ -2,11 +2,11 @@ import type ChangesetGenerator from 'src/core/data/changeset-generator.data';
 import type Repository from 'src/core/data/repository.data';
 import type { PropType } from 'vue';
 
-import Criteria from '@cicada-ag/meteor-admin-sdk/es/data/Criteria';
+import Criteria from '@shopware-ag/meteor-admin-sdk/es/data/Criteria';
 import template from './sw-generic-cms-page-assignment.html.twig';
 import './sw-generic-cms-page-assignment.scss';
 
-const objectUtils = Cicada.Utils.object;
+const objectUtils = Shopware.Utils.object;
 
 interface CmsSlotOverrides {
     [key: string]: unknown;
@@ -16,10 +16,8 @@ interface CmsSlotOverrides {
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -64,7 +62,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         changesetGenerator(): ChangesetGenerator {
-            return new Cicada.Data.ChangesetGenerator();
+            return new Shopware.Data.ChangesetGenerator();
         },
 
         cmsPageCriteria(): Criteria {
@@ -174,7 +172,7 @@ export default Cicada.Component.wrapComponentConfig({
             const response = await this.cmsPageRepository.search(criteria);
             const cmsPage = this.applySlotOverrides(response[0]);
 
-            Cicada.Store.get('cmsPage').setCurrentPage(cmsPage);
+            Shopware.Store.get('cmsPage').setCurrentPage(cmsPage);
             this.cmsPage = cmsPage;
 
             this.isLoading = false;

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Snippet;
+namespace Shopware\Administration\Snippet;
 
-use Cicada\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
+use Shopware\Core\Framework\Log\Package;
 
 /**
  * @extends EntityCollection<AppAdministrationSnippetEntity>

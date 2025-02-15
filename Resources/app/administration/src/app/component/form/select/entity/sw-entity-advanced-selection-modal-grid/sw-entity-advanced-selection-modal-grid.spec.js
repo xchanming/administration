@@ -8,7 +8,7 @@ import Criteria from 'src/core/data/criteria.data';
 async function createWrapper(isSelectable, tooltip) {
     // mock entity functions
     const items = [
-        { name: 'Cicada' },
+        { name: 'Shopware' },
         { name: 'Github' },
         { name: 'PHP' },
         { name: 'VueJS' },

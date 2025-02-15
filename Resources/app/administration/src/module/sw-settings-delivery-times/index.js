@@ -5,16 +5,16 @@ import './acl';
  */
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-delivery-time-list', () => import('./page/sw-settings-delivery-time-list'));
-Cicada.Component.register('sw-settings-delivery-time-detail', () => import('./page/sw-settings-delivery-time-detail'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-settings-delivery-time-list', () => import('./page/sw-settings-delivery-time-list'));
+Shopware.Component.register('sw-settings-delivery-time-detail', () => import('./page/sw-settings-delivery-time-detail'));
+Shopware.Component.extend(
     'sw-settings-delivery-time-create',
     'sw-settings-delivery-time-detail',
     () => import('./page/sw-settings-delivery-time-create'),
 );
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module, Feature } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-delivery-time', {
@@ -55,7 +55,14 @@ Module.register('sw-settings-delivery-time', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: function () {
+            // @deprecated tag:v6.7.0 - Remove condition and function callback
+            if (!Feature.isActive('v6.7.0.0')) {
+                return 'shop';
+            }
+
+            return 'commerce';
+        },
         to: 'sw.settings.delivery.time.index',
         icon: 'regular-clock',
         privilege: 'delivery_times.viewer',

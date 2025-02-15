@@ -59,7 +59,7 @@ export default class ImportExportService extends ApiService {
         );
 
         return (
-            `${Cicada.Context.api.apiPath || ''}/_action/${this.getApiBasePath()}/` +
+            `${Shopware.Context.api.apiPath || ''}/_action/${this.getApiBasePath()}/` +
             `file/download?fileId=${fileId}&accessToken=${accessTokenResponse.data.accessToken}`
         );
     }
@@ -80,7 +80,7 @@ export default class ImportExportService extends ApiService {
         );
 
         return (
-            `${Cicada.Context.api.apiPath || ''}/_action/${this.getApiBasePath()}/` +
+            `${Shopware.Context.api.apiPath || ''}/_action/${this.getApiBasePath()}/` +
             `file/download?fileId=${prepareResponse.data.fileId}&accessToken=${prepareResponse.data.accessToken}`
         );
     }
@@ -150,7 +150,7 @@ export default class ImportExportService extends ApiService {
         );
 
         const createdLog = await this.httpClient.post('/_action/import-export/prepare', formData, {
-            headers: this.getBasicHeaders(),
+            headers: this.getBasicHeaders({ 'Content-Type': 'multipart/form-data' }),
         });
 
         return this.trackProgress(createdLog, callback);

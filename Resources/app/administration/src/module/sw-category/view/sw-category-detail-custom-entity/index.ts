@@ -1,18 +1,16 @@
-import Criteria from '@cicada-ag/meteor-admin-sdk/es/data/Criteria';
+import Criteria from '@shopware-ag/meteor-admin-sdk/es/data/Criteria';
 import template from './sw-category-detail-custom-entity.html.twig';
 import './sw-category-detail-custom-entity.scss';
 
-const { Utils } = Cicada;
+const { Utils } = Shopware;
 const EXTENSION_POSTFIX = 'SwCategories';
 
 /**
  * @private
- * @sw-package discovery
+ * @sw-package inventory
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -56,7 +54,7 @@ export default Cicada.Component.wrapComponentConfig({
 
         category(): Entity<'category'> | null {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            return Cicada.State.get('swCategoryDetail').category as Entity<'category'> | null;
+            return Shopware.Store.get('swCategoryDetail').category as Entity<'category'> | null;
         },
 
         customEntityCriteria(): Criteria {
@@ -68,7 +66,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

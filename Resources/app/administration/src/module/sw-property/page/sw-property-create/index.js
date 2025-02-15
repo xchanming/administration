@@ -16,14 +16,14 @@ export default {
 
     computed: {
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
     methods: {
         createdComponent() {
-            if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                Cicada.Context.api.languageId = Cicada.Context.api.systemLanguageId;
+            if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                Shopware.Context.api.languageId = Shopware.Context.api.systemLanguageId;
             }
 
             this.propertyGroup = this.propertyRepository.create();

@@ -9,7 +9,7 @@ function getSnippets() {
         data: {
             'account.addressCreateBtn': [
                 {
-                    author: 'Cicada',
+                    author: 'Shopware',
                     id: null,
                     origin: 'Neue Adresse hinzufügen',
                     resetTo: 'Neue Adresse hinzufügen',
@@ -18,7 +18,7 @@ function getSnippets() {
                     value: 'Neue Adresse hinzufügen',
                 },
                 {
-                    author: 'Cicada',
+                    author: 'Shopware',
                     id: null,
                     origin: 'Add address',
                     resetTo: 'Add address',
@@ -39,10 +39,10 @@ function getSnippets() {
 function getSnippetSets() {
     const data = [
         {
-            baseFile: 'messages.zh-CN',
+            baseFile: 'messages.de-DE',
             id: 'a2f95068665e4498ae98a2318a7963df',
-            iso: 'zh-CN',
-            name: 'BASE zh-CN',
+            iso: 'de-DE',
+            name: 'BASE de-DE',
         },
     ];
 

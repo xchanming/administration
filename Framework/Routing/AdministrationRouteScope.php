@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Framework\Routing;
+namespace Shopware\Administration\Framework\Routing;
 
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Routing\AbstractRouteScope;
-use Cicada\Core\Framework\Routing\ApiContextRouteScopeDependant;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Routing\AbstractRouteScope;
+use Shopware\Core\Framework\Routing\ApiContextRouteScopeDependant;
 use Symfony\Component\HttpFoundation\Request;
 
 #[Package('framework')]

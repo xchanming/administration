@@ -5,16 +5,13 @@ import template from './sw-order-general-info.html.twig';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
-const { mapGetters, mapState } = Cicada.Component.getComponentHelper();
-const { cloneDeep } = Cicada.Utils.object;
+const { Mixin, Store } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
+const { cloneDeep } = Shopware.Utils.object;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: {
         swOrderDetailOnSaveEdits: {
@@ -71,13 +68,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters('swOrderDetail', [
-            'isLoading',
-        ]),
+        isLoading: () => Store.get('swOrderDetail').isLoading,
 
-        ...mapState('swOrderDetail', [
-            'savedSuccessful',
-        ]),
+        savedSuccessful: () => Store.get('swOrderDetail').savedSuccessful,
 
         lastChangedUser() {
             if (this.liveOrder) {
@@ -162,15 +155,15 @@ export default {
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         emailIdnFilter() {
-            return Cicada.Filter.getByName('decode-idn-email');
+            return Shopware.Filter.getByName('decode-idn-email');
         },
     },
 
@@ -197,7 +190,7 @@ export default {
             this.tagCollection = new EntityCollection(
                 this.order.tags.source,
                 this.order.tags.entity,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 null,
                 tags,
                 tags.length,
@@ -208,7 +201,7 @@ export default {
         },
 
         getLiveOrder() {
-            this.orderRepository.search(this.lastChangedByCriteria, Cicada.Context.api).then((response) => {
+            this.orderRepository.search(this.lastChangedByCriteria, Shopware.Context.api).then((response) => {
                 if (response && response.first()) {
                     this.liveOrder = response.first();
                 }
@@ -280,7 +273,7 @@ export default {
         },
 
         getTransitionOptions() {
-            Cicada.State.commit('swOrderDetail/setLoading', [
+            Store.get('swOrderDetail').setLoading([
                 'states',
                 true,
             ]);
@@ -332,7 +325,7 @@ export default {
                     return Promise.resolve();
                 })
                 .finally(() => {
-                    Cicada.State.commit('swOrderDetail/setLoading', [
+                    Store.get('swOrderDetail').setLoading([
                         'states',
                         false,
                     ]);

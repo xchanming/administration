@@ -1,6 +1,5 @@
 // @ts-expect-error
 import MD5 from 'md5-es';
-import { utcToZonedTime } from 'date-fns-tz';
 
 /**
  * @sw-package framework
@@ -47,7 +46,7 @@ export function currency(val: number, sign: string, decimalPlaces: number, addit
 
     const opts = {
         style: 'currency',
-        currency: sign || (Cicada.Context.app.systemCurrencyISOCode as string),
+        currency: sign || (Shopware.Context.app.systemCurrencyISOCode as string),
         ...decimalOpts,
         ...additionalOptions,
     };
@@ -56,7 +55,7 @@ export function currency(val: number, sign: string, decimalPlaces: number, addit
 
     try {
         result = val.toLocaleString(
-            additionalOptions.language ?? Cicada.State.get('session').currentLocale ?? 'zh-CN',
+            additionalOptions.language ?? Shopware.Store.get('session').currentLocale ?? 'en-US',
             // @ts-expect-error - style "currency" is allowed in the options
             opts,
         );
@@ -76,14 +75,14 @@ export function currency(val: number, sign: string, decimalPlaces: number, addit
             delete opts.currency;
 
             result = val.toLocaleString(
-                additionalOptions.language ?? Cicada.State.get('session').currentLocale ?? 'zh-CN',
-                // @ts-expect-error - style "currency" is allowed in the options
+                additionalOptions.language ?? Shopware.Store.get('session').currentLocale ?? 'en-US',
+                // @ts-expect-error - style "decimal" is allowed in the options
                 opts,
             );
         }
     }
 
-    return result.replace(/^[A-Za-z]+(?=\p{Sc})/gu, '').trim();
+    return result;
 }
 
 interface DateFilterOptions extends Intl.DateTimeFormatOptions {
@@ -114,9 +113,9 @@ export function date(val: string, options: DateFilterOptions = {}): string {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    const lastKnownLang = Cicada.Application.getContainer('factory').locale.getLastKnownLocale();
+    const lastKnownLang = Shopware.Application.getContainer('factory').locale.getLastKnownLocale();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const userTimeZone = Cicada?.State?.get('session')?.currentUser?.timeZone ?? 'Asia/Shanghai';
+    const userTimeZone = Shopware?.Store?.get('session')?.currentUser?.timeZone ?? 'UTC';
 
     const dateTimeFormatter = new Intl.DateTimeFormat(lastKnownLang, {
         timeZone: options.skipTimezoneConversion ? undefined : userTimeZone,
@@ -140,11 +139,20 @@ export function date(val: string, options: DateFilterOptions = {}): string {
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export function dateWithUserTimezone(dateObj: Date = new Date()): Date {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const userTimeZone = Cicada.State.get('session').currentUser?.timeZone ?? 'Asia/Shanghai';
+    const userTimeZone = Shopware.Store.get('session').currentUser?.timeZone ?? 'UTC';
 
-    // 将给定的时间转换为用户时区的时间
-    // 返回转换后的 Date 对象
-    return utcToZonedTime(dateObj, userTimeZone);
+    // Language and options are set in order to re-create the date object
+    const localizedDate = dateObj.toLocaleDateString('en-GB', {
+        timeZone: userTimeZone,
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+    });
+
+    return new Date(localizedDate);
 }
 
 /**
@@ -163,7 +171,7 @@ export function md5(value: string): string {
  * Formats a number of bytes to a string with a unit
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-export function fileSize(bytes: number, locale = 'zh-CN'): string {
+export function fileSize(bytes: number, locale = 'de-DE'): string {
     const denominator = 1024;
     const units = [
         'B',

@@ -13,9 +13,9 @@ async function createWrapper(privileges = []) {
         },
     };
 
-    Cicada.EntityDefinition = EntityDefinitionFactory;
+    Shopware.EntityDefinition = EntityDefinitionFactory;
     Object.keys(mockEntitySchema).forEach((entity) => {
-        Cicada.EntityDefinition.add(entity, mockEntitySchema[entity]);
+        Shopware.EntityDefinition.add(entity, mockEntitySchema[entity]);
     });
 
     return mount(await wrapTestComponent('sw-product-stream-filter', { sync: true }), {

@@ -5,7 +5,7 @@ import { mount } from '@vue/test-utils';
 import 'src/app/component/rule/sw-arrow-field';
 
 async function createWrapper(customOptions = {}) {
-    return mount(await Cicada.Component.build('sw-arrow-field'), {
+    return mount(await Shopware.Component.build('sw-arrow-field'), {
         ...customOptions,
     });
 }

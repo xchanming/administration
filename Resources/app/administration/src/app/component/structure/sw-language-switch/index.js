@@ -1,9 +1,9 @@
 import template from './sw-language-switch.html.twig';
 import './sw-language-switch.scss';
 
-const { Component } = Cicada;
-const { warn } = Cicada.Utils.debug;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { warn } = Shopware.Utils.debug;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package framework
@@ -19,8 +19,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-language-switch', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['on-change'],
 
@@ -89,22 +87,14 @@ Component.register('sw-language-switch', {
 
     methods: {
         createdComponent() {
-            this.languageId = Cicada.Context.api.languageId;
+            this.languageId = Shopware.Context.api.languageId;
             this.lastLanguageId = this.languageId;
 
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                this.$root.$on('on-change-language-clicked', this.changeToNewLanguage);
-            } else {
-                Cicada.Utils.EventBus.on('on-change-language-clicked', this.changeToNewLanguage);
-            }
+            Shopware.Utils.EventBus.on('on-change-language-clicked', this.changeToNewLanguage);
         },
 
         destroyedComponent() {
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                this.$root.$off('on-change-language-clicked', this.changeToNewLanguage);
-            } else {
-                Cicada.Utils.EventBus.off('on-change-language-clicked', this.changeToNewLanguage);
-            }
+            Shopware.Utils.EventBus.off('on-change-language-clicked', this.changeToNewLanguage);
         },
 
         onInput(newLanguageId) {
@@ -137,16 +127,10 @@ Component.register('sw-language-switch', {
             this.lastLanguageId = this.languageId;
 
             if (this.changeGlobalLanguage) {
-                Cicada.State.commit('context/setApiLanguageId', this.languageId);
-                if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                    this.$root.$emit('on-change-application-language', {
-                        languageId: this.languageId,
-                    });
-                } else {
-                    Cicada.Utils.EventBus.emit('sw-language-switch-change-application-language', {
-                        languageId: this.languageId,
-                    });
-                }
+                Shopware.Store.get('context').api.languageId = this.languageId;
+                Shopware.Utils.EventBus.emit('sw-language-switch-change-application-language', {
+                    languageId: this.languageId,
+                });
             }
 
             this.$emit('on-change', this.languageId);

@@ -2,17 +2,17 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-cross-selling', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-cross-selling', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-cross-selling', () => import('./component'));
+Shopware.Component.register('sw-cms-block-cross-selling', () => import('./component'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'cross-selling',
     label: 'sw-cms.blocks.commerce.crossSelling.label',
     category: 'commerce',

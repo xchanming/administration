@@ -7,7 +7,7 @@ import 'src/app/component/base/sw-button-process';
  * @sw-package framework
  */
 
-Cicada.Component.register('sw-generic-custom-entity-detail', swGenericCustomEntityDetail);
+Shopware.Component.register('sw-generic-custom-entity-detail', swGenericCustomEntityDetail);
 
 const testEntityName = 'custom_test_entity';
 const testEntityCreateId = 'new-id';
@@ -115,7 +115,7 @@ const customEntityRepository = {
 };
 
 async function createWrapper({ activeTab = 'main', routeId = null, entityName = testEntityName } = {}) {
-    return shallowMount(await Cicada.Component.build('sw-generic-custom-entity-detail'), {
+    return shallowMount(await Shopware.Component.build('sw-generic-custom-entity-detail'), {
         global: {
             stubs: {
                 'sw-page': {
@@ -262,7 +262,7 @@ const numberOfElementsDataProvider = [
 ];
 
 /**
- * @sw-package content
+ * @sw-package framework
  */
 describe('module/sw-custom-entity/page/sw-generic-custom-entity-detail', () => {
     it('should render the correct number of tabs, tab-items and activeTabs with correct labels', async () => {

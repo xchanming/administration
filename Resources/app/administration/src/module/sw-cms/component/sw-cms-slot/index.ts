@@ -3,16 +3,14 @@ import template from './sw-cms-slot.html.twig';
 import './sw-cms-slot.scss';
 import { type CmsElementConfig } from '../../service/cms.service';
 
-const { deepCopyObject } = Cicada.Utils.object;
+const { deepCopyObject } = Shopware.Utils.object;
 
 /**
  * @private since v6.5.0
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'cmsService',
@@ -60,7 +58,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         cmsElements() {
-            const currentPageType = Cicada.Store.get('cmsPage').currentPageType;
+            const currentPageType = Shopware.Store.get('cmsPage').currentPageType;
 
             if (!currentPageType) {
                 return {};

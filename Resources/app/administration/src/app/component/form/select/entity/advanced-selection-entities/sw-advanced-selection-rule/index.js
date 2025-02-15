@@ -1,8 +1,8 @@
 import template from './sw-advanced-selection-rule.html.twig';
 import './sw-advanced-selection-rule.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -14,8 +14,6 @@ const { Criteria } = Cicada.Data;
  */
 Component.register('sw-advanced-selection-rule', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'ruleConditionDataProviderService',
@@ -59,7 +57,7 @@ Component.register('sw-advanced-selection-rule', {
 
     computed: {
         getRuleDefinition() {
-            return Cicada.EntityDefinition.get('rule');
+            return Shopware.EntityDefinition.get('rule');
         },
 
         assignmentProperties() {
@@ -80,7 +78,7 @@ Component.register('sw-advanced-selection-rule', {
         },
 
         context() {
-            return Cicada.Context.api;
+            return Shopware.Context.api;
         },
 
         columns() {
@@ -266,7 +264,7 @@ Component.register('sw-advanced-selection-rule', {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 

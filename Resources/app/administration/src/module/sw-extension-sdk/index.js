@@ -1,10 +1,11 @@
 /**
  * @sw-package framework
  */
+
 import './page/sw-extension-sdk-module';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Module.register('sw-extension-sdk', {
+Shopware.Module.register('sw-extension-sdk', {
     type: 'core',
     name: 'sw-extension-sdk',
     title: 'sw-extension-sdk.general.mainMenuItemGeneral',

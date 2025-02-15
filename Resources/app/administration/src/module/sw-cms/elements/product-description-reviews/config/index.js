@@ -2,7 +2,7 @@ import Criteria from 'src/core/data/criteria.data';
 import template from './sw-cms-el-config-product-description-reviews.html.twig';
 import './sw-cms-el-config-product-description-reviews.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -28,7 +26,7 @@ export default {
 
         productSelectContext() {
             return {
-                ...Cicada.Context.api,
+                ...Shopware.Context.api,
                 inheritance: true,
             };
         },
@@ -65,26 +63,16 @@ export default {
             if (!productId) {
                 this.element.config.product.value = null;
 
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.element.data, 'productId', null);
-                    this.$set(this.element.data, 'product', null);
-                } else {
-                    this.element.data.productId = null;
-                    this.element.data.product = null;
-                }
+                this.element.data.productId = null;
+                this.element.data.product = null;
             } else {
                 this.productRepository
                     .get(productId, this.productSelectContext, this.selectedProductCriteria)
                     .then((product) => {
                         this.element.config.product.value = productId;
 
-                        if (this.isCompatEnabled('INSTANCE_SET')) {
-                            this.$set(this.element.data, 'productId', productId);
-                            this.$set(this.element.data, 'product', product);
-                        } else {
-                            this.element.data.productId = productId;
-                            this.element.data.product = product;
-                        }
+                        this.element.data.productId = productId;
+                        this.element.data.product = product;
                     });
             }
 

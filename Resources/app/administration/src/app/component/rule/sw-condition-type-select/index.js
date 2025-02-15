@@ -1,7 +1,7 @@
 import template from './sw-condition-type-select.html.twig';
 import './sw-condition-type-select.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-condition-type-select', {
     template: template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'removeNodeFromTree',

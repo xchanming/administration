@@ -3,7 +3,7 @@
 import { VNode } from 'vue';
 import { ComponentPublicInstance } from 'vue';
 
-const { Directive } = Cicada;
+const { Directive } = Shopware;
 
 /**
  * @sw-package framework

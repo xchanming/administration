@@ -7,7 +7,7 @@ import Entity from 'src/core/data/entity.data';
 import CMS from 'src/module/sw-cms/constant/sw-cms.constant';
 
 describe('module/sw-cms/service/cms.service.spec.js', () => {
-    const cmsService = Cicada.Service('cmsService');
+    const cmsService = Shopware.Service('cmsService');
 
     const mediaEntites1 = [
         {
@@ -26,7 +26,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
     ];
 
     const enrichData = {
-        'entity-media-0': new Cicada.Data.EntityCollection(
+        'entity-media-0': new Shopware.Data.EntityCollection(
             '/media',
             'media',
             null,
@@ -35,7 +35,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
             mediaEntites1.length,
             null,
         ),
-        'entity-media-1': new Cicada.Data.EntityCollection(
+        'entity-media-1': new Shopware.Data.EntityCollection(
             '/media',
             'media',
             null,
@@ -190,10 +190,10 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
             const result = element.collect(element);
 
             // search criteria gets optimized to only search the needed ids.
-            const entityMedia2Criteria = new Cicada.Data.Criteria(1, 25);
+            const entityMedia2Criteria = new Shopware.Data.Criteria(1, 25);
             entityMedia2Criteria.setIds([5]);
 
-            const entityMedia3Criteria = new Cicada.Data.Criteria(1, 25);
+            const entityMedia3Criteria = new Shopware.Data.Criteria(1, 25);
             entityMedia3Criteria.setIds([6]);
 
             const expected = {
@@ -280,7 +280,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
             const result = element.collect(element);
 
             // search criteria gets optimized to only search the needed ids.
-            const entityMedia2Criteria = new Cicada.Data.Criteria(1, 25);
+            const entityMedia2Criteria = new Shopware.Data.Criteria(1, 25);
             entityMedia2Criteria.setIds([
                 '123',
                 '567',
@@ -300,7 +300,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
         });
 
         it('uses given search criteria of cms element', async () => {
-            const criteria = new Cicada.Data.Criteria(1, 10);
+            const criteria = new Shopware.Data.Criteria(1, 10);
             criteria.setIds(['123']);
             // cms element components call the initElementConfig() function from cms-service mixin
             // to add the defaultConfig properties to the config root level
@@ -357,7 +357,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
             const result = element.collect(element);
 
             // search criteria gets optimized to only search the needed ids.
-            const entityMedia2Criteria = new Cicada.Data.Criteria(1, 25);
+            const entityMedia2Criteria = new Shopware.Data.Criteria(1, 25);
             entityMedia2Criteria.setIds([
                 '123',
                 '567',
@@ -472,7 +472,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
             cmsService.registerCmsElement(element);
 
             element.enrich(element, {
-                'entity-media-0': new Cicada.Data.EntityCollection(
+                'entity-media-0': new Shopware.Data.EntityCollection(
                     '/media',
                     'media',
                     null,
@@ -555,7 +555,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
             ];
 
             element.enrich(element, {
-                'entity-media-0': new Cicada.Data.EntityCollection(
+                'entity-media-0': new Shopware.Data.EntityCollection(
                     '/media',
                     'media',
                     null,
@@ -584,7 +584,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
     });
 
     describe('getEntityMappingTypes', () => {
-        const entityDefinition = Cicada.EntityDefinition;
+        const entityDefinition = Shopware.EntityDefinition;
         let mockCustomFields;
 
         beforeEach(async () => {
@@ -928,7 +928,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
 
     describe('getCollectFunction', () => {
         const context = {
-            ...Cicada.Context.api,
+            ...Shopware.Context.api,
             inheritance: true,
         };
 
@@ -959,10 +959,10 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
             const result = element.collect(element);
 
             // search criteria gets optimized to only search the needed ids.
-            const entityMedia2Criteria = new Cicada.Data.Criteria(1, 25);
+            const entityMedia2Criteria = new Shopware.Data.Criteria(1, 25);
             entityMedia2Criteria.setIds([5]);
 
-            const entityMedia3Criteria = new Cicada.Data.Criteria(1, 25);
+            const entityMedia3Criteria = new Shopware.Data.Criteria(1, 25);
             entityMedia3Criteria.setIds([6]);
 
             const expected = {
@@ -1005,7 +1005,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
                 collect: cmsService.getCollectFunction(),
             };
 
-            const entityCriteria = new Cicada.Data.Criteria(1, 25);
+            const entityCriteria = new Shopware.Data.Criteria(1, 25);
             entityCriteria.setIds([
                 '16a2beeb80f041c29390efa3432760cc',
                 'acb449f51754404596f53787b994381e',
@@ -1078,7 +1078,7 @@ describe('module/sw-cms/service/cms.service.spec.js', () => {
         });
 
         it('uses given search criteria of cms element', async () => {
-            const criteria = new Cicada.Data.Criteria(1, 10);
+            const criteria = new Shopware.Data.Criteria(1, 10);
             criteria.setIds(['123']);
             // cms element components call the initElementConfig() function from cms-service mixin
             // to add the defaultConfig properties to the config root level

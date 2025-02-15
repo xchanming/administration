@@ -4,14 +4,12 @@
 import template from './sw-settings-product-feature-sets-modal.html.twig';
 import './sw-settings-product-feature-sets-modal.scss';
 
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -275,7 +273,7 @@ export default {
             this.valuesLoading = true;
 
             return repository
-                .search(criteria, Cicada.Context.api)
+                .search(criteria, Shopware.Context.api)
                 .then(callback)
                 .catch(() => {
                     this.valuesLoading = false;
@@ -432,8 +430,8 @@ export default {
         },
 
         readCustomFieldLabel(field) {
-            const language = Cicada.State.get('session').currentLocale;
-            const fallback = Cicada.Context.app.fallbackLocale;
+            const language = Shopware.Store.get('session').currentLocale;
+            const fallback = Shopware.Context.app.fallbackLocale;
 
             return field.config.label[language] || field.config.label[fallback];
         },

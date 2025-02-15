@@ -4,7 +4,7 @@ import type { Address } from 'src/core/service/api/custom-snippet.api.service';
 import template from './sw-address.html.twig';
 import './sw-address.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -17,7 +17,8 @@ const { Component } = Cicada;
  * <sw-address headline="Billing address" :address="{
  *     salutation: 'Mister',
  *     title: 'Doctor',
- *     name: 'John',
+ *     firstName: 'John',
+ *     lastName: 'Doe',
  *     street: 'Main St 123',
  *     zipcode: '12456',
  *     city: 'Anytown',
@@ -26,8 +27,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-address', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         address: {
@@ -41,7 +40,8 @@ Component.register('sw-address', {
                         },
                     },
                     title: '',
-                    name: '',
+                    firstName: '',
+                    lastName: '',
                     street: '',
                     zipcode: '',
                     city: '',

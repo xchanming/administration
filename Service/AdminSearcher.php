@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Service;
+namespace Shopware\Administration\Service;
 
-use Cicada\Administration\Framework\Search\CriteriaCollection;
-use Cicada\Core\Framework\Api\Acl\Role\AclRoleDefinition;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
-use Cicada\Core\Framework\DataAbstractionLayer\Entity;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Administration\Framework\Search\CriteriaCollection;
+use Shopware\Core\Framework\Api\Acl\Role\AclRoleDefinition;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
+use Shopware\Core\Framework\Log\Package;
 
 #[Package('framework')]
 class AdminSearcher

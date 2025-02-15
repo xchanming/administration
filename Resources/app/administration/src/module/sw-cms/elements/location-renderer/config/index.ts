@@ -2,7 +2,7 @@ import type { PropType } from 'vue';
 import template from './sw-cms-el-config-location-renderer.html.twig';
 import type { ElementDataProp } from '../index';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Component, Mixin } = Cicada;
  */
 Component.register('sw-cms-el-config-location-renderer', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('cms-element'),
@@ -57,7 +55,7 @@ Component.register('sw-cms-el-config-location-renderer', {
         createdComponent() {
             this.initElementConfig(this.elementData.name);
 
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: this.publishingKey,
                 path: 'element',
                 scope: this,

@@ -5,14 +5,7 @@ import { mount } from '@vue/test-utils';
  */
 
 async function createWrapper(methods = [], cards = [], privileges = []) {
-    if (typeof Cicada.State.get('paymentOverviewCardState') !== 'undefined') {
-        Cicada.State.unregisterModule('paymentOverviewCardState');
-    }
-
-    Cicada.State.registerModule('paymentOverviewCardState', {
-        namespaced: true,
-        state: { cards },
-    });
+    Shopware.Store.get('paymentOverviewCard').cards = cards;
 
     return mount(
         await wrapTestComponent('sw-settings-payment-overview', {

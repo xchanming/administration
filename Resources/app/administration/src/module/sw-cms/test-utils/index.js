@@ -18,8 +18,8 @@ function runCmsBlockRegistryTest(config) {
     });
 
     it('registers the component in the CMS block registry', async () => {
-        const componentRegistry = Cicada.Component.getComponentRegistry();
-        const cmsService = Cicada.Service('cmsService');
+        const componentRegistry = Shopware.Component.getComponentRegistry();
+        const cmsService = Shopware.Service('cmsService');
 
         expect(componentRegistry.has(config.component)).toBeTruthy();
         expect(componentRegistry.has(config.preview)).toBeTruthy();
@@ -38,8 +38,8 @@ function runCmsElementRegistryTest(config) {
     });
 
     it('registers the component in the CMS block registry', async () => {
-        const componentRegistry = Cicada.Component.getComponentRegistry();
-        const cmsService = Cicada.Service('cmsService');
+        const componentRegistry = Shopware.Component.getComponentRegistry();
+        const cmsService = Shopware.Service('cmsService');
 
         expect(componentRegistry.has(config.component)).toBeTruthy();
 
@@ -65,9 +65,9 @@ async function setupCmsEnvironment() {
     await import('src/module/sw-cms/mixin/sw-cms-element.mixin');
     await import('src/module/sw-cms/mixin/sw-cms-state.mixin');
 
-    Cicada.State.get('session').currentUser = {
+    Shopware.Store.get('session').setCurrentUser({
         id: 'admin',
-    };
+    });
 }
 
 /**

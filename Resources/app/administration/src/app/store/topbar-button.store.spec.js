@@ -6,7 +6,7 @@ describe('topbar-button.store', () => {
     let store;
 
     beforeEach(() => {
-        store = Cicada.Store.get('topBarButton');
+        store = Shopware.Store.get('topBarButton');
     });
 
     afterEach(() => {

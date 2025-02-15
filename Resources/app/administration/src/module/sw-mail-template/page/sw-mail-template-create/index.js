@@ -1,6 +1,6 @@
 import template from './sw-mail-template-create.html.twig';
 
-const utils = Cicada.Utils;
+const utils = Shopware.Utils;
 
 /**
  * @sw-package after-sales
@@ -19,12 +19,12 @@ export default {
 
     methods: {
         createdComponent() {
-            if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                Cicada.State.commit('context/resetLanguageToDefault');
+            if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                Shopware.Store.get('context').resetLanguageToDefault();
             }
 
             if (this.$route.params.id) {
-                this.mailTemplate = this.mailTemplateRepository.create(Cicada.Context.api, this.$route.params.id);
+                this.mailTemplate = this.mailTemplateRepository.create(Shopware.Context.api, this.$route.params.id);
             } else {
                 this.mailTemplate = this.mailTemplateRepository.create();
             }

@@ -9,8 +9,6 @@ import './sw-product-variants-delivery-media.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'mediaService',

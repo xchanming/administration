@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Controller;
+namespace Shopware\Administration\Controller;
 
-use Cicada\Administration\Dashboard\OrderAmountService;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Administration\Dashboard\OrderAmountService;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\Log\Package;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class DashboardController extends AbstractController
     {
         $paid = $request->query->getBoolean('paid', true);
 
-        $timezone = $request->query->get('timezone', 'Asia/Shanghai');
+        $timezone = $request->query->get('timezone', 'UTC');
 
         $amount = $this->orderAmountService->load($context, $since, $paid, $timezone);
 

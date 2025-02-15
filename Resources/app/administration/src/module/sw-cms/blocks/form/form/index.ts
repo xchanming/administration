@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-form', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-form', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-form', () => import('./component'));
+Shopware.Component.register('sw-cms-block-form', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'form',
     label: 'sw-cms.blocks.form.form.label',
     category: 'form',

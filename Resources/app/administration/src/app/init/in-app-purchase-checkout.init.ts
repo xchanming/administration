@@ -7,8 +7,8 @@ import 'src/app/store/in-app-purchase-checkout.store';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeInAppPurchaseCheckout(): void {
-    Cicada.ExtensionAPI.handle('iapCheckout', (entry, { _event_ }) => {
-        const extension = Object.values(Cicada.State.get('extensions')).find((ext) =>
+    Shopware.ExtensionAPI.handle('iapCheckout', (entry, { _event_ }) => {
+        const extension = Object.values(Shopware.Store.get('extensions').extensionsState).find((ext) =>
             ext.baseUrl.startsWith(_event_.origin),
         );
 
@@ -16,6 +16,6 @@ export default function initializeInAppPurchaseCheckout(): void {
             throw new Error(`Extension with the origin "${_event_.origin}" not found.`);
         }
 
-        Cicada.Store.get('inAppPurchaseCheckout').request(entry, extension.name);
+        Shopware.Store.get('inAppPurchaseCheckout').request(entry, extension.name);
     });
 }

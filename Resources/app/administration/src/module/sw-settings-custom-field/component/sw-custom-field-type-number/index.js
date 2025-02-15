@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-custom-field-type-number.html.twig';
 

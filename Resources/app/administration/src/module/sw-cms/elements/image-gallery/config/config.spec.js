@@ -27,7 +27,7 @@ async function createWrapper(activeTab = 'content') {
         {
             global: {
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                     repositoryFactory: {
                         create: () => {
                             return {
@@ -161,7 +161,7 @@ describe('src/module/sw-cms/elements/image-gallery/config', () => {
     });
 
     beforeEach(() => {
-        Cicada.Store.get('cmsPage').$reset();
+        Shopware.Store.get('cmsPage').$reset();
     });
 
     it('should media selection if sliderItems config source is static', async () => {

@@ -1,11 +1,12 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 /* eslint-disable max-len */
 import { mount } from '@vue/test-utils';
-import CicadaError from 'src/core/data/CicadaError';
+import ShopwareError from 'src/core/data/ShopwareError';
+import { MtUrlField } from '@shopware-ag/meteor-component-library';
 import { kebabCase } from 'lodash';
-import uuid from 'src/../test/_helper_/uuid';
+import uuid from 'test/_helper_/uuid';
 import 'src/app/filter/media-name.filter';
 import 'src/app/filter/unicode-uri';
 
@@ -93,6 +94,7 @@ async function createWrapper(defaultValues = {}) {
                 'sw-media-modal-replace': true,
                 'sw-media-modal-delete': true,
                 'sw-media-modal-move': true,
+                'mt-url-field': MtUrlField,
             },
             provide: {
                 systemConfigApiService: {
@@ -271,8 +273,8 @@ function createConfig() {
                 domValueCheck: (field, domValue) => {
                     expect(field.find('input').element.value).toBe(domValue);
                 },
-                afterValue: 'https://www.cicada.de',
-                afterValueDom: 'www.cicada.de',
+                afterValue: 'https://www.shopware.de',
+                afterValueDom: 'www.shopware.de',
                 childValue: 'https://www.child.xchanming.com',
                 childValueDom: 'www.child.xchanming.com',
                 changeValueFunction: async (field, afterValue) => {
@@ -706,7 +708,7 @@ function createConfig() {
 }
 
 function createEntityCollection(entities = []) {
-    return new Cicada.Data.EntityCollection('collection', 'collection', {}, null, entities);
+    return new Shopware.Data.EntityCollection('collection', 'collection', {}, null, entities);
 }
 
 describe('src/module/sw-settings/component/sw-system-config/sw-system-config', () => {
@@ -748,10 +750,10 @@ describe('src/module/sw-settings/component/sw-system-config/sw-system-config', (
         expect(selectionText.text()).toBe('Headless');
     });
 
-    it('should return CicadaError when has error', async () => {
-        await Cicada.State.dispatch('error/addApiError', {
+    it('should return ShopwareError when has error', async () => {
+        Shopware.Store.get('error').addApiError({
             expression: 'SYSTEM_CONFIG.null.dummyKey',
-            error: new CicadaError({ code: 'dummyCode' }),
+            error: new ShopwareError({ code: 'dummyCode' }),
         });
 
         wrapper = await createWrapper({
@@ -764,7 +766,7 @@ describe('src/module/sw-settings/component/sw-system-config/sw-system-config', (
 
         const error = wrapper.vm.getFieldError('dummyKey');
 
-        expect(error).toBeInstanceOf(CicadaError);
+        expect(error).toBeInstanceOf(ShopwareError);
     });
 
     createConfig()[0].elements.forEach(({ name, type, config, _test }) => {

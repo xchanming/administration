@@ -2,22 +2,22 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-product-listing', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-product-listing', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-product-listing', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-product-listing', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-product-listing', () => import('./component'));
+Shopware.Component.register('sw-cms-el-product-listing', () => import('./component'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-cms-el-config-product-listing-config-sorting-grid',
     () => import('./config/components/sw-cms-el-config-product-listing-config-sorting-grid'),
 );
@@ -26,7 +26,7 @@ Cicada.Component.register(
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'product-listing',
     label: 'sw-cms.elements.productListing.label',
     hidden: true,

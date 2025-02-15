@@ -1,8 +1,8 @@
 import template from './sw-condition-script.html.twig';
 import './sw-condition-script.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @public
@@ -76,7 +76,7 @@ Component.extend('sw-condition-script', 'sw-condition-base', {
                     return;
                 }
 
-                const errorProperty = Cicada.State.getters['error/getApiError'](this.condition, `value.${config.name}`);
+                const errorProperty = Shopware.Store.get('error').getApiError(this.condition, `value.${config.name}`);
 
                 if (errorProperty) {
                     error = errorProperty;
@@ -95,7 +95,7 @@ Component.extend('sw-condition-script', 'sw-condition-base', {
 
     methods: {
         getBind(field) {
-            const fieldClone = Cicada.Utils.object.cloneDeep(field);
+            const fieldClone = Shopware.Utils.object.cloneDeep(field);
 
             if (fieldClone.type === 'html') {
                 fieldClone.type = 'text';
@@ -127,11 +127,6 @@ Component.extend('sw-condition-script', 'sw-condition-base', {
         },
 
         updateFieldValue(fieldName, value) {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.values, fieldName, value);
-                return;
-            }
-
             this.values[fieldName] = value;
         },
     },

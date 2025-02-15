@@ -1,7 +1,7 @@
 /**
  * @sw-package discovery
  */
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'content',
     key: 'cms',
@@ -43,7 +43,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'cms_slot:create',
                 'cms_slot:update',
                 'cms_slot:delete',
-                Cicada.Service('privileges').getPrivileges('media.creator'),
+                Shopware.Service('privileges').getPrivileges('media.creator'),
                 'currency:read',
                 'product_stream:read',
                 'product_manufacturer:read',

@@ -42,11 +42,11 @@ describe('src/app/asyncComponent/asyncComponent', () => {
     });
 
     it.each(componentNames)('should register the %s synchronously', (componentName) => {
-        expect(Cicada.Component.getComponentRegistry().has(componentName)).toBe(true);
+        expect(Shopware.Component.getComponentRegistry().has(componentName)).toBe(true);
     });
 
     it.each(componentNames)('should be able to build %s correctly', async (componentName) => {
-        const buildResult = await Cicada.Component.build(componentName);
+        const buildResult = await Shopware.Component.build(componentName);
         // If component could not get build then the component library returns "false"
         expect(buildResult).not.toBe(false);
     });

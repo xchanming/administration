@@ -237,7 +237,7 @@ describe('components/entity/sw-product-stream-grid-preview.spec', () => {
     });
 
     it('should send request with term when updating searchTerm', async () => {
-        Cicada.Utils.debounce = jest.fn((fn) => fn);
+        Shopware.Utils.debounce = jest.fn((fn) => fn);
         wrapper = await createWrapper();
 
         await wrapper.setProps({
@@ -251,7 +251,7 @@ describe('components/entity/sw-product-stream-grid-preview.spec', () => {
 
         expect(wrapper.vm.criteria.term).toBe('Desired product');
 
-        Cicada.Utils.debounce.mockReset();
+        Shopware.Utils.debounce.mockReset();
     });
 
     it('should emit event when selection change with correct data', async () => {

@@ -1,9 +1,10 @@
 /**
  * @sw-package framework
  */
+
 import { mount } from '@vue/test-utils';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 async function createWrapper() {
     return mount(await wrapTestComponent('sw-string-filter', { sync: true }), {

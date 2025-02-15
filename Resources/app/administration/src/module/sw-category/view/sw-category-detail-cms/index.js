@@ -8,8 +8,6 @@ import './sw-category-detail-cms.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['acl'],
 
     props: {
@@ -21,11 +19,11 @@ export default {
 
     computed: {
         category() {
-            return Cicada.State.get('swCategoryDetail').category;
+            return Shopware.Store.get('swCategoryDetail').category;
         },
 
         cmsPage() {
-            return Cicada.Store.get('cmsPage').currentPage;
+            return Shopware.Store.get('cmsPage').currentPage;
         },
     },
 };

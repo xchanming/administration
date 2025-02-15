@@ -190,7 +190,7 @@ async function createWrapper(privileges = []) {
 
 describe('module/sw-flow/component/sw-flow-create-mail-template-modal', () => {
     beforeAll(() => {
-        Cicada.Context.app.config.settings = {
+        Shopware.Context.app.config.settings = {
             enableHtmlSanitizer: true,
         };
     });

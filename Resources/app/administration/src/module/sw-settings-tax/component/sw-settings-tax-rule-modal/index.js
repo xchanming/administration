@@ -4,19 +4,16 @@ import template from './sw-settings-tax-rule-modal.html.twig';
  * @sw-package checkout
  */
 
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
-        'feature',
     ],
 
     emits: ['modal-close'],

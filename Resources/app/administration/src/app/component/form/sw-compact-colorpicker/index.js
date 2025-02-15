@@ -1,7 +1,7 @@
 import template from './sw-compact-colorpicker.html.twig';
 import './sw-compact-colorpicker.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework

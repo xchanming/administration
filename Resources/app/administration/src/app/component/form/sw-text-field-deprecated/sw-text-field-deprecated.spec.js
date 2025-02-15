@@ -34,7 +34,7 @@ async function createWrapper({ provide, ...options } = {}) {
 }
 
 async function createWrappedComponent() {
-    const wrapper = mount(await Cicada.Component.build('sw-text-field-mock'), {
+    const wrapper = mount(await Shopware.Component.build('sw-text-field-mock'), {
         global: {
             stubs: {
                 'sw-text-field': await wrapTestComponent('sw-text-field'),
@@ -62,7 +62,7 @@ async function createWrappedComponent() {
 
 describe('src/app/component/form/sw-text-field', () => {
     beforeAll(() => {
-        Cicada.Component.register('sw-text-field-mock', {
+        Shopware.Component.register('sw-text-field-mock', {
             template: `
             <div>
                 <sw-text-field v-model:value="mockVar" class="no-suffix" name="sw-field--mockVar" />

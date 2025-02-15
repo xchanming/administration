@@ -1,5 +1,5 @@
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
 import { config, mount } from '@vue/test-utils';
 import { createRouter, createWebHashHistory } from 'vue-router';
@@ -283,18 +283,18 @@ describe('src/module/sw-bulk-edit/page/sw-bulk-edit-customer', () => {
             response: {
                 data: [
                     {
-                        id: Cicada.Utils.createId(),
+                        id: Shopware.Utils.createId(),
                         attributes: {
-                            id: Cicada.Utils.createId(),
+                            id: Shopware.Utils.createId(),
                         },
                     },
                 ],
             },
         });
 
-        Cicada.State.commit('cicadaApps/setSelectedIds', [
-            Cicada.Utils.createId(),
-        ]);
+        Shopware.Store.get('shopwareApps').selectedIds = [
+            Shopware.Utils.createId(),
+        ];
     });
 
     it('should show all form fields', async () => {
@@ -307,7 +307,7 @@ describe('src/module/sw-bulk-edit/page/sw-bulk-edit-customer', () => {
     it('should be show empty state', async () => {
         wrapper = await createWrapper();
 
-        Cicada.State.commit('cicadaApps/setSelectedIds', []);
+        Shopware.Store.get('shopwareApps').selectedIds = [];
         await wrapper.setData({
             isLoading: false,
         });
@@ -343,7 +343,7 @@ describe('src/module/sw-bulk-edit/page/sw-bulk-edit-customer', () => {
         await tagsCard.find('.sw-bulk-edit-change-field__change input').trigger('click');
         await flushPromises();
 
-        Cicada.State.commit('cicadaApps/setSelectedIds', new Array(100).fill(1));
+        Shopware.Store.get('shopwareApps').selectedIds = new Array(100).fill(1);
 
         await wrapper.find('.sw-bulk-edit-customer__save-action').trigger('click');
 

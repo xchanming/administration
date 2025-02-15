@@ -8,8 +8,6 @@ import template from './sw-order-create-details-body.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'on-edit-billing-address',
         'on-edit-shipping-address',

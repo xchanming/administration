@@ -6,9 +6,9 @@ import template from './sw-skip-link.html.twig';
 import './sw-skip-link.scss';
 
 /**
- * @private - Only to be used by the Cicada Admin
+ * @private - Only to be used by the Shopware Admin
  */
-Cicada.Component.register('sw-skip-link', {
+Shopware.Component.register('sw-skip-link', {
     template,
 
     data(): {

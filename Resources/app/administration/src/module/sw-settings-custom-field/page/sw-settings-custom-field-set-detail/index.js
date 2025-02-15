@@ -1,16 +1,14 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-settings-custom-field-set-detail.html.twig';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -117,7 +115,11 @@ export default {
         },
 
         async loadEntityData() {
-            this.set = await this.customFieldSetRepository.get(this.setId, Cicada.Context.api, this.customFieldSetCriteria);
+            this.set = await this.customFieldSetRepository.get(
+                this.setId,
+                Shopware.Context.api,
+                this.customFieldSetCriteria,
+            );
         },
 
         saveFinish() {
@@ -127,9 +129,13 @@ export default {
         onSave() {
             const setLabel = this.identifier;
             const titleSaveSuccess = this.$tc('global.default.success');
-            const messageSaveSuccess = this.$tc('sw-settings-custom-field.set.detail.messageSaveSuccess', 0, {
-                name: setLabel,
-            });
+            const messageSaveSuccess = this.$tc(
+                'sw-settings-custom-field.set.detail.messageSaveSuccess',
+                {
+                    name: setLabel,
+                },
+                0,
+            );
             this.isSaveSuccessful = false;
             this.isLoading = true;
 

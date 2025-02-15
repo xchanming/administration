@@ -2,8 +2,8 @@
  * @sw-package framework
  */
 
-const { warn } = Cicada.Utils.debug;
-const Sanitizer = Cicada.Helper.SanitizerHelper;
+const { warn } = Shopware.Utils.debug;
+const Sanitizer = Shopware.Helper.SanitizerHelper;
 
 let pluginInstalled = false;
 

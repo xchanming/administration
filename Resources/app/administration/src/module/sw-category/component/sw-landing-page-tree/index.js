@@ -1,8 +1,7 @@
 import template from './sw-landing-page-tree.html.twig';
 import './sw-landing-page-tree.scss';
 
-const { Criteria } = Cicada.Data;
-const { mapState } = Cicada.Component.getComponentHelper();
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package discovery
@@ -10,8 +9,6 @@ const { mapState } = Cicada.Component.getComponentHelper();
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -72,9 +69,9 @@ export default {
     },
 
     computed: {
-        ...mapState('swCategoryDetail', [
-            'landingPagesToDelete',
-        ]),
+        landingPagesToDelete() {
+            return Shopware.Store.get('swCategoryDetail').landingPagesToDelete;
+        },
 
         cmsLandingPageCriteria() {
             const criteria = new Criteria(1, 500);
@@ -84,7 +81,7 @@ export default {
         },
 
         landingPage() {
-            return Cicada.State.get('swCategoryDetail').landingPage;
+            return Shopware.Store.get('swCategoryDetail').landingPage;
         },
 
         landingPageRepository() {
@@ -100,7 +97,7 @@ export default {
                 return true;
             }
 
-            return this.currentLanguageId !== Cicada.Context.api.systemLanguageId;
+            return this.currentLanguageId !== Shopware.Context.api.systemLanguageId;
         },
 
         contextMenuTooltipText() {
@@ -120,9 +117,7 @@ export default {
 
             this.$refs.landingPageTree.onDeleteElements(value);
 
-            Cicada.State.commit('swCategoryDetail/setLandingPagesToDelete', {
-                landingPagesToDelete: undefined,
-            });
+            Shopware.Store.get('swCategoryDetail').landingPagesToDelete = undefined;
         },
 
         landingPage(newVal, oldVal) {
@@ -191,11 +186,7 @@ export default {
 
         onDeleteLandingPage({ data: landingPage }) {
             if (landingPage.isNew()) {
-                if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                    this.$delete(this.loadedLandingPages, landingPage.id);
-                } else {
-                    delete this.loadedLandingPages[landingPage.id];
-                }
+                delete this.loadedLandingPages[landingPage.id];
                 return Promise.resolve();
             }
 
@@ -232,7 +223,7 @@ export default {
             };
 
             this.landingPageRepository
-                .clone(contextItem.id, behavior, Cicada.Context.api)
+                .clone(contextItem.id, behavior, Shopware.Context.api)
                 .then((clone) => {
                     const criteria = new Criteria(1, 25);
                     criteria.setIds([clone.id]);

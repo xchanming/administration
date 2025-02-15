@@ -4,11 +4,11 @@
 
 describe('src/module/sw-cms/store/cms-page.store.ts', () => {
     it('should register a store', () => {
-        expect(Cicada.Store.get('cmsPage')).toBeDefined();
+        expect(Shopware.Store.get('cmsPage')).toBeDefined();
     });
 
     it('should set the default state', () => {
-        const cmsPageState = Cicada.Store.get('cmsPage');
+        const cmsPageState = Shopware.Store.get('cmsPage');
 
         expect(cmsPageState.currentPage).toBeNull();
         expect(cmsPageState.currentPageType).toBeNull();

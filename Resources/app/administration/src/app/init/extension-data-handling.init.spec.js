@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 import initializeExtensionDataLoader from 'src/app/init/extension-data-handling.init';
-import { send } from '@cicada-ag/meteor-admin-sdk/es/channel';
+import { send } from '@shopware-ag/meteor-admin-sdk/es/channel';
 import Criteria from 'src/core/data/criteria.data';
 
 describe('src/app/init/extension-data-handling.init.ts', () => {
@@ -49,7 +49,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
     });
 
     beforeAll(() => {
-        jest.spyOn(Cicada.Service('repositoryFactory'), 'create').mockImplementation((entityName) => {
+        jest.spyOn(Shopware.Service('repositoryFactory'), 'create').mockImplementation((entityName) => {
             if (entityName === 'not-existing-entity') {
                 return undefined;
             }
@@ -68,7 +68,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
     });
 
     beforeEach(() => {
-        Cicada.Service('repositoryFactory').create.mockClear();
+        Shopware.Service('repositoryFactory').create.mockClear();
         searchMockMethod.mockClear();
         getMockMethod.mockClear();
         saveMockMethod.mockClear();
@@ -87,8 +87,8 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
         createResult = { createFoo: 'bar' };
 
         // create mock extension
-        Cicada.State._store.state.extensions = {};
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').extensionsState = {};
+        Shopware.Store.get('extensions').addExtension({
             name: 'MyAwesomeExtension',
             permissions: {},
             baseUrl: '',
@@ -110,7 +110,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
         expect(searchMockMethod).toHaveBeenCalledWith(
             searchCriteria,
             expect.objectContaining({
@@ -138,7 +138,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
         expect(getMockMethod).toHaveBeenCalledWith(
             'my-awesome-id',
             expect.objectContaining({
@@ -165,7 +165,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
         expect(saveMockMethod).toHaveBeenCalledWith(
             {
                 name: 'my-awesome-product',
@@ -187,7 +187,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
         expect(cloneMockMethod).toHaveBeenCalledWith(
             'my-awesome-id',
             'my-awesome-behavior',
@@ -211,7 +211,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
         expect(hasChangesMockMethod).toHaveBeenCalledWith({
             my: 'entity',
         });
@@ -231,7 +231,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
         expect(saveAllMockMethod).toHaveBeenCalledWith(
             [
                 {
@@ -254,7 +254,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
         expect(deleteMockMethod).toHaveBeenCalledWith(
             'my-awesome-id',
             expect.objectContaining({
@@ -273,7 +273,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product');
         expect(createMockMethod).toHaveBeenCalledWith(
             expect.objectContaining({
                 languageId: 'my-awesome-language-id',
@@ -291,7 +291,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
 
     it('should throw an error if no extension with the given event origin was found', async () => {
         // create mock extension with a different baseUrl
-        Cicada.State._store.state.extensions = {};
+        Shopware.Store.get('extensions').extensionsState = {};
 
         const searchCriteria = new Criteria();
         searchCriteria.setPage(1);
@@ -320,8 +320,8 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
     });
 
     it('should handle repositorySearch with integrationId', async () => {
-        Cicada.State._store.state.extensions = {};
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').extensionsState = {};
+        Shopware.Store.get('extensions').addExtension({
             name: 'MyAwesomeExtension',
             permissions: {},
             baseUrl: '',
@@ -342,7 +342,7 @@ describe('src/app/init/extension-data-handling.init.ts', () => {
             },
         });
 
-        expect(Cicada.Service('repositoryFactory').create).toHaveBeenCalledWith('product', '', {
+        expect(Shopware.Service('repositoryFactory').create).toHaveBeenCalledWith('product', '', {
             'sw-app-integration-id': 'my-awesome-integration-id',
         });
         expect(searchMockMethod).toHaveBeenCalledWith(

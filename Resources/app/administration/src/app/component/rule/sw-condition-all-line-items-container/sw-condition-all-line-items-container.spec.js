@@ -20,7 +20,7 @@ async function createWrapper(customProps = {}) {
                 },
                 condition: {
                     type: 'allLineItemsContainer',
-                    children: new EntityCollection('', 'rule_condition', Cicada.Context.api, null, [
+                    children: new EntityCollection('', 'rule_condition', Shopware.Context.api, null, [
                         {
                             id: 'rule-condition-id',
                             type: 'cartLineItemUnitPrice',
@@ -82,7 +82,7 @@ describe('src/app/component/rule/sw-condition-and-container', () => {
     it('should removeNodeFromTree when children length becomes 0', async () => {
         const wrapper = await createWrapper();
         const condition = { ...wrapper.props().condition };
-        condition.children = new EntityCollection('', 'rule_condition', Cicada.Context.api, null, []);
+        condition.children = new EntityCollection('', 'rule_condition', Shopware.Context.api, null, []);
         await wrapper.setProps({ condition });
 
         expect(removeNodeFromTree).toHaveBeenCalled();
@@ -91,7 +91,7 @@ describe('src/app/component/rule/sw-condition-and-container', () => {
     it('should call injections when children type changes to none line item type', async () => {
         const wrapper = await createWrapper();
         const condition = { ...wrapper.props().condition };
-        condition.children = new EntityCollection('', 'rule_condition', Cicada.Context.api, null, [
+        condition.children = new EntityCollection('', 'rule_condition', Shopware.Context.api, null, [
             {
                 type: 'cartGoodsPrice',
                 value: {

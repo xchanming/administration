@@ -16,27 +16,27 @@ import './acl';
 /**
  * @private
  */
-Cicada.Service().register('cmsPageTypeService', (() => {
+Shopware.Service().register('cmsPageTypeService', (() => {
     return new CmsPageTypeService();
 }) as unknown as CmsPageTypeService);
 
 initCmsPageTypes();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Component.register('sw-cms-list', () => import('./page/sw-cms-list'));
+Shopware.Component.register('sw-cms-list', () => import('./page/sw-cms-list'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-detail', () => import('./page/sw-cms-detail'));
+Shopware.Component.register('sw-cms-detail', () => import('./page/sw-cms-detail'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.extend('sw-cms-create', 'sw-cms-detail', () => import('./page/sw-cms-create'));
+Shopware.Component.extend('sw-cms-create', 'sw-cms-detail', () => import('./page/sw-cms-create'));
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Module.register('sw-cms', {
+Shopware.Module.register('sw-cms', {
     type: 'core',
     name: 'cms',
     title: 'sw-cms.general.mainMenuItemGeneral',

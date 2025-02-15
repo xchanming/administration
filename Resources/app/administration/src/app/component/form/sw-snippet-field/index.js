@@ -3,9 +3,8 @@ import './sw-snippet-field.scss';
 
 const {
     Component,
-    State,
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 
 /**
  * @sw-package framework
@@ -19,8 +18,6 @@ const {
  */
 Component.register('sw-snippet-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'snippetSetService',
@@ -72,7 +69,7 @@ Component.register('sw-snippet-field', {
         languageCriteria() {
             const criteria = new Criteria(1, 25);
 
-            criteria.addFilter(Criteria.equals('id', Cicada.Context.api.systemLanguageId));
+            criteria.addFilter(Criteria.equals('id', Shopware.Context.api.systemLanguageId));
             criteria.addAssociation('locale');
 
             return criteria;
@@ -105,7 +102,7 @@ Component.register('sw-snippet-field', {
                 this.snippets = translations.data[this.snippet];
             }
 
-            this.snippetSets = await this.snippetSetRepository.search(new Criteria(), Cicada.Context.api);
+            this.snippetSets = await this.snippetSetRepository.search(new Criteria(), Shopware.Context.api);
 
             await this.updatePlaceholderValueToSnippetTranslation();
 
@@ -117,7 +114,7 @@ Component.register('sw-snippet-field', {
                 return;
             }
 
-            const currentLocale = State.get('session').currentLocale;
+            const currentLocale = Shopware.Store.get('session').currentLocale;
             let translation = this.getTranslationByLocale(currentLocale);
             if (translation) {
                 this.textValue = translation.value;
@@ -152,7 +149,7 @@ Component.register('sw-snippet-field', {
         },
 
         async getSystemDefaultLocale() {
-            const languages = await this.languageRepository.search(this.languageCriteria, Cicada.Context.api);
+            const languages = await this.languageRepository.search(this.languageCriteria, Shopware.Context.api);
 
             return languages.first().locale.code;
         },

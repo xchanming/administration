@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 import ErrorResolverSystemConfig from 'src/core/data/error-resolver.system-config.data';
-import CicadaError from 'src/core/data/CicadaError';
+import ShopwareError from 'src/core/data/ShopwareError';
 import mock from './mocks/error-resolver.system-config.mock.json';
 
 const errorResolverSystemConfig = new ErrorResolverSystemConfig();
@@ -16,7 +16,7 @@ describe('src/core/data/error-resolver.system-config.data.ts', () => {
     it('should handleWriteErrors has system error', () => {
         errorResolverSystemConfig.handleWriteErrors(mock.errorWithSystemError);
 
-        const countSystemError = Cicada.State.getters['error/countSystemError']();
+        const countSystemError = Shopware.Store.get('error').countSystemError();
 
         expect(countSystemError).toBe(1);
     });
@@ -24,19 +24,19 @@ describe('src/core/data/error-resolver.system-config.data.ts', () => {
     it('should handleWriteErrors has api error', () => {
         errorResolverSystemConfig.handleWriteErrors(mock.apiErrors);
 
-        const result = Cicada.State.getters['error/getSystemConfigApiError'](
+        const result = Shopware.Store.get('error').getSystemConfigApiError(
             ErrorResolverSystemConfig.ENTITY_NAME,
             null,
             'dummy.key',
         );
 
-        expect(result).toBeInstanceOf(CicadaError);
+        expect(result).toBeInstanceOf(ShopwareError);
     });
 
     it('should handleWriteErrors has api error with translations', () => {
         errorResolverSystemConfig.handleWriteErrors(mock.apiErrorsWithTranslation);
 
-        const result = Cicada.State.getters['error/getSystemConfigApiError'](
+        const result = Shopware.Store.get('error').getSystemConfigApiError(
             ErrorResolverSystemConfig.ENTITY_NAME,
             null,
             'dummy.key',
@@ -50,7 +50,7 @@ describe('src/core/data/error-resolver.system-config.data.ts', () => {
 
         errorResolverSystemConfig.cleanWriteErrors();
 
-        const result = Cicada.State.getters['error/getAllApiErrors']();
+        const result = Shopware.Store.get('error').getAllApiErrors();
 
         expect(result).toEqual([]);
     });

@@ -37,7 +37,7 @@ describe('src/core/service/plugin-update-listener.service.ts', () => {
         localStorage.setItem(localStorageKey, lastCheckDate);
 
         // no application root given => no notification can be dispatched => localStorageKey should not be updated
-        jest.spyOn(Cicada.Application, 'getApplicationRoot').mockImplementation(() => {
+        jest.spyOn(Shopware.Application, 'getApplicationRoot').mockImplementation(() => {
             return false;
         });
 
@@ -48,8 +48,8 @@ describe('src/core/service/plugin-update-listener.service.ts', () => {
                 'app.all',
             ]),
         );
-        Cicada.State.commit('setCurrentUser', {
-            name: 'userName',
+        Shopware.Store.get('session').setCurrentUser({
+            firstName: 'userFirstName',
         });
 
         await flushPromises();
@@ -61,7 +61,7 @@ describe('src/core/service/plugin-update-listener.service.ts', () => {
         localStorage.setItem(localStorageKey, lastCheckDate);
 
         // This is to simplify the retrieval of the notification
-        jest.spyOn(Cicada.Utils, 'createId').mockImplementation(() => 'jest');
+        jest.spyOn(Shopware.Utils, 'createId').mockImplementation(() => 'jest');
 
         addPluginUpdatesListener(
             null,
@@ -71,8 +71,8 @@ describe('src/core/service/plugin-update-listener.service.ts', () => {
             ]),
         );
 
-        Cicada.State.commit('setCurrentUser', {
-            name: 'userName',
+        Shopware.Store.get('session').setCurrentUser({
+            firstName: 'userFirstName',
         });
 
         await flushPromises();
@@ -80,7 +80,7 @@ describe('src/core/service/plugin-update-listener.service.ts', () => {
         const expectedDate = currentTime.toString();
         expect(localStorage.getItem(localStorageKey)).toBe(expectedDate);
 
-        const notifications = Cicada.State.get('notification');
+        const notifications = Shopware.Store.get('notification');
         expect(notifications.notifications.jest.message).toBe(
             'global.notification-center.plugin-updates-listener.updatesAvailableMessage',
         );
@@ -96,8 +96,8 @@ describe('src/core/service/plugin-update-listener.service.ts', () => {
         localStorage.setItem(localStorageKey, lastCheckDate);
 
         addPluginUpdatesListener(null, null);
-        Cicada.State.commit('setCurrentUser', {
-            name: 'userName',
+        Shopware.Store.get('session').setCurrentUser({
+            firstName: 'userFirstName',
         });
 
         await flushPromises();
@@ -111,13 +111,13 @@ describe('src/core/service/plugin-update-listener.service.ts', () => {
         const lastCheckDate = (currentTime - oneDay - 1).toString();
         localStorage.setItem(localStorageKey, lastCheckDate);
 
-        Cicada.State.commit('setCurrentUser', null);
+        Shopware.Store.get('session').setCurrentUser(null);
         await flushPromises();
 
         addPluginUpdatesListener(null, null);
 
         // should not trigger the check because the user was not changed
-        Cicada.State.commit('setCurrentUser', null);
+        Shopware.Store.get('session').setCurrentUser(null);
         await flushPromises();
 
         const expectedDate = (currentTime - oneDay - 1).toString();

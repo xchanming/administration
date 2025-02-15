@@ -3,7 +3,7 @@
  */
 
 import { mount } from '@vue/test-utils';
-import { MtPopover, MtButton, MtIcon, MtSwitch } from '@cicada-ag/meteor-component-library';
+import { MtPopover, MtButton, MtIcon, MtSwitch } from '@shopware-ag/meteor-component-library';
 
 async function createWrapper(props = {}) {
     return mount(await wrapTestComponent('sw-extension-teaser-popover', { sync: true }), {
@@ -30,7 +30,7 @@ describe('src/app/component/extension-api/sw-extension-teaser-popover', () => {
     let store = null;
 
     beforeEach(async () => {
-        store = Cicada.Store.get('teaserPopover');
+        store = Shopware.Store.get('teaserPopover');
         store.identifier = {};
     });
 

@@ -4,13 +4,11 @@
 import template from './sw-import-export-new-profile-wizard-csv-page.html.twig';
 import './sw-import-export-new-profile-wizard-csv-page.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -63,11 +61,7 @@ export default {
                 .then((mapping) => {
                     const transformedMapping = this.transformMapping(mapping);
 
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(this.profile, 'mapping', transformedMapping);
-                    } else {
-                        this.profile.mapping = transformedMapping;
-                    }
+                    this.profile.mapping = transformedMapping;
                     this.$emit('next-allow');
 
                     if (transformedMapping.length === 1) {

@@ -4,16 +4,14 @@
 import './sw-import-export-entity-path-select.scss';
 import template from './sw-import-export-entity-path-select.html.twig';
 
-const { Mixin } = Cicada;
-const { debounce, get, flow } = Cicada.Utils;
+const { Mixin } = Shopware;
+const { debounce, get, flow } = Shopware.Utils;
 
 /**
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 
@@ -230,7 +228,7 @@ export default {
                     return;
                 }
 
-                const definition = Cicada.EntityDefinition.get(entity);
+                const definition = Shopware.EntityDefinition.get(entity);
 
                 if (!definition.properties[part]?.entity) {
                     entity = '';
@@ -283,7 +281,7 @@ export default {
 
             const pathParts = this.actualPathParts;
 
-            let actualDefinition = Cicada.EntityDefinition.get(this.entityType);
+            let actualDefinition = Shopware.EntityDefinition.get(this.entityType);
             let entityFound = false;
 
             pathParts.forEach((propertyName) => {
@@ -335,10 +333,10 @@ export default {
                 }
 
                 const entity = actualDefinition.properties[propertyName].entity;
-                entityFound = Cicada.EntityDefinition.has(entity);
+                entityFound = Shopware.EntityDefinition.has(entity);
 
                 if (entityFound) {
-                    actualDefinition = Cicada.EntityDefinition.get(entity);
+                    actualDefinition = Shopware.EntityDefinition.get(entity);
                 }
             });
 
@@ -377,7 +375,7 @@ export default {
                     properties: this.getCustomFields(this.currentEntity || this.entityType),
                 };
             } else {
-                definition = Cicada.EntityDefinition.get(this.currentEntity);
+                definition = Shopware.EntityDefinition.get(this.currentEntity);
             }
 
             const unprocessedValues = {
@@ -420,17 +418,6 @@ export default {
 
         searchTerm() {
             return this.actualSearch.split('.').pop();
-        },
-
-        /**
-         * @deprecated tag:v6.7.0 - Will be removed
-         */
-        listeners() {
-            if (!this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return {};
-            }
-
-            return this.$listeners;
         },
     },
 
@@ -537,7 +524,7 @@ export default {
                 return { properties, options, definition, path };
             }
 
-            const translationDefinition = Cicada.EntityDefinition.get(translationProperty.entity);
+            const translationDefinition = Shopware.EntityDefinition.get(translationProperty.entity);
             const translationProperties = Object.keys(translationDefinition.properties);
 
             const newOptions = [
@@ -664,7 +651,7 @@ export default {
                 return { definition, options, properties, path };
             }
 
-            const transactionDefinition = Cicada.EntityDefinition.get(transactionsProperty.entity);
+            const transactionDefinition = Shopware.EntityDefinition.get(transactionsProperty.entity);
             const transactionProperties = Object.keys(transactionDefinition.properties);
 
             const newOptions = [
@@ -699,7 +686,7 @@ export default {
                 return { properties, options, definition, path };
             }
 
-            const deliveryDefinition = Cicada.EntityDefinition.get(deliveryProperty.entity);
+            const deliveryDefinition = Shopware.EntityDefinition.get(deliveryProperty.entity);
             const deliveryProperties = Object.keys(deliveryDefinition.properties);
 
             const newOptions = [

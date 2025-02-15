@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Controller;
+namespace Shopware\Administration\Controller;
 
-use Cicada\Administration\Framework\Search\CriteriaCollection;
-use Cicada\Administration\Service\AdminSearcher;
-use Cicada\Core\Framework\Api\Acl\AclCriteriaValidator;
-use Cicada\Core\Framework\Api\Exception\MissingPrivilegeException;
-use Cicada\Core\Framework\Api\Serializer\JsonEntityEncoder;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
-use Cicada\Core\Framework\DataAbstractionLayer\Entity;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\RequestCriteriaBuilder;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Administration\Framework\Search\CriteriaCollection;
+use Shopware\Administration\Service\AdminSearcher;
+use Shopware\Core\Framework\Api\Acl\AclCriteriaValidator;
+use Shopware\Core\Framework\Api\Exception\MissingPrivilegeException;
+use Shopware\Core\Framework\Api\Serializer\JsonEntityEncoder;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\RequestCriteriaBuilder;
+use Shopware\Core\Framework\Log\Package;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

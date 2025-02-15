@@ -8,7 +8,7 @@ import EntityCollection from 'src/core/data/entity-collection.data';
 
 const productSortingRepositoryMock = {
     search() {
-        return Promise.resolve(new EntityCollection('', '', Cicada.Context.api, null, [{}], 1));
+        return Promise.resolve(new EntityCollection('', '', Shopware.Context.api, null, [{}], 1));
     },
     route: '/product_sorting',
     schema: {
@@ -141,7 +141,7 @@ async function createWrapper(activeTab = 'sorting') {
 
 describe('src/module/sw-cms/elements/product-listing/config', () => {
     beforeAll(() => {
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
         });
     });

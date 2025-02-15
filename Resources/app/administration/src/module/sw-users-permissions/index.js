@@ -4,54 +4,54 @@
 import './acl';
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-users-permissions', () => import('./page/sw-users-permissions'));
-Cicada.Component.register(
+Shopware.Component.register('sw-users-permissions', () => import('./page/sw-users-permissions'));
+Shopware.Component.register(
     'sw-users-permissions-user-listing',
     () => import('./components/sw-users-permissions-user-listing'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-users-permissions-role-listing',
     () => import('./components/sw-users-permissions-role-listing'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-users-permissions-configuration',
     () => import('./components/sw-users-permissions-configuration'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-users-permissions-additional-permissions',
     () => import('./components/sw-users-permissions-additional-permissions'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-users-permissions-permissions-grid',
     () => import('./components/sw-users-permissions-permissions-grid'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-users-permissions-detailed-permissions-grid',
     () => import('./components/sw-users-permissions-detailed-permissions-grid'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-users-permissions-detailed-additional-permissions',
     () => import('./components/sw-users-permissions-detailed-additional-permissions'),
 );
-Cicada.Component.register('sw-users-permissions-user-detail', () => import('./page/sw-users-permissions-user-detail'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-users-permissions-user-detail', () => import('./page/sw-users-permissions-user-detail'));
+Shopware.Component.extend(
     'sw-users-permissions-user-create',
     'sw-users-permissions-user-detail',
     () => import('./page/sw-users-permissions-user-create'),
 );
-Cicada.Component.register('sw-users-permissions-role-detail', () => import('./page/sw-users-permissions-role-detail'));
-Cicada.Component.register(
+Shopware.Component.register('sw-users-permissions-role-detail', () => import('./page/sw-users-permissions-role-detail'));
+Shopware.Component.register(
     'sw-users-permissions-role-view-general',
     () => import('./view/sw-users-permissions-role-view-general'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-users-permissions-role-view-detailed',
     () => import('./view/sw-users-permissions-role-view-detailed'),
 );
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Module.register('sw-users-permissions', {
+Shopware.Module.register('sw-users-permissions', {
     type: 'core',
     name: 'users-permissions',
     title: 'sw-users-permissions.general.label',

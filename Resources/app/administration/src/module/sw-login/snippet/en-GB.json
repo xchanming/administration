@@ -2,12 +2,12 @@
   "sw-login": {
     "general": {
       "mainMenuItemIndex": "Login",
-      "description": "Cicada login"
+      "description": "Shopware login"
     },
     "index": {
       "headlineMain": "Hello!",
       "subheadlineMain": "Welcome back.",
-      "headlineForm": "Log in to your Cicada store",
+      "headlineForm": "Log in to your Shopware store",
       "labelUsername": "Username",
       "labelPassword": "Password",
       "labelKeepLoggedIn": "Stay signed in",
@@ -56,10 +56,7 @@
   },
   "global": {
     "sw-admin-menu": {
-      "textCicadaAdmin": "Cicada Administration"
-    },
-    "default": {
-      "error": "Error"
+      "textShopwareAdmin": "Shopware Administration"
     }
   }
 }

@@ -35,7 +35,7 @@ const localeRegistry = new Map<string, Snippets>();
  *
  * @type {String}
  */
-const defaultLocale = 'zh-CN';
+const defaultLocale = 'en-GB';
 
 /**
  * Defines the key of the localStorage item
@@ -99,7 +99,7 @@ function extend(localeName: string, localeMessages: Snippets = {}): boolean | st
     if (!localeRegistry.has(localeName)) {
         warn(
             'LocaleFactory',
-            `The locale "${localeName}" doesn't exists. Please use the register method to register a new locale`,
+            `The locale "${localeName}" doesn't exist. Please use the register method to register a new locale`,
         );
         return false;
     }

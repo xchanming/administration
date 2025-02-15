@@ -8,7 +8,7 @@ async function createWrapper(/* TODO: add or remove options = {} */) {
     }), {
         global: {
             stubs: {
-                // 'sw-missing-component-one': Cicada.Component.build('sw-missing-component-one'),
+                // 'sw-missing-component-one': Shopware.Component.build('sw-missing-component-one'),
             },
             mocks: {
             },

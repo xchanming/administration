@@ -2,21 +2,21 @@
  * @sw-package framework
  */
 
-import { updateSubscriber, register, handleGet } from '@cicada-ag/meteor-admin-sdk/es/data';
+import { updateSubscriber, register, handleGet } from '@shopware-ag/meteor-admin-sdk/es/data';
 import { get, debounce, cloneDeepWith } from 'lodash';
 import type { App } from 'vue';
-import { selectData } from '@cicada-ag/meteor-admin-sdk/es/_internals/data/selectData';
-import MissingPrivilegesError from '@cicada-ag/meteor-admin-sdk/es/_internals/privileges/missing-privileges-error';
+import { selectData } from '@shopware-ag/meteor-admin-sdk/es/_internals/data/selectData';
+import MissingPrivilegesError from '@shopware-ag/meteor-admin-sdk/es/_internals/privileges/missing-privileges-error';
 import EntityCollection from 'src/core/data/entity-collection.data';
 import Criteria from 'src/core/data/criteria.data';
 import Entity from 'src/core/data/entity.data';
 
 interface scopeInterface {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    $set(target: object, key: string, value: any): void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $watch(path: string, callback: (value: any) => void, options: { deep: boolean; immediate: boolean }): () => void;
-    $once(event: string, callback: () => void): void;
+    $: {
+        uid: number;
+    };
 }
 interface publishOptions {
     id: string;
@@ -42,8 +42,6 @@ type ParsedPath = {
     pathToLastSegment: string;
     lastSegment: string;
 };
-
-type vueWithUid = Partial<App<Element>> & { _uid: number };
 
 // This is used by the Vue devtool extension plugin
 let publishedDataSets: dataset[] = [];
@@ -128,7 +126,7 @@ handleGet((data, additionalOptions) => {
     }
 
     if (registeredDataSet.deprecated) {
-        const extension = Object.values(Cicada.State.get('extensions')).find((ext) =>
+        const extension = Object.values(Shopware.Store.get('extensions').extensionsState).find((ext) =>
             ext.baseUrl.startsWith(additionalOptions._event_.origin),
         );
 
@@ -143,9 +141,9 @@ handleGet((data, additionalOptions) => {
         ];
         // @ts-expect-error
         if (process.env !== 'prod') {
-            Cicada.Utils.debug.error(...debugArgs);
+            Shopware.Utils.debug.error(...debugArgs);
         } else {
-            Cicada.Utils.debug.warn(...debugArgs);
+            Shopware.Utils.debug.warn(...debugArgs);
         }
     }
 
@@ -197,17 +195,15 @@ export function publishData({ id, path, scope, deprecated, deprecationMessage }:
     }
     const registeredDataSet = publishedDataSets.find((s) => s.id === id);
 
-    // @ts-expect-error
     // Dataset registered from different scope? Prevent update.
-    if (registeredDataSet && registeredDataSet.scope !== (scope as vueWithUid)._uid) {
+    if (registeredDataSet && registeredDataSet.scope !== scope?.$?.uid) {
         console.error(`The dataset id "${id}" you tried to publish is already registered.`);
 
         return () => {};
     }
 
-    // @ts-expect-error
     // Dataset registered from same scope? Update.
-    if (registeredDataSet && registeredDataSet.scope === (scope as vueWithUid)._uid) {
+    if (registeredDataSet && registeredDataSet.scope === scope?.$?.uid) {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         register({ id: id, data: get(scope, path) }).catch(() => {});
 
@@ -242,13 +238,13 @@ export function publishData({ id, path, scope, deprecated, deprecationMessage }:
 
                 if (
                     // @ts-expect-error
-                    Cicada.Utils.hasOwnProperty(transferObject[property], 'getDraft', this) &&
+                    Shopware.Utils.hasOwnProperty(transferObject[property], 'getDraft', this) &&
                     // @ts-expect-error
                     typeof transferObject[property].getDraft === 'function'
                 ) {
                     setObject(
                         {
-                            [property]: Cicada.Utils.object.cloneDeep(transferObject[property]),
+                            [property]: Shopware.Utils.object.cloneDeep(transferObject[property]),
                         },
                         realPath,
                     );
@@ -264,20 +260,9 @@ export function publishData({ id, path, scope, deprecated, deprecationMessage }:
                     return;
                 }
 
-                // @ts-expect-error - This is added in the vue.adapter.ts
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-                if (scope.isCompatEnabled('INSTANCE_SET')) {
-                    scope.$set(
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                        Cicada.Utils.object.get(scope, parsedPath.pathToLastSegment),
-                        parsedPath.lastSegment,
-                        transferObject[property],
-                    );
-                } else {
-                    // eslint-disable-next-line max-len,@typescript-eslint/no-unsafe-member-access
-                    Cicada.Utils.object.get(scope, parsedPath.pathToLastSegment)[parsedPath.lastSegment] =
-                        transferObject[property];
-                }
+                // eslint-disable-next-line max-len,@typescript-eslint/no-unsafe-member-access
+                Shopware.Utils.object.get(scope, parsedPath.pathToLastSegment)[parsedPath.lastSegment] =
+                    transferObject[property];
             });
         }
 
@@ -311,27 +296,14 @@ export function publishData({ id, path, scope, deprecated, deprecationMessage }:
                 return;
             }
 
-            // @ts-expect-error - This is added in the vue.adapter.ts
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (scope.isCompatEnabled('INSTANCE_SET')) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                scope.$set(Cicada.Utils.object.get(scope, newPath), lastPath, value.data);
-            } else {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                Cicada.Utils.object.get(scope, newPath)[lastPath] = value.data;
-            }
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            Shopware.Utils.object.get(scope, newPath)[lastPath] = value.data;
 
             return;
         }
 
-        // @ts-expect-error - This is added in the vue.adapter.ts
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-        if (scope.isCompatEnabled('INSTANCE_SET')) {
-            scope.$set(scope, path, value.data);
-        } else {
-            // @ts-expect-error
-            scope[path] = value.data;
-        }
+        // @ts-expect-error
+        scope[path] = value.data;
     });
 
     // Watch for Changes on the Reactive Vue property and automatically publish them
@@ -361,8 +333,7 @@ export function publishData({ id, path, scope, deprecated, deprecationMessage }:
             publishedDataSets.push({
                 id,
                 data: clonedValue,
-                // @ts-expect-error
-                scope: (scope as vueWithUid)._uid,
+                scope: scope?.$?.uid,
                 deprecated,
                 deprecationMessage,
             });

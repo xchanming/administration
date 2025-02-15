@@ -7,22 +7,14 @@ import { mount } from '@vue/test-utils';
 const categoryIdMock = 'CATEGORY_MOCK_ID';
 
 async function createWrapper(categoryType) {
-    if (Cicada.State.get('swCategoryDetail')) {
-        Cicada.State.unregisterModule('swCategoryDetail');
-    }
+    Shopware.Store.get('swCategoryDetail').$reset();
+    Shopware.Store.get('swCategoryDetail').category = {
+        id: categoryIdMock,
+    };
+    Shopware.Store.get('swCategoryDetail').isCategoryColumn = true;
 
-    Cicada.State.registerModule('swCategoryDetail', {
-        namespaced: true,
-        state: {
-            category: {
-                id: categoryIdMock,
-                isColumn: true,
-            },
-        },
-    });
-
-    Cicada.Store.unregister('cmsPage');
-    Cicada.Store.register({
+    Shopware.Store.unregister('cmsPage');
+    Shopware.Store.register({
         id: 'cmsPage',
         state: () => ({
             currentPage: undefined,
@@ -84,7 +76,6 @@ describe('src/module/sw-category/component/sw-category-view', () => {
         expect(wrapper.getComponent('.sw-language-info').props('entityDescription')).toStrictEqual({
             entity: {
                 id: 'CATEGORY_MOCK_ID',
-                isColumn: true,
             },
             fallbackSnippet: 'sw-manufacturer.detail.textHeadline',
             field: 'name',

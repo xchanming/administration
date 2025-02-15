@@ -20,8 +20,6 @@ const defaultMailerSettings = {
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['systemConfigApiService'],
 
     mixins: ['notification'],

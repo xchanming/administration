@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Framework\Twig;
+namespace Shopware\Administration\Framework\Twig;
 
-use Cicada\Core\Framework\Log\Package;
 use League\Flysystem\FilesystemOperator;
 use Pentatrion\ViteBundle\Service\FileAccessor;
+use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\Asset\Packages;
 
 #[Package('framework')]

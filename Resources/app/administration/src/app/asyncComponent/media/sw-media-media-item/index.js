@@ -1,8 +1,8 @@
 import template from './sw-media-media-item.html.twig';
 import './sw-media-media-item.scss';
 
-const { Mixin } = Cicada;
-const { dom } = Cicada.Utils;
+const { Mixin } = Shopware;
+const { dom } = Shopware.Utils;
 
 /**
  * @status ready
@@ -28,8 +28,6 @@ const { dom } = Cicada.Utils;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -67,24 +65,15 @@ export default {
         },
 
         mediaNameFilter() {
-            return Cicada.Filter.getByName('mediaName');
+            return Shopware.Filter.getByName('mediaName');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         fileSizeFilter() {
-            return Cicada.Filter.getByName('fileSize');
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
+            return Shopware.Filter.getByName('fileSize');
         },
     },
 
@@ -121,9 +110,13 @@ export default {
             switch (error.code) {
                 case 'CONTENT__MEDIA_FILE_NAME_IS_TOO_LONG':
                     this.createNotificationError({
-                        message: this.$tc('global.sw-media-media-item.notification.fileNameTooLong.message', 0, {
-                            length: error.meta.parameters.maxLength,
-                        }),
+                        message: this.$tc(
+                            'global.sw-media-media-item.notification.fileNameTooLong.message',
+                            {
+                                length: error.meta.parameters.maxLength,
+                            },
+                            0,
+                        ),
                     });
                     break;
                 default:

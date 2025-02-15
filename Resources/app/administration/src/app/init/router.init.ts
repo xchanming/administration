@@ -9,9 +9,9 @@ import coreRoutes from 'src/app/route';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeRouter(container: InitContainer) {
-    const RouterFactory = Cicada.Classes._private.RouterFactory;
-    const factoryContainer = Cicada.Application.getContainer('factory');
-    const loginService = Cicada.Service('loginService');
+    const RouterFactory = Shopware.Classes._private.RouterFactory;
+    const factoryContainer = Shopware.Application.getContainer('factory');
+    const loginService = Shopware.Service('loginService');
     // @ts-expect-error - RouterFactory is also a method
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const factory = RouterFactory(VueRouter3, container.view, factoryContainer.module, loginService);

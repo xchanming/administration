@@ -39,7 +39,7 @@ async function createWrapper() {
                     'sw-icon': true,
                 },
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
             },
         },
@@ -53,11 +53,11 @@ describe('module/sw-cms/elements/buy-box/component', () => {
     });
 
     afterEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('should show skeleton if page type is product page', async () => {
-        Cicada.Store.get('cmsPage').setCurrentPage({
+        Shopware.Store.get('cmsPage').setCurrentPage({
             type: 'product_detail',
         });
 
@@ -88,8 +88,8 @@ describe('module/sw-cms/elements/buy-box/component', () => {
     });
 
     it('should show current demo data if mapping entity is product', async () => {
-        Cicada.Store.get('cmsPage').setCurrentMappingEntity('product');
-        Cicada.Store.get('cmsPage').setCurrentDemoEntity(productMock);
+        Shopware.Store.get('cmsPage').setCurrentMappingEntity('product');
+        Shopware.Store.get('cmsPage').setCurrentDemoEntity(productMock);
         const wrapper = await createWrapper();
 
         wrapper.get('.sw-cms-el-buy-box__content');
@@ -97,8 +97,8 @@ describe('module/sw-cms/elements/buy-box/component', () => {
     });
 
     it('should show dummy data initially if mapping entity is not product', async () => {
-        Cicada.Store.get('cmsPage').setCurrentMappingEntity(null);
-        Cicada.Store.get('cmsPage').setCurrentDemoEntity(productMock);
+        Shopware.Store.get('cmsPage').setCurrentMappingEntity(null);
+        Shopware.Store.get('cmsPage').setCurrentDemoEntity(productMock);
         const wrapper = await createWrapper();
 
         wrapper.get('.sw-cms-el-buy-box__content');
@@ -125,7 +125,7 @@ describe('module/sw-cms/elements/buy-box/component', () => {
     });
 
     it('computed product falls back to dummy data if no product or demo config is available', async () => {
-        Cicada.Store.get('cmsPage').setCurrentDemoEntity(null);
+        Shopware.Store.get('cmsPage').setCurrentDemoEntity(null);
         const wrapper = await createWrapper();
         await wrapper.setProps({
             element: {

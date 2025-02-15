@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 
 import './sw-settings-logging-mail-sent-info.scss';

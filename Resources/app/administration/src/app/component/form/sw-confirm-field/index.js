@@ -1,7 +1,7 @@
 import template from './sw-confirm-field.html.twig';
 import './sw-confirm-field.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -15,8 +15,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-confirm-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'remove-error',

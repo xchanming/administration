@@ -91,7 +91,8 @@ async function createWrapper() {
                                         first: () => {
                                             return {
                                                 user: {
-                                                    name: 'John',
+                                                    firstName: 'John',
+                                                    lastName: 'Doe',
                                                 },
                                                 createdAt: new Date(),
                                             };
@@ -99,7 +100,7 @@ async function createWrapper() {
                                     });
                                 }
 
-                                return Promise.resolve(new EntityCollection('', '', Cicada.Context.api, null, [], 0));
+                                return Promise.resolve(new EntityCollection('', '', Shopware.Context.api, null, [], 0));
                             },
                         };
                     },
@@ -134,12 +135,9 @@ async function createWrapper() {
 
 describe('src/module/sw-order/component/sw-order-details-state-card', () => {
     beforeEach(async () => {
-        if (Cicada.State.get('swOrderDetail')) {
-            Cicada.State.unregisterModule('swOrderDetail');
-        }
-
-        Cicada.State.registerModule('swOrderDetail', {
-            namespaced: true,
+        Shopware.Store.unregister('swOrderDetail');
+        Shopware.Store.register({
+            id: 'swOrderDetail',
             state: {
                 isLoading: false,
                 isSavedSuccessful: false,
@@ -156,7 +154,7 @@ describe('src/module/sw-order/component/sw-order-details-state-card', () => {
 
         const summary = wrapper.get('.sw-order-detail-state-card__state-history-text');
 
-        expect(summary.text()).toBe('John');
+        expect(summary.text()).toBe('John Doe');
         expect(summary.findComponent('.sw-time-ago').props('date')).toEqual(new Date(170363865609544));
     });
 });

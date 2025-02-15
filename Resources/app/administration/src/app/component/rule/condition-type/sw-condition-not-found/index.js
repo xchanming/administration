@@ -1,8 +1,8 @@
 import template from './sw-condition-not-found.html.twig';
 import './sw-condition-not-found.scss';
 
-const { Component } = Cicada;
-const { debounce } = Cicada.Utils;
+const { Component } = Shopware;
+const { debounce } = Shopware.Utils;
 
 /**
  * @public

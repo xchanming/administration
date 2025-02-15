@@ -1,8 +1,8 @@
 import template from './sw-media-folder-item.html.twig';
 import './sw-media-folder-item.scss';
 
-const { Application, Mixin, Context } = Cicada;
-const { warn } = Cicada.Utils.debug;
+const { Application, Mixin, Context } = Shopware;
+const { warn } = Shopware.Utils.debug;
 
 /**
  * @sw-package discovery
@@ -10,8 +10,6 @@ const { warn } = Cicada.Utils.debug;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -86,20 +84,11 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
+            return Shopware.Filter.getByName('date');
         },
     },
 

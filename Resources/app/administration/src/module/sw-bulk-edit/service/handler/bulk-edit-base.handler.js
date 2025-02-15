@@ -1,23 +1,23 @@
-const { object } = Cicada.Utils;
-const { Criteria } = Cicada.Data;
+const { object } = Shopware.Utils;
+const { Criteria } = Shopware.Data;
 const bulkSyncTypes = Object.freeze({
     OVERWRITE: 'overwrite',
     CLEAR: 'clear',
     ADD: 'add',
     REMOVE: 'remove',
 });
-const { types } = Cicada.Utils;
-const { getObjectDiff } = Cicada.Utils.object;
+const { types } = Shopware.Utils;
+const { getObjectDiff } = Shopware.Utils.object;
 
 /**
  * @class
  *
- * @sw-package inventory
+ * @sw-package framework
  */
 class BulkEditBaseHandler {
     constructor() {
-        this.syncService = Cicada.Service('syncService');
-        this.repositoryFactory = Cicada.Service('repositoryFactory');
+        this.syncService = Shopware.Service('syncService');
+        this.repositoryFactory = Shopware.Service('repositoryFactory');
         this.entityName = null;
         this.entityIds = [];
 
@@ -64,7 +64,7 @@ class BulkEditBaseHandler {
     }
      */
     async buildBulkSyncPayload(changes) {
-        const definition = Cicada.EntityDefinition.get(this.entityName);
+        const definition = Shopware.EntityDefinition.get(this.entityName);
 
         if (!definition) {
             throw Error(`No schema found for entity ${this.entityName}`);
@@ -85,7 +85,7 @@ class BulkEditBaseHandler {
                 const field = definition.getField(change.field);
 
                 if (!field) {
-                    Cicada.Utils.debug.warn('Entity factory', `Property ${this.entityName}.${change.field} not found`);
+                    Shopware.Utils.debug.warn('Entity factory', `Property ${this.entityName}.${change.field} not found`);
 
                     return;
                 }
@@ -97,7 +97,7 @@ class BulkEditBaseHandler {
 
                         return;
                     } catch (e) {
-                        Cicada.Utils.debug.warn(e);
+                        Shopware.Utils.debug.warn(e);
 
                         // Ignore the failed change
                         return;
@@ -513,7 +513,7 @@ class BulkEditBaseHandler {
     }
 
     _getEditableProperties(entity) {
-        const definition = Cicada.EntityDefinition.get(entity);
+        const definition = Shopware.EntityDefinition.get(entity);
         const fields = definition.filterProperties((property) => {
             return (
                 definition.isScalarField(property) ||

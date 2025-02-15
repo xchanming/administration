@@ -5,7 +5,7 @@
 import template from './sw-app-app-url-changed-modal.html.twig';
 import './sw-app-app-url-changed-modal.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -13,13 +13,11 @@ const { Component } = Cicada;
 Component.register('sw-app-app-url-changed-modal', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['appUrlChangeService'],
 
     emits: ['modal-close'],
 
-    mixins: [Cicada.Mixin.getByName('notification')],
+    mixins: [Shopware.Mixin.getByName('notification')],
 
     props: {
         /**

@@ -1,7 +1,7 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'settings',
     key: 'language',

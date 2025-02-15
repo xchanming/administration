@@ -6,6 +6,7 @@ import { CookieStorage } from 'cookie-storage';
 import type { CookieOptions } from 'cookie-storage/lib/cookie-options';
 import html2canvas from 'html2canvas';
 import type { Router } from 'vue-router';
+import type { ContextStore } from '../../app/store/context.store';
 
 /** @private */
 export interface AuthObject {
@@ -47,7 +48,7 @@ export interface LoginService {
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function createLoginService(
     httpClient: InitContainer['httpClient'],
-    context: VuexRootState['context']['api'],
+    context: ContextStore['api'],
     bearerAuth: AuthObject | null = null,
 ): LoginService {
     /** @var {String} storageKey token */
@@ -84,9 +85,9 @@ export default function createLoginService(
      */
     function verifyUserToken(password: string): Promise<string> {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        return verifyUserByUsername(Cicada.State.get('session').currentUser.username, password)
+        return verifyUserByUsername(Shopware.Store.get('session').currentUser?.username ?? '', password)
             .then(({ access }) => {
-                if (Cicada.Utils.types.isString(access)) {
+                if (Shopware.Utils.types.isString(access)) {
                     return access;
                 }
                 throw new Error('access Token should be of type String');
@@ -107,7 +108,7 @@ export default function createLoginService(
                 {
                     grant_type: 'password',
                     client_id: 'administration',
-                    scopes: 'write',
+                    scope: 'write',
                     username: user,
                     password: pass,
                 },
@@ -117,7 +118,7 @@ export default function createLoginService(
                 },
             )
             .then((response) => {
-                Cicada.Service('userActivityService').updateLastUserActivity();
+                Shopware.Service('userActivityService').updateLastUserActivity();
 
                 const auth = setBearerAuthentication({
                     access: response.data.access_token,
@@ -147,7 +148,7 @@ export default function createLoginService(
                 {
                     grant_type: 'refresh_token',
                     client_id: 'administration',
-                    scopes: 'write',
+                    scope: 'write',
                     refresh_token: token,
                 },
                 {
@@ -260,7 +261,7 @@ export default function createLoginService(
 
         if (!shouldConsiderUserActivity()) {
             const rememberMeDuration = context.refreshTokenTtl || 7 * 86400 * 1000;
-            cookieOptions.expires = new Date(Date.now() + rememberMeDuration);
+            cookieOptions.expires = new Date(Date.now() + Number(rememberMeDuration));
         }
 
         const authObject = { access, refresh, expiry };
@@ -310,7 +311,7 @@ export default function createLoginService(
      * @private
      */
     function lastActivityOverThreshold(): boolean {
-        const lastActivity = Cicada.Service('userActivityService').getLastUserActivity().getTime();
+        const lastActivity = Shopware.Service('userActivityService').getLastUserActivity().getTime();
 
         // (Current time) - (30 minutes)
         const threshold = Date.now() - 30 * 60 * 1000;
@@ -329,7 +330,7 @@ export default function createLoginService(
 
     function shouldConsiderUserActivity(): boolean {
         const rememberMe = Boolean(localStorage.getItem('rememberMe'));
-        const devEnv = Cicada.Context.app.environment === 'development';
+        const devEnv = Shopware.Context.app.environment === 'development';
 
         return !devEnv && !rememberMe;
     }
@@ -395,9 +396,9 @@ export default function createLoginService(
 
         // @ts-expect-error
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const router = Cicada.Application.view.router as null | Router;
+        const router = Shopware.Application.view.router as null | Router;
         if (router) {
-            const id = Cicada.Utils.createId();
+            const id = Shopware.Utils.createId();
 
             sessionStorage.setItem(
                 `sw-admin-previous-route_${id}`,
@@ -424,7 +425,7 @@ export default function createLoginService(
                         // that contain urls to images from a different origin will throw a security error in Safari.
                     }
 
-                    sessionStorage.setItem('lastKnownUser', Cicada.State.get('session').currentUser.username);
+                    sessionStorage.setItem('lastKnownUser', Shopware.Store.get('session').currentUser?.username ?? '');
 
                     window.processingInactivityLogout = true;
 

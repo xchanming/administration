@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 import 'src/app/component/filter/sw-existence-filter';
 import 'src/app/component/filter/sw-base-filter';
 import 'src/app/component/form/sw-select-field';
@@ -8,7 +9,7 @@ import 'src/app/component/form/field-base/sw-block-field';
 import 'src/app/component/form/field-base/sw-base-field';
 import { mount } from '@vue/test-utils';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 async function createWrapper() {
     return mount(await wrapTestComponent('sw-existence-filter', { sync: true }), {

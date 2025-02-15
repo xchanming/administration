@@ -1,9 +1,9 @@
-const ApiService = Cicada.Classes.ApiService;
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * Gateway for the API end point "integration"
  * @class
- * @sw-package fundamentals@after-sales
+ * @sw-package fundamentals@framework
  * @extends ApiService
  */
 class IntegrationApiService extends ApiService {

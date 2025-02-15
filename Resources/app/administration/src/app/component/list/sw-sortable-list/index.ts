@@ -2,7 +2,7 @@ import type { PropType } from 'vue';
 import template from './sw-sortable-list.html.twig';
 import './sw-sortable-list.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 interface DragConfig {
     delay: number;
@@ -62,8 +62,6 @@ const defaultScrollOnDragConf = {
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-sortable-list', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         items: {

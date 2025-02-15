@@ -1,7 +1,7 @@
 import template from './sw-help-text.html.twig';
 import './sw-help-text.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -15,8 +15,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-help-text', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         text: {

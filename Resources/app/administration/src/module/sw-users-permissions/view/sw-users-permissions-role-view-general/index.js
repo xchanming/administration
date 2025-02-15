@@ -3,13 +3,11 @@
  */
 import template from './sw-users-permissions-role-view-general.html.twig';
 
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',

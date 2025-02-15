@@ -8,8 +8,6 @@ import './sw-category-entry-point-overwrite-modal.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'cancel',
         'confirm',

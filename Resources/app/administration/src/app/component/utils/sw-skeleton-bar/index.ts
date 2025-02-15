@@ -1,6 +1,6 @@
 import template from './sw-skeleton-bar.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -12,32 +12,21 @@ const { Component } = Cicada;
 Component.register('sw-skeleton-bar', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         useMeteorComponent() {
             // Use new meteor component in major
-            if (Cicada.Feature.isActive('v6.7.0.0')) {
+            if (Shopware.Feature.isActive('ENABLE_METEOR_COMPONENTS')) {
                 return true;
             }
 
             // Throw warning when deprecated component is used
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'sw-skeleton-bar',
                 // eslint-disable-next-line max-len
                 'The old usage of "sw-skeleton-bar" is deprecated and will be removed in v6.7.0.0. Please use "mt-skeleton-bar" instead.',
             );
 
             return false;
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 });

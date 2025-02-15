@@ -1,18 +1,17 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-multi-select-filter.html.twig';
 
-const { Component } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 /**
  * @private
  */
 Component.register('sw-multi-select-filter', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -46,7 +45,7 @@ Component.register('sw-multi-select-filter', {
                 return this.filter.value || [];
             }
 
-            const entities = new EntityCollection('', this.filter.schema.entity, Cicada.Context.api);
+            const entities = new EntityCollection('', this.filter.schema.entity, Shopware.Context.api);
 
             if (Array.isArray(this.filter.value)) {
                 this.filter.value.forEach((value) => {

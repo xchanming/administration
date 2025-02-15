@@ -1,77 +1,77 @@
 /**
- * @sw-package inventory
+ * @sw-package framework
  */
 import './init/services.init';
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-bulk-edit-product', () => import('./page/sw-bulk-edit-product'));
-Cicada.Component.register('sw-bulk-edit-order', () => import('./page/sw-bulk-edit-order'));
-Cicada.Component.register('sw-bulk-edit-customer', () => import('./page/sw-bulk-edit-customer'));
-Cicada.Component.register(
+Shopware.Component.register('sw-bulk-edit-product', () => import('./page/sw-bulk-edit-product'));
+Shopware.Component.register('sw-bulk-edit-order', () => import('./page/sw-bulk-edit-order'));
+Shopware.Component.register('sw-bulk-edit-customer', () => import('./page/sw-bulk-edit-customer'));
+Shopware.Component.register(
     'sw-bulk-edit-order-documents',
     () => import('./component/sw-bulk-edit-order/sw-bulk-edit-order-documents'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-bulk-edit-order-documents-generate-invoice',
     () => import('./component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-invoice'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-bulk-edit-order-documents-generate-cancellation-invoice',
     'sw-bulk-edit-order-documents-generate-invoice',
     () => import('./component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-cancellation-invoice'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-bulk-edit-order-documents-generate-delivery-note',
     'sw-bulk-edit-order-documents-generate-invoice',
     () => import('./component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-delivery-note'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-bulk-edit-order-documents-generate-credit-note',
     'sw-bulk-edit-order-documents-generate-invoice',
     () => import('./component/sw-bulk-edit-order/sw-bulk-edit-order-documents-generate-credit-note'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-bulk-edit-order-documents-download-documents',
     () => import('./component/sw-bulk-edit-order/sw-bulk-edit-order-documents-download-documents'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-bulk-edit-custom-fields',
     'sw-custom-field-set-renderer',
     () => import('./component/sw-bulk-edit-custom-fields'),
 );
-Cicada.Component.register('sw-bulk-edit-change-type', () => import('./component/sw-bulk-edit-change-type'));
-Cicada.Component.register(
+Shopware.Component.register('sw-bulk-edit-change-type', () => import('./component/sw-bulk-edit-change-type'));
+Shopware.Component.register(
     'sw-bulk-edit-change-type-field-renderer',
     () => import('./component/sw-bulk-edit-change-type-field-renderer'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-bulk-edit-form-field-renderer',
     'sw-form-field-renderer',
     () => import('./component/sw-bulk-edit-form-field-renderer'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-bulk-edit-product-visibility',
     () => import('./component/product/sw-bulk-edit-product-visibility'),
 );
-Cicada.Component.register('sw-bulk-edit-product-media', () => import('./component/product/sw-bulk-edit-product-media'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-bulk-edit-product-media', () => import('./component/product/sw-bulk-edit-product-media'));
+Shopware.Component.extend(
     'sw-bulk-edit-product-media-form',
     'sw-product-media-form',
     () => import('./component/product/sw-bulk-edit-product-media-form'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-bulk-edit-product-description',
     'sw-text-editor',
     () => import('./component/product/sw-bulk-edit-product-description'),
 );
-Cicada.Component.register('sw-bulk-edit-save-modal', () => import('./component/sw-bulk-edit-save-modal'));
-Cicada.Component.register('sw-bulk-edit-save-modal-confirm', () => import('./component/sw-bulk-edit-save-modal-confirm'));
-Cicada.Component.register('sw-bulk-edit-save-modal-process', () => import('./component/sw-bulk-edit-save-modal-process'));
-Cicada.Component.register('sw-bulk-edit-save-modal-success', () => import('./component/sw-bulk-edit-save-modal-success'));
-Cicada.Component.register('sw-bulk-edit-save-modal-error', () => import('./component/sw-bulk-edit-save-modal-error'));
+Shopware.Component.register('sw-bulk-edit-save-modal', () => import('./component/sw-bulk-edit-save-modal'));
+Shopware.Component.register('sw-bulk-edit-save-modal-confirm', () => import('./component/sw-bulk-edit-save-modal-confirm'));
+Shopware.Component.register('sw-bulk-edit-save-modal-process', () => import('./component/sw-bulk-edit-save-modal-process'));
+Shopware.Component.register('sw-bulk-edit-save-modal-success', () => import('./component/sw-bulk-edit-save-modal-success'));
+Shopware.Component.register('sw-bulk-edit-save-modal-error', () => import('./component/sw-bulk-edit-save-modal-error'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-bulk-edit', {

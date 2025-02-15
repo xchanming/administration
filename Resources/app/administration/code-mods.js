@@ -3,11 +3,11 @@ const process = require('process');
 const commandLineArgs = require('command-line-args');
 const getUsage = require('command-line-usage');
 const fs = require('fs');
-const chalk = require('chalk');
+const colors = require('picocolors');
 const path = require('path');
 
-// Available Cicada versions
-const cicadaVersions = ['6.6', '6.7'];
+// Available Shopware versions
+const shopwareVersions = ['6.6', '6.7'];
 
 // Command options
 const optionDefinitions = [
@@ -24,8 +24,8 @@ const optionDefinitions = [
         type: String,
     },
     {
-        description: 'Cicada root. Default ../../../../../',
-        name: 'cicada-root',
+        description: 'Shopware root. Default ../../../../../',
+        name: 'shopware-root',
         alias: 'r',
         type: String,
     },
@@ -50,8 +50,8 @@ const optionDefinitions = [
     },
     {
         // eslint-disable-next-line max-len
-        description: `Define the Cicada version for loading the correct codemods. Available: ${cicadaVersions.join(', ')}`,
-        name: 'cicada-version',
+        description: `Define the Shopware version for loading the correct codemods. Available: ${shopwareVersions.join(', ')}`,
+        name: 'shopware-version',
         alias: 'v',
         type: String,
     },
@@ -60,17 +60,17 @@ const optionDefinitions = [
 // Command help
 const sections = [
     {
-        header: 'Cicada Admin code mods',
-        content: 'Run cicada code mods in your plugin!',
+        header: 'Shopware Admin code mods',
+        content: 'Run shopware code mods in your plugin!',
     },
     {
         header: 'Synopsis',
         content: [
-            '{bold Run as npm script inside <cicadaRoot>/src/Administration/Resources/app/administration}:',
+            '{bold Run as npm script inside <shopwareRoot>/src/Administration/Resources/app/administration}:',
             '$ npm run code-mods -- [{bold --fix}] {bold --plugin-name} {underline SwagExamplePlugin}',
             '$ npm run code-mods -- {bold --help}',
             '',
-            '{bold Run as composer script inside <cicadaRoot>}:',
+            '{bold Run as composer script inside <shopwareRoot>}:',
             '$ composer run admin:code-mods -- [{bold --fix}] {bold --plugin-name} {underline SwagExamplePlugin}',
             '$ composer run admin:code-mods -- {bold --help}',
         ],
@@ -91,21 +91,21 @@ const sections = [
         process.exit();
     }
 
-    const cicadaVersion = options['cicada-version'];
-    if (cicadaVersion && !cicadaVersions.includes(cicadaVersion)) {
-        console.error(chalk.red('Invalid Cicada version. Available: 6.6, 6.7'));
+    const shopwareVersion = options['shopware-version'];
+    if (shopwareVersion && !shopwareVersions.includes(shopwareVersion)) {
+        console.error(colors.red('Invalid Shopware version. Available: 6.6, 6.7'));
         process.exit(1);
     }
 
     const pluginName = options['plugin-name'];
     if (!pluginName) {
-        console.error(chalk.red('You have to specify your plugin name.'));
+        console.error(colors.red('You have to specify your plugin name.'));
         process.exit(1);
     }
 
     let customPluginsPath = path.resolve('../../../../../custom/plugins');
-    if (options['cicada-root']) {
-        let optionsRoot = options['cicada-root'];
+    if (options['shopware-root']) {
+        let optionsRoot = options['shopware-root'];
 
         // remove trailing slash
         optionsRoot = optionsRoot.replace(/\/$/, '');
@@ -116,7 +116,7 @@ const sections = [
     const src = options.src || ['src/Resources/app/administration/src'];
     if (!src.length) {
         // eslint-disable-next-line no-console
-        console.log(chalk.red('You need to specify at least one src folder or use the default!'));
+        console.log(colors.red('You need to specify at least one src folder or use the default!'));
         process.exit();
     }
 
@@ -130,7 +130,7 @@ const sections = [
     }
 
     if (!pluginFound) {
-        console.error(chalk.red(`Unable to locate "${pluginName}" in "${customPluginsPath}"!`));
+        console.error(colors.red(`Unable to locate "${pluginName}" in "${customPluginsPath}"!`));
         process.exit(1);
     }
 
@@ -142,8 +142,8 @@ const sections = [
     }
 
     if (!pluginIsGitRepository && !options['ignore-git']) {
-        console.error(chalk.red('Plugin is no git repository. Make sure your plugin is in git and has a clean work space!'));
-        console.error(chalk.red('If you feel adventurous you can ignore this with -G... You where warned!'));
+        console.error(colors.red('Plugin is no git repository. Make sure your plugin is in git and has a clean work space!'));
+        console.error(colors.red('If you feel adventurous you can ignore this with -G... You where warned!'));
         process.exit(1);
     }
 
@@ -160,7 +160,7 @@ const sections = [
         }
 
         if (!srcFound) {
-            console.error(chalk.red(`Unable to locate folder "${folder}" in "${pluginFolder}"!`));
+            console.error(colors.red(`Unable to locate folder "${folder}" in "${pluginFolder}"!`));
             process.exit(1);
         }
 
@@ -173,7 +173,7 @@ const sections = [
         copyFolderRecursiveSync(pluginAdminSrcDir, workingDir);
 
         const fix = options.fix;
-        await lintFiles([workingDir], fix, cicadaVersion);
+        await lintFiles([workingDir], fix, shopwareVersion);
 
         // only copy back changes if fix is requested
         if (fix) {
@@ -231,8 +231,8 @@ function createESLintInstance(overrideConfig, fix) {
 }
 
 // Lint the specified files and return the results
-async function lintAndFix(eslint, filePaths, cicadaVersion) {
-    const results = await eslint.lintFiles(filePaths, cicadaVersion);
+async function lintAndFix(eslint, filePaths, shopwareVersion) {
+    const results = await eslint.lintFiles(filePaths, shopwareVersion);
 
     // Apply automatic fixes and output fixed code
     await ESLint.outputFixes(results);
@@ -251,7 +251,7 @@ async function outputLintingResults(results, eslint) {
 }
 
 // Put previous functions all together
-async function lintFiles(filePaths, fix, cicadaVersion) {
+async function lintFiles(filePaths, fix, shopwareVersion) {
     // The ESLint configuration. Alternatively, you could load the configuration
     // from a .eslintrc file or just use the default config.
     const overrideConfig = {
@@ -269,7 +269,7 @@ async function lintFiles(filePaths, fix, cicadaVersion) {
                 files: ['**/*.html.twig'],
                 rules: {
                     ...(() => {
-                        if (isVersionNewerOrSame(cicadaVersion, '6.7')) {
+                        if (isVersionNewerOrSame(shopwareVersion, '6.7')) {
                             return {
                                 'sw-deprecation-rules/no-deprecated-components': ['error'],
                                 'sw-deprecation-rules/no-deprecated-component-usage': ['error'],
@@ -292,7 +292,7 @@ async function lintFiles(filePaths, fix, cicadaVersion) {
             {
                 extends: [
                     'plugin:vue/vue3-recommended',
-                    '@cicada-ag/eslint-config-base',
+                    '@shopware-ag/eslint-config-base',
                 ],
                 files: ['**/*.js'],
                 excludedFiles: ['*.spec.js', '*.spec.vue3.js'],
@@ -312,7 +312,7 @@ async function lintFiles(filePaths, fix, cicadaVersion) {
                 files: ['**/*.ts', '**/*.tsx'],
                 extends: [
                     'plugin:vue/vue3-recommended',
-                    '@cicada-ag/eslint-config-base',
+                    '@shopware-ag/eslint-config-base',
                 ],
                 parser: '@typescript-eslint/parser',
                 parserOptions: {
@@ -332,7 +332,7 @@ async function lintFiles(filePaths, fix, cicadaVersion) {
     };
 
     const eslint = createESLintInstance(overrideConfig, fix);
-    const results = await lintAndFix(eslint, filePaths, cicadaVersion);
+    const results = await lintAndFix(eslint, filePaths, shopwareVersion);
     return outputLintingResults(results, eslint);
 }
 

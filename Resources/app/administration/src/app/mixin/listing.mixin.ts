@@ -3,7 +3,7 @@
  */
 
 /* @private */
-import type Criteria from '@cicada-ag/meteor-admin-sdk/es/data/Criteria';
+import type Criteria from '@shopware-ag/meteor-admin-sdk/es/data/Criteria';
 import { defineComponent } from 'vue';
 import type { LocationQuery, RouteLocationNamedRaw } from 'vue-router';
 
@@ -16,7 +16,7 @@ export {};
 /**
  * @private
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'listing',
     defineComponent({
         inject: [
@@ -104,7 +104,7 @@ export default Cicada.Mixin.register(
             const actualQueryParameters: LocationQuery = this.$route.query;
 
             // When no route information are provided
-            if (Cicada.Utils.types.isEmpty(actualQueryParameters)) {
+            if (Shopware.Utils.types.isEmpty(actualQueryParameters)) {
                 this.resetListing();
             } else {
                 this.parseBooleanQueryParams(actualQueryParameters);
@@ -124,7 +124,7 @@ export default Cicada.Mixin.register(
 
                 const query = this.$route.query;
 
-                if (Cicada.Utils.types.isEmpty(query)) {
+                if (Shopware.Utils.types.isEmpty(query)) {
                     this.resetListing();
                 }
 
@@ -145,7 +145,7 @@ export default Cicada.Mixin.register(
             },
 
             selection() {
-                Cicada.State.commit('cicadaApps/setSelectedIds', Object.keys(this.selection));
+                Shopware.Store.get('shopwareApps').selectedIds = Object.keys(this.selection);
             },
 
             term(newValue) {
@@ -211,7 +211,7 @@ export default Cicada.Mixin.register(
                 };
 
                 // If query is empty then replace route, otherwise push
-                if (Cicada.Utils.types.isEmpty(routeQuery)) {
+                if (Shopware.Utils.types.isEmpty(routeQuery)) {
                     void this.$router.replace(route as unknown as RouteLocationNamedRaw);
                 } else {
                     void this.$router.push(route as unknown as RouteLocationNamedRaw);
@@ -341,7 +341,7 @@ export default Cicada.Mixin.register(
             },
 
             getList() {
-                Cicada.Utils.debug.warn(
+                Shopware.Utils.debug.warn(
                     'Listing Mixin',
                     'When using the listing mixin you have to implement your custom "getList()" method.',
                 );

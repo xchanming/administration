@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 import AdminNotificationWorker from 'src/core/worker/admin-notification-worker';
 
 describe('src/core/worker/admin-notification-worker', () => {
@@ -13,8 +14,8 @@ describe('src/core/worker/admin-notification-worker', () => {
         };
         const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-        Cicada.Service().register('notificationsService', () => notificationService);
-        Cicada.Service().register('userConfigService', () => userConfigService);
+        Shopware.Service().register('notificationsService', () => notificationService);
+        Shopware.Service().register('userConfigService', () => userConfigService);
 
         const adminNotificationWorker = new AdminNotificationWorker();
         adminNotificationWorker.loadNotifications();

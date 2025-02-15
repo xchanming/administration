@@ -5,13 +5,11 @@
 import template from './sw-product-variants-configurator-selection.html.twig';
 import './sw-product-variants-configurator-selection.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -25,14 +23,6 @@ export default {
         product: {
             type: Object,
             required: true,
-        },
-        /**
-         * @deprecated tag:v6.7.0 - The disabled props will be removed.
-         */
-        disabled: {
-            type: Boolean,
-            required: false,
-            default: false,
         },
     },
 

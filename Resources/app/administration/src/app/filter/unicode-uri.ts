@@ -7,7 +7,7 @@ import Punycode from 'punycode';
 /**
  * @private
  */
-Cicada.Filter.register('unicodeUri', (value: string) => {
+Shopware.Filter.register('unicodeUri', (value: string) => {
     if (!value) {
         return '';
     }

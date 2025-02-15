@@ -8,18 +8,15 @@ import CUSTOMER from '../../constant/sw-customer.constant';
  * @sw-package checkout
  */
 
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
-        'feature',
     ],
 
     props: {
@@ -43,7 +40,7 @@ export default {
         return {
             orderCount: 0,
             customerLanguage: null,
-            currencyCode: Cicada.Context.app.systemCurrencyISOCode,
+            currencyCode: Shopware.Context.app.systemCurrencyISOCode,
         };
     },
 
@@ -90,11 +87,11 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
 

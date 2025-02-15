@@ -2,7 +2,7 @@ import type { PropType } from 'vue';
 import template from './sw-cms-el-preview-location-renderer.html.twig';
 import type { ElementDataProp } from '../index';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-cms-el-preview-location-renderer', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         elementData: {
@@ -40,7 +38,7 @@ Component.register('sw-cms-el-preview-location-renderer', {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: this.publishingKey,
                 path: 'element',
                 scope: this,

@@ -50,7 +50,7 @@ describe('src/app/component/structure/sw-search-bar-item', () => {
     let spyRecentlySearchServiceAdd;
 
     async function createWrapper(props) {
-        swSearchBarItemComponent = await Cicada.Component.build('sw-search-bar-item');
+        swSearchBarItemComponent = await Shopware.Component.build('sw-search-bar-item');
         spyOnClickSearchResult = jest.spyOn(swSearchBarItemComponent.methods, 'onClickSearchResult');
         jest.spyOn(swSearchBarItemComponent.methods, 'registerEvents').mockImplementation(() => {});
         jest.spyOn(swSearchBarItemComponent.methods, 'removeEvents').mockImplementation(() => {});
@@ -80,16 +80,16 @@ describe('src/app/component/structure/sw-search-bar-item', () => {
     }
 
     beforeAll(async () => {
-        swSearchBarItemComponent = await Cicada.Component.build('sw-search-bar-item');
+        swSearchBarItemComponent = await Shopware.Component.build('sw-search-bar-item');
         recentlySearchService = new RecentlySearchService();
         spyOnClickSearchResult = jest.spyOn(swSearchBarItemComponent.methods, 'onClickSearchResult');
         spyRecentlySearchServiceAdd = jest.spyOn(recentlySearchService, 'add');
     });
 
     beforeEach(async () => {
-        Cicada.State.get('session').currentUser = {
+        Shopware.Store.get('session').setCurrentUser({
             id: 'userId',
-        };
+        });
     });
 
     it('should be a Vue.js component', async () => {

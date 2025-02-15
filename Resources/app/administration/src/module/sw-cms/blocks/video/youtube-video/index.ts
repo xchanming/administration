@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-youtube-video', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-youtube-video', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-youtube-video', () => import('./component'));
+Shopware.Component.register('sw-cms-block-youtube-video', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'youtube-video',
     label: 'sw-cms.blocks.video.youtubeVideo.label',
     category: 'video',

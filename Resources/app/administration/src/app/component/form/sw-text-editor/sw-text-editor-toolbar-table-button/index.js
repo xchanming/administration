@@ -1,17 +1,16 @@
 import template from './sw-text-editor-toolbar-table-button.html.twig';
 import './sw-text-editor-toolbar-table-button.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
+ * @deprecated tag:v6.8.0 - Will be removed, use mt-text-editor instead.
  *
  * @private
  */
 Component.register('sw-text-editor-toolbar-table-button', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'mounted',

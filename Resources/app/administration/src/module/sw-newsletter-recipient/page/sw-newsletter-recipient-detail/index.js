@@ -5,14 +5,12 @@ import './sw-newsletter-recipient-detail.scss';
  * @sw-package after-sales
  */
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -58,7 +56,7 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-newsletter-recipient-detail__newsletterRecipient',
                 path: 'newsletterRecipient',
                 scope: this,
@@ -79,11 +77,15 @@ export default {
         },
 
         onClickSave() {
-            this.newsletterRecipientStore.save(this.newsletterRecipient, Cicada.Context.api).then(() => {
+            this.newsletterRecipientStore.save(this.newsletterRecipient, Shopware.Context.api).then(() => {
                 this.createNotificationSuccess({
-                    message: this.$tc('sw-newsletter-recipient.detail.messageSaveSuccess', 0, {
-                        key: this.newsletterRecipient.email,
-                    }),
+                    message: this.$tc(
+                        'sw-newsletter-recipient.detail.messageSaveSuccess',
+                        {
+                            key: this.newsletterRecipient.email,
+                        },
+                        0,
+                    ),
                 });
             });
         },

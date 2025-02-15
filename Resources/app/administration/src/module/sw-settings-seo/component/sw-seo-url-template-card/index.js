@@ -5,17 +5,15 @@
 import template from './sw-seo-url-template-card.html.twig';
 import './sw-seo-url-template-card.scss';
 
-const { Mixin } = Cicada;
-const { mapCollectionPropertyErrors } = Cicada.Component.getComponentHelper();
-const EntityCollection = Cicada.Data.EntityCollection;
-const Criteria = Cicada.Data.Criteria;
-const utils = Cicada.Utils;
+const { Mixin } = Shopware;
+const { mapCollectionPropertyErrors } = Shopware.Component.getComponentHelper();
+const EntityCollection = Shopware.Data.EntityCollection;
+const Criteria = Shopware.Data.Criteria;
+const utils = Shopware.Utils;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'seoUrlTemplateService',
@@ -74,14 +72,14 @@ export default {
             this.seoUrlTemplates = new EntityCollection(
                 this.seoUrlTemplateRepository.route,
                 this.seoUrlTemplateRepository.schema.entity,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 new Criteria(1, 25),
             );
 
             this.defaultSeoUrlTemplates = new EntityCollection(
                 this.seoUrlTemplateRepository.route,
                 this.seoUrlTemplateRepository.schema.entity,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 new Criteria(1, 25),
             );
 
@@ -172,11 +170,7 @@ export default {
                 },
             );
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.variableStores, id, storeOptions);
-            } else {
-                this.variableStores.id = storeOptions;
-            }
+            this.variableStores.id = storeOptions;
         },
         getVariableOptions(id) {
             if (this.variableStores.hasOwnProperty(id)) {
@@ -225,7 +219,7 @@ export default {
                     this.seoUrlTemplates = new EntityCollection(
                         this.seoUrlTemplateRepository.route,
                         this.seoUrlTemplateRepository.schema.entity,
-                        Cicada.Context.api,
+                        Shopware.Context.api,
                         new Criteria(1, 25),
                     );
                     this.fetchSeoUrlTemplates(this.salesChannelId);
@@ -282,18 +276,10 @@ export default {
         },
         setErrorMessagesForEntity(entity, value = null) {
             // eslint-disable-next-line no-lonely-if
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.errorMessages, entity.id, value);
-            } else {
-                this.errorMessages[entity.id] = value;
-            }
+            this.errorMessages[entity.id] = value;
         },
         fetchSeoUrlPreview(entity) {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.previewLoadingStates, entity.id, true);
-            } else {
-                this.previewLoadingStates[entity.id] = true;
-            }
+            this.previewLoadingStates[entity.id] = true;
 
             const criteria = this.seoUrlPreviewCriteria[entity.routeName]
                 ? this.seoUrlPreviewCriteria[entity.routeName]
@@ -306,11 +292,7 @@ export default {
                         return elem !== entity.id;
                     });
 
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(this.previews, entity.id, response);
-                    } else {
-                        this.previews[entity.id] = response;
-                    }
+                    this.previews[entity.id] = response;
 
                     if (response === null) {
                         this.noEntityError.push(entity.id);
@@ -322,11 +304,7 @@ export default {
                 .catch((err) => {
                     this.setErrorMessagesForEntity(entity, err.response.data.errors[0].detail);
 
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(this.previews, entity.id, []);
-                    } else {
-                        this.previews[entity.id] = [];
-                    }
+                    this.previews[entity.id] = [];
 
                     this.previewLoadingStates[entity.id] = false;
                 });

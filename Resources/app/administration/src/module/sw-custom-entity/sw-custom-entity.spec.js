@@ -5,7 +5,7 @@ import './index';
 
 describe('src/module/sw-custom-entity', () => {
     it('should register all custom entity components', async () => {
-        const components = Cicada.Component.getComponentRegistry();
+        const components = Shopware.Component.getComponentRegistry();
         const expectedComponents = [
             'sw-generic-custom-entity-detail',
             'sw-generic-custom-entity-list',
@@ -22,7 +22,7 @@ describe('src/module/sw-custom-entity', () => {
     });
 
     it('should register the custom entity module correctly', async () => {
-        const customEntityModule = Cicada.Module.getModuleRegistry().get('sw-custom-entity');
+        const customEntityModule = Shopware.Module.getModuleRegistry().get('sw-custom-entity');
         const expectedRoutes = [
             'sw.custom.entity.index',
             'sw.custom.entity.detail',

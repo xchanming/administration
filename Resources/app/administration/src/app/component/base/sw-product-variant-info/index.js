@@ -1,7 +1,7 @@
 import template from './sw-product-variant-info.html.twig';
 import './sw-product-variant-info.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -15,8 +15,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-product-variant-info', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

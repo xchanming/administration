@@ -31,7 +31,7 @@ async function createWrapper() {
 
 describe('src/module/sw-cms/elements/sidebar-filter/component', () => {
     beforeAll(() => {
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
         });
     });

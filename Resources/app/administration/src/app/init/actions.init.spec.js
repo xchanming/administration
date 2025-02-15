@@ -2,34 +2,25 @@
  * @sw-package framework
  */
 import initActions from 'src/app/init/actions.init';
-import { actionExecute } from '@cicada-ag/meteor-admin-sdk/es/app/action';
+import { actionExecute } from '@shopware-ag/meteor-admin-sdk/es/app/action';
 import ExtensionSdkService from '../../core/service/api/extension-sdk.service';
-import extensionsStore from '../state/extensions.store';
 
 describe('src/app/init/actions.init.ts', () => {
     beforeAll(() => {
-        Cicada.Service().register('extensionSdkService', () => {
+        Shopware.Service().register('extensionSdkService', () => {
             return new ExtensionSdkService();
         });
     });
 
     beforeEach(() => {
-        if (Cicada.State.get('extensions')) {
-            Cicada.State.unregisterModule('extensions');
-        }
-
-        Cicada.State.registerModule('extensions', extensionsStore);
-    });
-
-    afterEach(() => {
-        Cicada.State.unregisterModule('extensions');
+        Shopware.Store.get('extensions').extensionsState = {};
     });
 
     it('should handle actionExecute', async () => {
         const appName = 'jestapp';
         const mock = jest.fn();
 
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').addExtension({
             name: appName,
             baseUrl: '',
             permissions: [],
@@ -39,7 +30,7 @@ describe('src/app/init/actions.init.ts', () => {
             active: true,
         });
 
-        Cicada.Service('extensionSdkService').runAction = mock;
+        Shopware.Service('extensionSdkService').runAction = mock;
 
         initActions();
         await actionExecute({
@@ -62,7 +53,7 @@ describe('src/app/init/actions.init.ts', () => {
     it('should not handle actionExecute if extension is not found', async () => {
         const mock = jest.fn();
 
-        Cicada.Service('extensionSdkService').runAction = mock;
+        Shopware.Service('extensionSdkService').runAction = mock;
 
         initActions();
 

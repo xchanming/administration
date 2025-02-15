@@ -2,7 +2,7 @@ import { inject } from 'vue';
 import template from './sw-switch-field-deprecated.html.twig';
 import './sw-switch-field-deprecated.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -48,7 +48,6 @@ Component.extend('sw-switch-field-deprecated', 'sw-checkbox-field-deprecated', {
                 ].includes(val);
             },
         },
-
         ariaLabel: {
             type: String,
             required: false,

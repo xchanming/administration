@@ -1,7 +1,7 @@
 import template from './sw-button-process.html.twig';
 import './sw-button-process.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -18,8 +18,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-button-process', {
     template,
-
-    compatConfig: Cicada.disableCompat,
 
     inheritAttrs: false,
 
@@ -45,14 +43,6 @@ Component.register('sw-button-process', {
             return {
                 'is--hidden': this.processSuccess,
             };
-        },
-
-        listeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

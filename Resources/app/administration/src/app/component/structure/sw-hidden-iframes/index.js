@@ -1,7 +1,7 @@
-import { MAIN_HIDDEN } from '@cicada-ag/meteor-admin-sdk/es/location';
+import { MAIN_HIDDEN } from '@shopware-ag/meteor-admin-sdk/es/location';
 import template from './sw-hidden-iframes.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -11,11 +11,9 @@ const { Component } = Cicada;
 Component.register('sw-hidden-iframes', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         extensions() {
-            return Cicada.State.getters['extensions/privilegedExtensions'];
+            return Shopware.Store.get('extensions').privilegedExtensions;
         },
 
         MAIN_HIDDEN() {

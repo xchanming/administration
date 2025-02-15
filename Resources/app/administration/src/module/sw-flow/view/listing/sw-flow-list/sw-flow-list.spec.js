@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import flowState from 'src/module/sw-flow/state/flow.state';
+import { createPinia } from 'pinia';
 
 /**
  * @sw-package after-sales
@@ -9,17 +9,17 @@ const mockBusinessEvents = [
     {
         name: 'checkout.customer.before.login',
         mailAware: true,
-        aware: ['Cicada\\Core\\Framework\\Event\\SalesChannelAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\SalesChannelAware'],
     },
     {
         name: 'checkout.customer.changed-payment-method',
         mailAware: false,
-        aware: ['Cicada\\Core\\Framework\\Event\\SalesChannelAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\SalesChannelAware'],
     },
     {
         name: 'checkout.order.placed',
         mailAware: true,
-        aware: ['Cicada\\Core\\Framework\\Event\\OrderAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\OrderAware'],
     },
 ];
 
@@ -33,6 +33,7 @@ const flowData = [
 async function createWrapper(privileges = [], hasSnippetFromApp = false, customFlowData = flowData) {
     return mount(await wrapTestComponent('sw-flow-list', { sync: true }), {
         global: {
+            plugins: [createPinia()],
             stubs: {
                 'sw-page': {
                     template: `
@@ -124,19 +125,10 @@ async function createWrapper(privileges = [], hasSnippetFromApp = false, customF
 }
 
 describe('module/sw-flow/view/listing/sw-flow-list', () => {
-    Cicada.Service().register('businessEventService', () => {
+    Shopware.Service().register('businessEventService', () => {
         return {
             getBusinessEvents: () => Promise.resolve(mockBusinessEvents),
         };
-    });
-
-    beforeAll(() => {
-        Cicada.State.registerModule('swFlowState', {
-            ...flowState,
-            state: {
-                triggerEvents: [],
-            },
-        });
     });
 
     it('should be able to duplicate a flow', async () => {

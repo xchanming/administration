@@ -128,7 +128,6 @@ export default class ImportExportProfileMappingService {
         if (
             property.type === 'association' &&
             property.relation === 'many_to_one' &&
-            property.localField &&
             properties[property.localField].flags.required === true
         ) {
             // association is many_to_one and required

@@ -7,7 +7,7 @@ import { defineComponent } from 'vue';
  *
  * @module app/mixin/validation
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'validation',
     defineComponent({
         inject: {
@@ -48,11 +48,11 @@ export default Cicada.Mixin.register(
                 let validation = this.validation;
                 let valid = true;
 
-                if (Cicada.Utils.types.isBoolean(validation)) {
+                if (Shopware.Utils.types.isBoolean(validation)) {
                     return validation;
                 }
 
-                if (Cicada.Utils.types.isString(validation)) {
+                if (Shopware.Utils.types.isString(validation)) {
                     const validationList = validation.split(',');
 
                     if (validationList.length > 1) {
@@ -64,15 +64,17 @@ export default Cicada.Mixin.register(
                     }
                 }
 
-                if (Cicada.Utils.types.isArray(validation)) {
+                if (Shopware.Utils.types.isArray(validation)) {
                     valid = validation.every((validationRule) => {
-                        if (Cicada.Utils.types.isBoolean(validationRule)) {
+                        if (Shopware.Utils.types.isBoolean(validationRule)) {
                             return validationRule;
                         }
 
-                        // eslint-disable-next-line max-len
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-                        return this.validateRule(value, validationRule.trim());
+                        if (Shopware.Utils.types.isString(validationRule)) {
+                            return this.validateRule(value, validationRule.trim());
+                        }
+
+                        return false;
                     });
                 }
 

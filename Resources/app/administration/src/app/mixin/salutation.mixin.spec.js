@@ -13,7 +13,7 @@ async function createWrapper() {
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('salutation'),
+                Shopware.Mixin.getByName('salutation'),
             ],
             data() {
                 return {
@@ -33,13 +33,13 @@ describe('src/app/mixin/salutation.mixin.ts', () => {
 
     beforeEach(async () => {
         if (originalFilterGetByName) {
-            Object.defineProperty(Cicada.Filter, 'getByName', {
+            Object.defineProperty(Shopware.Filter, 'getByName', {
                 value: jest.fn(() => {
                     return jest.fn(() => 'Salutation filter result');
                 }),
             });
         } else {
-            originalFilterGetByName = Cicada.Filter.getByName;
+            originalFilterGetByName = Shopware.Filter.getByName;
         }
 
         wrapper = await createWrapper();
@@ -55,13 +55,13 @@ describe('src/app/mixin/salutation.mixin.ts', () => {
         const result = wrapper.vm.salutationFilter();
 
         expect(result).toBe('Salutation filter result');
-        expect(Cicada.Filter.getByName).toHaveBeenCalledWith('salutation');
+        expect(Shopware.Filter.getByName).toHaveBeenCalledWith('salutation');
     });
 
     it('should return the correct salutation filter for entity with fallback snippet', () => {
         const result = wrapper.vm.salutation('product', 'myFallbackSnippet');
 
         expect(result).toBe('Salutation filter result');
-        expect(Cicada.Filter.getByName).toHaveBeenCalledWith('salutation');
+        expect(Shopware.Filter.getByName).toHaveBeenCalledWith('salutation');
     });
 });

@@ -2,8 +2,8 @@
  * @sw-package framework
  */
 import WorkerNotificationFactory from 'src/core/factory/worker-notification.factory';
+import { createPinia, setActivePinia } from 'pinia';
 import initializeWorker from './worker.init';
-import contextStore from '../state/context.store';
 
 describe('src/app/init-post/worker.init.ts', () => {
     let loggedIn = false;
@@ -11,7 +11,7 @@ describe('src/app/init-post/worker.init.ts', () => {
     let loginListeners = [];
 
     beforeAll(() => {
-        Cicada.Service().register('loginService', () => {
+        Shopware.Service().register('loginService', () => {
             return {
                 isLoggedIn: () => {
                     return loggedIn;
@@ -32,7 +32,7 @@ describe('src/app/init-post/worker.init.ts', () => {
             };
         });
 
-        Cicada.Service().register('configService', () => {
+        Shopware.Service().register('configService', () => {
             return {
                 getConfig: () => {
                     return Promise.resolve(config);
@@ -47,18 +47,13 @@ describe('src/app/init-post/worker.init.ts', () => {
 
         WorkerNotificationFactory.resetHelper();
 
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
-        }
-
-        Cicada.State.registerModule('context', contextStore);
+        setActivePinia(createPinia());
     });
 
     afterEach(() => {
         loggedIn = false;
         config = {};
         loginListeners = [];
-        Cicada.State.unregisterModule('context');
     });
 
     it('should not initialize if not logged in', () => {
@@ -70,20 +65,20 @@ describe('src/app/init-post/worker.init.ts', () => {
     });
 
     it.each([
-        'Cicada\\Core\\Framework\\DataAbstractionLayer\\Indexing\\MessageQueue\\IndexerMessage',
-        'Cicada\\Elasticsearch\\Framework\\Indexing\\IndexingMessage',
-        'Cicada\\Core\\Content\\Media\\Message\\GenerateThumbnailsMessage',
-        'Cicada\\Core\\Checkout\\Promotion\\DataAbstractionLayer\\PromotionIndexingMessage',
-        'Cicada\\Core\\Content\\ProductStream\\DataAbstractionLayer\\ProductStreamIndexingMessage',
-        'Cicada\\Core\\Content\\Category\\DataAbstractionLayer\\CategoryIndexingMessage',
-        'Cicada\\Core\\Content\\Media\\DataAbstractionLayer\\MediaIndexingMessage',
-        'Cicada\\Core\\System\\SalesChannel\\DataAbstractionLayer\\SalesChannelIndexingMessage',
-        'Cicada\\Core\\Content\\Rule\\DataAbstractionLayer\\RuleIndexingMessage',
-        'Cicada\\Core\\Content\\Product\\DataAbstractionLayer\\ProductIndexingMessage',
-        'Cicada\\Elasticsearch\\Framework\\Indexing\\ElasticsearchIndexingMessage',
-        'Cicada\\Core\\Content\\ImportExport\\Message\\ImportExportMessage',
-        'Cicada\\Core\\Content\\Flow\\Indexing\\FlowIndexingMessage',
-        'Cicada\\Core\\Content\\Newsletter\\DataAbstractionLayer\\NewsletterRecipientIndexingMessage',
+        'Shopware\\Core\\Framework\\DataAbstractionLayer\\Indexing\\MessageQueue\\IndexerMessage',
+        'Shopware\\Elasticsearch\\Framework\\Indexing\\IndexingMessage',
+        'Shopware\\Core\\Content\\Media\\Message\\GenerateThumbnailsMessage',
+        'Shopware\\Core\\Checkout\\Promotion\\DataAbstractionLayer\\PromotionIndexingMessage',
+        'Shopware\\Core\\Content\\ProductStream\\DataAbstractionLayer\\ProductStreamIndexingMessage',
+        'Shopware\\Core\\Content\\Category\\DataAbstractionLayer\\CategoryIndexingMessage',
+        'Shopware\\Core\\Content\\Media\\DataAbstractionLayer\\MediaIndexingMessage',
+        'Shopware\\Core\\System\\SalesChannel\\DataAbstractionLayer\\SalesChannelIndexingMessage',
+        'Shopware\\Core\\Content\\Rule\\DataAbstractionLayer\\RuleIndexingMessage',
+        'Shopware\\Core\\Content\\Product\\DataAbstractionLayer\\ProductIndexingMessage',
+        'Shopware\\Elasticsearch\\Framework\\Indexing\\ElasticsearchIndexingMessage',
+        'Shopware\\Core\\Content\\ImportExport\\Message\\ImportExportMessage',
+        'Shopware\\Core\\Content\\Flow\\Indexing\\FlowIndexingMessage',
+        'Shopware\\Core\\Content\\Newsletter\\DataAbstractionLayer\\NewsletterRecipientIndexingMessage',
     ])('should register thumbnail middleware "%s"', async (name) => {
         loggedIn = true;
 
@@ -142,7 +137,7 @@ describe('src/app/init-post/worker.init.ts', () => {
         helper.go({
             queue: [
                 {
-                    name: 'Cicada\\Core\\Framework\\DataAbstractionLayer\\Indexing\\MessageQueue\\IndexerMessage',
+                    name: 'Shopware\\Core\\Framework\\DataAbstractionLayer\\Indexing\\MessageQueue\\IndexerMessage',
                     size: 1,
                 },
             ],
@@ -161,7 +156,7 @@ describe('src/app/init-post/worker.init.ts', () => {
         helper.go({
             queue: [
                 {
-                    name: 'Cicada\\Core\\Framework\\DataAbstractionLayer\\Indexing\\MessageQueue\\IndexerMessage',
+                    name: 'Shopware\\Core\\Framework\\DataAbstractionLayer\\Indexing\\MessageQueue\\IndexerMessage',
                     size: 0,
                 },
             ],
@@ -192,6 +187,6 @@ describe('src/app/init-post/worker.init.ts', () => {
         await flushPromises();
 
         expect(loginListeners).toHaveLength(0);
-        expect(Cicada.State.get('context').app.config.version).toBe('jest');
+        expect(Shopware.Store.get('context').app.config.version).toBe('jest');
     });
 });

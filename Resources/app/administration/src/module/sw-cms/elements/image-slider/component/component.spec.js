@@ -5,7 +5,7 @@ import { mount } from '@vue/test-utils';
 import { setupCmsEnvironment } from 'src/module/sw-cms/test-utils';
 
 const MOCK_ASSET_PATH = '/ASSET-PATH/';
-Cicada.Context.api.assetsPath = MOCK_ASSET_PATH;
+Shopware.Context.api.assetsPath = MOCK_ASSET_PATH;
 
 const sliderItemsConfigMock = [
     {
@@ -52,7 +52,7 @@ async function createWrapper() {
             global: {
                 sync: false,
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
                 stubs: {
                     'sw-icon': true,

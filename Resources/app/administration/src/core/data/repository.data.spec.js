@@ -4,32 +4,32 @@
 
 import ChangesetGenerator from 'src/core/data/changeset-generator.data';
 import RepositoryData from 'src/core/data/repository.data';
-import IdCollection from 'src/../test/_helper_/id.collection';
+import IdCollection from 'test/_helper_/id.collection';
 import EntityCollection from 'src/core/data/entity-collection.data';
 import Criteria from 'src/core/data/criteria.data';
 
 const clientMock = global.repositoryFactoryMock.clientMock;
 const responses = global.repositoryFactoryMock.responses;
-const repositoryFactory = Cicada.Service('repositoryFactory');
+const repositoryFactory = Shopware.Service('repositoryFactory');
 const DEFAULT_CURRENCY = 'b7d2554b0ce847cd82f3ac9bd1c0dfca';
 
 function mockContext() {
     return {
-        apiPath: 'http://cicada.local/api',
-        apiResourcePath: 'http://cicada.local/api/v2',
-        assetsPath: 'http://cicada.local/bundles/',
+        apiPath: 'http://shopware.local/api',
+        apiResourcePath: 'http://shopware.local/api/v2',
+        assetsPath: 'http://shopware.local/bundles/',
         basePath: '',
-        host: 'cicada.local',
+        host: 'shopware.local',
         inheritance: false,
-        installationPath: 'http://cicada.local',
+        installationPath: 'http://shopware.local',
         languageId: '2fbb5fe2e29a4d70aa5854ce7ce3e20b',
         currencyId: '7924299acc9641bfb8237a06e5aa0fa4',
         liveVersionId: '0fa91ce3e96a4bc2be4bd9ce752c3425',
         pathInfo: '/admin',
         port: 80,
         scheme: 'http',
-        schemeAndHttpHost: 'http://cicada.local',
-        uri: 'http://cicada.local/admin',
+        schemeAndHttpHost: 'http://shopware.local',
+        uri: 'http://shopware.local/admin',
         authToken: {
             access: 'BwP_OL47uNW6k8iQzChh6SxE31XaleO_l4unyLNmFco',
         },
@@ -129,7 +129,7 @@ describe('repository.data.ts', () => {
         const repository = repositoryFactory.create('product', null, {
             useSync: true,
         });
-        const context = Cicada.Context.api;
+        const context = Shopware.Context.api;
         const product = repository.create(context, ids.get('product'));
 
         product.name = 'test';

@@ -1,6 +1,6 @@
 import template from './sw-icon.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -12,8 +12,6 @@ const { Component } = Cicada;
 Component.register('sw-icon', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     props: {
         name: {
             type: String,
@@ -24,27 +22,18 @@ Component.register('sw-icon', {
     computed: {
         useMeteorComponent() {
             // Use new meteor component in major
-            if (Cicada.Feature.isActive('v6.7.0.0')) {
+            if (Shopware.Feature.isActive('ENABLE_METEOR_COMPONENTS')) {
                 return true;
             }
 
             // Throw warning when deprecated component is used
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'sw-icon',
                 // eslint-disable-next-line max-len
                 'The old usage of "sw-icon" is deprecated and will be removed in v6.7.0.0. Please use "mt-icon" instead.',
             );
 
             return false;
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 });

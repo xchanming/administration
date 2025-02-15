@@ -3,18 +3,22 @@
  */
 import type { CurrencyOptions } from 'src/core/service/utils/format.utils';
 
-const { currency } = Cicada.Utils.format;
+const { currency } = Shopware.Utils.format;
 
 /**
  * @private
  */
-Cicada.Filter.register(
+Shopware.Filter.register(
     'currency',
     (value: string | boolean, format: string, decimalPlaces: number, additionalOptions: CurrencyOptions) => {
-        if ((!value || value === true) && (!Cicada.Utils.types.isNumber(value) || Cicada.Utils.types.isEqual(value, NaN))) {
+        if (
+            (!value || value === true) &&
+            (!Shopware.Utils.types.isNumber(value) || Shopware.Utils.types.isEqual(value, NaN))
+        ) {
             return '-';
         }
-        if (Cicada.Utils.types.isEqual(parseInt(value, 10), NaN)) {
+
+        if (Shopware.Utils.types.isEqual(parseInt(value, 10), NaN)) {
             return value;
         }
 

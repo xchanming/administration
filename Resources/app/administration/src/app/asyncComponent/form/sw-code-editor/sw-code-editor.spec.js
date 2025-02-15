@@ -39,9 +39,9 @@ async function createWrapper(options = {}) {
 
 describe('asyncComponents/form/sw-code-editor', () => {
     beforeAll(() => {
-        Cicada.Service().register('userInputSanitizeService', () => userInputSanitizeService);
+        Shopware.Service().register('userInputSanitizeService', () => userInputSanitizeService);
 
-        Cicada.Context.app.config.settings = {
+        Shopware.Context.app.config.settings = {
             enableHtmlSanitizer: true,
         };
     });
@@ -110,7 +110,7 @@ describe('asyncComponents/form/sw-code-editor', () => {
         expect(wrapper.vm.contentWasSanitized).toBe(true);
         expect(wrapper.vm.editor.getValue()).toBe(sanitizedInput);
 
-        Cicada.Context.app.config.settings = {
+        Shopware.Context.app.config.settings = {
             enableHtmlSanitizer: false,
         };
         wrapper = await createWrapper({

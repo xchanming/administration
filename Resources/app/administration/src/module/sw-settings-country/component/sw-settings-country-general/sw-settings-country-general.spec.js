@@ -91,7 +91,7 @@ async function createWrapper(privileges = [], customPropsData = {}) {
 
 describe('module/sw-settings-country/component/sw-settings-country-general', () => {
     beforeAll(() => {
-        Cicada.State.get('session').currentUser = {};
+        Shopware.Store.get('session').setCurrentUser({});
     });
 
     it('should be a Vue.JS component', async () => {

@@ -1,7 +1,7 @@
 import './sw-error.scss';
 import template from './sw-error.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -18,8 +18,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-error', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         errorObject: {

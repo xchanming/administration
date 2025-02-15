@@ -1,19 +1,17 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@framework
  */
 import template from './sw-settings-currency-detail.html.twig';
 import './sw-settings-currency-detail.scss';
 
-const { cloneDeep } = Cicada.Utils.object;
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { cloneDeep } = Shopware.Utils.object;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -207,7 +205,7 @@ export default {
                 ]);
             }
 
-            Cicada.State.commit('context/resetLanguageToDefault');
+            Shopware.Store.get('context').resetLanguageToDefault();
             this.isLoading = true;
             this.currency = this.currencyRepository.create();
             // defaults for rounding

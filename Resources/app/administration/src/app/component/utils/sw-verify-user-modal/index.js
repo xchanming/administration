@@ -4,15 +4,13 @@
 
 import template from './sw-verify-user-modal.html.twig';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-verify-user-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'loginService',
@@ -44,7 +42,7 @@ Component.register('sw-verify-user-modal', {
             return this.loginService
                 .verifyUserToken(this.confirmPassword)
                 .then((verifiedToken) => {
-                    const context = { ...Cicada.Context.api };
+                    const context = { ...Shopware.Context.api };
                     context.authToken.access = verifiedToken;
 
                     const authObject = {

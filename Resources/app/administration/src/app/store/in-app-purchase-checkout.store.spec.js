@@ -7,7 +7,7 @@ describe('src/app/store/in-app-purchase-checkout.store.ts', () => {
     let store = null;
 
     beforeEach(() => {
-        store = Cicada.Store.get('inAppPurchaseCheckout');
+        store = Shopware.Store.get('inAppPurchaseCheckout');
     });
 
     it('should have initial state', () => {
@@ -20,7 +20,7 @@ describe('src/app/store/in-app-purchase-checkout.store.ts', () => {
             featureId: 'TestFeature',
         };
 
-        Cicada.Context.app.config.bundles = {
+        Shopware.Context.app.config.bundles = {
             TestExtension: {
                 identifier: 'TestExtension',
             },
@@ -38,7 +38,7 @@ describe('src/app/store/in-app-purchase-checkout.store.ts', () => {
         };
         const extensionName = 'TestExtension';
 
-        Cicada.Context.app.config.bundles = {};
+        Shopware.Context.app.config.bundles = {};
 
         expect(() => {
             store.request(checkoutRequest, extensionName);

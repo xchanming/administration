@@ -1,18 +1,17 @@
 /**
  * @sw-package framework
  */
+
 import './sw-notification-center-item.scss';
 import template from './sw-notification-center-item.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-notification-center-item', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['center-close'],
 
@@ -49,12 +48,12 @@ Component.register('sw-notification-center-item', {
         },
 
         onDelete() {
-            Cicada.State.commit('notification/removeNotification', this.notification);
+            Shopware.Store.get('notification').removeNotification(this.notification);
         },
 
         handleAction(action) {
-            // Allow external links for example to the cicada account or store
-            if (Cicada.Utils.string.isUrl(action.route)) {
+            // Allow external links for example to the shopware account or store
+            if (Shopware.Utils.string.isUrl(action.route)) {
                 window.open(action.route);
                 return;
             }

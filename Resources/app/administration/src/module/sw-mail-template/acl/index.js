@@ -1,7 +1,8 @@
 /**
  * @sw-package after-sales
  */
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'settings',
     key: 'mail_templates',
@@ -14,7 +15,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'mail_template_media:read',
                 'mail_template_type:read',
                 'mail_template_sales_channel:read',
-                Cicada.Service('privileges').getPrivileges('media.viewer'),
+                Shopware.Service('privileges').getPrivileges('media.viewer'),
             ],
             dependencies: [],
         },
@@ -28,7 +29,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'mail_template_sales_channel:create',
                 'mail_template_sales_channel:delete',
                 'sales_channel:update',
-                Cicada.Service('privileges').getPrivileges('media.creator'),
+                Shopware.Service('privileges').getPrivileges('media.creator'),
             ],
             dependencies: [
                 'mail_templates.viewer',

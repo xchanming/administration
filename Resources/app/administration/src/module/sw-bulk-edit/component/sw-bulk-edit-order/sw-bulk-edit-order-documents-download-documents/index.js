@@ -1,21 +1,19 @@
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
 import template from './sw-bulk-edit-order-documents-download-documents.html.twig';
 import './sw-bulk-edit-order-documents-download-documents.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['repositoryFactory'],
 
     mixins: [
-        Cicada.Mixin.getByName('notification'),
+        Shopware.Mixin.getByName('notification'),
     ],
 
     computed: {
@@ -32,10 +30,10 @@ export default {
 
         documentTypes: {
             get() {
-                return Cicada.State.get('swBulkEdit')?.orderDocuments?.download?.value;
+                return Shopware.Store.get('swBulkEdit')?.orderDocuments?.download?.value;
             },
             set(documentTypes) {
-                Cicada.State.commit('swBulkEdit/setOrderDocumentsValue', {
+                Shopware.Store.get('swBulkEdit').setOrderDocumentsValue({
                     type: 'download',
                     value: documentTypes,
                 });

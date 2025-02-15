@@ -1,6 +1,6 @@
 import template from './sw-confirm-modal.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework

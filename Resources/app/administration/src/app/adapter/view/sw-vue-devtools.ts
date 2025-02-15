@@ -37,12 +37,12 @@ const DATASET_ID_PREFIX = 'sw-extension-api-dataset__';
 /**
  * @private
  */
-export default function setupCicadaDevtools(app: App): void {
+export default function setupShopwareDevtools(app: App): void {
     setupDevtoolsPlugin(
         {
             // Options
             id: 'sw-admin-extension-plugin',
-            label: 'Cicada Admin extensions plugin',
+            label: 'Shopware Admin extensions plugin',
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             app,
         },
@@ -80,7 +80,7 @@ export default function setupCicadaDevtools(app: App): void {
             // Add new inspector for finding the extension positions
             api.addInspector({
                 id: POSITION_INSPECTOR_ID,
-                label: 'Cicada Extension API',
+                label: 'Shopware Extension API',
                 icon: 'picture_in_picture_alt',
                 actions: [
                     {
@@ -134,7 +134,7 @@ export default function setupCicadaDevtools(app: App): void {
                     });
                 });
 
-                const publishedDatasets = Cicada.ExtensionAPI.getPublishedDataSets();
+                const publishedDatasets = Shopware.ExtensionAPI.getPublishedDataSets();
                 if (publishedDatasets.length <= 0) {
                     return;
                 }
@@ -170,7 +170,7 @@ export default function setupCicadaDevtools(app: App): void {
 
                     const datasetId = payload.nodeId.substring(DATASET_ID_PREFIX.length, payload.nodeId.length);
                     const value =
-                        Cicada.ExtensionAPI.getPublishedDataSets().find((set) => set.id === datasetId)?.data ?? 'unknown';
+                        Shopware.ExtensionAPI.getPublishedDataSets().find((set) => set.id === datasetId)?.data ?? 'unknown';
 
                     payload.state.General.push({
                         key: 'id',

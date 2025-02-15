@@ -4,14 +4,12 @@
 import template from './sw-promotion-v2-list.html.twig';
 import './sw-promotion-v2-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -66,7 +64,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
@@ -147,7 +145,7 @@ export default {
                         active: false,
                     },
                 };
-                const clone = await this.promotionRepository.clone(referencePromotion.id, behavior, Cicada.Context.api);
+                const clone = await this.promotionRepository.clone(referencePromotion.id, behavior, Shopware.Context.api);
 
                 this.$nextTick(() => {
                     this.$router.push({

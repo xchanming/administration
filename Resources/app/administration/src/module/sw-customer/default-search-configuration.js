@@ -10,9 +10,13 @@ const defaultSearchConfiguration = {
         _searchable: true,
         _score: searchRankingPoint.HIGH_SEARCH_RANKING,
     },
-    name: {
+    firstName: {
         _searchable: true,
         _score: searchRankingPoint.MIDDLE_SEARCH_RANKING,
+    },
+    lastName: {
+        _searchable: true,
+        _score: searchRankingPoint.HIGH_SEARCH_RANKING,
     },
     company: {
         _searchable: true,
@@ -23,7 +27,11 @@ const defaultSearchConfiguration = {
         _score: searchRankingPoint.MIDDLE_SEARCH_RANKING,
     },
     defaultBillingAddress: {
-        name: {
+        firstName: {
+            _searchable: false,
+            _score: searchRankingPoint.MIDDLE_SEARCH_RANKING,
+        },
+        lastName: {
             _searchable: false,
             _score: searchRankingPoint.MIDDLE_SEARCH_RANKING,
         },
@@ -63,7 +71,11 @@ const defaultSearchConfiguration = {
         },
     },
     defaultShippingAddress: {
-        name: {
+        firstName: {
+            _searchable: false,
+            _score: searchRankingPoint.MIDDLE_SEARCH_RANKING,
+        },
+        lastName: {
             _searchable: false,
             _score: searchRankingPoint.MIDDLE_SEARCH_RANKING,
         },

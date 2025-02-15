@@ -1,21 +1,17 @@
 /**
  * @sw-package framework
- *
- * This is the initial start file for the whole administration. It loads
- * the Cicada Core with the Cicada object. And then starts to execute
- * the application.
  */
-import { configureCompat } from 'vue';
-import 'src/core/cicada';
-import 'src/app/main';
+import './app/assets/scss/all.scss';
 
-// Take all keys out of Cicada.compatConfig but set them to true
-const compatConfig = Object.fromEntries(
-    Object.keys(Cicada.compatConfig).map((key) => [
-        key,
-        true,
-    ]),
-);
+// Import the Shopware instance
+void import('src/core/shopware').then(async ({ ShopwareInstance }) => {
+    // Set the global Shopware instance
+    window.Shopware = ShopwareInstance;
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-configureCompat(compatConfig);
+    // Import the main file
+    await import('src/app/main');
+
+    // Start the main application and fingers crossed
+    // that everything works as expected
+    window.startApplication();
+});

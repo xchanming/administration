@@ -2,7 +2,7 @@
  * @sw-package checkout
  */
 
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'settings',
     key: 'payment',
@@ -10,7 +10,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
         viewer: {
             privileges: [
                 'payment_method:read',
-                Cicada.Service('privileges').getPrivileges('media.viewer'),
+                Shopware.Service('privileges').getPrivileges('media.viewer'),
                 'rule:read',
                 'plugin:read',
                 'system_config:read',
@@ -25,7 +25,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
         editor: {
             privileges: [
                 'payment_method:update',
-                Cicada.Service('privileges').getPrivileges('media.creator'),
+                Shopware.Service('privileges').getPrivileges('media.creator'),
             ],
             dependencies: [
                 'payment.viewer',

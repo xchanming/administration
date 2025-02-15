@@ -2,7 +2,7 @@
  * @sw-package checkout
  */
 
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'settings',
     key: 'shipping',
@@ -16,7 +16,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
                 'currency:read',
                 'delivery_time:read',
                 'media_folder:read',
-                Cicada.Service('privileges').getPrivileges('media.viewer'),
+                Shopware.Service('privileges').getPrivileges('media.viewer'),
                 'tax:read',
                 'custom_field_set:read',
                 'custom_field:read',
@@ -29,7 +29,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
             privileges: [
                 'shipping_method:update',
                 'tag:create',
-                Cicada.Service('privileges').getPrivileges('media.creator'),
+                Shopware.Service('privileges').getPrivileges('media.creator'),
                 'shipping_method_price:create',
                 'shipping_method_price:update',
                 'shipping_method_price:delete',

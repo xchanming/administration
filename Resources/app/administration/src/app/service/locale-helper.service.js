@@ -14,23 +14,23 @@ export default class LocaleHelperService {
 
     _snippetService;
 
-    _Cicada;
+    _Shopware;
 
-    constructor({ Cicada, localeRepository, snippetService, localeFactory }) {
-        this._Cicada = Cicada;
+    constructor({ Shopware, localeRepository, snippetService, localeFactory }) {
+        this._Shopware = Shopware;
         this._snippetService = snippetService;
         this._localeFactory = localeFactory;
         this._localeRepository = localeRepository;
     }
 
     async setLocaleWithId(localeId) {
-        const { code } = await this._localeRepository.get(localeId, this._Cicada.Context.api);
+        const { code } = await this._localeRepository.get(localeId, this._Shopware.Context.api);
 
         await this.setLocaleWithCode(code);
     }
 
     async setLocaleWithCode(localeCode) {
         await this._snippetService.getSnippets(this._localeFactory, localeCode);
-        await this._Cicada.State.dispatch('setAdminLocale', localeCode);
+        await this._Shopware.Store.get('session').setAdminLocale(localeCode);
     }
 }

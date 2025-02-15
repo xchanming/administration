@@ -1,16 +1,14 @@
 /**
- * @sw-package buyers-experience
+ * @sw-package fundamentals@discovery
  */
 import template from './sw-settings-country-state.html.twig';
 import './sw-settings-country-state.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -118,7 +116,7 @@ export default {
             this.countryStateLoading = true;
 
             return this.countryStateRepository
-                .syncDeleted(countryStateIds, Cicada.Context.api)
+                .syncDeleted(countryStateIds, Shopware.Context.api)
                 .then(() => {
                     this.$refs.countryStateGrid.resetSelection();
                     this.refreshCountryStateList();
@@ -129,7 +127,7 @@ export default {
         },
 
         onAddCountryState() {
-            this.currentCountryState = this.countryStateRepository.create(Cicada.Context.api);
+            this.currentCountryState = this.countryStateRepository.create(Shopware.Context.api);
         },
 
         onSaveCountryState(countryState) {
@@ -162,7 +160,7 @@ export default {
 
         onClickCountryState(item) {
             // Create a copy with the same id which will be edited
-            const copy = this.countryStateRepository.create(Cicada.Context.api, item.id);
+            const copy = this.countryStateRepository.create(Shopware.Context.api, item.id);
             copy._isNew = false;
 
             this.currentCountryState = Object.assign(copy, item);

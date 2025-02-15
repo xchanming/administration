@@ -8,8 +8,6 @@ import './sw-settings-snippet-filter-switch.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['update:value'],
 
     props: {

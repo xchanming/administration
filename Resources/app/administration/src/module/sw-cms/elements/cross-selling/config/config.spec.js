@@ -50,7 +50,7 @@ async function createWrapper(customCmsElementConfig) {
                     'sw-icon': true,
                 },
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                     repositoryFactory: {
                         create: () => {
                             return {
@@ -71,7 +71,7 @@ describe('module/sw-cms/elements/cross-selling/config', () => {
     });
 
     beforeEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('should display a message if it is product page layout type', async () => {
@@ -83,7 +83,7 @@ describe('module/sw-cms/elements/cross-selling/config', () => {
     });
 
     it('should display product select if it is product page layout type', async () => {
-        Cicada.Store.get('cmsPage').setCurrentPage({
+        Shopware.Store.get('cmsPage').setCurrentPage({
             type: 'product_detail',
         });
         const wrapper = await createWrapper();

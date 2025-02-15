@@ -3,7 +3,7 @@ import ApiService from '../api.service';
 
 /**
  * @private
- * @sw-package fundamentals@after-sales
+ * @sw-package inventory
  */
 export default class ProductStreamPreviewService extends ApiService {
     constructor(httpClient, loginService) {

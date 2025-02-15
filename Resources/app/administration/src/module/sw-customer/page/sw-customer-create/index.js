@@ -5,16 +5,14 @@ import CUSTOMER from '../../constant/sw-customer.constant';
  * @sw-package checkout
  */
 
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
-const { CicadaError } = Cicada.Classes;
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
+const { ShopwareError } = Shopware.Classes;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -82,11 +80,7 @@ export default {
         },
 
         salutationFilter() {
-            return Cicada.Filter.getByName('salutation');
-        },
-
-        isBusinessAccountType() {
-            return this.customer?.accountType === CUSTOMER.ACCOUNT_TYPE_BUSINESS;
+            return Shopware.Filter.getByName('salutation');
         },
     },
 
@@ -104,9 +98,7 @@ export default {
                 return;
             }
 
-            Cicada.State.dispatch('error/removeApiError', {
-                expression: `customer_address.${this.address.id}.company`,
-            });
+            Shopware.Store.get('error').removeApiError(`customer_address.${this.address.id}.company`);
         },
     },
 
@@ -118,7 +110,7 @@ export default {
         async createdComponent() {
             const defaultSalutationId = await this.getDefaultSalutation();
 
-            Cicada.State.commit('context/resetLanguageToDefault');
+            Shopware.Store.get('context').resetLanguageToDefault();
             this.customer = this.customerRepository.create();
 
             const addressRepository = this.repositoryFactory.create(
@@ -163,9 +155,9 @@ export default {
                     return emailIsValid;
                 })
                 .catch((exception) => {
-                    Cicada.State.dispatch('error/addApiError', {
+                    Shopware.Store.get('error').addApiError({
                         expression: `customer.${this.customer.id}.email`,
-                        error: new CicadaError(exception.response.data.errors[0]),
+                        error: new ShopwareError(exception.response.data.errors[0]),
                     });
                 });
         },
@@ -204,7 +196,7 @@ export default {
             }
 
             const languageId = await this.languageId;
-            const context = { ...Cicada.Context.api, ...{ languageId } };
+            const context = { ...Shopware.Context.api, ...{ languageId } };
 
             return numberRangePromise.then(() => {
                 return this.customerRepository
@@ -235,9 +227,9 @@ export default {
 
         createErrorMessageForCompanyField() {
             this.isLoading = false;
-            Cicada.State.dispatch('error/addApiError', {
+            Shopware.Store.get('error').addApiError({
                 expression: `customer_address.${this.address.id}.company`,
-                error: new Cicada.Classes.CicadaError({
+                error: new Shopware.Classes.ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 }),
             });
@@ -248,7 +240,7 @@ export default {
         },
 
         async loadLanguage(salesChannelId) {
-            const languageId = Cicada.Context.api.languageId;
+            const languageId = Shopware.Context.api.languageId;
 
             if (!salesChannelId) {
                 return languageId;

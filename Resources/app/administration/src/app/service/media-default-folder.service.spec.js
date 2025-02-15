@@ -15,7 +15,7 @@ describe('app/service/media-default-folder.service.js', () => {
     });
 
     it('getDefaultFolderId should use criteria with a correct association and filter', async () => {
-        const factory = Cicada.Service('repositoryFactory');
+        const factory = Shopware.Service('repositoryFactory');
         factory.create = () => {
             return {
                 search: (criteria, context) => {
@@ -35,7 +35,7 @@ describe('app/service/media-default-folder.service.js', () => {
                             ]),
                         }),
                     );
-                    expect(context).toEqual(Cicada.Context.api);
+                    expect(context).toEqual(Shopware.Context.api);
 
                     return Promise.resolve({
                         first: () => {

@@ -1,10 +1,10 @@
 import template from './sw-flow-create-mail-template-modal.html.twig';
 import './sw-flow-create-mail-template-modal.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
-const utils = Cicada.Utils;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
+const utils = Shopware.Utils;
 
 /**
  * @private
@@ -12,8 +12,6 @@ const utils = Cicada.Utils;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'mailService',
@@ -89,11 +87,11 @@ export default {
 
     methods: {
         createdComponent() {
-            if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                Cicada.State.commit('context/resetLanguageToDefault');
+            if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                Shopware.Store.get('context').resetLanguageToDefault();
             }
 
-            this.mailTemplate = this.mailTemplateRepository.create(Cicada.Context.api, utils.createId());
+            this.mailTemplate = this.mailTemplateRepository.create(Shopware.Context.api, utils.createId());
         },
 
         onClose() {
@@ -122,7 +120,7 @@ export default {
 
                     this.createNotificationError({
                         message:
-                            this.$tc('sw-mail-template.detail.messageSaveError', 0, { subject: mailTemplateSubject }) +
+                            this.$tc('sw-mail-template.detail.messageSaveError', { subject: mailTemplateSubject }, 0) +
                             errorMsg,
                     });
                 });
@@ -162,7 +160,7 @@ export default {
 
         getMailTemplate() {
             return this.mailTemplateRepository
-                .get(this.mailTemplate.id, Cicada.Context.api, this.mailTemplateCriteria)
+                .get(this.mailTemplate.id, Shopware.Context.api, this.mailTemplateCriteria)
                 .then((data) => {
                     this.$emit('process-finish', data);
                 })

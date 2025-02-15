@@ -1,9 +1,9 @@
 import template from './sw-media-upload-v2.html.twig';
 import './sw-media-upload-v2.scss';
 
-const { Mixin, Context } = Cicada;
-const { fileReader } = Cicada.Utils;
-const { fileSize } = Cicada.Utils.format;
+const { Mixin, Context } = Shopware;
+const { fileReader } = Shopware.Utils;
+const { fileSize } = Shopware.Utils.format;
 const INPUT_TYPE_FILE_UPLOAD = 'file-upload';
 const INPUT_TYPE_URL_UPLOAD = 'url-upload';
 
@@ -24,8 +24,6 @@ const INPUT_TYPE_URL_UPLOAD = 'url-upload';
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -210,9 +208,6 @@ export default {
         },
 
         hasOpenMediaButtonListener() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return Object.keys(this.$listeners).includes('mediaUploadSidebarOpen');
-            }
             return !!this.onMediaUploadSidebarOpen;
         },
 
@@ -255,7 +250,7 @@ export default {
         },
 
         mediaNameFilter() {
-            return Cicada.Filter.getByName('mediaName');
+            return Shopware.Filter.getByName('mediaName');
         },
     },
 
@@ -531,10 +526,14 @@ export default {
             }
 
             this.createNotificationError({
-                message: this.$tc('global.sw-media-upload-v2.notification.invalidFileSize.message', 0, {
-                    name: file.name || file.fileName,
-                    limit: fileSize(this.maxFileSize),
-                }),
+                message: this.$tc(
+                    'global.sw-media-upload-v2.notification.invalidFileSize.message',
+                    {
+                        name: file.name || file.fileName,
+                        limit: fileSize(this.maxFileSize),
+                    },
+                    0,
+                ),
             });
             return false;
         },
@@ -566,10 +565,14 @@ export default {
             }
 
             this.createNotificationError({
-                message: this.$tc('global.sw-media-upload-v2.notification.invalidFileType.message', 0, {
-                    name: file.name,
-                    supportedTypes: this.extensionAccept || this.fileAccept,
-                }),
+                message: this.$tc(
+                    'global.sw-media-upload-v2.notification.invalidFileType.message',
+                    {
+                        name: file.name,
+                        supportedTypes: this.extensionAccept || this.fileAccept,
+                    },
+                    0,
+                ),
             });
 
             return false;

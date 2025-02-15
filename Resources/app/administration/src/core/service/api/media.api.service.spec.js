@@ -24,7 +24,7 @@ function getMediaApiService(client = null, loginService = null) {
     }
 
     if (loginService === null) {
-        loginService = createLoginService(client, Cicada.Context.api);
+        loginService = createLoginService(client, Shopware.Context.api);
     }
 
     return new MediaApiService(client, loginService);
@@ -64,7 +64,7 @@ describe('storeService', () => {
     it('test getDefaultFolderId without result', async () => {
         const mediaApiService = getMediaApiService();
 
-        const spyRepository = jest.spyOn(Cicada.Service('repositoryFactory'), 'create').mockImplementation(() => {
+        const spyRepository = jest.spyOn(Shopware.Service('repositoryFactory'), 'create').mockImplementation(() => {
             return {
                 search: async () => {
                     return Promise.resolve([]);
@@ -80,7 +80,7 @@ describe('storeService', () => {
     it('test getDefaultFolderId without folder', async () => {
         const mediaApiService = getMediaApiService();
 
-        const spyRepository = jest.spyOn(Cicada.Service('repositoryFactory'), 'create').mockImplementation(() => {
+        const spyRepository = jest.spyOn(Shopware.Service('repositoryFactory'), 'create').mockImplementation(() => {
             return {
                 search: async () => {
                     return Promise.resolve([
@@ -102,7 +102,7 @@ describe('storeService', () => {
 
         let searchCount = 0;
 
-        const spyRepository = jest.spyOn(Cicada.Service('repositoryFactory'), 'create').mockImplementation(() => {
+        const spyRepository = jest.spyOn(Shopware.Service('repositoryFactory'), 'create').mockImplementation(() => {
             return {
                 search: async () => {
                     searchCount += 1;

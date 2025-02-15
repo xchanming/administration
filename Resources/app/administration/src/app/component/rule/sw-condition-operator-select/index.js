@@ -1,7 +1,7 @@
 import template from './sw-condition-operator-select.html.twig';
 import './sw-condition-operator-select.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-condition-operator-select', {
     template: template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         operators: {

@@ -10,8 +10,6 @@ import './sw-promotion-detail-discounts.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'acl',
@@ -26,21 +24,22 @@ export default {
 
     computed: {
         promotion() {
-            return Cicada.State.get('swPromotionDetail').promotion;
+            return Shopware.Store.get('swPromotionDetail').promotion;
         },
 
         isLoading: {
             get() {
-                return Cicada.State.get('swPromotionDetail').isLoading;
+                return Shopware.Store.get('swPromotionDetail').isLoading;
             },
             set(isLoading) {
-                Cicada.State.commit('swPromotionDetail/setIsLoading', isLoading);
+                Shopware.Store.get('swPromotionDetail').isLoading = isLoading;
             },
         },
 
         discounts() {
             return (
-                Cicada.State.get('swPromotionDetail').promotion && Cicada.State.get('swPromotionDetail').promotion.discounts
+                Shopware.Store.get('swPromotionDetail').promotion &&
+                Shopware.Store.get('swPromotionDetail').promotion.discounts
             );
         },
     },

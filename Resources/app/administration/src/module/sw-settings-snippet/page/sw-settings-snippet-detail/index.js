@@ -6,15 +6,13 @@ import template from './sw-settings-snippet-detail.html.twig';
 const {
     Mixin,
     Data: { Criteria },
-} = Cicada;
-const CicadaError = Cicada.Classes.CicadaError;
-const utils = Cicada.Utils;
+} = Shopware;
+const ShopwareError = Shopware.Classes.ShopwareError;
+const utils = Shopware.Utils;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'snippetSetService',
@@ -90,7 +88,7 @@ export default {
 
         invalidKeyError() {
             if (this.isInvalidKey) {
-                return new CicadaError({
+                return new ShopwareError({
                     code: 'DUPLICATED_SNIPPET_KEY',
                     parameters: { key: this.translationKey },
                 });
@@ -100,7 +98,7 @@ export default {
 
         currentAuthor: {
             get() {
-                return this._currentAuthor || `user/${Cicada.State.get('session').currentUser.username}`;
+                return this._currentAuthor || `user/${Shopware.Store.get('session').currentUser.username}`;
             },
         },
     },
@@ -218,7 +216,7 @@ export default {
             if (!this.isSaveable) {
                 this.isLoading = false;
                 this.createNotificationError({
-                    message: this.$tc('sw-settings-snippet.detail.messageSaveError', 0, { key: this.translationKey }),
+                    message: this.$tc('sw-settings-snippet.detail.messageSaveError', { key: this.translationKey }, 0),
                 });
 
                 return;
@@ -265,7 +263,7 @@ export default {
                     }
                     this.createNotificationError({
                         message:
-                            this.$tc('sw-settings-snippet.detail.messageSaveError', 0, { key: this.translationKey }) +
+                            this.$tc('sw-settings-snippet.detail.messageSaveError', { key: this.translationKey }, 0) +
                             errormsg,
                     });
                 });

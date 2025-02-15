@@ -19,7 +19,7 @@ import 'src/app/component/form/sw-checkbox-field';
 import 'src/app/component/base/sw-container';
 import 'src/app/component/base/sw-button';
 
-Cicada.Utils.debounce = function debounce(fn) {
+Shopware.Utils.debounce = function debounce(fn) {
     return function execFunction(...args) {
         fn.apply(this, args);
     };
@@ -318,11 +318,11 @@ describe('app/plugins/shortcut.plugin', () => {
         const onSaveMock = jest.fn();
         let testString = 'foo';
 
-        Cicada.Store.register({
+        Shopware.Store.register({
             id: 'cmsPage',
         });
 
-        Cicada.Component.register('base-component', {
+        Shopware.Component.register('base-component', {
             name: 'base-component',
             template: `
               <div>
@@ -355,26 +355,26 @@ describe('app/plugins/shortcut.plugin', () => {
             document.body.appendChild(element);
         }
 
-        wrapper = mount(await Cicada.Component.build('base-component'), {
+        wrapper = mount(await Shopware.Component.build('base-component'), {
             attachTo: element,
             global: {
                 plugins: [shortcutPlugin],
                 stubs: {
-                    'sw-text-editor': await Cicada.Component.build('sw-text-editor'),
-                    'sw-text-editor-toolbar': await Cicada.Component.build('sw-text-editor-toolbar'),
-                    'sw-text-editor-toolbar-button': await Cicada.Component.build('sw-text-editor-toolbar-button'),
+                    'sw-text-editor': await Shopware.Component.build('sw-text-editor'),
+                    'sw-text-editor-toolbar': await Shopware.Component.build('sw-text-editor-toolbar'),
+                    'sw-text-editor-toolbar-button': await Shopware.Component.build('sw-text-editor-toolbar-button'),
                     'sw-icon': { template: '<div class="sw-icon"></div>' },
-                    'sw-text-field': await Cicada.Component.build('sw-text-field'),
-                    'sw-contextual-field': await Cicada.Component.build('sw-contextual-field'),
-                    'sw-block-field': await Cicada.Component.build('sw-block-field'),
-                    'sw-base-field': await Cicada.Component.build('sw-base-field'),
-                    'sw-checkbox-field': await Cicada.Component.build('sw-checkbox-field'),
-                    'sw-switch-field': await Cicada.Component.build('sw-switch-field'),
+                    'sw-text-field': await Shopware.Component.build('sw-text-field'),
+                    'sw-contextual-field': await Shopware.Component.build('sw-contextual-field'),
+                    'sw-block-field': await Shopware.Component.build('sw-block-field'),
+                    'sw-base-field': await Shopware.Component.build('sw-base-field'),
+                    'sw-checkbox-field': await Shopware.Component.build('sw-checkbox-field'),
+                    'sw-switch-field': await Shopware.Component.build('sw-switch-field'),
                     'sw-field-error': true,
-                    'sw-compact-colorpicker': await Cicada.Component.build('sw-compact-colorpicker'),
-                    'sw-colorpicker': await Cicada.Component.build('sw-colorpicker'),
-                    'sw-container': await Cicada.Component.build('sw-container'),
-                    'sw-button': await Cicada.Component.build('sw-button'),
+                    'sw-compact-colorpicker': await Shopware.Component.build('sw-compact-colorpicker'),
+                    'sw-colorpicker': await Shopware.Component.build('sw-colorpicker'),
+                    'sw-container': await Shopware.Component.build('sw-container'),
+                    'sw-button': await Shopware.Component.build('sw-button'),
                     'sw-text-editor-table-toolbar': true,
                     'sw-code-editor': true,
                     'sw-text-editor-link-menu': true,

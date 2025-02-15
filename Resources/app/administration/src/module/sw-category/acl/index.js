@@ -1,7 +1,8 @@
 /**
  * @sw-package discovery
  */
-Cicada.Service('privileges')
+
+Shopware.Service('privileges')
     .addPrivilegeMappingEntry({
         category: 'permissions',
         parent: 'catalogues',
@@ -11,7 +12,7 @@ Cicada.Service('privileges')
                 privileges: [
                     'category:read',
                     'category_translation:read',
-                    Cicada.Service('privileges').getPrivileges('media.viewer'),
+                    Shopware.Service('privileges').getPrivileges('media.viewer'),
                     'seo_url:read',
                     'tag:read',
                     'sales_channel:read',
@@ -20,7 +21,7 @@ Cicada.Service('privileges')
                     'property_group:read',
                     'product_manufacturer:read',
                     'sales_channel_type:read',
-                    Cicada.Service('privileges').getPrivileges('cms.viewer'),
+                    Shopware.Service('privileges').getPrivileges('cms.viewer'),
                     'custom_field_set:read',
                     'custom_field:read',
                     'custom_field_set_relation:read',
@@ -34,8 +35,8 @@ Cicada.Service('privileges')
                     'category:update',
                     'media:delete',
                     'media_thumbnail:delete',
-                    Cicada.Service('privileges').getPrivileges('media.creator'),
-                    Cicada.Service('privileges').getPrivileges('cms.editor'),
+                    Shopware.Service('privileges').getPrivileges('media.creator'),
+                    Shopware.Service('privileges').getPrivileges('cms.editor'),
                     'product_category:create',
                     'tag:create',
                     'category_tag:create',
@@ -75,11 +76,11 @@ Cicada.Service('privileges')
                     'landing_page_translation:read',
                     'landing_page_tag:read',
                     'landing_page_sales_channel:read',
-                    Cicada.Service('privileges').getPrivileges('media.viewer'),
+                    Shopware.Service('privileges').getPrivileges('media.viewer'),
                     'tag:read',
                     'sales_channel:read',
                     'sales_channel_type:read',
-                    Cicada.Service('privileges').getPrivileges('cms.viewer'),
+                    Shopware.Service('privileges').getPrivileges('cms.viewer'),
                     'custom_field_set:read',
                     'custom_field:read',
                     'custom_field_set_relation:read',
@@ -91,8 +92,8 @@ Cicada.Service('privileges')
                     'landing_page:update',
                     'landing_page_translation:create',
                     'landing_page_translation:update',
-                    Cicada.Service('privileges').getPrivileges('media.creator'),
-                    Cicada.Service('privileges').getPrivileges('cms.editor'),
+                    Shopware.Service('privileges').getPrivileges('media.creator'),
+                    Shopware.Service('privileges').getPrivileges('cms.editor'),
                     'tag:create',
                     'landing_page_tag:create',
                     'landing_page_tag:delete',

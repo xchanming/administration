@@ -1,7 +1,7 @@
 import template from './sw-image-preview-modal.html.twig';
 import './sw-image-preview-modal.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 /**
  * @sw-package framework
  *
@@ -18,8 +18,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-image-preview-modal', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['modal-close'],
 

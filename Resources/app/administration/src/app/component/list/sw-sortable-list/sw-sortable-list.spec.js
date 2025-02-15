@@ -44,7 +44,7 @@ async function createWrapper(userConfig = {}) {
     };
 
     const wrapper = shallowMount(
-        await Cicada.Component.build('sw-sortable-list'),
+        await Shopware.Component.build('sw-sortable-list'),
         deepMergeObject(defaultConfig, userConfig),
     );
 

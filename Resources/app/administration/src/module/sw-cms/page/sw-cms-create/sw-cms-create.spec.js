@@ -6,7 +6,7 @@ import { mount } from '@vue/test-utils';
 import 'src/module/sw-cms/mixin/sw-cms-state.mixin';
 import CmsPageTypeService from '../../../sw-cms/service/cms-page-type.service';
 
-const { EntityCollection } = Cicada.Data;
+const { EntityCollection } = Shopware.Data;
 
 const pageId = 'TEST-PAGE-ID';
 const categoryId = 'TEST-CATEGORY-ID';
@@ -98,8 +98,8 @@ async function createWrapper(routeParams = {}) {
 
 describe('module/sw-cms/page/sw-cms-create', () => {
     beforeEach(() => {
-        Cicada.Store.unregister('cmsPage');
-        Cicada.Store.register({
+        Shopware.Store.unregister('cmsPage');
+        Shopware.Store.register({
             id: 'cmsPage',
             state: () => ({
                 isSystemDefaultLanguage: true,

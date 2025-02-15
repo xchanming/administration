@@ -4,14 +4,12 @@ import template from './sw-settings-tax-rule-type-individual-states.html.twig';
  * @sw-package checkout
  */
 
-const { Context } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 

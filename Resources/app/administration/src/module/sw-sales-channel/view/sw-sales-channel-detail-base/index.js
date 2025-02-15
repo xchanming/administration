@@ -5,19 +5,17 @@
 import template from './sw-sales-channel-detail-base.html.twig';
 import './sw-sales-channel-detail-base.scss';
 
-const { Component, Mixin, Context, Defaults } = Cicada;
-const { Criteria } = Cicada.Data;
-const domUtils = Cicada.Utils.dom;
-const CicadaError = Cicada.Classes.CicadaError;
-const utils = Cicada.Utils;
+const { Component, Mixin, Context, Defaults } = Shopware;
+const { Criteria } = Shopware.Data;
+const domUtils = Shopware.Utils.dom;
+const ShopwareError = Shopware.Classes.ShopwareError;
+const utils = Shopware.Utils;
 
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'salesChannelService',
@@ -354,7 +352,7 @@ export default {
         invalidFileNameError() {
             if (this.invalidFileName && !this.isFileNameChecking) {
                 this.$emit('invalid-file-name');
-                return new CicadaError({
+                return new ShopwareError({
                     code: 'DUPLICATED_PRODUCT_EXPORT_FILE_NAME',
                 });
             }
@@ -368,13 +366,17 @@ export default {
                 name: 'sw.settings.tax.index',
             };
 
-            return this.$tc('sw-sales-channel.detail.helpTextTaxCalculation.label', 0, {
-                link: `<sw-internal-link
+            return this.$tc(
+                'sw-sales-channel.detail.helpTextTaxCalculation.label',
+                {
+                    link: `<sw-internal-link
                            :router-link=${JSON.stringify(link)}
                            :inline="true">
                            ${this.$tc('sw-sales-channel.detail.helpTextTaxCalculation.linkText')}
                       </sw-internal-link>`,
-            });
+                },
+                0,
+            );
         },
 
         taxCalculationTypeOptions() {
@@ -468,7 +470,7 @@ export default {
         },
 
         salesChannelFavoritesService() {
-            return Cicada.Service('salesChannelFavorites');
+            return Shopware.Service('salesChannelFavorites');
         },
 
         currencyCriteria() {
@@ -488,7 +490,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         cliCommand() {
@@ -567,9 +569,13 @@ export default {
 
                 this.salesChannel.active = false;
                 this.createNotificationError({
-                    message: this.$tc('sw-sales-channel.detail.messageActivateWithoutThemeError', 0, {
-                        name: this.salesChannel.name || this.placeholder(this.salesChannel, 'name'),
-                    }),
+                    message: this.$tc(
+                        'sw-sales-channel.detail.messageActivateWithoutThemeError',
+                        {
+                            name: this.salesChannel.name || this.placeholder(this.salesChannel, 'name'),
+                        },
+                        0,
+                    ),
                 });
             });
         },
@@ -589,11 +595,7 @@ export default {
 
         deleteSalesChannel(salesChannelId) {
             this.salesChannelRepository.delete(salesChannelId, Context.api).then(() => {
-                if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                    this.$root.$emit('sales-channel-change');
-                } else {
-                    Cicada.Utils.EventBus.emit('sw-sales-channel-detail-base-sales-channel-change');
-                }
+                Shopware.Utils.EventBus.emit('sw-sales-channel-detail-base-sales-channel-change');
                 this.salesChannelFavoritesService.refresh();
             });
         },
@@ -699,7 +701,7 @@ export default {
         },
 
         async createCategoriesCollection(criteria, collectionName) {
-            this[collectionName] = await this.categoryRepository.search(criteria, Cicada.Context.api);
+            this[collectionName] = await this.categoryRepository.search(criteria, Shopware.Context.api);
         },
 
         onMainSelectionAdd(item) {
@@ -745,7 +747,7 @@ export default {
                 name: collection.first().translated[property].replaceAll('|', '&vert;'),
                 addition:
                     collection.length > 2
-                        ? this.$tc('sw-sales-channel.detail.warningDisabledAddition', 1, { amount: collection.length - 1 })
+                        ? this.$tc('sw-sales-channel.detail.warningDisabledAddition', { amount: collection.length - 1 }, 1)
                         : collection.last().translated[property].replaceAll('|', '&vert;'),
             };
 

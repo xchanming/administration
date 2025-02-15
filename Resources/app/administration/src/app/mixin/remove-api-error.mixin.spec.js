@@ -13,7 +13,7 @@ async function createWrapper(attrs = {}) {
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('remove-api-error'),
+                Shopware.Mixin.getByName('remove-api-error'),
             ],
             data() {
                 return {
@@ -35,11 +35,11 @@ describe('src/app/mixin/remove-api-error.mixin.ts', () => {
 
     beforeEach(async () => {
         if (originalDispatch) {
-            Object.defineProperty(Cicada.State, 'dispatch', {
+            Object.defineProperty(Shopware.State, 'dispatch', {
                 value: originalDispatch,
             });
         } else {
-            originalDispatch = Cicada.State.dispatch;
+            originalDispatch = Shopware.State.dispatch;
         }
 
         wrapper = await createWrapper();
@@ -59,7 +59,7 @@ describe('src/app/mixin/remove-api-error.mixin.ts', () => {
         expect(wrapper.vm).toBeTruthy();
     });
 
-    it('should dispatch removeApiError on value change', async () => {
+    it('should call  removeApiError on value change', async () => {
         await wrapper.unmount();
         wrapper = await createWrapper({
             error: {
@@ -68,10 +68,9 @@ describe('src/app/mixin/remove-api-error.mixin.ts', () => {
         });
         await flushPromises();
 
-        // add mock for dispatch
-        Object.defineProperty(Cicada.State, 'dispatch', {
-            value: jest.fn(),
-        });
+        // add mock for removeApiError
+        const errorStore = Shopware.Store.get('error');
+        jest.spyOn(errorStore, 'removeApiError');
 
         // change value to trigger watcher
         wrapper.vm.value = 'new-value';
@@ -79,8 +78,6 @@ describe('src/app/mixin/remove-api-error.mixin.ts', () => {
         await flushPromises();
 
         // expect dispatch to have been called with removeApiError
-        expect(Cicada.State.dispatch).toHaveBeenCalledWith('error/removeApiError', {
-            expression: 'self.link',
-        });
+        expect(Shopware.Store.get('error').removeApiError).toHaveBeenCalledWith('self.link');
     });
 });

@@ -56,8 +56,8 @@ async function createWrapper(props) {
  */
 describe('src/module/sw-extension/page/sw-extension-app-module-page/index.js', () => {
     beforeEach(() => {
-        Cicada.State.get('session').currentLocale = 'en-GB';
-        Cicada.State.commit('cicadaApps/setApps', testApps);
+        Shopware.Store.get('session').currentLocale = 'en-GB';
+        Shopware.Store.get('shopwareApps').apps = testApps;
     });
 
     it('sets the correct heading and source with a regular module', async () => {
@@ -68,7 +68,7 @@ describe('src/module/sw-extension/page/sw-extension-app-module-page/index.js', (
         await flushPromises();
 
         expect(wrapper.get('.smart-bar__header h2').text()).toBe('test App A english - Standard module');
-        expect(wrapper.get('iframe#app-content').attributes('src')).toBe('https://cicada.apps/module1?timestamp=signed');
+        expect(wrapper.get('iframe#app-content').attributes('src')).toBe('https://shopware.apps/module1?timestamp=signed');
     });
 
     it('sets the correct heading and source with a main module', async () => {
@@ -77,7 +77,7 @@ describe('src/module/sw-extension/page/sw-extension-app-module-page/index.js', (
         });
 
         expect(wrapper.get('.smart-bar__header h2').text()).toBe('test App A english');
-        expect(wrapper.get('iframe#app-content').attributes('src')).toBe('https://cicada.apps/login?timestamp=signed');
+        expect(wrapper.get('iframe#app-content').attributes('src')).toBe('https://shopware.apps/login?timestamp=signed');
     });
 
     it('shows no iframe and default heading if module is not found', async () => {
@@ -118,7 +118,7 @@ describe('src/module/sw-extension/page/sw-extension-app-module-page/index.js', (
         wrapper.get('sw-loader-stub');
 
         const event = new MessageEvent('message', {
-            origin: 'https://cicada.apps',
+            origin: 'https://shopware.apps',
             data: 'sw-app-loaded',
         });
 
@@ -139,7 +139,7 @@ describe('src/module/sw-extension/page/sw-extension-app-module-page/index.js', (
         });
         expect(wrapper.find('.smart-bar__content').exists()).toBeTruthy();
 
-        Cicada.State.commit('extensionSdkModules/addHiddenSmartBar', 'standardModule');
+        Shopware.Store.get('extensionSdkModules').addHiddenSmartBar('standardModule');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.find('.smart-bar__content').exists()).toBeFalsy();

@@ -1,6 +1,6 @@
-import CicadaError from 'src/core/data/CicadaError';
+import ShopwareError from 'src/core/data/ShopwareError';
 
-const { string } = Cicada.Utils;
+const { string } = Shopware.Utils;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 interface ApiError {
@@ -8,7 +8,7 @@ interface ApiError {
     title: string;
     detail: string;
     meta: {
-        parameters: object;
+        parameters: Record<string, string>;
     };
     status: string;
     source?: {
@@ -27,7 +27,7 @@ export default class ErrorResolverSystemConfig {
     private readonly merge;
 
     constructor() {
-        this.merge = Cicada.Utils.object.merge;
+        this.merge = Shopware.Utils.object.merge;
     }
 
     public handleWriteErrors(errors?: ApiError[]) {
@@ -45,14 +45,14 @@ export default class ErrorResolverSystemConfig {
     }
 
     public cleanWriteErrors() {
-        void Cicada.State.dispatch('error/resetApiErrors');
+        void Shopware.Store.get('error').resetApiErrors();
     }
 
     private reduceErrorsByWriteIndex(errors: ApiError[]) {
         const writeErrors: {
-            systemError: CicadaError[];
+            systemError: ShopwareError[];
             apiError: {
-                [key: string]: CicadaError;
+                [key: string]: ShopwareError;
             };
         } = {
             systemError: [],
@@ -61,8 +61,7 @@ export default class ErrorResolverSystemConfig {
 
         errors.forEach((current) => {
             if (!current.source || !current.source.pointer) {
-                const systemError = new CicadaError({
-                    // @ts-expect-error
+                const systemError = new ShopwareError({
                     code: current.code,
                     meta: current.meta,
                     detail: current.detail,
@@ -83,14 +82,14 @@ export default class ErrorResolverSystemConfig {
             const denormalized = {};
             const lastIndex = segments.length - 1;
 
-            segments.reduce((pointer: { [key: string]: Partial<CicadaError> }, segment, index) => {
+            segments.reduce((pointer: { [key: string]: Partial<ShopwareError> }, segment, index) => {
                 // skip translations
                 if (segment === 'translations' || segments[index - 1] === 'translations') {
                     return pointer;
                 }
 
                 if (index === lastIndex) {
-                    pointer[segment] = new CicadaError(current);
+                    pointer[segment] = new ShopwareError(current);
                 } else {
                     pointer[segment] = {};
                 }
@@ -104,15 +103,15 @@ export default class ErrorResolverSystemConfig {
         return writeErrors;
     }
 
-    private addSystemErrors(errors: CicadaError[]) {
+    private addSystemErrors(errors: ShopwareError[]) {
         errors.forEach((error) => {
-            void Cicada.State.dispatch('error/addSystemError', error);
+            void Shopware.Store.get('error').addSystemError({ error });
         });
     }
 
-    private handleErrors(errors: { [key: string]: CicadaError }) {
+    private handleErrors(errors: { [key: string]: ShopwareError }) {
         Object.keys(errors).forEach((key: string) => {
-            void Cicada.State.dispatch('error/addApiError', {
+            void Shopware.Store.get('error').addApiError({
                 expression: this.getErrorPath(key),
                 error: errors[key],
             });

@@ -5,8 +5,7 @@
 import template from './sw-app-wrong-app-url-modal.html.twig';
 import './sw-app-wrong-app-url-modal.scss';
 
-const { mapState } = Cicada.Component.getComponentHelper();
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 const STORAGE_KEY_WAS_WRONG_APP_MODAL_SHOWN = 'sw-app-wrong-app-url-modal-shown';
 
@@ -16,11 +15,9 @@ const STORAGE_KEY_WAS_WRONG_APP_MODAL_SHOWN = 'sw-app-wrong-app-url-modal-shown'
 Component.register('sw-app-wrong-app-url-modal', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['modal-close'],
 
-    mixins: [Cicada.Mixin.getByName('notification')],
+    mixins: [Shopware.Mixin.getByName('notification')],
 
     data() {
         return {
@@ -41,17 +38,20 @@ Component.register('sw-app-wrong-app-url-modal', {
     },
 
     computed: {
-        ...mapState('context', {
-            isAppUrlReachable: (state) => state.app.config.settings.appUrlReachable,
-            hasAppsThatRequireAppUrl: (state) => state.app.config.settings.appsRequireAppUrl,
-        }),
+        isAppUrlReachable() {
+            return Shopware.Store.get('context').app.config.settings.appUrlReachable;
+        },
+
+        hasAppsThatRequireAppUrl() {
+            return Shopware.Store.get('context').app.config.settings.appsRequireAppUrl;
+        },
 
         display() {
             return !this.isAppUrlReachable && this.hasAppsThatRequireAppUrl && !this.wasModalAlreadyShown;
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -80,7 +80,7 @@ Component.register('sw-app-wrong-app-url-modal', {
         },
 
         removeAlertNotification() {
-            Cicada.State.commit('notification/removeNotification', this.notification);
+            Shopware.Store.get('notification').removeNotification(this.notification);
         },
     },
 });

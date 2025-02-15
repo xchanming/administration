@@ -5,16 +5,14 @@
 import template from './sw-shortcut-overview.html.twig';
 import './sw-shortcut-overview.scss';
 
-const { Component } = Cicada;
-const utils = Cicada.Utils;
+const { Component } = Shopware;
+const utils = Shopware.Utils;
 
 /**
  * @private
  */
 Component.register('sw-shortcut-overview', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'shortcut-open',

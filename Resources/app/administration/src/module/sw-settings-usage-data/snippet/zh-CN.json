@@ -1,0 +1,54 @@
+{
+  "sw-settings-usage-data": {
+    "general": {
+      "mainMenuItemGeneral": "数据共享",
+      "textHeadline": "数据共享",
+      "description": "决定是否与我们共享使用数据，以改进 Shopware。"
+    }
+  },
+  "sw-settings-usage-data-general": {
+    "tabHeadline": "通用"
+  },
+  "sw-usage-data-consent-banner": {
+    "headline": "共同塑造电商的未来",
+    "improvingDescription": "我们不断改进为您提供的服务。下一步，我们将利用机器学习（例如模式识别）分析您的数据，以优化和提升我们的产品。您的数据还将用于开发数据驱动的服务，帮助您提升业务成功率。以下是我们收集的数据：",
+    "improvingDescriptionNotAccepted": "我们不断改进为您提供的服务。下一步，我们希望利用机器学习（例如模式识别）分析您的数据，以优化和提升我们的产品。您的数据还将用于开发数据驱动的服务，帮助您提升业务成功率。以下是我们将收集的数据：",
+    "fullDetailsDescription": "您可以在 {link} 查看本协议的所有详细信息。{fullDetailsDescriptionNotAccepted}",
+    "fullDetailsDescriptionNotAccepted": " 您可以随时拒绝数据共享。",
+    "confirmAuthorization": "点击“同意”即表示您有权代表您的公司接受本协议。",
+    "privacyPolicy": "xchanming.com/zh/data-use-details",
+    "privacyPolicyLink": "https://www.xchanming.com/zh/data-use-details/",
+    "collectionInformation": {
+      "orderData": "订单数据",
+      "usageData": "使用数据",
+      "diagnosticData": "诊断数据",
+      "storeData": "店铺数据",
+      "helpText": {
+        "orderDataHelp": "<strong>订单数据</strong> 指在 Shopware 平台上客户下单的详细信息，包括产品、数量、价格、来源、支付方式、配送等。我们分析这些数据，以了解趋势和模式，从而改进功能并开发新的服务，以提升业务成功率。我们不会收集可用于识别个人客户的个人数据。",
+        "usageDataHelp": "<strong>使用数据</strong> 指管理员用户和在线商店访客如何与我们的平台交互的信息，包括对 Shopware 管理模块的访问、浏览页面、停留时间、点击路径及用户操作等。通过分析使用数据，我们可以识别平台的高频访问或低访问区域，从而优化布局、设计和功能。我们不会收集可用于识别管理员或在线商店访客的个人数据。",
+        "diagnosticDataHelp": "<strong>诊断数据</strong> 指与系统状态、错误信息和平台性能相关的信息，包括系统日志、错误消息、服务器响应时间及其他技术指标。分析这些数据有助于我们快速识别和解决常见问题或安全漏洞，以维护平台的稳定性和安全性。",
+        "storeDataHelp": "<strong>店铺数据</strong> 指与您的在线商店相关的所有信息，例如产品、优惠、价格、图片、描述等，以及店铺的元数据，如主题和插件。我们不会收集可用于识别管理员用户或访客的个人数据。通过汇总店铺数据，我们可以利用机器学习提供市场趋势分析，帮助您调整产品策略和营销活动。"
+      }
+    },
+    "checkListDataSharing": {
+      "title": "我们承诺：",
+      "gdprCompliant": "我们符合 GDPR 规定",
+      "personalData": "我们不会收集个人数据",
+      "securelyProcessed": "您的数据将被安全处理和存储",
+      "thirdParty": "我们不会将您的数据提供给第三方用于其自身目的",
+      "helpText": {
+        "shareDataHelpText": "<strong>“共享”</strong> 指的是向接收方披露数据以供其自身使用；我们可能会将数据提供给我们的服务提供商。"
+      }
+    },
+    "acceptDataCollection": "同意",
+    "declineDataCollection": "暂不",
+    "togglePath": "设置",
+    "rejectedMessage": "您可以随时同意此协议，允许数据共享，以持续改进我们的服务并从中受益，路径：{link}。",
+    "thankYouMessage": "{thanksForParticipation} 您可以随时撤销协议，停止共享数据，并停止参与我们的持续改进计划，路径：{link}。",
+    "thanksForParticipation": "感谢您的参与！",
+    "settings": {
+      "deactivateDataCollection": "停用数据共享",
+      "sharingInformation": "您正在与我们共享数据"
+    }
+  }
+}

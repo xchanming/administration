@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import EntityCollection from 'src/core/data/entity-collection.data';
+import { createPinia, setActivePinia } from 'pinia';
 
 /**
  * @sw-package checkout
@@ -13,7 +14,8 @@ const orderMock = {
     orderNumber: 10000,
     orderCustomer: {
         customerId: 'orderID',
-        name: 'John',
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'john@doe.dev',
     },
     currency: {
@@ -129,7 +131,7 @@ async function createWrapper() {
                 repositoryFactory: {
                     create() {
                         return {
-                            search: () => Promise.resolve(new EntityCollection('', '', Cicada.Context.api, null)),
+                            search: () => Promise.resolve(new EntityCollection('', '', Shopware.Context.api, null)),
                             delete: deleteFn,
                             assign: assignFn,
                         };
@@ -152,17 +154,7 @@ describe('src/module/sw-order/component/sw-order-general-info', () => {
     let wrapper;
 
     beforeAll(() => {
-        Cicada.State.registerModule('swOrderDetail', {
-            namespaced: true,
-            state: {
-                isLoading: false,
-                isSavedSuccessful: false,
-                versionContext: {},
-            },
-            mutations: {
-                setLoading() {},
-            },
-        });
+        setActivePinia(createPinia());
     });
 
     beforeEach(async () => {
@@ -184,7 +176,7 @@ describe('src/module/sw-order/component/sw-order-general-info', () => {
         expect(summary.exists()).toBeTruthy();
         expect(link.exists()).toBeTruthy();
         expect(summary.text()).toContain('10000');
-        expect(summary.text()).toContain('John');
+        expect(summary.text()).toContain('John Doe');
         expect(summary.text()).toContain('john@doe.dev');
     });
 

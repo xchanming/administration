@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function createLocaleToLanguageService() {
@@ -15,8 +15,8 @@ export default function createLocaleToLanguageService() {
      * @return {Promise} languageIdPromise
      */
     function localeToLanguage(locale) {
-        const apiContext = Cicada.Context.api;
-        const repoFactory = Cicada.Service('repositoryFactory');
+        const apiContext = Shopware.Context.api;
+        const repoFactory = Shopware.Service('repositoryFactory');
         const localeRepo = repoFactory.create('locale', '/locale');
         const localeCriteria = new Criteria(1, 25);
 
@@ -29,7 +29,7 @@ export default function createLocaleToLanguageService() {
             })
             .catch(() => {
                 // Fallback: System default language
-                return Cicada.Context.api.systemLanguageId;
+                return Shopware.Context.api.systemLanguageId;
             });
     }
 }

@@ -1,7 +1,7 @@
 import template from './sw-context-button.html.twig';
 import './sw-context-button.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -18,8 +18,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-context-button', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

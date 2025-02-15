@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 describe('src/app/filter/salutation.filter.ts', () => {
-    const salutationFilter = Cicada.Filter.getByName('salutation');
+    const salutationFilter = Shopware.Filter.getByName('salutation');
 
     it('should contain a filter', () => {
         expect(salutationFilter).toBeDefined();
@@ -25,9 +25,10 @@ describe('src/app/filter/salutation.filter.ts', () => {
                     displayName: 'Mr.',
                 },
                 title: 'Dr.',
-                name: 'Max',
+                firstName: 'Max',
+                lastName: 'Mustermann',
             }),
-        ).toBe('Mr. Dr. Max');
+        ).toBe('Mr. Dr. Max Mustermann');
     });
 
     it('should hide salutation when no salutationKey was defined', () => {
@@ -39,9 +40,10 @@ describe('src/app/filter/salutation.filter.ts', () => {
                     displayName: 'Mr.',
                 },
                 title: 'Dr.',
-                name: 'Max',
+                firstName: 'Max',
+                lastName: 'Mustermann',
             }),
-        ).toBe('Dr. Max');
+        ).toBe('Dr. Max Mustermann');
     });
 
     it('should return the fallback snippet when no subvalues are given', () => {
@@ -53,7 +55,8 @@ describe('src/app/filter/salutation.filter.ts', () => {
                     displayName: '',
                 },
                 title: '',
-                name: '',
+                firstName: '',
+                lastName: '',
             }),
         ).toBe('');
     });

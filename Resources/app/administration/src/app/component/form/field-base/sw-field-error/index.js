@@ -5,15 +5,13 @@
 import template from './sw-field-error.html.twig';
 import './sw-field-error.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-field-error', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         error: {

@@ -5,7 +5,7 @@
 import template from './sw-login.html.twig';
 import './sw-login.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
@@ -13,8 +13,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-login', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         hash: {
@@ -41,7 +39,7 @@ Component.register('sw-login', {
     computed: {
         title() {
             const modulName = this.$tc('sw-login.general.mainMenuItemIndex');
-            const adminName = this.$tc('global.sw-admin-menu.textCicadaAdmin');
+            const adminName = this.$tc('global.sw-admin-menu.textShopwareAdmin');
 
             return `${modulName} | ${adminName}`;
         },

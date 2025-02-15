@@ -1,6 +1,7 @@
 /**
  * @sw-package discovery
  */
+
 import './sw-generic-social-media-card.scss';
 
 import type { PropType } from 'vue';
@@ -8,15 +9,13 @@ import type { PropType } from 'vue';
 import type Repository from 'src/core/data/repository.data';
 import template from './sw-generic-social-media-card.html.twig';
 
-const createId = Cicada.Utils.createId;
+const createId = Shopware.Utils.createId;
 
 /**
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

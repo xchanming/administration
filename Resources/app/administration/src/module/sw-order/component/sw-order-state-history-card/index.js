@@ -4,14 +4,12 @@ import template from './sw-order-state-history-card.html.twig';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'orderService',
@@ -19,7 +17,6 @@ export default {
         'orderStateMachineService',
         'repositoryFactory',
         'acl',
-        'feature',
     ],
 
     emits: [

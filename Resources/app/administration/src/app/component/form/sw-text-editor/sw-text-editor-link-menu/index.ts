@@ -3,8 +3,8 @@ import type RepositoryType from 'src/core/data/repository.data';
 import template from './sw-text-editor-link-menu.html.twig';
 import './sw-text-editor-link-menu.scss';
 
-const { Component } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 type ButtonVariant = 'primary' | 'primary-sm' | 'secondary' | 'secondary-sm';
 type LinkCategories = 'link' | 'detail' | 'navigation' | 'media' | 'email' | 'phone';
@@ -23,13 +23,12 @@ interface TextEditorLinkMenuConfig {
 
 /**
  * @sw-package framework
+ * @deprecated tag:v6.8.0 - Will be removed, use mt-text-editor instead.
  *
  * @private
  */
 Component.register('sw-text-editor-link-menu', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -152,7 +151,7 @@ Component.register('sw-text-editor-link-menu', {
             return new EntityCollection(
                 this.categoryRepository.route,
                 this.categoryRepository.entityName,
-                Cicada.Context.api,
+                Shopware.Context.api,
             );
         },
 

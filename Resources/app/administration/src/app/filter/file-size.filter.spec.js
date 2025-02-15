@@ -2,12 +2,12 @@
  * @sw-package framework
  */
 describe('src/app/filter/file-size.filter.js', () => {
-    const fileSizeFilter = Cicada.Filter.getByName('fileSize');
+    const fileSizeFilter = Shopware.Filter.getByName('fileSize');
 
-    Cicada.Utils.format.fileSize = jest.fn();
+    Shopware.Utils.format.fileSize = jest.fn();
 
     beforeEach(() => {
-        Cicada.Utils.format.fileSize.mockClear();
+        Shopware.Utils.format.fileSize.mockClear();
     });
 
     it('should contain a filter', () => {
@@ -23,7 +23,7 @@ describe('src/app/filter/file-size.filter.js', () => {
             myLocaleOptions: 'foo',
         });
 
-        expect(Cicada.Utils.format.fileSize).toHaveBeenCalledWith(1856165, {
+        expect(Shopware.Utils.format.fileSize).toHaveBeenCalledWith(1856165, {
             myLocaleOptions: 'foo',
         });
     });

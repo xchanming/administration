@@ -5,8 +5,6 @@
 export default {
     functional: true,
 
-    compatConfig: Cicada.compatConfig,
-
     render(createElement, context) {
         function mapEntity() {
             const entityMapping = {

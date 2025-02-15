@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 import { mount } from '@vue/test-utils';
+import { setActivePinia, createPinia } from 'pinia';
 
 import ExtensionErrorService from 'src/module/sw-extension/service/extension-error.service';
-import CicadaExtensionService from 'src/module/sw-extension/service/cicada-extension.service';
+import ShopwareExtensionService from 'src/module/sw-extension/service/shopware-extension.service';
 import ExtensionStoreActionService from 'src/module/sw-extension/service/extension-store-action.service';
 import 'src/module/sw-extension/mixin/sw-extension-error.mixin';
-import extensionStore from 'src/module/sw-extension/store/extensions.store';
 
-Cicada.Application.addServiceProvider('loginService', () => {
+Shopware.Application.addServiceProvider('loginService', () => {
     return {
         getToken: jest.fn(() => Promise.resolve({ access: true, refresh: true })),
     };
@@ -19,27 +19,27 @@ const httpClient = {
     delete: jest.fn(),
 };
 
-Cicada.Application.getContainer('init').httpClient = httpClient;
+Shopware.Application.getContainer('init').httpClient = httpClient;
 
 const extensionStoreActionService = new ExtensionStoreActionService(
-    Cicada.Application.getContainer('init').httpClient,
-    Cicada.Service('loginService'),
+    Shopware.Application.getContainer('init').httpClient,
+    Shopware.Service('loginService'),
 );
 
-Cicada.Application.addServiceProvider('extensionStoreActionService', () => {
+Shopware.Application.addServiceProvider('extensionStoreActionService', () => {
     return extensionStoreActionService;
 });
 
-Cicada.Application.addServiceProvider('cicadaExtensionService', () => {
-    return new CicadaExtensionService(
-        Cicada.Service('appModulesService'),
-        Cicada.Service('extensionStoreActionService'),
-        Cicada.Service('cicadaDiscountCampaignService'),
+Shopware.Application.addServiceProvider('shopwareExtensionService', () => {
+    return new ShopwareExtensionService(
+        Shopware.Service('appModulesService'),
+        Shopware.Service('extensionStoreActionService'),
+        Shopware.Service('shopwareDiscountCampaignService'),
     );
 });
 
 // Added service manually because `sw-extension-error` is using it
-Cicada.Application.addServiceProvider('extensionErrorService', () => {
+Shopware.Application.addServiceProvider('extensionErrorService', () => {
     return new ExtensionErrorService(
         {},
         {
@@ -63,7 +63,7 @@ async function createWrapper(extension) {
                           ]),
             },
             mixins: [
-                Cicada.Mixin.getByName('sw-extension-error'),
+                Shopware.Mixin.getByName('sw-extension-error'),
             ],
             stubs: {
                 'sw-meteor-card': await wrapTestComponent('sw-meteor-card', { sync: true }),
@@ -115,9 +115,9 @@ async function createWrapper(extension) {
                 'sw-label': true,
             },
             provide: {
-                extensionStoreActionService: Cicada.Service('extensionStoreActionService'),
-                cicadaExtensionService: Cicada.Service('cicadaExtensionService'),
-                extensionErrorService: Cicada.Service('extensionErrorService'),
+                extensionStoreActionService: Shopware.Service('extensionStoreActionService'),
+                shopwareExtensionService: Shopware.Service('shopwareExtensionService'),
+                extensionErrorService: Shopware.Service('extensionErrorService'),
                 cacheApiService: {},
                 shortcutService: {
                     stopEventListener: () => {},
@@ -136,13 +136,13 @@ async function createWrapper(extension) {
  */
 describe('src/module/sw-extension/component/sw-extension-card-bought', () => {
     beforeAll(() => {
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
+        if (Shopware.Store.get('context')) {
+            Shopware.Store.unregister('context');
         }
 
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
+        Shopware.Store.register({
+            id: 'context',
+            state: () => ({
                 app: {
                     config: {
                         settings: {
@@ -156,23 +156,20 @@ describe('src/module/sw-extension/component/sw-extension-card-bought', () => {
                         token: 'testToken',
                     },
                 },
-            },
+            }),
         });
     });
 
     beforeEach(() => {
-        if (Cicada.State.get('cicadaExtensions')) {
-            Cicada.State.unregisterModule('cicadaExtensions');
-        }
-        Cicada.State.registerModule('cicadaExtensions', extensionStore);
+        setActivePinia(createPinia());
 
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
+        if (Shopware.Store.get('context')) {
+            Shopware.Store.unregister('context');
         }
 
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
+        Shopware.Store.register({
+            id: 'context',
+            state: () => ({
                 app: {
                     config: {
                         settings: {
@@ -186,7 +183,7 @@ describe('src/module/sw-extension/component/sw-extension-card-bought', () => {
                         token: 'testToken',
                     },
                 },
-            },
+            }),
         });
     });
 
@@ -469,7 +466,7 @@ describe('src/module/sw-extension/component/sw-extension-card-bought', () => {
                                 code: 'FRAMEWORK__STORE_ERROR',
                                 detail: 'The download of the extension is not allowed, please purchase a corresponding license or contact the customer service',
                                 meta: {
-                                    documentationLink: 'https://docs.xchanming.com/en/cicada-6-en',
+                                    documentationLink: 'https://docs.xchanming.com/en/shopware-6-en',
                                 },
                                 status: '500',
                                 title: 'Download not allowed',
@@ -513,7 +510,7 @@ describe('src/module/sw-extension/component/sw-extension-card-bought', () => {
                 'The download of the extension is not allowed, please purchase a corresponding license or contact the customer service',
             details: null,
             parameters: {
-                documentationLink: 'https://docs.xchanming.com/en/cicada-6-en',
+                documentationLink: 'https://docs.xchanming.com/en/shopware-6-en',
             },
         });
 
@@ -522,7 +519,7 @@ describe('src/module/sw-extension/component/sw-extension-card-bought', () => {
             'The download of the extension is not allowed, please purchase a corresponding license or contact the customer service',
         );
         expect(wrapper.find('.sw-extension-card-bought__installation-failed-modal p > a').text()).toBe(
-            'https://docs.xchanming.com/en/cicada-6-en',
+            'https://docs.xchanming.com/en/shopware-6-en',
         );
     });
 

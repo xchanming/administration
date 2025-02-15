@@ -10,8 +10,6 @@ import './sw-import-export-new-profile-wizard-mapping-page.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
     ],

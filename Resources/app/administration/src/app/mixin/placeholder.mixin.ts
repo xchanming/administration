@@ -10,7 +10,7 @@ import { defineComponent } from 'vue';
 /**
  * @private
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'placeholder',
     defineComponent({
         methods: {
@@ -23,12 +23,12 @@ export default Cicada.Mixin.register(
                     return fallbackSnippet;
                 }
 
-                if (Cicada.Utils.types.isString(entity[field]) && entity[field].length > 0) {
+                if (Shopware.Utils.types.isString(entity[field]) && entity[field].length > 0) {
                     return entity[field];
                 }
 
                 // Return the field from parent translation if set
-                const parentLanguageId = Cicada.Context.api.language ? Cicada.Context.api.language.parentId : null;
+                const parentLanguageId = Shopware.Context.api.language ? Shopware.Context.api.language.parentId : null;
 
                 // @ts-expect-error - we just check if translations exists
                 const translations = entity.translations as unknown as { [key: string]: string }[];

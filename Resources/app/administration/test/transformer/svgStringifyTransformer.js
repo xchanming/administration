@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 module.exports = {
     process(sourceText) {
         return {

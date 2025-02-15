@@ -6,26 +6,26 @@ import './mixin/media-sidebar-modal.mixin';
 import './acl';
 import defaultSearchConfiguration from './default-search-configuration';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-media-index', () => import('./page/sw-media-index'));
-Cicada.Component.register('sw-media-grid', () => import('./component/sw-media-grid'));
-Cicada.Component.register('sw-media-sidebar', () => import('./component/sidebar/sw-media-sidebar'));
-Cicada.Component.register(
+Shopware.Component.register('sw-media-index', () => import('./page/sw-media-index'));
+Shopware.Component.register('sw-media-grid', () => import('./component/sw-media-grid'));
+Shopware.Component.register('sw-media-sidebar', () => import('./component/sidebar/sw-media-sidebar'));
+Shopware.Component.register(
     'sw-media-quickinfo-metadata-item',
     () => import('./component/sidebar/sw-media-quickinfo-metadata-item'),
 );
-Cicada.Component.register('sw-media-quickinfo-usage', () => import('./component/sidebar/sw-media-quickinfo-usage'));
-Cicada.Component.extend('sw-media-collapse', 'sw-collapse', () => import('./component/sw-media-collapse'));
-Cicada.Component.register('sw-media-folder-info', () => import('./component/sidebar/sw-media-folder-info'));
-Cicada.Component.register('sw-media-quickinfo', () => import('./component/sidebar/sw-media-quickinfo'));
-Cicada.Component.register('sw-media-quickinfo-multiple', () => import('./component/sidebar/sw-media-quickinfo-multiple'));
-Cicada.Component.register('sw-media-tag', () => import('./component/sidebar/sw-media-tag'));
-Cicada.Component.register('sw-media-display-options', () => import('./component/sw-media-display-options'));
-Cicada.Component.register('sw-media-breadcrumbs', () => import('./component/sw-media-breadcrumbs'));
-Cicada.Component.register('sw-media-library', () => import('./component/sw-media-library'));
-Cicada.Component.register('sw-media-modal-v2', () => import('./component/sw-media-modal-v2'));
+Shopware.Component.register('sw-media-quickinfo-usage', () => import('./component/sidebar/sw-media-quickinfo-usage'));
+Shopware.Component.extend('sw-media-collapse', 'sw-collapse', () => import('./component/sw-media-collapse'));
+Shopware.Component.register('sw-media-folder-info', () => import('./component/sidebar/sw-media-folder-info'));
+Shopware.Component.register('sw-media-quickinfo', () => import('./component/sidebar/sw-media-quickinfo'));
+Shopware.Component.register('sw-media-quickinfo-multiple', () => import('./component/sidebar/sw-media-quickinfo-multiple'));
+Shopware.Component.register('sw-media-tag', () => import('./component/sidebar/sw-media-tag'));
+Shopware.Component.register('sw-media-display-options', () => import('./component/sw-media-display-options'));
+Shopware.Component.register('sw-media-breadcrumbs', () => import('./component/sw-media-breadcrumbs'));
+Shopware.Component.register('sw-media-library', () => import('./component/sw-media-library'));
+Shopware.Component.register('sw-media-modal-v2', () => import('./component/sw-media-modal-v2'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations

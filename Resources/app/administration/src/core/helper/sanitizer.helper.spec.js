@@ -111,7 +111,7 @@ describe('core/helper/sanitizer.helper.js', () => {
             meta: { $module: { icon: null } },
         };
 
-        const wrapper = mount(await Cicada.Component.build('sw-empty-state'), {
+        const wrapper = mount(await Shopware.Component.build('sw-empty-state'), {
             global: {
                 plugins: [SanitizePlugin],
                 stubs: ['sw-icon'],

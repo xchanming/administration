@@ -601,7 +601,7 @@ describe('components/data-grid/sw-data-grid', () => {
             testCase,
         ]) => {
             it(`should render columns with ${key}`, async () => {
-                jest.spyOn(Cicada.Utils.debug, 'warn').mockImplementation(() => {});
+                jest.spyOn(Shopware.Utils.debug, 'warn').mockImplementation(() => {});
 
                 const wrapper = await createWrapper();
                 const grid = wrapper.vm;

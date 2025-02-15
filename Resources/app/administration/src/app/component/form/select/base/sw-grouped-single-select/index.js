@@ -1,7 +1,7 @@
 import './sw-grouped-single-select.scss';
 import template from './sw-grouped-single-select.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework

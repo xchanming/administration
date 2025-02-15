@@ -1,34 +1,10 @@
 import { mount } from '@vue/test-utils';
-import flowState from 'src/module/sw-flow/state/flow.state';
 
 /**
  * @sw-package after-sales
  */
 
-const { CicadaError } = Cicada.Classes;
-
-Cicada.State.registerModule('swFlowState', {
-    ...flowState,
-    state: {
-        invalidSequences: [],
-        triggerEvent: {
-            data: {
-                order: {
-                    type: 'entity',
-                },
-            },
-            customerAware: false,
-            extensions: [],
-            logAware: false,
-            mailAware: false,
-            name: 'action.grant.download.access',
-            orderAware: true,
-            salesChannelAware: false,
-            userAware: false,
-            webhookAware: false,
-        },
-    },
-});
+const { ShopwareError } = Shopware.Classes;
 
 async function createWrapper(config = null) {
     return mount(
@@ -66,6 +42,25 @@ async function createWrapper(config = null) {
 }
 
 describe('module/sw-flow/component/sw-flow-grant-download-access-modal', () => {
+    beforeAll(() => {
+        Shopware.Store.get('swFlow').triggerEvent = {
+            data: {
+                order: {
+                    type: 'entity',
+                },
+            },
+            customerAware: false,
+            extensions: [],
+            logAware: false,
+            mailAware: false,
+            name: 'action.grant.download.access',
+            orderAware: true,
+            salesChannelAware: false,
+            userAware: false,
+            webhookAware: false,
+        };
+    });
+
     it('should get config', async () => {
         const wrapper = await createWrapper();
         await flushPromises();
@@ -79,7 +74,7 @@ describe('module/sw-flow/component/sw-flow-grant-download-access-modal', () => {
         const wrapper = await createWrapper();
         await flushPromises();
 
-        expect(wrapper.vm.fieldError(wrapper.vm.value)).toBeInstanceOf(CicadaError);
+        expect(wrapper.vm.fieldError(wrapper.vm.value)).toBeInstanceOf(ShopwareError);
     });
 
     it('should emit on modal close', async () => {

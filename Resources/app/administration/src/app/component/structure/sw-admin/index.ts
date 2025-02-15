@@ -1,7 +1,7 @@
-import type { Toast } from '@cicada-ag/meteor-component-library/dist/esm/components/feedback-indicator/mt-toast/mt-toast';
+import type { Toast } from '@shopware-ag/meteor-component-library/dist/esm/components/feedback-indicator/mt-toast/mt-toast';
 import template from './sw-admin.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -11,8 +11,6 @@ const { Component } = Cicada;
 Component.register('sw-admin', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'userActivityService',
         'loginService',
@@ -21,7 +19,7 @@ Component.register('sw-admin', {
 
     metaInfo() {
         return {
-            title: this.$tc('global.sw-admin-menu.textCicadaAdmin'),
+            title: this.$tc('global.sw-admin-menu.textShopwareAdmin'),
         };
     },
 
@@ -49,10 +47,10 @@ Component.register('sw-admin', {
     },
 
     created() {
-        Cicada.ExtensionAPI.handle('toastDispatch', (toast) => {
+        Shopware.ExtensionAPI.handle('toastDispatch', (toast) => {
             this.toasts = [
                 {
-                    id: Cicada.Utils.createId(),
+                    id: Shopware.Utils.createId(),
                     ...toast,
                 },
                 ...this.toasts,
@@ -63,7 +61,7 @@ Component.register('sw-admin', {
         this.channel.onmessage = (event) => {
             const data = event.data as { inactive?: boolean };
 
-            if (!data || !Cicada.Utils.object.hasOwnProperty(data, 'inactive')) {
+            if (!data || !Shopware.Utils.object.hasOwnProperty(data, 'inactive')) {
                 return;
             }
 

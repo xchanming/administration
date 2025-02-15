@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-product-slider', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-product-slider', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-product-slider', () => import('./component'));
+Shopware.Component.register('sw-cms-block-product-slider', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'product-slider',
     label: 'sw-cms.blocks.commerce.productSlider.label',
     category: 'commerce',

@@ -14,7 +14,7 @@ export default {
         },
 
         createdComponent() {
-            Cicada.State.commit('context/resetLanguageToDefault');
+            Shopware.Store.get('context').resetLanguageToDefault();
 
             this.deliveryTime = this.deliveryTimeRepository.create();
         },

@@ -1,20 +1,18 @@
 import { mount } from '@vue/test-utils';
-import flowState from 'src/module/sw-flow/state/flow.state';
 import EntityCollection from 'src/core/data/entity-collection.data';
 import { ACTION } from 'src/module/sw-flow/constant/flow.constant';
+import { createPinia, setActivePinia } from 'pinia';
 
 /**
  * @sw-package after-sales
  */
-
-const { cloneDeep } = Cicada.Utils.object;
 
 function getSequencesCollection(collection = []) {
     return new EntityCollection(
         '/flow_sequence',
         'flow_sequence',
         null,
-        { isCicadaContext: true },
+        { isShopwareContext: true },
         collection,
         collection.length,
         null,
@@ -46,17 +44,17 @@ const mockBusinessEvents = [
     {
         name: 'checkout.customer.before.login',
         mailAware: true,
-        aware: ['Cicada\\Core\\Framework\\Event\\SalesChannelAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\SalesChannelAware'],
     },
     {
         name: 'checkout.customer.changed-payment-method',
         mailAware: false,
-        aware: ['Cicada\\Core\\Framework\\Event\\SalesChannelAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\SalesChannelAware'],
     },
     {
         name: 'checkout.customer.deleted',
         mailAware: true,
-        aware: ['Cicada\\Core\\Framework\\Event\\SalesChannelAware'],
+        aware: ['Shopware\\Core\\Framework\\Event\\SalesChannelAware'],
     },
 ];
 
@@ -71,6 +69,7 @@ const mockTranslations = {
     'sw-flow.triggers.deleted': 'Deleted',
 };
 
+const pinia = createPinia();
 async function createWrapper(propsData) {
     return mount(
         await wrapTestComponent('sw-flow-trigger', {
@@ -82,6 +81,7 @@ async function createWrapper(propsData) {
                 ...propsData,
             },
             global: {
+                plugins: [pinia],
                 mocks: {
                     $tc(translationKey) {
                         return mockTranslations[translationKey] ? mockTranslations[translationKey] : translationKey;
@@ -149,27 +149,21 @@ async function createWrapper(propsData) {
 
 describe('src/module/sw-flow/component/sw-flow-trigger', () => {
     beforeAll(() => {
-        Cicada.Service().register('ruleConditionDataProviderService', () => {
+        Shopware.Service().register('ruleConditionDataProviderService', () => {
             return {
                 getRestrictedRules: () => Promise.resolve([]),
             };
         });
 
-        Cicada.Service().register('businessEventService', () => {
+        Shopware.Service().register('businessEventService', () => {
             return {
                 getBusinessEvents: () => Promise.resolve(mockBusinessEvents),
             };
         });
-
-        Cicada.State.registerModule('swFlowState', cloneDeep(flowState));
     });
 
     beforeEach(() => {
-        if (Cicada.State.get('swFlowState')) {
-            Cicada.State.unregisterModule('swFlowState');
-        }
-
-        Cicada.State.registerModule('swFlowState', cloneDeep(flowState));
+        setActivePinia(pinia);
     });
 
     afterEach(async () => {
@@ -193,7 +187,7 @@ describe('src/module/sw-flow/component/sw-flow-trigger', () => {
     });
 
     it('should display event tree with event get from flow state', async () => {
-        Cicada.State.commit('swFlowState/setTriggerEvents', mockBusinessEvents);
+        Shopware.Store.get('swFlow').triggerEvents = mockBusinessEvents;
 
         const wrapper = await createWrapper();
         await wrapper.setProps({
@@ -211,7 +205,7 @@ describe('src/module/sw-flow/component/sw-flow-trigger', () => {
 
         eventTree = wrapper.find('.sw-tree');
         expect(eventTree.exists()).toBeTruthy();
-        Cicada.State.commit('swFlowState/setTriggerEvents', []);
+        Shopware.Store.get('swFlow').triggerEvents = [];
     });
 
     it('should show event name with correct format', async () => {
@@ -652,7 +646,7 @@ describe('src/module/sw-flow/component/sw-flow-trigger', () => {
     });
 
     it('should show confirmation modal when clicking tree item', async () => {
-        Cicada.State.commit('swFlowState/setSequences', getSequencesCollection(sequencesFixture));
+        Shopware.Store.get('swFlow').setSequences(getSequencesCollection(sequencesFixture));
         const wrapper = await createWrapper();
         await flushPromises();
 
@@ -674,14 +668,14 @@ describe('src/module/sw-flow/component/sw-flow-trigger', () => {
         await transitionStub.find('.sw-tree-item__content .tree-link').trigger('click');
         await flushPromises();
 
-        const isSequenceEmpty = Cicada.State.getters['swFlowState/isSequenceEmpty'];
+        const isSequenceEmpty = Shopware.Store.get('swFlow').isSequenceEmpty;
 
         expect(isSequenceEmpty).toBe(false);
         expect(wrapper.find('.sw-flow-event-change-confirm-modal').exists()).toBeTruthy();
     });
 
     it('should show confirmation modal when pressing Enter on search item', async () => {
-        Cicada.State.commit('swFlowState/setSequences', getSequencesCollection(sequencesFixture));
+        Shopware.Store.get('swFlow').setSequences(getSequencesCollection(sequencesFixture));
 
         const wrapper = await createWrapper();
         await flushPromises();
@@ -702,7 +696,7 @@ describe('src/module/sw-flow/component/sw-flow-trigger', () => {
 
         await flushPromises();
 
-        const isSequenceEmpty = Cicada.State.getters['swFlowState/isSequenceEmpty'];
+        const isSequenceEmpty = Shopware.Store.get('swFlow').isSequenceEmpty;
 
         expect(isSequenceEmpty).toBe(false);
         expect(wrapper.find('.sw-flow-event-change-confirm-modal').exists()).toBeTruthy();
@@ -747,7 +741,7 @@ describe('src/module/sw-flow/component/sw-flow-trigger', () => {
         mockBusinessEvents.push({
             name: 'swag.before.open.the_doors',
             mailAware: true,
-            aware: ['Cicada\\Core\\Framework\\Event\\CustomEventAware'],
+            aware: ['Shopware\\Core\\Framework\\Event\\CustomEventAware'],
         });
 
         expect(wrapper.vm.eventTree).toEqual([

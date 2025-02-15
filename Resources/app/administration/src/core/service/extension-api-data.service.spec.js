@@ -3,8 +3,8 @@
  */
 
 import { mount } from '@vue/test-utils';
-import { handleFactory, send } from '@cicada-ag/meteor-admin-sdk/es/channel';
-import SerializerFactory from '@cicada-ag/meteor-admin-sdk/es/_internals/serializer';
+import { handleFactory, send } from '@shopware-ag/meteor-admin-sdk/es/channel';
+import SerializerFactory from '@shopware-ag/meteor-admin-sdk/es/_internals/serializer';
 import Entity from 'src/core/data/entity.data';
 import { getPublishedDataSets, publishData, deepCloneWithEntity } from 'src/core/service/extension-api-data.service';
 import EntityCollection from 'src/core/data/entity-collection.data';
@@ -19,7 +19,7 @@ const serializeEntity = SerializerFactory({
 
 describe('core/service/extension-api-data.service.ts', () => {
     it('should keep functions on entity', async () => {
-        const entity = new Entity(Cicada.Utils.createId(), 'jest', {
+        const entity = new Entity(Shopware.Utils.createId(), 'jest', {
             name: 'jest',
         });
 
@@ -48,7 +48,7 @@ describe('core/service/extension-api-data.service.ts', () => {
     });
 
     it('should update entity', async () => {
-        const entity = new Entity(Cicada.Utils.createId(), 'jestupdate', {
+        const entity = new Entity(Shopware.Utils.createId(), 'jestupdate', {
             name: 'beforeupdate',
         });
 
@@ -64,7 +64,7 @@ describe('core/service/extension-api-data.service.ts', () => {
         expect(entity.name).toBe('beforeupdate');
 
         jest.spyOn(window, 'addEventListener').mockImplementationOnce((event, handler) => {
-            const e = new Entity(Cicada.Utils.createId(), 'jestupdate', {
+            const e = new Entity(Shopware.Utils.createId(), 'jestupdate', {
                 name: 'beforeupdate',
             });
 
@@ -76,7 +76,7 @@ describe('core/service/extension-api-data.service.ts', () => {
                     id: 'jest',
                     data: serializeEntity(e),
                 },
-                _callbackId: Cicada.Utils.createId(),
+                _callbackId: Shopware.Utils.createId(),
             };
 
             handler({ data: JSON.stringify(data) });
@@ -125,14 +125,14 @@ describe('core/service/extension-api-data.service.ts', () => {
         const collection = new EntityCollection('jest', 'jest', {});
 
         collection.add(
-            new Entity(Cicada.Utils.createId(), 'jest', {
+            new Entity(Shopware.Utils.createId(), 'jest', {
                 id: 1,
                 name: 'jest1',
             }),
         );
 
         collection.add(
-            new Entity(Cicada.Utils.createId(), 'jest', {
+            new Entity(Shopware.Utils.createId(), 'jest', {
                 id: 2,
                 name: 'jest2',
             }),
@@ -163,7 +163,7 @@ describe('core/service/extension-api-data.service.ts', () => {
                         null,
                     ],
                 },
-                _callbackId: Cicada.Utils.createId(),
+                _callbackId: Shopware.Utils.createId(),
             };
 
             handler({ data: JSON.stringify(data) });
@@ -202,7 +202,7 @@ describe('core/service/extension-api-data.service.ts', () => {
                     id: 'jest',
                     data: 1337,
                 },
-                _callbackId: Cicada.Utils.createId(),
+                _callbackId: Shopware.Utils.createId(),
             };
 
             handler({ data: JSON.stringify(data) });
@@ -244,7 +244,7 @@ describe('core/service/extension-api-data.service.ts', () => {
                     id: 'jest',
                     data: 1337,
                 },
-                _callbackId: Cicada.Utils.createId(),
+                _callbackId: Shopware.Utils.createId(),
             };
 
             handler({ data: JSON.stringify(data) });
@@ -366,7 +366,7 @@ describe('core/service/extension-api-data.service.ts', () => {
                     id: 'jest',
                     data: 1337,
                 },
-                _callbackId: Cicada.Utils.createId(),
+                _callbackId: Shopware.Utils.createId(),
             };
 
             handler({ data: JSON.stringify(data) });
@@ -385,14 +385,14 @@ describe('core/service/extension-api-data.service.ts', () => {
         const collection = new EntityCollection('jest', 'jest', {});
 
         collection.add(
-            new Entity(Cicada.Utils.createId(), 'jest', {
+            new Entity(Shopware.Utils.createId(), 'jest', {
                 id: 1,
                 name: 'jest1',
             }),
         );
 
         collection.add(
-            new Entity(Cicada.Utils.createId(), 'jest', {
+            new Entity(Shopware.Utils.createId(), 'jest', {
                 id: 2,
                 name: 'jest2',
             }),
@@ -426,7 +426,7 @@ describe('core/service/extension-api-data.service.ts', () => {
                         },
                     ],
                 },
-                _callbackId: Cicada.Utils.createId(),
+                _callbackId: Shopware.Utils.createId(),
             };
 
             handler({ data: JSON.stringify(data) });
@@ -451,7 +451,7 @@ describe('core/service/extension-api-data.service.ts', () => {
 
     it('should deepClone with Entities', async () => {
         const originalValue = {
-            name: 'Cicada',
+            name: 'Shopware',
             age: 21,
             product: new Entity('foo', 'product', {
                 name: 'T-Shirt',
@@ -472,13 +472,13 @@ describe('core/service/extension-api-data.service.ts', () => {
                         url: 'https://xchanming.com/image1.jpg',
                         tags: new EntityCollection('image1/tags', 'tag', {}, null, [
                             new Entity('tag1', 'tag', {
-                                name: 'Cicada',
+                                name: 'Shopware',
                             }),
                             new Entity('tag2', 'tag', {
-                                name: 'Cicada AG',
+                                name: 'Shopware AG',
                             }),
                             new Entity('tag3', 'tag', {
-                                name: 'Cicada Community',
+                                name: 'Shopware Community',
                             }),
                         ]),
                     }),
@@ -486,13 +486,13 @@ describe('core/service/extension-api-data.service.ts', () => {
                         url: 'https://xchanming.com/image2.jpg',
                         tags: new EntityCollection('image2/tags', 'tag', {}, null, [
                             new Entity('tag4', 'tag', {
-                                name: 'Cicada',
+                                name: 'Shopware',
                             }),
                             new Entity('tag5', 'tag', {
-                                name: 'Cicada AG',
+                                name: 'Shopware AG',
                             }),
                             new Entity('tag6', 'tag', {
-                                name: 'Cicada Community',
+                                name: 'Shopware Community',
                             }),
                         ]),
                     }),
@@ -537,7 +537,7 @@ describe('core/service/extension-api-data.service.ts', () => {
                     id: 'jest',
                     data: 1337,
                 },
-                _callbackId: Cicada.Utils.createId(),
+                _callbackId: Shopware.Utils.createId(),
             };
 
             handler({ data: JSON.stringify(data) });
@@ -570,7 +570,7 @@ describe('core/service/extension-api-data.service.ts', () => {
                     id: 'jest',
                     data: 1338,
                 },
-                _callbackId: Cicada.Utils.createId(),
+                _callbackId: Shopware.Utils.createId(),
             };
 
             handler({ data: JSON.stringify(data) });
@@ -605,12 +605,12 @@ describe('core/service/extension-api-data.service.ts', () => {
         if (env === 'prod') {
             envBefore = process.env;
             process.env = 'prod';
-            Cicada.Utils.debug.warn = mock;
+            Shopware.Utils.debug.warn = mock;
         } else {
-            Cicada.Utils.debug.error = mock;
+            Shopware.Utils.debug.error = mock;
         }
 
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').addExtension({
             name: 'JestApp',
             baseUrl: '', // This only works because it's a startsWith check
         });

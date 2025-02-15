@@ -8,7 +8,7 @@ function createWrapper() {
     return mount({
         template: '<div></div>',
         mixins: [
-            Cicada.Mixin.getByName('cms-state'),
+            Shopware.Mixin.getByName('cms-state'),
         ],
     });
 }
@@ -24,12 +24,12 @@ describe('module/sw-cms/mixin/sw-cms-state.mixin.js', () => {
     });
 
     afterEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('properties are properly written to and read from the shared store', () => {
         const wrapper = createWrapper();
-        const store = Cicada.Store.get('cmsPage');
+        const store = Shopware.Store.get('cmsPage');
 
         const block = { id: 'block-1234' };
         wrapper.vm.selectedBlock = block;

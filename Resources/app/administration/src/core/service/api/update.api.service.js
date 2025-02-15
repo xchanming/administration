@@ -3,13 +3,13 @@
  * @private
  */
 
-const ApiService = Cicada.Classes.ApiService;
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * Gateway for the API end point "update"
  * @class
  * @extends ApiService
- * @sw-package fundamentals@after-sales
+ * @sw-package framework
  */
 class UpdateService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = 'update') {

@@ -1,7 +1,7 @@
 import template from './sw-card-view.html.twig';
 import './sw-card-view.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -27,8 +27,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-card-view', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         showErrorSummary: {

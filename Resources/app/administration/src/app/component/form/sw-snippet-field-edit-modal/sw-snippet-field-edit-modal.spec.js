@@ -28,7 +28,7 @@ async function createWrapper() {
                     origin: null,
                     resetTo: 'deutsch',
                     translationKey: 'test.snippet',
-                    setId: 'zh-CN-MOCK-ID',
+                    setId: 'de-DE-MOCK-ID',
                 },
             ],
             snippetSets: createEntityCollection([
@@ -38,9 +38,9 @@ async function createWrapper() {
                     id: 'en-GB-MOCK-ID',
                 },
                 {
-                    name: 'Base zh-CN',
-                    iso: 'zh-CN',
-                    id: 'zh-CN-MOCK-ID',
+                    name: 'Base de-DE',
+                    iso: 'de-DE',
+                    id: 'de-DE-MOCK-ID',
                 },
             ]),
         },
@@ -75,7 +75,7 @@ async function createWrapper() {
 }
 
 function createEntityCollection(entities = []) {
-    return new Cicada.Data.EntityCollection('collection', 'collection', {}, null, entities);
+    return new Shopware.Data.EntityCollection('collection', 'collection', {}, null, entities);
 }
 
 describe('src/app/component/form/sw-snippet-field-edit-modal', () => {

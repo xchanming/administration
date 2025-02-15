@@ -17,11 +17,11 @@ describe('src/core/service/utils/format.utils.js', () => {
 
     describe('date', () => {
         const setLocale = (locale) => {
-            jest.spyOn(Cicada.Application.getContainer('factory').locale, 'getLastKnownLocale').mockImplementation(
+            jest.spyOn(Shopware.Application.getContainer('factory').locale, 'getLastKnownLocale').mockImplementation(
                 () => locale,
             );
         };
-        const setTimeZone = (timeZone) => Cicada.State.commit('setCurrentUser', { timeZone });
+        const setTimeZone = (timeZone) => Shopware.Store.get('session').setCurrentUser({ timeZone });
 
         beforeEach(async () => {
             setLocale('en-GB');
@@ -46,11 +46,11 @@ describe('src/core/service/utils/format.utils.js', () => {
             expect(date('2000-06-18T08:30:00.000+00:00')).toBe('June 18, 2000 at 8:30 AM');
         });
 
-        it('should convert the date correctly with timezone UTC in zh-CN', async () => {
-            setLocale('zh-CN');
+        it('should convert the date correctly with timezone UTC in de-DE', async () => {
+            setLocale('de-DE');
             setTimeZone('UTC');
 
-            expect(date('2000-06-18T08:30:00.000+00:00')).toBe('2000年6月18日 08:30');
+            expect(date('2000-06-18T08:30:00.000+00:00')).toBe('18. Juni 2000 um 08:30');
         });
 
         it('should convert the date correctly with timezone America/New_York in en-GB', async () => {
@@ -67,36 +67,36 @@ describe('src/core/service/utils/format.utils.js', () => {
             expect(date('2000-06-18T08:30:00.000+00:00')).toBe('June 18, 2000 at 4:30 AM');
         });
 
-        it('should convert the date correctly with timezone America/New_York in zh-CN', async () => {
-            setLocale('zh-CN');
+        it('should convert the date correctly with timezone America/New_York in de-DE', async () => {
+            setLocale('de-DE');
             setTimeZone('America/New_York');
 
-            expect(date('2000-06-18T08:30:00.000+00:00')).toBe('2000年6月18日 04:30');
+            expect(date('2000-06-18T08:30:00.000+00:00')).toBe('18. Juni 2000 um 04:30');
         });
 
-        it('should not convert the date correctly with timezone America/New_York in zh-CN', async () => {
-            setLocale('zh-CN');
+        it('should not convert the date correctly with timezone America/New_York in de-DE', async () => {
+            setLocale('de-DE');
             setTimeZone('America/New_York');
 
             expect(
                 date('2000-06-18T08:30:00.000+00:00', {
                     skipTimezoneConversion: true,
                 }),
-            ).toBe('2000年6月18日 16:30');
+            ).toBe('18. Juni 2000 um 08:30');
         });
     });
 
     describe('dateWithUserTimezone', () => {
         const setLocale = (locale) => {
-            jest.spyOn(Cicada.Application.getContainer('factory').locale, 'getLastKnownLocale').mockImplementation(
+            jest.spyOn(Shopware.Application.getContainer('factory').locale, 'getLastKnownLocale').mockImplementation(
                 () => locale,
             );
         };
-        const setTimeZone = (timeZone) => Cicada.State.commit('setCurrentUser', { timeZone });
+        const setTimeZone = (timeZone) => Shopware.Store.get('session').setCurrentUser({ timeZone });
 
         beforeEach(async () => {
-            setLocale('zh-CN');
-            setTimeZone('Asia/Shanghai');
+            setLocale('en-GB');
+            setTimeZone('UTC');
         });
 
         it('should convert the date correctly with timezone Pacific/Pago_Pago', async () => {
@@ -104,7 +104,9 @@ describe('src/core/service/utils/format.utils.js', () => {
             // eslint-disable-next-line no-shadow
             const date = new Date(2000, 1, 1, 11, 13, 37);
 
-            expect(dateWithUserTimezone(date).toString()).toBe('Mon Jan 31 2000 16:13:37 GMT+0800 (China Standard Time)');
+            expect(dateWithUserTimezone(date).toString()).toBe(
+                'Tue Feb 01 2000 00:13:37 GMT+0000 (Coordinated Universal Time)',
+            );
         });
 
         it('should convert the date correctly with timezone UTC as fallback', async () => {
@@ -112,41 +114,43 @@ describe('src/core/service/utils/format.utils.js', () => {
             // eslint-disable-next-line no-shadow
             const date = new Date(2000, 1, 1, 0, 13, 37);
 
-            expect(dateWithUserTimezone(date).toString()).toBe('Tue Feb 01 2000 00:13:37 GMT+0800 (China Standard Time)');
+            expect(dateWithUserTimezone(date).toString()).toBe(
+                'Tue Feb 01 2000 00:13:37 GMT+0000 (Coordinated Universal Time)',
+            );
         });
     });
 
     describe('currency', () => {
-        const currencyFilter = Cicada.Utils.format.currency;
+        const currencyFilter = Shopware.Utils.format.currency;
 
         const precision = 0;
 
         it('should handle integers', async () => {
-            expect(currencyFilter(42, 'CNY', precision)).toBe('¥42');
+            expect(currencyFilter(42, 'EUR', precision)).toBe('€42');
         });
 
         it('should handle big int', async () => {
-            expect(currencyFilter(42n, 'CNY', precision)).toBe('¥42');
+            expect(currencyFilter(42n, 'EUR', precision)).toBe('€42');
         });
 
         it('should handle floats', async () => {
-            expect(currencyFilter(42.2, 'CNY', 2)).toBe('¥42.20');
+            expect(currencyFilter(42.2, 'EUR', 2)).toBe('€42.20');
         });
 
         it('should use the provided language', async () => {
-            expect(currencyFilter(42, 'CNY', 0, { language: 'en-US' })).toBe('¥42');
+            expect(currencyFilter(42, 'EUR', 0, { language: 'en-US' })).toBe('€42');
         });
 
         it('should use a different fallback language', async () => {
-            Cicada.State.commit('setAdminLocale', {
-                locales: ['zh-CN'],
-                locale: 'zh-CN',
+            Shopware.Store.get('session').setAdminLocaleState({
+                locales: ['de-DE'],
+                locale: 'de-DE',
                 languageId: '2fbb5fe2e29a4d70aa5854ce7ce3e20b',
             });
 
-            expect(currencyFilter(42, 'CNY', 0)).toBe('¥42');
+            expect(currencyFilter(42, 'EUR', 0)).toBe('42 €');
 
-            Cicada.State.commit('setAdminLocale', {
+            Shopware.Store.get('session').setAdminLocaleState({
                 locales: ['en-GB'],
                 locale: 'en-GB',
                 languageId: '2fbb5fe2e29a4d70aa5854ce7ce3e20b',
@@ -154,21 +158,21 @@ describe('src/core/service/utils/format.utils.js', () => {
         });
 
         it('should fallback to the system currency', async () => {
-            Cicada.Context.app.systemCurrencyISOCode = 'CNY';
+            Shopware.Context.app.systemCurrencyISOCode = 'EUR';
 
-            expect(currencyFilter(42, undefined, 0)).toBe('¥42');
+            expect(currencyFilter(42, undefined, 0)).toBe('€42');
         });
 
         it('should fallback to a different system currency', async () => {
-            Cicada.Context.app.systemCurrencyISOCode = 'USD';
+            Shopware.Context.app.systemCurrencyISOCode = 'USD';
 
-            expect(currencyFilter(42, undefined, 0)).toBe('$42');
+            expect(currencyFilter(42, undefined, 0)).toBe('US$42');
 
-            Cicada.Context.app.systemCurrencyISOCode = 'CNY';
+            Shopware.Context.app.systemCurrencyISOCode = 'EUR';
         });
 
         it('should fallback to decimal when the currency ISO code is invalid', async () => {
-            Cicada.Context.app.systemCurrencyISOCode = 'INVALID_EXAMPLE_CURRENCY_CODE';
+            Shopware.Context.app.systemCurrencyISOCode = 'INVALID_EXAMPLE_CURRENCY_CODE';
 
             jest.spyOn(console, 'error').mockImplementationOnce(() => {});
 
@@ -178,7 +182,7 @@ describe('src/core/service/utils/format.utils.js', () => {
                 new RangeError('Invalid currency code : INVALID_EXAMPLE_CURRENCY_CODE'),
             );
 
-            Cicada.Context.app.systemCurrencyISOCode = 'CNY';
+            Shopware.Context.app.systemCurrencyISOCode = 'EUR';
         });
     });
 

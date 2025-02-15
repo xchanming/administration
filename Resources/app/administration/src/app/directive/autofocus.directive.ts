@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 
-Cicada.Directive.register('autofocus', {
+Shopware.Directive.register('autofocus', {
     mounted: (el: HTMLElement) => {
         const inputs = el.getElementsByTagName('input');
 

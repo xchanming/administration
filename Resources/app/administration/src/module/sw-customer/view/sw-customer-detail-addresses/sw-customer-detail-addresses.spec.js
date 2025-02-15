@@ -4,7 +4,7 @@ import { mount } from '@vue/test-utils';
  * @sw-package checkout
  */
 
-const { CicadaError } = Cicada.Classes;
+const { ShopwareError } = Shopware.Classes;
 
 async function createWrapper() {
     return mount(
@@ -34,15 +34,15 @@ async function createWrapper() {
                     'sw-one-to-many-grid': {
                         props: ['collection'],
                         template: `
-                            <div>
-                                <tbody>
-                                <td v-for="item in collection">
-                                    <slot name="column-name" v-bind="{ item }"></slot>
-                                    <slot name="actions" v-bind="{ item }"></slot>
-                                </td>
-                                </tbody>
-                            </div>
-                        `,
+                    <table>
+                        <tbody>
+                            <td v-for="item in collection">
+                                <slot name="column-lastName" v-bind="{ item }"></slot>
+                                <slot name="actions" v-bind="{ item }"></slot>
+                            </td>
+                        </tbody>
+                    </table>
+                `,
                     },
                     'sw-context-menu-item': {
                         emits: ['click'],
@@ -69,7 +69,8 @@ async function createWrapper() {
                                     if (id === 'clone-address-id') {
                                         return Promise.resolve({
                                             id: 'clone-address-id',
-                                            name: 'Thu',
+                                            lastName: 'Thu',
+                                            firstName: 'Vo',
                                             city: 'Berlin',
                                             street: 'Legiendamm',
                                             zipcode: '550000',
@@ -91,7 +92,8 @@ async function createWrapper() {
                     addresses: [
                         {
                             id: '1',
-                            name: 'Nguyen',
+                            lastName: 'Nguyen',
+                            firstName: 'Quynh',
                             city: 'Berlin',
                             street: 'Legiendamm',
                             zipcode: '550000',
@@ -160,11 +162,11 @@ describe('module/sw-customer/view/sw-customer-detail-addresses.spec.js', () => {
             },
         });
 
-        expect(Cicada.State.getters['error/getApiError'](entityMock, 'street')).toBeNull();
+        expect(Shopware.Store.get('error').getApiError(entityMock, 'street')).toBeNull();
 
         await wrapper.vm.onSaveAddress();
 
-        expect(Cicada.State.getters['error/getApiError'](entityMock, 'street')).toBeInstanceOf(CicadaError);
+        expect(Shopware.Store.get('error').getApiError(entityMock, 'street')).toBeInstanceOf(ShopwareError);
     });
 
     it('should clone address line correctly', async () => {

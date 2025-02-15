@@ -5,9 +5,9 @@
 import template from './sw-app-actions.html.twig';
 import './sw-app-actions.scss';
 
-const { Component, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { hasOwnProperty } = Cicada.Utils.object;
+const { Component, Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { hasOwnProperty } = Shopware.Utils.object;
 
 const actionTypeConstants = Object.freeze({
     ACTION_SHOW_NOTIFICATION: 'notification',
@@ -30,8 +30,6 @@ const IFRAME_KEY = 'app.action_button.iframe';
  */
 Component.register('sw-app-actions', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     extensionApiDevtoolInformation: {
         property: 'ui.actionButton',
@@ -84,7 +82,7 @@ Component.register('sw-app-actions', {
         },
 
         params() {
-            return Cicada.State.get('cicadaApps').selectedIds;
+            return Shopware.Store.get('shopwareApps').selectedIds;
         },
 
         userConfigRepository() {
@@ -92,7 +90,7 @@ Component.register('sw-app-actions', {
         },
 
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         userConfigCriteria() {
@@ -105,7 +103,7 @@ Component.register('sw-app-actions', {
         },
 
         extensionSdkButtons() {
-            return Cicada.State.get('actionButtons').buttons.filter((button) => {
+            return Shopware.Store.get('actionButtons').buttons.filter((button) => {
                 return button.entity === this.entity && button.view === this.view;
             });
         },
@@ -125,14 +123,16 @@ Component.register('sw-app-actions', {
             this.loadActions();
         },
     },
+
     created() {
         // Reset the selectedIds when the component is created to avoid
         // that the actions are executed on the wrong entities.
         // Only reset when a entity exists
         if (this.entity) {
-            Cicada.State.commit('cicadaApps/setSelectedIds', []);
+            Shopware.Store.get('shopwareApps').selectedIds = [];
         }
     },
+
     methods: {
         async runAction(action) {
             const entityIdList = { ids: this.params };
@@ -227,11 +227,11 @@ Component.register('sw-app-actions', {
         },
 
         getUserConfig() {
-            this.userConfigRepository.search(this.userConfigCriteria, Cicada.Context.api).then((response) => {
+            this.userConfigRepository.search(this.userConfigCriteria, Shopware.Context.api).then((response) => {
                 if (response.length) {
                     this.iframeUserConfig = response.first();
                 } else {
-                    this.iframeUserConfig = this.userConfigRepository.create(Cicada.Context.api);
+                    this.iframeUserConfig = this.userConfigRepository.create(Shopware.Context.api);
                     this.iframeUserConfig.key = IFRAME_KEY;
                     this.iframeUserConfig.userId = this.currentUser?.id;
                     this.iframeUserConfig.value = {
@@ -246,7 +246,7 @@ Component.register('sw-app-actions', {
                 isShowModalConfirm: value,
             };
 
-            this.userConfigRepository.save(this.iframeUserConfig, Cicada.Context.api).then(() => {
+            this.userConfigRepository.save(this.iframeUserConfig, Shopware.Context.api).then(() => {
                 this.getUserConfig();
             });
         },

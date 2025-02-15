@@ -6,10 +6,8 @@ import './sw-cms-mapping-field.scss';
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['cmsService'],
 
@@ -65,15 +63,11 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         hasPreview() {
-            if (this.isCompatEnabled('INSTANCE_SCOPED_SLOTS')) {
-                return typeof this.$scopedSlots.preview !== 'undefined';
-            }
-
             return this.$slots.preview !== undefined;
         },
 
         cmsPageState() {
-            return Cicada.Store.get('cmsPage');
+            return Shopware.Store.get('cmsPage');
         },
     },
 

@@ -3,7 +3,7 @@
  */
 import { reactive } from 'vue';
 
-const { Utils } = Cicada;
+const { Utils } = Shopware;
 
 /**
  * @private

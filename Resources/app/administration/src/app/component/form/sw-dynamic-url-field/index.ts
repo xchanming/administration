@@ -3,8 +3,8 @@ import type RepositoryType from 'src/core/data/repository.data';
 import template from './sw-dynamic-url-field.html.twig';
 import './sw-dynamic-url-field.scss';
 
-const { Component } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 type LinkCategories = 'link' | 'detail' | 'navigation' | 'media' | 'email' | 'phone';
 
@@ -15,8 +15,6 @@ type LinkCategories = 'link' | 'detail' | 'navigation' | 'media' | 'email' | 'ph
  */
 Component.register('sw-dynamic-url-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -114,7 +112,7 @@ Component.register('sw-dynamic-url-field', {
             return new EntityCollection(
                 this.categoryRepository.route,
                 this.categoryRepository.entityName,
-                Cicada.Context.api,
+                Shopware.Context.api,
             );
         },
 

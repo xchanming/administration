@@ -8,8 +8,6 @@ import './sw-media-add-thumbnail-form.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'thumbnail-form-size-add',
         'on-input',

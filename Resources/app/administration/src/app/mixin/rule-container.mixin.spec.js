@@ -15,7 +15,7 @@ async function createWrapper(propsData = {}) {
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('ruleContainer'),
+                Shopware.Mixin.getByName('ruleContainer'),
             ],
             data() {
                 return {

@@ -7,13 +7,11 @@ import './sw-integration-list.scss';
 const {
     Mixin,
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'integrationService',

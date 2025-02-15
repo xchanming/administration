@@ -9,8 +9,6 @@ import './sw-privilege-error.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     metaInfo() {
         return {
             title: this.$createTitle(this.identifier),
@@ -19,7 +17,7 @@ export default {
 
     computed: {
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

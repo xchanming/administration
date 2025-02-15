@@ -1,7 +1,7 @@
 import template from './sw-cms-el-product-description-reviews.html.twig';
 import './sw-cms-el-product-description-reviews.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('cms-element'),
@@ -67,11 +65,7 @@ export default {
 
     watch: {
         pageType(newPageType) {
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element, 'locked', newPageType === 'product_detail');
-            } else {
-                this.element.locked = newPageType === 'product_detail';
-            }
+            this.element.locked = newPageType === 'product_detail';
         },
     },
 
@@ -84,11 +78,7 @@ export default {
             this.initElementConfig('product-description-reviews');
             this.initElementData('product-description-reviews');
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element, 'locked', this.isProductPageType);
-            } else {
-                this.element.locked = this.isProductPageType;
-            }
+            this.element.locked = this.isProductPageType;
         },
     },
 };

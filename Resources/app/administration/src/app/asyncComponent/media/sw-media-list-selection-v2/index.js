@@ -1,8 +1,8 @@
 import template from './sw-media-list-selection-v2.html.twig';
 import './sw-media-list-selection-v2.scss';
 
-const { Mixin, Context } = Cicada;
-const utils = Cicada.Utils;
+const { Mixin, Context } = Shopware;
+const utils = Shopware.Utils;
 
 /**
  * @sw-package discovery
@@ -10,8 +10,6 @@ const utils = Cicada.Utils;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

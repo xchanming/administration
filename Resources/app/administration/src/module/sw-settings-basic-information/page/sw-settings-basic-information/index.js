@@ -3,13 +3,11 @@
  */
 import template from './sw-settings-basic-information.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('notification'),
@@ -74,7 +72,7 @@ export default {
          * @deprecated tag:v6.7.0 - Will be removed
          */
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').api.languageId = languageId;
 
             this.$refs.systemConfig.createdComponent();
         },

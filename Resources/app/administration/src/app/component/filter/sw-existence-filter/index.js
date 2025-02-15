@@ -1,18 +1,17 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-existence-filter.html.twig';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 Component.register('sw-existence-filter', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'filter-update',

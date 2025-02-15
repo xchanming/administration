@@ -1,8 +1,8 @@
 import template from './sw-landing-page-detail-base.html.twig';
 import './sw-landing-page-detail-base.scss';
 
-const { Mixin } = Cicada;
-const { mapState, mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 /**
  * @sw-package discovery
@@ -10,8 +10,6 @@ const { mapState, mapPropertyErrors } = Cicada.Component.getComponentHelper();
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -30,15 +28,9 @@ export default {
     },
 
     computed: {
-        ...mapState('swCategoryDetail', {
-            customFieldSetsArray: (state) => {
-                if (!state.customFieldSets) {
-                    return [];
-                }
-
-                return state.customFieldSets;
-            },
-        }),
+        customFieldSetsArray() {
+            return Shopware.Store.get('swCategoryDetail').customFieldSets ?? [];
+        },
 
         ...mapPropertyErrors('landingPage', [
             'name',
@@ -47,11 +39,11 @@ export default {
         ]),
 
         landingPage() {
-            return Cicada.State.get('swCategoryDetail').landingPage;
+            return Shopware.Store.get('swCategoryDetail').landingPage;
         },
 
         cmsPage() {
-            return Cicada.Store.get('cmsPage').currentPage;
+            return Shopware.Store.get('cmsPage').currentPage;
         },
 
         isLayoutSet() {

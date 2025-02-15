@@ -8,8 +8,6 @@ import './sw-extension-my-extensions-listing-controls.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: [
         'update:active-state',
         'update:sorting-option',

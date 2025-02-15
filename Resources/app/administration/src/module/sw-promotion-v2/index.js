@@ -4,58 +4,60 @@
 import './init/services.init';
 import './acl';
 
-import swPromotionState from './page/sw-promotion-v2-detail/state';
+import './page/sw-promotion-v2-detail/store';
 import defaultSearchConfiguration from './default-search-configuration';
 
-const { Module, State } = Cicada;
-State.registerModule('swPromotionDetail', swPromotionState);
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-promotion-v2-settings-trigger',
     () => import('./component/discount/sw-promotion-v2-settings-trigger'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-promotion-v2-settings-discount-type',
     () => import('./component/discount/sw-promotion-v2-settings-discount-type'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-promotion-v2-settings-rule-selection',
     () => import('./component/discount/sw-promotion-v2-settings-rule-selection'),
 );
-Cicada.Component.extend(
+Shopware.Component.extend(
     'sw-promotion-v2-wizard-discount-selection',
     'sw-wizard-page',
     () => import('./component/discount/sw-promotion-v2-wizard-discount-selection'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-promotion-v2-wizard-description',
     () => import('./component/discount/sw-promotion-v2-wizard-description'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-promotion-v2-generate-codes-modal',
     () => import('./component/promotion-codes/sw-promotion-v2-generate-codes-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-promotion-v2-individual-codes-behavior',
     () => import('./component/promotion-codes/sw-promotion-v2-individual-codes-behavior'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-promotion-v2-cart-condition-form',
     () => import('./component/sw-promotion-v2-cart-condition-form'),
 );
-Cicada.Component.register('sw-promotion-v2-empty-state-hero', () => import('./component/sw-promotion-v2-empty-state-hero'));
-Cicada.Component.register('sw-promotion-v2-rule-select', () => import('./component/sw-promotion-v2-rule-select'));
-Cicada.Component.register(
+Shopware.Component.register(
+    'sw-promotion-v2-empty-state-hero',
+    () => import('./component/sw-promotion-v2-empty-state-hero'),
+);
+Shopware.Component.register('sw-promotion-v2-rule-select', () => import('./component/sw-promotion-v2-rule-select'));
+Shopware.Component.register(
     'sw-promotion-v2-sales-channel-select',
     () => import('./component/sw-promotion-v2-sales-channel-select'),
 );
-Cicada.Component.register('sw-promotion-discount-component', () => import('./component/sw-promotion-discount-component'));
-Cicada.Component.register('sw-promotion-v2-detail', () => import('./page/sw-promotion-v2-detail'));
-Cicada.Component.register('sw-promotion-v2-list', () => import('./page/sw-promotion-v2-list'));
-Cicada.Component.register('sw-promotion-v2-detail-base', () => import('./view/sw-promotion-v2-detail-base'));
-Cicada.Component.register('sw-promotion-v2-conditions', () => import('./view/sw-promotion-v2-conditions'));
-Cicada.Component.register('sw-promotion-detail-discounts', () => import('./view/sw-promotion-detail-discounts'));
+Shopware.Component.register('sw-promotion-discount-component', () => import('./component/sw-promotion-discount-component'));
+Shopware.Component.register('sw-promotion-v2-detail', () => import('./page/sw-promotion-v2-detail'));
+Shopware.Component.register('sw-promotion-v2-list', () => import('./page/sw-promotion-v2-list'));
+Shopware.Component.register('sw-promotion-v2-detail-base', () => import('./view/sw-promotion-v2-detail-base'));
+Shopware.Component.register('sw-promotion-v2-conditions', () => import('./view/sw-promotion-v2-conditions'));
+Shopware.Component.register('sw-promotion-detail-discounts', () => import('./view/sw-promotion-detail-discounts'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations

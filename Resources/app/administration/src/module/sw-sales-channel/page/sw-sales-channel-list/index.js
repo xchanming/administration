@@ -5,14 +5,12 @@
 import template from './sw-sales-channel-list.html.twig';
 import './sw-sales-channel-list.scss';
 
-const { Mixin, Defaults } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin, Defaults } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -101,11 +99,11 @@ export default {
         },
 
         salesChannelFavoritesService() {
-            return Cicada.Service('salesChannelFavorites');
+            return Shopware.Service('salesChannelFavorites');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 

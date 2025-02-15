@@ -1,6 +1,6 @@
 import LicenseViolationService from 'src/app/service/license-violations.service';
 
-const Application = Cicada.Application;
+const Application = Shopware.Application;
 
 const extensionApiServiceMock = {
     deactivateExtension: jest.fn(() => Promise.resolve()),
@@ -15,8 +15,8 @@ const cacheApiServiceMock = {
  * @sw-package framework
  */
 describe('app/service/license-violation.service.js', () => {
-    Cicada.Service().register('cicadaExtensionService', () => extensionApiServiceMock);
-    Cicada.Service().register('cacheApiService', () => cacheApiServiceMock);
+    Shopware.Service().register('shopwareExtensionService', () => extensionApiServiceMock);
+    Shopware.Service().register('cacheApiService', () => cacheApiServiceMock);
     const licenseViolationService = LicenseViolationService(Application.getContainer('service').storeService);
 
     beforeEach(async () => {

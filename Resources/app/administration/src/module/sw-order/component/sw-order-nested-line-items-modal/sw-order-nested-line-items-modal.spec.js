@@ -154,7 +154,7 @@ describe('src/module/sw-order/component/sw-order-nested-line-items-modal', () =>
     });
 
     it('should render the items in the correct order with correct indentation class and properties', async () => {
-        const currencyFilter = Cicada.Filter.getByName('currency');
+        const currencyFilter = Shopware.Filter.getByName('currency');
         const wrapper = await createWrapper();
         await flushPromises();
 

@@ -1,7 +1,7 @@
 import template from './sw-card-section.html.twig';
 import './sw-card-section.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -24,8 +24,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-card-section', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         divider: {

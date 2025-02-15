@@ -1,8 +1,8 @@
 /**
  * @sw-package framework
  */
-import { send } from '@cicada-ag/meteor-admin-sdk/es/channel';
-import MissingPrivilegesError from '@cicada-ag/meteor-admin-sdk/es/_internals/privileges/missing-privileges-error';
+import { send } from '@shopware-ag/meteor-admin-sdk/es/channel';
+import MissingPrivilegesError from '@shopware-ag/meteor-admin-sdk/es/_internals/privileges/missing-privileges-error';
 import api from './extension-api';
 
 describe('src/core/extension-api.ts', () => {
@@ -87,7 +87,7 @@ describe('src/core/extension-api.ts', () => {
         // Setup acl roles
         global.activeAclRoles = ['read:user'];
         const canMock = jest.fn();
-        Cicada.Service('acl').can = canMock;
+        Shopware.Service('acl').can = canMock;
 
         // Handle 'jest' message and provide spy for assertion
         const spy = jest.fn();

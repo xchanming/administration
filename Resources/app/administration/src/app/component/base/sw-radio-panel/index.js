@@ -5,8 +5,8 @@
 import template from './sw-radio-panel.html.twig';
 import './sw-radio-panel.scss';
 
-const { Component } = Cicada;
-const utils = Cicada.Utils;
+const { Component } = Shopware;
+const utils = Shopware.Utils;
 
 /**
  * @private
@@ -24,8 +24,6 @@ const utils = Cicada.Utils;
  */
 Component.register('sw-radio-panel', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

@@ -4,8 +4,8 @@ import { mount } from '@vue/test-utils';
  * @sw-package checkout
  */
 const {
-    Classes: { CicadaError },
-} = Cicada;
+    Classes: { ShopwareError },
+} = Shopware;
 
 async function createWrapper() {
     return mount(
@@ -95,12 +95,12 @@ describe('src/module/sw-order/component/sw-order-create-address-modal', () => {
 
         const swModalEditAddress = wrapper.findAll('.sw-modal')[0];
 
-        expect(Cicada.State.get('error').api.customer_address).toBeUndefined();
+        expect(Shopware.Store.get('error').api.customer_address).toBeUndefined();
 
         // submit form
         await swModalEditAddress.find('.sw-button--primary').trigger('click');
 
-        expect(Cicada.State.get('error').api).toHaveProperty('customer_address.12345.company');
-        expect(Cicada.State.get('error').api.customer_address['12345'].company).toBeInstanceOf(CicadaError);
+        expect(Shopware.Store.get('error').api).toHaveProperty('customer_address.12345.company');
+        expect(Shopware.Store.get('error').api.customer_address['12345'].company).toBeInstanceOf(ShopwareError);
     });
 });

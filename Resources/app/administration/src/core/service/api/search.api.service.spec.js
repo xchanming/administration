@@ -1,6 +1,7 @@
 /**
  * @sw-package inventory
  */
+
 import createLoginService from 'src/core/service/login.service';
 import createHTTPClient from 'src/core/factory/http.factory';
 import MockAdapter from 'axios-mock-adapter';
@@ -9,7 +10,7 @@ import SearchApiService from './search.api.service';
 function getSearchApiService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
 
     const searchApiService = new SearchApiService(client, loginService);
     return { searchApiService, clientMock };

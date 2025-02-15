@@ -3,13 +3,12 @@ import './sw-first-run-wizard-finish.scss';
 
 /**
  * @sw-package fundamentals@after-sales
+ *
  * @private
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['firstRunWizardService'],
 
@@ -49,8 +48,8 @@ export default {
         },
 
         buttonConfig() {
-            const disabledExtensionManagement = Cicada.State.get('context').app.config.settings.disableExtensionManagement;
-            const prevRoute = disabledExtensionManagement ? 'cicada.account' : 'store';
+            const disabledExtensionManagement = Shopware.Store.get('context').app.config.settings.disableExtensionManagement;
+            const prevRoute = disabledExtensionManagement ? 'shopware.account' : 'store';
 
             return [
                 {

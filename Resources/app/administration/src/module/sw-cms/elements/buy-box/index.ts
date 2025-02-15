@@ -2,23 +2,23 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-buy-box', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-buy-box', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-buy-box', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-buy-box', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-buy-box', () => import('./component'));
+Shopware.Component.register('sw-cms-el-buy-box', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'buy-box',
     label: 'sw-cms.elements.buyBox.label',
     component: 'sw-cms-el-buy-box',
@@ -32,7 +32,7 @@ Cicada.Service('cmsService').registerCmsElement({
             required: true,
             entity: {
                 name: 'product',
-                criteria: new Cicada.Data.Criteria(1, 25).addAssociation('deliveryMedia'),
+                criteria: new Shopware.Data.Criteria(1, 25).addAssociation('deliveryMedia'),
             },
         },
         alignment: {
@@ -53,5 +53,5 @@ Cicada.Service('cmsService').registerCmsElement({
             ],
         },
     },
-    collect: Cicada.Service('cmsService').getCollectFunction(),
+    collect: Shopware.Service('cmsService').getCollectFunction(),
 });

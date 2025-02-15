@@ -1,5 +1,5 @@
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @module app/service/rule-assignment-configuration

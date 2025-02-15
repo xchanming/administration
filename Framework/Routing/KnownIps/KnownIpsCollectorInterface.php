@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Framework\Routing\KnownIps;
+namespace Shopware\Administration\Framework\Routing\KnownIps;
 
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\HttpFoundation\Request;
 
 #[Package('framework')]

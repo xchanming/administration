@@ -10,8 +10,6 @@ import './sw-import-export-progress.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['feature'],
 
     emits: [

@@ -6,15 +6,13 @@ import { searchRankingPoint } from 'src/app/service/search-ranking.service';
 import template from './sw-product-list.html.twig';
 import './sw-product-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { cloneDeep } = Cicada.Utils.object;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { cloneDeep } = Shopware.Utils.object;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -225,19 +223,19 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         stockColorVariantFilter() {
-            return Cicada.Filter.getByName('stockColorVariant');
+            return Shopware.Filter.getByName('stockColorVariant');
         },
     },
 
@@ -266,7 +264,7 @@ export default {
         async getList() {
             this.isLoading = true;
 
-            let criteria = await Cicada.Service('filterService').mergeWithStoredFilters(
+            let criteria = await Shopware.Service('filterService').mergeWithStoredFilters(
                 this.storeKey,
                 this.productCriteria,
             );
@@ -335,7 +333,7 @@ export default {
             return promise
                 .then(() => {
                     this.createNotificationSuccess({
-                        message: this.$tc('sw-product.list.messageSaveSuccess', 0, { name: productName }),
+                        message: this.$tc('sw-product.list.messageSaveSuccess', { name: productName }, 0),
                     });
                 })
                 .catch(() => {
@@ -355,7 +353,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
             this.getList();
         },
 
@@ -401,7 +399,6 @@ export default {
                     property: 'manufacturer.name',
                     label: this.$tc('sw-product.list.columnManufacturer'),
                     allowResize: true,
-                    visible: false,
                 },
                 {
                     property: 'active',

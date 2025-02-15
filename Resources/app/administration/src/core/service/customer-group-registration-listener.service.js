@@ -1,5 +1,5 @@
-const { Application, Service, State } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Application, Service, Store } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package framework
@@ -20,7 +20,7 @@ export default function addCustomerGroupRegistrationListener(loginService) {
     loginService.addOnLoginListener(checkForUpdates);
 
     async function checkForUpdates() {
-        if (!Cicada.Service('acl').can('customer.viewer')) {
+        if (!Shopware.Service('acl').can('customer.viewer')) {
             return;
         }
 
@@ -29,7 +29,7 @@ export default function addCustomerGroupRegistrationListener(loginService) {
         criteria.addAssociation('requestedGroup');
         criteria.addFilter(Criteria.not('AND', [Criteria.equals('requestedGroupId', null)]));
 
-        const customers = await customerRepository.search(criteria, Cicada.Context.api);
+        const customers = await customerRepository.search(criteria, Shopware.Context.api);
 
         customers.forEach(createNotification);
     }
@@ -37,10 +37,14 @@ export default function addCustomerGroupRegistrationListener(loginService) {
     function createNotification(customer) {
         const notification = {
             title: getApplicationRootReference().$tc('global.default.info'),
-            message: getApplicationRootReference().$tc('sw-customer.customerGroupRegistration.notification.message', 0, {
-                name: `${customer.name}`,
-                groupName: customer.requestedGroup.name,
-            }),
+            message: getApplicationRootReference().$tc(
+                'sw-customer.customerGroupRegistration.notification.message',
+                {
+                    name: `${customer.firstName} ${customer.lastName}`,
+                    groupName: customer.requestedGroup.name,
+                },
+                0,
+            ),
             actions: [
                 {
                     label: getApplicationRootReference().$tc(
@@ -57,7 +61,7 @@ export default function addCustomerGroupRegistrationListener(loginService) {
             growl: true,
         };
 
-        State.dispatch('notification/createNotification', notification);
+        Store.get('notification').createNotification(notification);
     }
 
     function getApplicationRootReference() {

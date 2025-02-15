@@ -5,15 +5,13 @@
 import { email } from 'src/core/service/validation.service';
 import template from './sw-login-recovery.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-login-recovery', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['userRecoveryService'],
 

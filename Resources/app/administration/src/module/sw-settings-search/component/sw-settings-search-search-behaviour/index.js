@@ -8,8 +8,6 @@ import './sw-settings-search-search-behaviour.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'acl',
     ],

@@ -5,14 +5,12 @@
 import template from './sw-product-stream-value.html.twig';
 import './sw-product-stream-value.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 /*
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -337,7 +335,7 @@ export default {
         },
 
         context() {
-            return { ...Cicada.Context.api, inheritance: true };
+            return { ...Shopware.Context.api, inheritance: true };
         },
 
         productCriteria() {
@@ -415,11 +413,6 @@ export default {
     },
 
     mounted() {
-        if (this.isCompatEnabled('INSTANCE_CHILDREN')) {
-            this.childComponents = this.$children;
-            return;
-        }
-
         this.childComponents = this.$refs;
     },
 

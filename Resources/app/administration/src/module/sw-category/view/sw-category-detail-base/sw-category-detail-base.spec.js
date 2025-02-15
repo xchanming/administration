@@ -14,16 +14,8 @@ const categoryMock = {
 };
 
 async function createWrapper() {
-    if (Cicada.State.get('swCategoryDetail')) {
-        Cicada.State.unregisterModule('swCategoryDetail');
-    }
-
-    Cicada.State.registerModule('swCategoryDetail', {
-        namespaced: true,
-        state: {
-            category: categoryMock,
-        },
-    });
+    Shopware.Store.get('swCategoryDetail').$reset();
+    Shopware.Store.get('swCategoryDetail').category = categoryMock;
 
     return mount(await wrapTestComponent('sw-category-detail-base', { sync: true }), {
         global: {

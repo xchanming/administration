@@ -4,8 +4,8 @@
 
 import { reactive } from 'vue';
 
-const { warn, error } = Cicada.Utils.debug;
-const { object } = Cicada.Utils;
+const { warn, error } = Shopware.Utils.debug;
+const { object } = Shopware.Utils;
 
 type GetPrivilegesWithDependenciesSignature = () => string[];
 
@@ -185,7 +185,7 @@ export default class PrivilegesService {
      * automatically get all privileges dynamically from the other adminRole.
      *
      * @usage
-     * Cicada.Service('privileges').addPrivilegeMappingEntry({
+     * Shopware.Service('privileges').addPrivilegeMappingEntry({
      *     category: 'permissions',
      *     parent: null,
      *
@@ -194,7 +194,7 @@ export default class PrivilegesService {
      *         viewer: {
      *             privileges: [
      *                 'product.read',
-     *                 Cicada.Service('privileges').getPrivileges('rule.viewer')
+     *                 Shopware.Service('privileges').getPrivileges('rule.viewer')
      *             ],
      *             dependencies: []
      *         }

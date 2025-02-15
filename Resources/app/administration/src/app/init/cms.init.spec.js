@@ -3,27 +3,18 @@
  */
 import initCms from 'src/app/init/cms.init';
 import 'src/module/sw-cms/service/cms.service';
-import * as cms from '@cicada-ag/meteor-admin-sdk/es/ui/cms';
-import extensionsStore from '../state/extensions.store';
+import * as cms from '@shopware-ag/meteor-admin-sdk/es/ui/cms';
 
 describe('src/app/init/cms.init.ts', () => {
     beforeEach(() => {
-        if (Cicada.State.get('extensions')) {
-            Cicada.State.unregisterModule('extensions');
-        }
-
-        Cicada.State.registerModule('extensions', extensionsStore);
-    });
-
-    afterEach(() => {
-        Cicada.State.unregisterModule('extensions');
+        Shopware.Store.get('extensions').extensionsState = {};
     });
 
     it('should handle cmsRegisterElement', async () => {
         const appName = 'jestapp';
         const mock = jest.fn();
 
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').addExtension({
             name: appName,
             baseUrl: '',
             permissions: [],
@@ -33,7 +24,7 @@ describe('src/app/init/cms.init.ts', () => {
             active: true,
         });
 
-        Cicada.Service('cmsService').registerCmsElement = mock;
+        Shopware.Service('cmsService').registerCmsElement = mock;
 
         initCms();
         await cms.registerCmsElement({
@@ -60,7 +51,7 @@ describe('src/app/init/cms.init.ts', () => {
     it('should not handle cmsRegisterElement if extension is not found', async () => {
         const mock = jest.fn();
 
-        Cicada.Service('cmsService').registerCmsElement = mock;
+        Shopware.Service('cmsService').registerCmsElement = mock;
 
         initCms();
         await cms.registerCmsElement({
@@ -76,7 +67,7 @@ describe('src/app/init/cms.init.ts', () => {
         const appName = 'jestapp';
         const mock = jest.fn();
 
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').addExtension({
             name: appName,
             baseUrl: '',
             permissions: [],
@@ -86,7 +77,7 @@ describe('src/app/init/cms.init.ts', () => {
             active: true,
         });
 
-        Cicada.Service('cmsService').registerCmsBlock = mock;
+        Shopware.Service('cmsService').registerCmsBlock = mock;
 
         initCms();
         await cms.registerCmsBlock({
@@ -128,7 +119,7 @@ describe('src/app/init/cms.init.ts', () => {
         const appName = 'jestapp';
         const mock = jest.fn();
 
-        Cicada.State.commit('extensions/addExtension', {
+        Shopware.Store.get('extensions').addExtension({
             name: appName,
             baseUrl: '',
             permissions: [],
@@ -138,7 +129,7 @@ describe('src/app/init/cms.init.ts', () => {
             active: true,
         });
 
-        Cicada.Service('cmsService').registerCmsBlock = mock;
+        Shopware.Service('cmsService').registerCmsBlock = mock;
 
         initCms();
         await cms.registerCmsBlock({
@@ -176,7 +167,7 @@ describe('src/app/init/cms.init.ts', () => {
     it('should not handle cmsRegisterBlock if extension is not found', async () => {
         const mock = jest.fn();
 
-        Cicada.Service('cmsService').registerCmsBlock = mock;
+        Shopware.Service('cmsService').registerCmsBlock = mock;
 
         initCms();
         await cms.registerCmsBlock({

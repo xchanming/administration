@@ -1,7 +1,7 @@
 import template from './sw-flow-sequence-selector.html.twig';
 import './sw-flow-sequence-selector.scss';
 
-const { State } = Cicada;
+const { Store } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { State } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         sequence: {
@@ -54,14 +52,14 @@ export default {
 
     methods: {
         addIfCondition() {
-            State.commit('swFlowState/updateSequence', {
+            Store.get('swFlow').updateSequence({
                 id: this.sequence.id,
                 ruleId: '',
             });
         },
 
         addThenAction() {
-            State.commit('swFlowState/updateSequence', {
+            Store.get('swFlow').updateSequence({
                 id: this.sequence.id,
                 actionName: '',
             });

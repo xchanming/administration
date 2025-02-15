@@ -5,15 +5,15 @@
 import './acl';
 import defaultSearchConfiguration from './default-search-configuration';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-product-stream-list', () => import('./page/sw-product-stream-list'));
-Cicada.Component.register('sw-product-stream-detail', () => import('./page/sw-product-stream-detail'));
-Cicada.Component.register('sw-product-stream-field-select', () => import('./component/sw-product-stream-field-select'));
-Cicada.Component.register('sw-product-stream-value', () => import('./component/sw-product-stream-value'));
-Cicada.Component.register('sw-product-stream-modal-preview', () => import('./component/sw-product-stream-modal-preview'));
-Cicada.Component.extend(
+Shopware.Component.register('sw-product-stream-list', () => import('./page/sw-product-stream-list'));
+Shopware.Component.register('sw-product-stream-detail', () => import('./page/sw-product-stream-detail'));
+Shopware.Component.register('sw-product-stream-field-select', () => import('./component/sw-product-stream-field-select'));
+Shopware.Component.register('sw-product-stream-value', () => import('./component/sw-product-stream-value'));
+Shopware.Component.register('sw-product-stream-modal-preview', () => import('./component/sw-product-stream-modal-preview'));
+Shopware.Component.extend(
     'sw-product-stream-filter',
     'sw-condition-base',
     () => import('./component/sw-product-stream-filter'),

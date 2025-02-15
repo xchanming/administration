@@ -1,7 +1,7 @@
 /**
  * @sw-package checkout
  */
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'additional_permissions',
     parent: null,
     key: 'system',

@@ -8,7 +8,7 @@ import 'src/app/component/structure/sw-search-bar';
 import 'src/app/component/structure/sw-search-bar-item';
 import Criteria from 'src/core/data/criteria.data';
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 const register = Module.register;
 
 const searchTypeServiceTypes = {
@@ -53,7 +53,7 @@ describe('src/app/component/structure/sw-search-bar', () => {
     let spyLoadTypeSearchResultsByService;
 
     async function createWrapper(props, searchTypes = searchTypeServiceTypes, privileges = []) {
-        swSearchBarComponent = await Cicada.Component.build('sw-search-bar');
+        swSearchBarComponent = await Shopware.Component.build('sw-search-bar');
         spyLoadResults = jest.spyOn(swSearchBarComponent.methods, 'loadResults');
         spyLoadTypeSearchResults = jest.spyOn(swSearchBarComponent.methods, 'loadTypeSearchResults');
         spyLoadTypeSearchResultsByService = jest.spyOn(swSearchBarComponent.methods, 'loadTypeSearchResultsByService');
@@ -65,7 +65,7 @@ describe('src/app/component/structure/sw-search-bar', () => {
                     'sw-version': true,
                     'sw-loader': true,
                     'sw-search-more-results': true,
-                    'sw-search-bar-item': await Cicada.Component.build('sw-search-bar-item'),
+                    'sw-search-bar-item': await Shopware.Component.build('sw-search-bar-item'),
                     'sw-search-preferences-modal': true,
                     'router-link': true,
                     'sw-highlight-text': true,
@@ -292,12 +292,12 @@ describe('src/app/component/structure/sw-search-bar', () => {
     }
 
     beforeAll(async () => {
-        swSearchBarComponent = await Cicada.Component.build('sw-search-bar');
+        swSearchBarComponent = await Shopware.Component.build('sw-search-bar');
         spyLoadResults = jest.spyOn(swSearchBarComponent.methods, 'loadResults');
         spyLoadTypeSearchResults = jest.spyOn(swSearchBarComponent.methods, 'loadTypeSearchResults');
         spyLoadTypeSearchResultsByService = jest.spyOn(swSearchBarComponent.methods, 'loadTypeSearchResultsByService');
 
-        const apiService = Cicada.Application.getContainer('factory').apiService;
+        const apiService = Shopware.Application.getContainer('factory').apiService;
         apiService.register('categoryService', {
             getList: () => {
                 const result = [];
@@ -311,9 +311,9 @@ describe('src/app/component/structure/sw-search-bar', () => {
     });
 
     beforeEach(async () => {
-        Cicada.State.get('session').currentUser = {
+        Shopware.Store.get('session').setCurrentUser({
             id: 'id',
-        };
+        });
         Module.getModuleRegistry().clear();
     });
 
@@ -1348,7 +1348,7 @@ describe('src/app/component/structure/sw-search-bar', () => {
     });
 
     it('should search global with ES when adminEsEnable is true', async () => {
-        Cicada.Context.app.adminEsEnable = true;
+        Shopware.Context.app.adminEsEnable = true;
         wrapper = await createWrapper(
             {
                 initialSearchType: '',
@@ -1404,7 +1404,7 @@ describe('src/app/component/structure/sw-search-bar', () => {
     });
 
     it('should search type with ES when adminEsEnable is true', async () => {
-        Cicada.Context.app.adminEsEnable = true;
+        Shopware.Context.app.adminEsEnable = true;
         wrapper = await createWrapper(
             {
                 initialSearchType: '',

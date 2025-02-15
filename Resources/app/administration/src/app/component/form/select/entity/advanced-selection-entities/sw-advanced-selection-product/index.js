@@ -1,10 +1,11 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-advanced-selection-product.html.twig';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -15,8 +16,6 @@ const { Criteria } = Cicada.Data;
  */
 Component.register('sw-advanced-selection-product', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -39,7 +38,7 @@ Component.register('sw-advanced-selection-product', {
         },
 
         productContext() {
-            return { ...Cicada.Context.api, inheritance: true };
+            return { ...Shopware.Context.api, inheritance: true };
         },
 
         currenciesColumns() {
@@ -219,15 +218,15 @@ Component.register('sw-advanced-selection-product', {
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         stockColorVariantFilter() {
-            return Cicada.Filter.getByName('stockColorVariant');
+            return Shopware.Filter.getByName('stockColorVariant');
         },
     },
 

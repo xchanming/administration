@@ -7,85 +7,85 @@ import ImportExportProfileUpdateByService from './service/importExportUpdateByMa
 import './acl';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Service().register('importExport', () => {
-    return new ImportExportService(Cicada.Application.getContainer('init').httpClient, Cicada.Service('loginService'));
+Shopware.Service().register('importExport', () => {
+    return new ImportExportService(Shopware.Application.getContainer('init').httpClient, Shopware.Service('loginService'));
 });
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Service().register('importExportProfileMapping', () => {
-    return new ImportExportProfileMappingService(Cicada.EntityDefinition);
+Shopware.Service().register('importExportProfileMapping', () => {
+    return new ImportExportProfileMappingService(Shopware.EntityDefinition);
 });
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Service().register('importExportUpdateByMapping', () => {
-    return new ImportExportProfileUpdateByService(Cicada.EntityDefinition);
+Shopware.Service().register('importExportUpdateByMapping', () => {
+    return new ImportExportProfileUpdateByService(Shopware.EntityDefinition);
 });
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-import-export', () => import('./page/sw-import-export'));
-Cicada.Component.register('sw-import-export-exporter', () => import('./component/sw-import-export-exporter'));
-Cicada.Component.register('sw-import-export-importer', () => import('./component/sw-import-export-importer'));
-Cicada.Component.register('sw-import-export-activity', () => import('./component/sw-import-export-activity'));
-Cicada.Component.register(
+Shopware.Component.register('sw-import-export', () => import('./page/sw-import-export'));
+Shopware.Component.register('sw-import-export-exporter', () => import('./component/sw-import-export-exporter'));
+Shopware.Component.register('sw-import-export-importer', () => import('./component/sw-import-export-importer'));
+Shopware.Component.register('sw-import-export-activity', () => import('./component/sw-import-export-activity'));
+Shopware.Component.register(
     'sw-import-export-activity-log-info-modal',
     () => import('./component/sw-import-export-activity-log-info-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-activity-result-modal',
     () => import('./component/sw-import-export-activity-result-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-edit-profile-modal',
     () => import('./component/sw-import-export-edit-profile-modal'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-edit-profile-modal-mapping',
     () => import('./component/sw-import-export-edit-profile-modal-mapping'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-edit-profile-modal-identifiers',
     () => import('./component/sw-import-export-edit-profile-modal-identifiers'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-entity-path-select',
     () => import('./component/sw-import-export-entity-path-select'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-edit-profile-field-indicators',
     () => import('./component/sw-import-export-edit-profile-field-indicators'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-edit-profile-import-settings',
     () => import('./component/sw-import-export-edit-profile-import-settings'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-edit-profile-general',
     () => import('./component/sw-import-export-edit-profile-general'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-new-profile-wizard',
     () => import('./component/profile-wizard/sw-import-export-new-profile-wizard'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-new-profile-wizard-general-page',
     () => import('./component/profile-wizard/sw-import-export-new-profile-wizard-general-page'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-new-profile-wizard-csv-page',
     () => import('./component/profile-wizard/sw-import-export-new-profile-wizard-csv-page'),
 );
-Cicada.Component.register(
+Shopware.Component.register(
     'sw-import-export-new-profile-wizard-mapping-page',
     () => import('./component/profile-wizard/sw-import-export-new-profile-wizard-mapping-page'),
 );
-Cicada.Component.register('sw-import-export-view-import', () => import('./view/sw-import-export-view-import'));
-Cicada.Component.register('sw-import-export-view-export', () => import('./view/sw-import-export-view-export'));
-Cicada.Component.register('sw-import-export-view-profiles', () => import('./view/sw-import-export-view-profiles'));
-Cicada.Component.register('sw-import-export-progress', () => import('./component/sw-import-export-progress'));
+Shopware.Component.register('sw-import-export-view-import', () => import('./view/sw-import-export-view-import'));
+Shopware.Component.register('sw-import-export-view-export', () => import('./view/sw-import-export-view-export'));
+Shopware.Component.register('sw-import-export-view-profiles', () => import('./view/sw-import-export-view-profiles'));
+Shopware.Component.register('sw-import-export-progress', () => import('./component/sw-import-export-progress'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Cicada.Module.register('sw-import-export', {
+Shopware.Module.register('sw-import-export', {
     type: 'core',
     name: 'ImportExport',
     title: 'sw-import-export.general.mainMenuItemGeneral',
@@ -139,7 +139,7 @@ Cicada.Module.register('sw-import-export', {
     },
 
     settingsItem: {
-        group: 'shop',
+        group: 'automation',
         to: 'sw.import.export.index',
         icon: 'regular-database',
         privilege: 'system.import_export',

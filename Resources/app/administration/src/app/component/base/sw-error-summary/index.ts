@@ -5,8 +5,8 @@
 import template from './sw-error-summary.html.twig';
 import './sw-error-summary.scss';
 
-const { Component } = Cicada;
-const { hasOwnProperty } = Cicada.Utils.object;
+const { Component } = Shopware;
+const { hasOwnProperty } = Shopware.Utils.object;
 
 type error = {
     _code: string;
@@ -20,12 +20,10 @@ type error = {
 Component.register('sw-error-summary', {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         errors(): { [key: string]: number } {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            const allErrors = (Cicada.State.getters['error/getAllApiErrors']() || []) as Array<unknown>;
+            const allErrors = (Shopware.Store.get('error').getAllApiErrors() || []) as Array<unknown>;
 
             // Helper function to recursively get all error objects
             const extractErrorObjects = (errors: Array<unknown>) => {

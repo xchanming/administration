@@ -6,10 +6,8 @@ import './sw-cms-sidebar-nav-element.scss';
  * @sw-package discovery
  */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'block-duplicate',

@@ -1,5 +1,4 @@
 import { mount } from '@vue/test-utils';
-import extensionStore from 'src/module/sw-extension/store/extensions.store';
 
 const userInfo = {
     avatarUrl: 'https://avatar.url',
@@ -37,7 +36,7 @@ async function createWrapper() {
                     },
                 },
                 provide: {
-                    cicadaExtensionService: {
+                    shopwareExtensionService: {
                         checkLogin: () => {
                             return Promise.resolve({
                                 userInfo,
@@ -48,26 +47,26 @@ async function createWrapper() {
                         getValues: () => {
                             return Promise.resolve({
                                 'core.store.apiUri': 'https://api.xchanming.com',
-                                'core.store.licenseHost': 'sw6.test.cicada.in',
+                                'core.store.licenseHost': 'sw6.test.shopware.in',
                                 'core.store.shopSecret': 'very.s3cret',
                             });
                         },
                     },
                     storeService: {
-                        login: (cicadaId, password) => {
-                            if (cicadaId !== 'max@muster.com') {
+                        login: (shopwareId, password) => {
+                            if (shopwareId !== 'max@muster.com') {
                                 return Promise.reject();
                             }
                             if (password !== 'v3ryS3cret') {
                                 return Promise.reject();
                             }
 
-                            Cicada.State.get('cicadaExtensions').userInfo = userInfo;
+                            Shopware.Store.get('shopwareExtensions').userInfo = userInfo;
 
                             return Promise.resolve();
                         },
                         logout: () => {
-                            Cicada.State.get('cicadaExtensions').userInfo = null;
+                            Shopware.Store.get('shopwareExtensions').userInfo = null;
 
                             return Promise.resolve();
                         },
@@ -82,23 +81,19 @@ async function createWrapper() {
  * @sw-package checkout
  */
 describe('src/module/sw-extension/page/sw-extension-my-extensions-account', () => {
-    beforeAll(async () => {
-        Cicada.State.registerModule('cicadaExtensions', extensionStore);
-    });
-
     beforeEach(async () => {
-        Cicada.State.get('cicadaExtensions').userInfo = null;
+        Shopware.Store.get('shopwareExtensions').userInfo = null;
     });
 
     it('should show the login fields when not logged in', async () => {
         const wrapper = await createWrapper();
 
-        const cicadaIdField = wrapper.find('.sw-extension-my-extensions-account__cicada-id-field');
+        const shopwareIdField = wrapper.find('.sw-extension-my-extensions-account__shopware-id-field');
         const passwordField = wrapper.find('.sw-extension-my-extensions-account__password-field');
         const loginButton = wrapper.find('.sw-extension-my-extensions-account__login-button');
 
         // check if fields exists when user is not logged in
-        expect(cicadaIdField.isVisible()).toBe(true);
+        expect(shopwareIdField.isVisible()).toBe(true);
         expect(passwordField.isVisible()).toBe(true);
         expect(loginButton.isVisible()).toBe(true);
     });
@@ -111,12 +106,12 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-account', () =
         expect(loginStatus.exists()).toBe(false);
 
         // get fields
-        const cicadaIdField = wrapper.get('.sw-extension-my-extensions-account__cicada-id-field');
+        const shopwareIdField = wrapper.get('.sw-extension-my-extensions-account__shopware-id-field');
         const passwordField = wrapper.get('.sw-extension-my-extensions-account__password-field');
         const loginButton = wrapper.find('.sw-extension-my-extensions-account__login-button');
 
         // enter credentials
-        await cicadaIdField.setValue('max@muster.com');
+        await shopwareIdField.setValue('max@muster.com');
         await passwordField.setValue('v3ryS3cret');
 
         await wrapper.vm.$nextTick();
@@ -133,7 +128,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-account', () =
     });
 
     it('should show the logged in view when logged in', async () => {
-        Cicada.State.get('cicadaExtensions').userInfo = userInfo;
+        Shopware.Store.get('shopwareExtensions').userInfo = userInfo;
 
         // create component with logged in view
         const wrapper = await createWrapper();
@@ -147,7 +142,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-account', () =
     });
 
     it('should logout when user clicks logout button', async () => {
-        Cicada.State.get('cicadaExtensions').userInfo = userInfo;
+        Shopware.Store.get('shopwareExtensions').userInfo = userInfo;
 
         // create component with logged in view
         const wrapper = await createWrapper();

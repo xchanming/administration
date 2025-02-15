@@ -1,7 +1,7 @@
 import template from './sw-data-grid-column-boolean.html.twig';
 import './sw-data-grid-column-boolean.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -10,8 +10,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-data-grid-column-boolean', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['update:value'],
 

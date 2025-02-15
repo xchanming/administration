@@ -1,10 +1,10 @@
-const ApiService = Cicada.Classes.ApiService;
+const ApiService = Shopware.Classes.ApiService;
 
 /**
  * Gateway for the API end point "language-plugins"
  * @class
  * @extends ApiService
- * @sw-package fundamentals@after-sales
+ * @sw-package fundamentals@discovery
  */
 class LanguagePluginApiService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = 'language-plugins') {

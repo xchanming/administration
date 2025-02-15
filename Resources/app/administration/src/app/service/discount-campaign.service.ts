@@ -2,9 +2,9 @@ import type { DiscountCampaign } from 'src/module/sw-extension/service/extension
 
 /**
  * @private
- * @sw-package framework
+ * @sw-package checkout
  */
-export default class CicadaDiscountCampaignService {
+export default class ShopwareDiscountCampaignService {
     public isDiscountCampaignActive(discountCampaign: DiscountCampaign) {
         if (!discountCampaign || !discountCampaign.startDate) {
             return false;
@@ -45,6 +45,6 @@ export default class CicadaDiscountCampaignService {
 
 /**
  * @private
- * @sw-package framework
+ * @sw-package checkout
  */
-export type { CicadaDiscountCampaignService };
+export type { ShopwareDiscountCampaignService };

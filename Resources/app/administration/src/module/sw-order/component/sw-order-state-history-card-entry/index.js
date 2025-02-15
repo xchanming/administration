@@ -9,8 +9,6 @@ import template from './sw-order-state-history-card-entry.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['stateStyleDataProviderService'],
 
     props: {
@@ -40,20 +38,7 @@ export default {
 
     computed: {
         dateFilter() {
-            return Cicada.Filter.getByName('date');
-        },
-
-        /**
-         * @deprecated tag:v6.7.0 - Can be removed. Event listerns will be in $attrs.
-         */
-        listeners() {
-            let listeners = {};
-
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                listeners = this.$listeners;
-            }
-
-            return listeners;
+            return Shopware.Filter.getByName('date');
         },
     },
 

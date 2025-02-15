@@ -1,10 +1,10 @@
 import template from './sw-condition-line-item-custom-field.html.twig';
 import './sw-condition-line-item-custom-field.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { Criteria } = Cicada.Data;
-const { Filter } = Cicada;
+const { Criteria } = Shopware.Data;
+const { Filter } = Shopware;
 
 /**
  * @sw-package fundamentals@after-sales
@@ -122,6 +122,7 @@ Component.extend('sw-condition-line-item-custom-field', 'sw-condition-base-line-
                 this.conditionValueRenderedFieldValueError
             );
         },
+
         truncateFilter() {
             return Filter.getByName('truncate');
         },

@@ -89,7 +89,7 @@ describe('module/sw-cms/component/sw-cms-block-config', () => {
     });
 
     beforeEach(() => {
-        Cicada.Store.get('cmsPage').setIsSystemDefaultLanguage(true);
+        Shopware.Store.get('cmsPage').setIsSystemDefaultLanguage(true);
     });
 
     it('should be a Vue.js component', async () => {
@@ -161,7 +161,7 @@ describe('module/sw-cms/component/sw-cms-block-config', () => {
     it.each(eventEmittedDataProvider)(
         'should not be able to push the %s event on delete, when quickactions are disabled',
         async (eventName, handler) => {
-            Cicada.Store.get('cmsPage').setIsSystemDefaultLanguage(false);
+            Shopware.Store.get('cmsPage').setIsSystemDefaultLanguage(false);
             const wrapper = await createWrapper();
 
             wrapper.vm[handler]();

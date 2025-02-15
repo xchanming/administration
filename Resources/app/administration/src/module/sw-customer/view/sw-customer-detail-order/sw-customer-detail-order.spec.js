@@ -17,7 +17,7 @@ const orderFixture = [
 ];
 
 function getOrderCollection(collection = []) {
-    return new EntityCollection('/order', 'order', null, { isCicadaContext: true }, collection, collection.length, null);
+    return new EntityCollection('/order', 'order', null, { isShopwareContext: true }, collection, collection.length, null);
 }
 
 async function createWrapper(orderData = []) {

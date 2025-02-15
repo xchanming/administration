@@ -1,10 +1,10 @@
 import BulkEditBaseHandler from './bulk-edit-base.handler';
 import RetryHelper from '../../../../core/helper/retry.helper';
 
-const types = Cicada.Utils.types;
-const { Service, Application } = Cicada;
-const { Criteria } = Cicada.Data;
-const { cloneDeep } = Cicada.Utils.object;
+const types = Shopware.Utils.types;
+const { Service, Application } = Shopware;
+const { Criteria } = Shopware.Data;
+const { cloneDeep } = Shopware.Utils.object;
 
 /**
  * @class
@@ -73,7 +73,7 @@ class BulkEditProductHandler extends BulkEditBaseHandler {
                 {},
                 {
                     'single-operation': 1,
-                    'sw-language-id': Cicada.Context.api.languageId,
+                    'sw-language-id': Shopware.Context.api.languageId,
                 },
             );
         });
@@ -109,7 +109,7 @@ class BulkEditProductHandler extends BulkEditBaseHandler {
         const criteria = new Criteria(1, 25);
         criteria.setIds(this.entityIds);
 
-        return productRepository.search(criteria, Cicada.Context.api).then((products) => {
+        return productRepository.search(criteria, Shopware.Context.api).then((products) => {
             this.products = products;
         });
     }

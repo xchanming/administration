@@ -26,7 +26,7 @@ async function createWrapper() {
                     'sw-iframe-renderer': true,
                 },
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
             },
         },
@@ -39,7 +39,7 @@ describe('module/sw-cms/elements/location-renderer/config', () => {
         await import('src/module/sw-cms/elements/location-renderer');
 
         jest.useFakeTimers();
-        jest.spyOn(Cicada.ExtensionAPI, 'publishData').mockImplementation(() => {});
+        jest.spyOn(Shopware.ExtensionAPI, 'publishData').mockImplementation(() => {});
     });
 
     beforeEach(() => {

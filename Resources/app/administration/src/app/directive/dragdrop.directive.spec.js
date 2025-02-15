@@ -86,8 +86,8 @@ describe('directives/dragdrop', () => {
     let droppable;
 
     beforeAll(() => {
-        draggable = Cicada.Directive.getByName('draggable');
-        droppable = Cicada.Directive.getByName('droppable');
+        draggable = Shopware.Directive.getByName('draggable');
+        droppable = Shopware.Directive.getByName('droppable');
     });
 
     beforeEach(() => {

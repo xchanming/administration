@@ -7,7 +7,7 @@ import { defineComponent } from 'vue';
 /**
  * @private
  */
-export default Cicada.Mixin.register(
+export default Shopware.Mixin.register(
     'ruleContainer',
     defineComponent({
         inject: [

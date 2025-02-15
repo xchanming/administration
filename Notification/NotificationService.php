@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Notification;
+namespace Shopware\Administration\Notification;
 
-use Cicada\Core\Defaults;
-use Cicada\Core\Framework\Api\ApiException;
-use Cicada\Core\Framework\Api\Context\AdminApiSource;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Core\Defaults;
+use Shopware\Core\Framework\Api\ApiException;
+use Shopware\Core\Framework\Api\Context\AdminApiSource;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
+use Shopware\Core\Framework\Log\Package;
 
 /**
  * @internal

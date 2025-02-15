@@ -1,15 +1,20 @@
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
 
-Cicada.Component.register('sw-dashboard-statistics', () => import('./component/sw-dashboard-statistics'));
-Cicada.Component.register('sw-dashboard-index', () => import('./page/sw-dashboard-index'));
+Shopware.Component.register('sw-dashboard-index', () => import('./page/sw-dashboard-index'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
+
+// eslint-disable-next-line max-len,sw-deprecation-rules/private-feature-declarations
+Shopware.Component.register(
+    'sw-usage-data-consent-banner',
+    () => import('src/module/sw-settings-usage-data/component/sw-usage-data-consent-banner'),
+);
 
 /**
  * @sw-package after-sales
  *
  * @private
  */
-Cicada.Module.register('sw-dashboard', {
+Shopware.Module.register('sw-dashboard', {
     type: 'core',
     name: 'dashboard',
     title: 'sw-dashboard.general.mainMenuItemGeneral',

@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 import { mount } from '@vue/test-utils';
 
 async function createWrapper({ template = '<sw-provide />', components = {}, data = {} } = {}) {

@@ -3,17 +3,15 @@
  */
 import template from './sw-settings-salutation-detail.html.twig';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const CicadaError = Cicada.Classes.CicadaError;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
-const utils = Cicada.Utils;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const ShopwareError = Shopware.Classes.ShopwareError;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
+const utils = Shopware.Utils;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -83,7 +81,7 @@ export default {
 
         invalidKeyError() {
             if (this.invalidKey && !this.isKeyChecking) {
-                return new CicadaError({ code: 'DUPLICATED_SALUTATION_KEY' });
+                return new ShopwareError({ code: 'DUPLICATED_SALUTATION_KEY' });
             }
             return null;
         },
@@ -153,7 +151,7 @@ export default {
                 return;
             }
 
-            Cicada.State.commit('context/resetLanguageToDefault');
+            Shopware.Store.get('context').resetLanguageToDefault();
             this.salutation = this.salutationRepository.create();
             this.isLoading = false;
         },

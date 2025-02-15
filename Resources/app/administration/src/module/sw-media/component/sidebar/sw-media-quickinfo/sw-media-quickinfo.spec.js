@@ -16,6 +16,7 @@ const itemMock = (options = {}) => {
         productManufacturers: [],
         productMedia: [],
         mailTemplateMedia: [],
+        documentBaseConfigs: [],
         paymentMethods: [],
         shippingMethods: [],
         ...options,
@@ -140,7 +141,7 @@ function provide3DMockOptions() {
         [
             {
                 fileName: 'smth.glb',
-                url: 'http://cicada.example.com/media/file/2b71335f118c4940b425c55352e69e44/media-1-three-d.glb',
+                url: 'http://shopware.example.com/media/file/2b71335f118c4940b425c55352e69e44/media-1-three-d.glb',
             },
             true,
             true,

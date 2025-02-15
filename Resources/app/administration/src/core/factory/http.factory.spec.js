@@ -6,7 +6,7 @@ import axios from 'axios';
 import createHTTPClient from 'src/core/factory/http.factory';
 import MockAdapter from 'axios-mock-adapter';
 
-Cicada.Application.view.deleteReactive = () => {};
+Shopware.Application.view.deleteReactive = () => {};
 
 describe('core/factory/http.factory.js', () => {
     let httpClient;
@@ -132,7 +132,7 @@ describe('core/factory/http.factory.js', () => {
     });
 
     it('should add current vue route, as http header to trace', async () => {
-        Cicada.Application.view = {
+        Shopware.Application.view = {
             router: {
                 history: {
                     current: {
@@ -143,7 +143,7 @@ describe('core/factory/http.factory.js', () => {
         };
 
         mock.onGet('/test').reply((request) => {
-            expect(request.headers['cicada-admin-active-route']).toBe('sw-dashboard-index');
+            expect(request.headers['shopware-admin-active-route']).toBe('sw-dashboard-index');
 
             return [
                 200,

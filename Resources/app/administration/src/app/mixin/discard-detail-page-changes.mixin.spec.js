@@ -32,7 +32,7 @@ async function createWrapper(...entityNames) {
             </div>
         `,
             mixins: [
-                Cicada.Mixin.getByName('discard-detail-page-changes')(...entityNames),
+                Shopware.Mixin.getByName('discard-detail-page-changes')(...entityNames),
             ],
             data() {
                 return {
@@ -119,7 +119,7 @@ describe('src/app/mixin/discard-detail-page-changes.mixin.ts', () => {
 
         wrapper = await createWrapper('manufacturer');
 
-        jest.spyOn(Cicada.Utils.debug, 'warn').mockImplementationOnce(() => {});
+        jest.spyOn(Shopware.Utils.debug, 'warn').mockImplementationOnce(() => {});
 
         // simulate route id change
         await wrapper.vm.$router.push({
@@ -127,7 +127,7 @@ describe('src/app/mixin/discard-detail-page-changes.mixin.ts', () => {
             params: { id: '2' },
         });
 
-        expect(Cicada.Utils.debug.warn).toHaveBeenCalledWith(
+        expect(Shopware.Utils.debug.warn).toHaveBeenCalledWith(
             'Discard-detail-page-changes Mixin',
             'Could not discard changes for entity with name "manufacturer".',
         );

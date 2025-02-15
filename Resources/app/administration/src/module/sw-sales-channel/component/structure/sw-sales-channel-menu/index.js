@@ -5,17 +5,15 @@
 import template from './sw-sales-channel-menu.html.twig';
 import './sw-sales-channel-menu.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
-const FlatTree = Cicada.Helper.FlatTreeHelper;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
+const FlatTree = Shopware.Helper.FlatTreeHelper;
 
 /**
  * @private
  */
 Component.register('sw-sales-channel-menu', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -110,7 +108,7 @@ Component.register('sw-sales-channel-menu', {
         },
 
         salesChannelFavoritesService() {
-            return Cicada.Service('salesChannelFavorites');
+            return Shopware.Service('salesChannelFavorites');
         },
 
         salesChannelFavorites() {
@@ -150,27 +148,15 @@ Component.register('sw-sales-channel-menu', {
         },
 
         registerListener() {
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                this.$root.$on('sales-channel-change', this.loadEntityData);
-                this.$root.$on('on-change-application-language', this.loadEntityData);
-                this.$root.$on('on-add-sales-channel', this.openSalesChannelModal);
-            } else {
-                Cicada.Utils.EventBus.on('sw-sales-channel-detail-sales-channel-change', this.loadEntityData);
-                Cicada.Utils.EventBus.on('sw-language-switch-change-application-language', this.loadEntityData);
-                Cicada.Utils.EventBus.on('sw-sales-channel-detail-base-sales-channel-change', this.openSalesChannelModal);
-            }
+            Shopware.Utils.EventBus.on('sw-sales-channel-detail-sales-channel-change', this.loadEntityData);
+            Shopware.Utils.EventBus.on('sw-language-switch-change-application-language', this.loadEntityData);
+            Shopware.Utils.EventBus.on('sw-sales-channel-detail-base-sales-channel-change', this.openSalesChannelModal);
         },
 
         destroyedComponent() {
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                this.$root.$off('sales-channel-change', this.loadEntityData);
-                this.$root.$off('on-change-application-language', this.loadEntityData);
-                this.$root.$off('on-add-sales-channel', this.openSalesChannelModal);
-            } else {
-                Cicada.Utils.EventBus.off('sw-sales-channel-detail-sales-channel-change', this.loadEntityData);
-                Cicada.Utils.EventBus.off('sw-language-switch-change-application-language', this.loadEntityData);
-                Cicada.Utils.EventBus.off('sw-sales-channel-detail-base-sales-channel-change', this.openSalesChannelModal);
-            }
+            Shopware.Utils.EventBus.off('sw-sales-channel-detail-sales-channel-change', this.loadEntityData);
+            Shopware.Utils.EventBus.off('sw-language-switch-change-application-language', this.loadEntityData);
+            Shopware.Utils.EventBus.off('sw-sales-channel-detail-base-sales-channel-change', this.openSalesChannelModal);
         },
 
         getDomainLink(salesChannel) {

@@ -1,8 +1,8 @@
 import template from './sw-custom-field-set-renderer.html.twig';
 import './sw-custom-field-set-renderer.scss';
 
-const { Component, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package framework
@@ -21,8 +21,6 @@ Component.register('sw-custom-field-set-renderer', {
         'feature',
         'repositoryFactory',
     ],
-
-    compatConfig: Cicada.compatConfig,
 
     // Grant access to some variables to the child form render components
     provide() {
@@ -294,7 +292,7 @@ Component.register('sw-custom-field-set-renderer', {
         },
 
         getBind(customField, props) {
-            const customFieldClone = Cicada.Utils.object.cloneDeep(customField);
+            const customFieldClone = Shopware.Utils.object.cloneDeep(customField);
 
             if (customFieldClone.type === 'bool') {
                 customFieldClone.config.bordered = true;
@@ -358,17 +356,13 @@ Component.register('sw-custom-field-set-renderer', {
 
             // fully load the set
             this.customFieldSetRepository
-                .get(setId, Cicada.Context.api, this.customFieldSetCriteriaById())
+                .get(setId, Shopware.Context.api, this.customFieldSetCriteriaById())
                 .then((newSet) => {
                     // replace the fully fetched set
                     this.sets.forEach((originalSet, index) => {
                         if (originalSet.id === newSet.id) {
-                            if (this.isCompatEnabled('INSTANCE_SET')) {
-                                this.$set(this.sets, index, newSet);
-                            } else {
-                                // eslint-disable-next-line vue/no-mutating-props
-                                this.sets[index] = newSet;
-                            }
+                            // eslint-disable-next-line vue/no-mutating-props
+                            this.sets[index] = newSet;
                         }
                     });
 

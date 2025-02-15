@@ -15,8 +15,6 @@ const profileTypes = {
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['feature'],
 
     props: {

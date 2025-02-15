@@ -1,7 +1,7 @@
 import template from './sw-internal-link.html.twig';
 import './sw-internal-link.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -19,8 +19,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-internal-link', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['click'],
 

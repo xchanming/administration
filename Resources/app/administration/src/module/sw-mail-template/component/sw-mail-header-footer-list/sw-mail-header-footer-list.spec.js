@@ -6,7 +6,7 @@ import { mount } from '@vue/test-utils';
 const mailHeaderFooterMock = [
     {
         id: '1',
-        description: 'Cicada Default Template',
+        description: 'Shopware Default Template',
         name: 'Order Header',
         salesChannels: [
             {
@@ -16,7 +16,7 @@ const mailHeaderFooterMock = [
     },
     {
         id: '2',
-        description: 'Cicada Default Template',
+        description: 'Shopware Default Template',
         name: 'Order Header',
         salesChannels: [],
     },

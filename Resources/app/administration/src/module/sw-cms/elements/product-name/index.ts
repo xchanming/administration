@@ -1,11 +1,11 @@
-Cicada.Component.extend('sw-cms-el-product-name', 'sw-cms-el-text', () => import('./component'));
-Cicada.Component.extend('sw-cms-el-config-product-name', 'sw-cms-el-config-text', () => import('./config'));
+Shopware.Component.extend('sw-cms-el-product-name', 'sw-cms-el-text', () => import('./component'));
+Shopware.Component.extend('sw-cms-el-config-product-name', 'sw-cms-el-config-text', () => import('./config'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'product-name',
     label: 'sw-cms.elements.productHeading.name.label',
     component: 'sw-cms-el-product-name',

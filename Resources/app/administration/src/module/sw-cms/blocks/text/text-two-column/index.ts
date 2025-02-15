@@ -2,18 +2,18 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-text-two-column', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-text-two-column', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-text-two-column', () => import('./component'));
+Shopware.Component.register('sw-cms-block-text-two-column', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'text-two-column',
     label: 'sw-cms.blocks.text.textTwoColumn.label',
     category: 'text',

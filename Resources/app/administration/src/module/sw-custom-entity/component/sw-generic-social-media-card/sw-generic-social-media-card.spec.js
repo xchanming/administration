@@ -93,7 +93,7 @@ async function createWrapper() {
 }
 
 /**
- * @sw-package content
+ * @sw-package discovery
  */
 describe('src/module/sw-custom-entity/component/sw-generic-social-media-card', () => {
     it('should display the ogTitle and allow changing it', async () => {

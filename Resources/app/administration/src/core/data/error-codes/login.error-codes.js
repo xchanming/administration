@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 const title = 'global.default.error';
 
 const codes = {

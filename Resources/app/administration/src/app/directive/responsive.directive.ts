@@ -19,11 +19,11 @@ interface ResponsiveDirectiveBinding extends ObjectDirective {
  *  - timeout: Sets the duration on how much the throttle should wait.
  */
 
-Cicada.Directive.register('responsive', {
+Shopware.Directive.register('responsive', {
     mounted(el: HTMLElement, binding: ResponsiveDirectiveBinding) {
         const timeout = typeof binding.value?.timeout === 'number' ? binding.value.timeout : 200;
 
-        const handleResize: ResizeObserverCallback = Cicada.Utils.throttle((entries: ResizeObserverEntry[]) => {
+        const handleResize: ResizeObserverCallback = Shopware.Utils.throttle((entries: ResizeObserverEntry[]) => {
             entries.forEach((entry) => {
                 const elementSizeValues = entry.contentRect;
 

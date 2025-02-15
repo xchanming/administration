@@ -2,8 +2,8 @@
  * @sw-package framework
  */
 
-const { warn } = Cicada.Utils.debug;
-const { DeviceHelper } = Cicada.Helper;
+const { warn } = Shopware.Utils.debug;
+const { DeviceHelper } = Shopware.Helper;
 
 let pluginInstalled = false;
 

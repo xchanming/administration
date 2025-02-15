@@ -16,6 +16,7 @@ describe('components/media/sw-media-modal-delete', () => {
             productManufacturers: [],
             productMedia: [],
             mailTemplateMedia: [],
+            documentBaseConfigs: [],
             paymentMethods: [],
             shippingMethods: [],
             cmsBlocks: [],
@@ -85,6 +86,7 @@ describe('components/media/sw-media-modal-delete', () => {
         const category = { id: '30f832hdk5bn383h23023hf02' };
         const productManufacturer = { id: '923hf9202jd02j29d72h20' };
         const mailTemplateMedia = { id: '292hf92h283f89303h20210f' };
+        const documentBaseConfig = { id: '94hf02hnf02hf82292hf0202f' };
         const paymentMethod = { id: '02j2j0f02h2f0283nhf834h239f2' };
         const shippingMethod = { id: '02jhf92jf784jflsnhffi9989' };
         const productMedia = { id: 'f83hf3dn2k5nv83020283jf9320' };
@@ -111,6 +113,7 @@ describe('components/media/sw-media-modal-delete', () => {
                 productManufacturers: [productManufacturer],
                 productMedia: [productMedia],
                 mailTemplateMedia: [mailTemplateMedia],
+                documentBaseConfigs: [documentBaseConfig],
                 paymentMethods: [paymentMethod],
                 shippingMethods: [shippingMethod],
                 cmsBlocks: [cmsBlock],
@@ -129,6 +132,9 @@ describe('components/media/sw-media-modal-delete', () => {
         expect(wrapper.vm.mediaQuickInfo.productMedia).toEqual([productMedia]);
         expect(wrapper.vm.mediaQuickInfo.mailTemplateMedia).toEqual([
             mailTemplateMedia,
+        ]);
+        expect(wrapper.vm.mediaQuickInfo.documentBaseConfigs).toEqual([
+            documentBaseConfig,
         ]);
         expect(wrapper.vm.mediaQuickInfo.paymentMethods).toEqual([
             paymentMethod,

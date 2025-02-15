@@ -1,8 +1,8 @@
 import template from './sw-category-entry-point-card.html.twig';
 import './sw-category-entry-point-card.scss';
 
-const { Context } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 /**
  * @sw-package discovery
@@ -10,8 +10,6 @@ const { Criteria, EntityCollection } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',

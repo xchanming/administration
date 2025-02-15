@@ -56,13 +56,15 @@
                 color: $color-gray-700;
             }
 
+            /* stylelint-disable max-line-length, max-nesting-depth */
             .sw-field--switch .sw-field--switch__input input[type="checkbox"]:checked:disabled ~ .sw-field__switch-state {
-                background: $color-cicada-brand-200;
+                background: $color-shopware-brand-200;
 
                 .sw-field__switch-state-knob {
                     background: $color-gray-50;
                 }
             }
+            /* stylelint-enable max-line-length, max-nesting-depth */
         }
     }
 }

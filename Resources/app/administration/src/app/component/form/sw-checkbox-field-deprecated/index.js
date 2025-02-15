@@ -2,8 +2,8 @@ import { inject } from 'vue';
 import template from './sw-checkbox-field-deprecated.html.twig';
 import './sw-checkbox-field.scss';
 
-const { Component, Mixin } = Cicada;
-const utils = Cicada.Utils;
+const { Component, Mixin } = Shopware;
+const utils = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -19,8 +19,6 @@ Component.register('sw-checkbox-field-deprecated', {
     template,
 
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

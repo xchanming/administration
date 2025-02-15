@@ -3,7 +3,7 @@ import contact from './templates/form-contact/index';
 import newsletter from './templates/form-newsletter/index';
 import './sw-cms-el-form.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @private
@@ -11,8 +11,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('cms-element'),

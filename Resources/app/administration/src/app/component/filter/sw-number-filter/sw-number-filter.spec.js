@@ -1,9 +1,10 @@
 /**
  * @sw-package framework
  */
+
 import { shallowMount } from '@vue/test-utils';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 async function createWrapper() {
     return shallowMount(await wrapTestComponent('sw-number-filter', { sync: true }), {

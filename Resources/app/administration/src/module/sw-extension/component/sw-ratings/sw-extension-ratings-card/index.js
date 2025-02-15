@@ -8,8 +8,6 @@ import './sw-extension-ratings-card.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['update-extension'],
 
     mixins: ['sw-extension-error'],
@@ -51,7 +49,7 @@ export default {
         },
 
         extensionStoreDataService() {
-            return Cicada.Service('extensionStoreDataService');
+            return Shopware.Service('extensionStoreDataService');
         },
 
         hasReviews() {

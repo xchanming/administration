@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Notification;
+namespace Shopware\Administration\Notification;
 
-use Cicada\Core\Framework\DataAbstractionLayer\Entity;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityIdTrait;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\System\Integration\IntegrationEntity;
-use Cicada\Core\System\User\UserEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\System\Integration\IntegrationEntity;
+use Shopware\Core\System\User\UserEntity;
 
 #[Package('framework')]
 class NotificationEntity extends Entity

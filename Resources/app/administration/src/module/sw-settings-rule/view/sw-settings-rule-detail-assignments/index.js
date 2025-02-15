@@ -2,8 +2,8 @@ import RuleAssignmentConfigurationService from 'src/module/sw-settings-rule/serv
 import template from './sw-settings-rule-detail-assignments.html.twig';
 import './sw-settings-rule-detail-assignments.scss';
 
-const { Mixin, Context, Utils } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin, Context, Utils } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -11,8 +11,6 @@ const { Criteria } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -86,7 +84,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 

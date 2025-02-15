@@ -5,20 +5,17 @@ import './sw-customer-list.scss';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
         'acl',
         'filterFactory',
-        'feature',
     ],
 
     mixins: [
@@ -30,7 +27,7 @@ export default {
     data() {
         return {
             customers: null,
-            sortBy: 'createdAt',
+            sortBy: 'customerNumber',
             naturalSorting: true,
             sortDirection: 'DESC',
             isLoading: false,
@@ -77,7 +74,7 @@ export default {
         defaultCriteria() {
             const defaultCriteria = new Criteria(this.page, this.limit);
             // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-            this.naturalSorting = this.sortBy === 'createdAt';
+            this.naturalSorting = this.sortBy === 'customerNumber';
 
             defaultCriteria.setTerm(this.term);
 
@@ -181,6 +178,7 @@ export default {
                     placeholder: this.$tc('sw-customer.filter.tags.placeholder'),
                 },
             };
+
             return options;
         },
 
@@ -189,11 +187,11 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         emailIdnFilter() {
-            return Cicada.Filter.getByName('decode-idn-email');
+            return Shopware.Filter.getByName('decode-idn-email');
         },
     },
 
@@ -219,7 +217,7 @@ export default {
             promise
                 .then(() => {
                     this.createNotificationSuccess({
-                        message: this.$tc('sw-customer.detail.messageSaveSuccess', 0, { name: this.salutation(customer) }),
+                        message: this.$tc('sw-customer.detail.messageSaveSuccess', { name: this.salutation(customer) }, 0),
                     });
                 })
                 .catch(() => {
@@ -233,7 +231,7 @@ export default {
         async getList() {
             this.isLoading = true;
 
-            const criteria = await Cicada.Service('filterService').mergeWithStoredFilters(
+            const criteria = await Shopware.Service('filterService').mergeWithStoredFilters(
                 this.storeKey,
                 this.defaultCriteria,
             );
@@ -289,10 +287,10 @@ export default {
         getCustomerColumns() {
             const columns = [
                 {
-                    property: 'title',
-                    dataIndex: 'title',
+                    property: 'firstName',
+                    dataIndex: 'lastName,firstName',
                     inlineEdit: 'string',
-                    label: 'sw-customer.list.columnTitle',
+                    label: 'sw-customer.list.columnName',
                     routerLink: 'sw.customer.detail',
                     width: '250px',
                     allowResize: true,
@@ -304,6 +302,25 @@ export default {
                     label: 'sw-customer.list.columnCompany',
                     allowResize: true,
                     visible: false,
+                    useCustomSort: true,
+                },
+                {
+                    property: 'defaultBillingAddress.street',
+                    label: 'sw-customer.list.columnStreet',
+                    allowResize: true,
+                    useCustomSort: true,
+                },
+                {
+                    property: 'defaultBillingAddress.zipcode',
+                    label: 'sw-customer.list.columnZip',
+                    align: 'right',
+                    allowResize: true,
+                    useCustomSort: true,
+                },
+                {
+                    property: 'defaultBillingAddress.city',
+                    label: 'sw-customer.list.columnCity',
+                    allowResize: true,
                     useCustomSort: true,
                 },
                 {
@@ -327,39 +344,10 @@ export default {
                     useCustomSort: true,
                 },
                 {
-                    property: 'accountType',
-                    label: 'sw-customer.list.columnAccountType',
-                    allowResize: false,
-                    useCustomSort: true,
-                    visible: false,
-                },
-                {
                     property: 'email',
                     inlineEdit: 'string',
                     label: 'sw-customer.list.columnEmail',
                     allowResize: true,
-                    useCustomSort: true,
-                },
-                {
-                    property: 'defaultBillingAddress.street',
-                    label: 'sw-customer.list.columnStreet',
-                    allowResize: true,
-                    visible: false,
-                    useCustomSort: true,
-                },
-                {
-                    property: 'defaultBillingAddress.zipcode',
-                    label: 'sw-customer.list.columnZip',
-                    align: 'right',
-                    allowResize: true,
-                    visible: false,
-                    useCustomSort: true,
-                },
-                {
-                    property: 'defaultBillingAddress.city',
-                    label: 'sw-customer.list.columnCity',
-                    allowResize: true,
-                    visible: false,
                     useCustomSort: true,
                 },
                 {
@@ -382,21 +370,15 @@ export default {
                     property: 'boundSalesChannelId',
                     label: 'sw-customer.list.columnBoundSalesChannel',
                     allowResize: true,
-                    visible: true,
-                    useCustomSort: true,
-                },
-                {
-                    property: 'createdAt',
-                    dataIndex: 'createdAt',
-                    label: 'sw-customer.list.columnCreatedAt',
                     visible: false,
+                    useCustomSort: true,
                 },
                 {
                     property: 'active',
                     inlineEdit: 'boolean',
                     label: 'sw-customer.list.columnActive',
-                    allowResize: false,
-                    visible: true,
+                    allowResize: true,
+                    visible: false,
                     useCustomSort: true,
                 },
             ];

@@ -1,7 +1,7 @@
 import template from './sw-data-grid-column-position.html.twig';
 import './sw-data-grid-column-position.scss';
 
-const { Component, Mixin } = Cicada;
+const { Component, Mixin } = Shopware;
 
 /**
  * @sw-package framework
@@ -23,8 +23,6 @@ const { Component, Mixin } = Cicada;
  */
 Component.register('sw-data-grid-column-position', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'lower-position-value',

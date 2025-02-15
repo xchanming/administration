@@ -5,8 +5,8 @@
 import template from './sw-maintain-currencies-modal.html.twig';
 import './sw-maintain-currencies-modal.scss';
 
-const { Component } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -14,8 +14,6 @@ const { Criteria } = Cicada.Data;
 Component.register('sw-maintain-currencies-modal', {
     template,
     inject: ['repositoryFactory'],
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'update-prices',
@@ -114,7 +112,7 @@ Component.register('sw-maintain-currencies-modal', {
                 this.loadCurrencies();
             }
 
-            this.clonePrices = Cicada.Utils.object.cloneDeep(this.prices);
+            this.clonePrices = Shopware.Utils.object.cloneDeep(this.prices);
         },
 
         loadCurrencies() {
@@ -203,13 +201,8 @@ Component.register('sw-maintain-currencies-modal', {
                 };
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                // create new entry for currency in prices
-                this.$set(this.prices, this.prices.length, price);
-            } else {
-                // eslint-disable-next-line vue/no-mutating-props
-                this.prices[this.prices.length] = price;
-            }
+            // eslint-disable-next-line vue/no-mutating-props
+            this.prices[this.prices.length] = price;
 
             this.createdComponent();
         },

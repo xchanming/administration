@@ -4,39 +4,41 @@
  * @private
  */
 export default function initMainModules(): void {
-    Cicada.ExtensionAPI.handle('mainModuleAdd', async (mainModuleConfig, additionalInformation) => {
-        const extensionName = Object.keys(Cicada.State.get('extensions')).find((key) =>
-            Cicada.State.get('extensions')[key].baseUrl.startsWith(additionalInformation._event_.origin),
+    Shopware.ExtensionAPI.handle('mainModuleAdd', async (mainModuleConfig, additionalInformation) => {
+        const extensionName = Object.keys(Shopware.Store.get('extensions').extensionsState).find((key) =>
+            Shopware.Store.get('extensions').extensionsState[key].baseUrl.startsWith(additionalInformation._event_.origin),
         );
 
         if (!extensionName) {
             throw new Error(`Extension with the origin "${additionalInformation._event_.origin}" not found.`);
         }
 
-        const extension = Cicada.State.get('extensions')?.[extensionName];
+        const extension = Shopware.Store.get('extensions').extensionsState?.[extensionName];
 
-        await Cicada.State.dispatch('extensionSdkModules/addModule', {
-            heading: mainModuleConfig.heading,
-            locationId: mainModuleConfig.locationId,
-            displaySearchBar: mainModuleConfig.displaySearchBar ?? true,
-            baseUrl: extension.baseUrl,
-        }).then((moduleId) => {
-            if (typeof moduleId !== 'string') {
-                return;
-            }
+        await Shopware.Store.get('extensionSdkModules')
+            .addModule({
+                heading: mainModuleConfig.heading,
+                locationId: mainModuleConfig.locationId,
+                displaySearchBar: mainModuleConfig.displaySearchBar ?? true,
+                baseUrl: extension.baseUrl,
+            })
+            .then((moduleId) => {
+                if (typeof moduleId !== 'string') {
+                    return;
+                }
 
-            Cicada.State.commit('extensionMainModules/addMainModule', {
-                extensionName,
-                moduleId,
+                Shopware.Store.get('extensionMainModules').addMainModule({
+                    extensionName,
+                    moduleId,
+                });
             });
-        });
     });
 
-    Cicada.ExtensionAPI.handle('smartBarButtonAdd', (configuration) => {
-        Cicada.State.commit('extensionSdkModules/addSmartBarButton', configuration);
+    Shopware.ExtensionAPI.handle('smartBarButtonAdd', (configuration) => {
+        Shopware.Store.get('extensionSdkModules').addSmartBarButton(configuration);
     });
 
-    Cicada.ExtensionAPI.handle('smartBarHide', (configuration) => {
-        Cicada.State.commit('extensionSdkModules/addHiddenSmartBar', configuration.locationId);
+    Shopware.ExtensionAPI.handle('smartBarHide', (configuration) => {
+        Shopware.Store.get('extensionSdkModules').addHiddenSmartBar(configuration.locationId);
     });
 }

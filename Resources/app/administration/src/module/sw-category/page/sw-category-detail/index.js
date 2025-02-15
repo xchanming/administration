@@ -1,11 +1,11 @@
-import pageState from './state';
+import './store';
 import template from './sw-category-detail.html.twig';
 import './sw-category-detail.scss';
 
-const { Context, Mixin } = Cicada;
-const { Criteria, ChangesetGenerator, EntityCollection } = Cicada.Data;
-const { cloneDeep, merge } = Cicada.Utils.object;
-const type = Cicada.Utils.types;
+const { Context, Mixin } = Shopware;
+const { Criteria, ChangesetGenerator, EntityCollection } = Shopware.Data;
+const { cloneDeep, merge } = Shopware.Utils.object;
+const type = Shopware.Utils.types;
 
 /**
  * @sw-package discovery
@@ -13,8 +13,6 @@ const type = Cicada.Utils.types;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -62,7 +60,7 @@ export default {
             splitBreakpoint: 1024,
             isDisplayingLeavePageWarning: false,
             nextRoute: null,
-            currentLanguageId: Cicada.Context.api.languageId,
+            currentLanguageId: Shopware.Context.api.languageId,
             forceDiscardChanges: false,
             categoryCheckedItem: 0,
             landingPageCheckedItem: 0,
@@ -103,19 +101,19 @@ export default {
         },
 
         landingPage() {
-            if (!Cicada.State.get('swCategoryDetail')) {
+            if (!Shopware.Store.get('swCategoryDetail')) {
                 return {};
             }
 
-            return Cicada.State.get('swCategoryDetail').landingPage;
+            return Shopware.Store.get('swCategoryDetail').landingPage;
         },
 
         category() {
-            if (!Cicada.State.get('swCategoryDetail')) {
+            if (!Shopware.Store.get('swCategoryDetail')) {
                 return {};
             }
 
-            return Cicada.State.get('swCategoryDetail').category;
+            return Shopware.Store.get('swCategoryDetail').category;
         },
 
         showEntryPointOverwriteModal() {
@@ -123,11 +121,11 @@ export default {
         },
 
         cmsPage() {
-            return Cicada.Store.get('cmsPage').currentPage;
+            return Shopware.Store.get('cmsPage').currentPage;
         },
 
         cmsPageState() {
-            return Cicada.Store.get('cmsPage');
+            return Shopware.Store.get('cmsPage');
         },
 
         cmsPageId() {
@@ -235,7 +233,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -266,16 +264,11 @@ export default {
     },
 
     beforeCreate() {
-        Cicada.State.registerModule('swCategoryDetail', pageState);
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     },
 
     created() {
         this.createdComponent();
-    },
-
-    beforeUnmount() {
-        Cicada.State.unregisterModule('swCategoryDetail');
     },
 
     beforeRouteLeave(to, from, next) {
@@ -335,13 +328,13 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-category-detail__category',
                 path: 'category',
                 scope: this,
             });
 
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-category-detail__cmsPage',
                 path: 'cmsPage',
                 scope: this,
@@ -492,20 +485,20 @@ export default {
 
             try {
                 if (this.landingPageId === null) {
-                    Cicada.State.commit('cicadaApps/setSelectedIds', []);
+                    Shopware.Store.get('shopwareApps').selectedIds = [];
 
-                    await Cicada.State.dispatch('swCategoryDetail/setActiveLandingPage', { landingPage: null });
+                    Shopware.Store.get('swCategoryDetail').landingPage = null;
                     this.cmsPageState.resetCmsPageState();
 
                     return;
                 }
 
-                Cicada.State.commit('cicadaApps/setSelectedIds', [
+                Shopware.Store.get('shopwareApps').selectedIds = [
                     this.landingPageId,
-                ]);
-                await Cicada.State.dispatch('swCategoryDetail/loadActiveLandingPage', {
+                ];
+                await Shopware.Store.get('swCategoryDetail').loadActiveLandingPage({
                     repository: this.landingPageRepository,
-                    apiContext: Cicada.Context.api,
+                    apiContext: Shopware.Context.api,
                     id: this.landingPageId,
                     criteria: this.landingPageCriteria,
                 });
@@ -527,23 +520,24 @@ export default {
             this.isLoading = true;
 
             if (this.categoryId === null) {
-                Cicada.State.commit('cicadaApps/setSelectedIds', []);
+                Shopware.Store.get('shopwareApps').selectedIds = [];
 
-                return Cicada.State.dispatch('swCategoryDetail/setActiveCategory', { category: null }).then(() => {
-                    this.cmsPageState.resetCmsPageState();
-                    this.isLoading = false;
-                });
+                Shopware.Store.get('swCategoryDetail').category = null;
+                this.cmsPageState.resetCmsPageState();
+                this.isLoading = false;
+                return;
             }
 
-            Cicada.State.commit('cicadaApps/setSelectedIds', [
+            Shopware.Store.get('shopwareApps').selectedIds = [
                 this.categoryId,
-            ]);
-            return Cicada.State.dispatch('swCategoryDetail/loadActiveCategory', {
-                repository: this.categoryRepository,
-                apiContext: Cicada.Context.api,
-                id: this.categoryId,
-                criteria: this.categoryCriteria,
-            })
+            ];
+            Shopware.Store.get('swCategoryDetail')
+                .loadActiveCategory({
+                    repository: this.categoryRepository,
+                    apiContext: Shopware.Context.api,
+                    id: this.categoryId,
+                    criteria: this.categoryCriteria,
+                })
                 .then(() => {
                     this.cmsPageState.resetCmsPageState();
                     return Promise.resolve();
@@ -561,7 +555,7 @@ export default {
             return this.customFieldSetRepository
                 .search(this.customFieldSetCriteria)
                 .then((customFieldSet) => {
-                    return this.$store.commit('swCategoryDetail/setCustomFieldSets', customFieldSet);
+                    Shopware.Store.get('swCategoryDetail').customFieldSets = customFieldSet;
                 })
                 .finally(() => {
                     this.isCustomFieldLoading = true;
@@ -574,7 +568,7 @@ export default {
             return this.customFieldSetRepository
                 .search(this.customFieldSetLandingPageCriteria)
                 .then((customFieldSet) => {
-                    return this.$store.commit('swCategoryDetail/setCustomFieldSets', customFieldSet);
+                    Shopware.Store.get('swCategoryDetail').customFieldSets = customFieldSet;
                 })
                 .finally(() => {
                     this.isCustomFieldLoading = true;
@@ -597,9 +591,7 @@ export default {
 
         onLeaveModalConfirm(destination) {
             // Discard all category related errors that may have occurred
-            Cicada.State.dispatch('error/removeApiError', {
-                expression: 'category',
-            });
+            Shopware.Store.get('error').removeApiError('category');
 
             this.forceDiscardChanges = true;
             this.isDisplayingLeavePageWarning = false;
@@ -678,7 +670,7 @@ export default {
             }
 
             return this.categoryRepository
-                .save(this.category, { ...Cicada.Context.api })
+                .save(this.category, { ...Shopware.Context.api })
                 .then(() => {
                     this.isSaveSuccessful = true;
                     this.entryPointOverwriteConfirmed = false;
@@ -747,7 +739,7 @@ export default {
 
             this.isLoading = true;
             return this.landingPageRepository
-                .save(this.landingPage, Cicada.Context.api)
+                .save(this.landingPage, Shopware.Context.api)
                 .then(() => {
                     this.isSaveSuccessful = true;
 
@@ -777,15 +769,15 @@ export default {
         },
 
         addLandingPageSalesChannelError() {
-            const cicadaError = new Cicada.Classes.CicadaError({
+            const shopwareError = new Shopware.Classes.ShopwareError({
                 code: 'landing_page_sales_channel_blank',
                 detail: 'This value should not be blank.',
                 status: '400',
             });
 
-            Cicada.State.dispatch('error/addApiError', {
+            Shopware.Store.get('error').addApiError({
                 expression: `landing_page.${this.landingPage.id}.salesChannels`,
-                error: cicadaError,
+                error: shopwareError,
             });
 
             this.createNotificationError({
@@ -861,11 +853,11 @@ export default {
         },
 
         updateSeoUrls() {
-            if (!Cicada.State.list().includes('swSeoUrl')) {
+            if (!Shopware.Store.list().includes('swSeoUrl')) {
                 return Promise.resolve();
             }
 
-            const seoUrls = Cicada.State.getters['swSeoUrl/getNewOrModifiedUrls']();
+            const seoUrls = Shopware.Store.get('swSeoUrl').newOrModifiedUrls;
 
             return Promise.all(
                 seoUrls.map((seoUrl) => {
@@ -880,15 +872,11 @@ export default {
         },
 
         onLandingPageDelete() {
-            Cicada.State.commit('swCategoryDetail/setLandingPagesToDelete', {
-                landingPagesToDelete: null,
-            });
+            Shopware.Store.get('swCategoryDetail').landingPagesToDelete = null;
         },
 
         onCategoryDelete() {
-            Cicada.State.commit('swCategoryDetail/setCategoriesToDelete', {
-                categoriesToDelete: null,
-            });
+            Shopware.Store.get('swCategoryDetail').categoriesToDelete = null;
         },
     },
 };

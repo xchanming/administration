@@ -6,20 +6,20 @@ import RuleConditionService from 'src/app/service/rule-condition.service';
 
 describe('entity-collection.data.ts', () => {
     beforeAll(async () => {
-        Cicada.Service().register('ruleConditionDataProviderService', () => {
+        Shopware.Service().register('ruleConditionDataProviderService', () => {
             return new RuleConditionService();
         });
     });
 
     it('should register conditions with correct scope', async () => {
-        const condition = Cicada.Service('ruleConditionDataProviderService').getByType('language');
+        const condition = Shopware.Service('ruleConditionDataProviderService').getByType('language');
 
         expect(condition).toBeDefined();
         expect(condition.scopes).toEqual(['global']);
     });
 
     it('should add app script conditions', async () => {
-        Cicada.Service('ruleConditionDataProviderService').addScriptConditions([
+        Shopware.Service('ruleConditionDataProviderService').addScriptConditions([
             {
                 id: 'bar',
                 name: 'foo',
@@ -28,7 +28,7 @@ describe('entity-collection.data.ts', () => {
             },
         ]);
 
-        const condition = Cicada.Service('ruleConditionDataProviderService').getByType('bar');
+        const condition = Shopware.Service('ruleConditionDataProviderService').getByType('bar');
 
         expect(condition.component).toBe('sw-condition-script');
         expect(condition.type).toBe('scriptRule');

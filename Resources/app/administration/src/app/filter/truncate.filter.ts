@@ -6,7 +6,7 @@
  * @private
  * Filter which allows you to truncate a string.
  */
-Cicada.Filter.register(
+Shopware.Filter.register(
     'truncate',
     (value: string = '', length: number = 75, stripHtml: boolean = true, ellipsis: string = '...') => {
         if (!value || !value.length) {

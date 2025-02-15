@@ -1,7 +1,7 @@
 import template from './sw-media-modal-v2.html.twig';
 import './sw-media-modal-v2.scss';
 
-const { Context, Utils } = Cicada;
+const { Context, Utils } = Shopware;
 
 /**
  * @event media-modal-selection-change EntityProxy[]
@@ -11,8 +11,6 @@ const { Context, Utils } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',

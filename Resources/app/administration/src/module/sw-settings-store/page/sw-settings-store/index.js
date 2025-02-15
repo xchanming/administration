@@ -1,6 +1,6 @@
 import template from './sw-settings-store.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @sw-package checkout
@@ -8,8 +8,6 @@ const { Mixin } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('notification'),

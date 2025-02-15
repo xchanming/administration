@@ -81,7 +81,7 @@ describe('src/app/component/wizard/sw-wizard', () => {
         const wrapper = await createWrapper();
         await flushPromises();
 
-        const page = await Cicada.Component.build('sw-wizard-page');
+        const page = await Shopware.Component.build('sw-wizard-page');
         page.props = {
             position: 5,
         };

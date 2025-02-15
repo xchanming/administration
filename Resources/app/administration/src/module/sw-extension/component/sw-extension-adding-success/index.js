@@ -8,7 +8,5 @@ import './sw-extension-adding-success.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     emits: ['close'],
 };

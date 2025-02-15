@@ -1,36 +1,36 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Controller;
+namespace Shopware\Administration\Controller;
 
-use Cicada\Administration\Events\PreResetExcludedSearchTermEvent;
-use Cicada\Administration\Framework\Routing\KnownIps\KnownIpsCollectorInterface;
-use Cicada\Administration\Snippet\SnippetFinderInterface;
-use Cicada\Core\Checkout\Customer\CustomerCollection;
-use Cicada\Core\Checkout\Customer\CustomerEntity;
-use Cicada\Core\Defaults;
-use Cicada\Core\DevOps\Environment\EnvironmentHelper;
-use Cicada\Core\Framework\Adapter\Twig\TemplateFinder;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\NotFilter;
-use Cicada\Core\Framework\Feature;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Routing\RoutingException;
-use Cicada\Core\Framework\Store\Services\FirstRunWizardService;
-use Cicada\Core\Framework\Util\HtmlSanitizer;
-use Cicada\Core\Framework\Uuid\Uuid;
-use Cicada\Core\Framework\Validation\Exception\ConstraintViolationException;
-use Cicada\Core\PlatformRequest;
-use Cicada\Core\System\Currency\CurrencyCollection;
-use Cicada\Core\System\SystemConfig\SystemConfigService;
 use Doctrine\DBAL\Connection;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
+use Shopware\Administration\Events\PreResetExcludedSearchTermEvent;
+use Shopware\Administration\Framework\Routing\KnownIps\KnownIpsCollectorInterface;
+use Shopware\Administration\Snippet\SnippetFinderInterface;
+use Shopware\Core\Checkout\Customer\CustomerCollection;
+use Shopware\Core\Checkout\Customer\CustomerEntity;
+use Shopware\Core\Defaults;
+use Shopware\Core\DevOps\Environment\EnvironmentHelper;
+use Shopware\Core\Framework\Adapter\Twig\TemplateFinder;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\NotFilter;
+use Shopware\Core\Framework\Feature;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Routing\RoutingException;
+use Shopware\Core\Framework\Store\Services\FirstRunWizardService;
+use Shopware\Core\Framework\Util\HtmlSanitizer;
+use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\Framework\Validation\Exception\ConstraintViolationException;
+use Shopware\Core\PlatformRequest;
+use Shopware\Core\System\Currency\CurrencyCollection;
+use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -64,7 +64,7 @@ class AdministrationController extends AbstractController
         private readonly KnownIpsCollectorInterface $knownIpsCollector,
         private readonly Connection $connection,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly string $cicadaCoreDir,
+        private readonly string $shopwareCoreDir,
         private readonly EntityRepository $customerRepository,
         private readonly EntityRepository $currencyRepository,
         private readonly HtmlSanitizer $htmlSanitizer,
@@ -83,7 +83,7 @@ class AdministrationController extends AbstractController
             : false;
     }
 
-    #[Route(path: '/%cicada_administration.path_name%', name: 'administration.index', defaults: ['auth_required' => false], methods: ['GET'])]
+    #[Route(path: '/%shopware_administration.path_name%', name: 'administration.index', defaults: ['auth_required' => false], methods: ['GET'])]
     public function index(Request $request, Context $context): Response
     {
         $template = $this->finder->find('@Administration/administration/index.html.twig');
@@ -140,19 +140,19 @@ class AdministrationController extends AbstractController
         return new JsonResponse(['ips' => $ips]);
     }
 
-    #[Route(path: '/%cicada_administration.path_name%/{pluginName}/index.html', name: 'administration.plugin.index', defaults: ['auth_required' => false], methods: ['GET'])]
+    #[Route(path: '/%shopware_administration.path_name%/{pluginName}/index.html', name: 'administration.plugin.index', defaults: ['auth_required' => false], methods: ['GET'])]
     public function pluginIndex(string $pluginName): Response
     {
         try {
-            $webpackIndexHtml = $this->fileSystem->read('bundles/' . $pluginName . '/administration/index.html');
             $publicAssetBaseUrl = $this->fileSystem->publicUrl('/');
+            $viteIndexHtml = $this->fileSystem->read('bundles/' . $pluginName . '/meteor-app/index.html');
         } catch (FilesystemException $e) {
             return new Response('Plugin index.html not found', Response::HTTP_NOT_FOUND);
         }
 
-        $webpackIndexHtml = str_replace('__$ASSET_BASE_PATH$__', $publicAssetBaseUrl, $webpackIndexHtml);
+        $indexHtml = str_replace('__$ASSET_BASE_PATH$__', \sprintf('%sbundles/%s/meteor-app/', $publicAssetBaseUrl, $pluginName), $viteIndexHtml);
 
-        $response = new Response($webpackIndexHtml, Response::HTTP_OK, [
+        $response = new Response($indexHtml, Response::HTTP_OK, [
             'Content-Type' => 'text/html',
             'Content-Security-Policy' => 'script-src * \'unsafe-eval\' \'unsafe-inline\'',
             PlatformRequest::HEADER_FRAME_OPTIONS => 'sameorigin',
@@ -171,16 +171,16 @@ class AdministrationController extends AbstractController
             throw RoutingException::languageNotFound($context->getLanguageId());
         }
 
-        $zhLanguageId = $this->fetchLanguageIdByName('zh-CN', $this->connection);
+        $deLanguageId = $this->fetchLanguageIdByName('de-DE', $this->connection);
         $enLanguageId = $this->fetchLanguageIdByName('en-GB', $this->connection);
 
         switch ($context->getLanguageId()) {
-            case $zhLanguageId:
-                $defaultExcludedTerm = require $this->cicadaCoreDir . '/Migration/Fixtures/stopwords/zh.php';
+            case $deLanguageId:
+                $defaultExcludedTerm = require $this->shopwareCoreDir . '/Migration/Fixtures/stopwords/de.php';
 
                 break;
             case $enLanguageId:
-                $defaultExcludedTerm = require $this->cicadaCoreDir . '/Migration/Fixtures/stopwords/en.php';
+                $defaultExcludedTerm = require $this->shopwareCoreDir . '/Migration/Fixtures/stopwords/en.php';
 
                 break;
             default:

@@ -1,8 +1,9 @@
 /**
  * @sw-package innovation
  */
+
 import initTeaserButtons from 'src/app/init/teaser-popover.init';
-import { send } from '@cicada-ag/meteor-admin-sdk/es/channel';
+import { send } from '@shopware-ag/meteor-admin-sdk/es/channel';
 
 describe('src/app/init/teaser-popover.init.ts', () => {
     it('should handle __upsellingTeaserPopover', async () => {
@@ -20,7 +21,7 @@ describe('src/app/init/teaser-popover.init.ts', () => {
             },
         });
 
-        const teaserButtonStore = Cicada.Store.get('teaserPopover');
+        const teaserButtonStore = Shopware.Store.get('teaserPopover');
 
         expect(teaserButtonStore.identifier[positionId]).toBeDefined();
         expect(teaserButtonStore.identifier[positionId].component).toBe('button');

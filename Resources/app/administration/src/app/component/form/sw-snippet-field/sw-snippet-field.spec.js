@@ -3,7 +3,7 @@
  */
 
 import { mount } from '@vue/test-utils';
-import uuid from 'src/../test/_helper_/uuid';
+import uuid from 'test/_helper_/uuid';
 
 async function createWrapper(systemLanguageIso = '', translations = [], customOptions = {}) {
     return mount(await wrapTestComponent('sw-snippet-field', { sync: true }), {
@@ -53,9 +53,9 @@ async function createWrapper(systemLanguageIso = '', translations = [], customOp
                                             id: uuid.get('en-GB'),
                                         },
                                         {
-                                            name: 'Base zh-CN',
-                                            iso: 'zh-CN',
-                                            id: uuid.get('zh-CN'),
+                                            name: 'Base de-DE',
+                                            iso: 'de-DE',
+                                            id: uuid.get('de-DE'),
                                         },
                                         ...mockLanguages,
                                     ]),
@@ -100,7 +100,7 @@ async function createWrapper(systemLanguageIso = '', translations = [], customOp
 }
 
 function createEntityCollection(entities = []) {
-    return new Cicada.Data.EntityCollection('collection', 'collection', {}, null, entities);
+    return new Shopware.Data.EntityCollection('collection', 'collection', {}, null, entities);
 }
 
 describe('src/app/component/form/sw-snippet-field', () => {
@@ -110,7 +110,7 @@ describe('src/app/component/form/sw-snippet-field', () => {
     });
 
     it('should show admin language translation of snippet field', async () => {
-        Cicada.State.get('session').currentLocale = 'zh-CN';
+        Shopware.Store.get('session').currentLocale = 'de-DE';
 
         const wrapper = await createWrapper('en-GB', [
             {
@@ -129,7 +129,7 @@ describe('src/app/component/form/sw-snippet-field', () => {
                 origin: null,
                 resetTo: 'deutsch',
                 translationKey: 'test.snippet',
-                setId: uuid.get('zh-CN'),
+                setId: uuid.get('de-DE'),
             },
         ]);
 
@@ -140,7 +140,7 @@ describe('src/app/component/form/sw-snippet-field', () => {
     });
 
     it("should show all admin languages' translations of snippet field, even with more than 25 languages", async () => {
-        Cicada.State.get('session').currentLocale = 'zh-CN';
+        Shopware.Store.get('session').currentLocale = 'de-DE';
 
         const enGB = {
             author: 'testUser',
@@ -156,7 +156,7 @@ describe('src/app/component/form/sw-snippet-field', () => {
             ...enGB,
             value: 'deutsch',
             resetTo: 'deutsch',
-            setId: uuid.get('zh-CN'),
+            setId: uuid.get('de-DE'),
         };
 
         const mockLanguages = new Array(30).reduce((accumulator, _, index) => {
@@ -181,9 +181,9 @@ describe('src/app/component/form/sw-snippet-field', () => {
     });
 
     it('should show system default language translation of snippet field', async () => {
-        Cicada.State.get('session').currentLocale = 'nl-NL';
+        Shopware.Store.get('session').currentLocale = 'nl-NL';
 
-        const wrapper = await createWrapper('zh-CN', [
+        const wrapper = await createWrapper('de-DE', [
             {
                 author: 'testUser',
                 id: null,
@@ -200,7 +200,7 @@ describe('src/app/component/form/sw-snippet-field', () => {
                 origin: null,
                 resetTo: 'deutsch',
                 translationKey: 'test.snippet',
-                setId: uuid.get('zh-CN'),
+                setId: uuid.get('de-DE'),
             },
         ]);
 
@@ -211,7 +211,7 @@ describe('src/app/component/form/sw-snippet-field', () => {
     });
 
     it('should show en-GB language translation of snippet field', async () => {
-        Cicada.State.get('session').currentLocale = 'nl-NL';
+        Shopware.Store.get('session').currentLocale = 'nl-NL';
 
         const wrapper = await createWrapper('nl-NL', [
             {
@@ -230,7 +230,7 @@ describe('src/app/component/form/sw-snippet-field', () => {
                 origin: null,
                 resetTo: 'deutsch',
                 translationKey: 'test.snippet',
-                setId: uuid.get('zh-CN'),
+                setId: uuid.get('de-DE'),
             },
         ]);
 
@@ -241,7 +241,7 @@ describe('src/app/component/form/sw-snippet-field', () => {
     });
 
     it('should show snippet key as fallback', async () => {
-        Cicada.State.get('session').currentLocale = 'nl-NL';
+        Shopware.Store.get('session').currentLocale = 'nl-NL';
 
         const wrapper = await createWrapper('nl-NL', []);
 
@@ -252,10 +252,10 @@ describe('src/app/component/form/sw-snippet-field', () => {
     });
 
     it('should display and hide edit modal', async () => {
-        Cicada.State.get('session').currentLocale = 'en-GB';
-        Cicada.State.get('session').currentUser = {
+        Shopware.Store.get('session').currentLocale = 'en-GB';
+        Shopware.Store.get('session').setCurrentUser({
             username: 'testUser',
-        };
+        });
 
         const wrapper = await createWrapper('en-GB', []);
 

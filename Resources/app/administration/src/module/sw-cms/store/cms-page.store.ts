@@ -17,7 +17,7 @@ type CmsPageState = {
  * @private
  * @sw-package discovery
  */
-const cmsPageStore = Cicada.Store.register({
+const cmsPageStore = Shopware.Store.register({
     id: 'cmsPage',
 
     state: (): CmsPageState => ({

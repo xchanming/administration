@@ -1,48 +1,50 @@
 /**
  * @sw-package framework
  */
-
+import { watch } from 'vue';
 /* Is covered by E2E tests */
-import { publish } from '@cicada-ag/meteor-admin-sdk/es/channel';
+import { publish } from '@shopware-ag/meteor-admin-sdk/es/channel';
+import '../store/context.store';
+import useSession from '../composables/use-session';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default function initializeContext(): void {
     // Handle incoming context requests from the ExtensionAPI
-    Cicada.ExtensionAPI.handle('contextCurrency', () => {
+    Shopware.ExtensionAPI.handle('contextCurrency', () => {
         return {
-            systemCurrencyId: Cicada.Context.app.systemCurrencyId ?? '',
-            systemCurrencyISOCode: Cicada.Context.app.systemCurrencyISOCode ?? '',
+            systemCurrencyId: Shopware.Context.app.systemCurrencyId ?? '',
+            systemCurrencyISOCode: Shopware.Context.app.systemCurrencyISOCode ?? '',
         };
     });
 
-    Cicada.ExtensionAPI.handle('contextEnvironment', () => {
-        return Cicada.Context.app.environment ?? 'production';
+    Shopware.ExtensionAPI.handle('contextEnvironment', () => {
+        return Shopware.Context.app.environment ?? 'production';
     });
 
-    Cicada.ExtensionAPI.handle('contextLanguage', () => {
+    Shopware.ExtensionAPI.handle('contextLanguage', () => {
         return {
-            languageId: Cicada.Context.api.languageId ?? '',
-            systemLanguageId: Cicada.Context.api.systemLanguageId ?? '',
+            languageId: Shopware.Context.api.languageId ?? '',
+            systemLanguageId: Shopware.Context.api.systemLanguageId ?? '',
         };
     });
 
-    Cicada.ExtensionAPI.handle('contextLocale', () => {
+    Shopware.ExtensionAPI.handle('contextLocale', () => {
         return {
-            fallbackLocale: Cicada.Context.app.fallbackLocale ?? '',
-            locale: Cicada.State.get('session').currentLocale ?? '',
+            fallbackLocale: Shopware.Context.app.fallbackLocale ?? '',
+            locale: Shopware.Store.get('session').currentLocale ?? '',
         };
     });
 
-    Cicada.ExtensionAPI.handle('contextCicadaVersion', () => {
-        return Cicada.Context.app.config.version ?? '';
+    Shopware.ExtensionAPI.handle('contextShopwareVersion', () => {
+        return Shopware.Context.app.config.version ?? '';
     });
 
-    Cicada.ExtensionAPI.handle('contextUserTimezone', () => {
-        return Cicada.State.get('session').currentUser?.timeZone ?? 'Asia/Shanghai';
+    Shopware.ExtensionAPI.handle('contextUserTimezone', () => {
+        return Shopware.Store.get('session').currentUser?.timeZone ?? 'UTC';
     });
 
-    Cicada.ExtensionAPI.handle('contextModuleInformation', (_, additionalInformation) => {
-        const extension = Object.values(Cicada.State.get('extensions')).find((ext) =>
+    Shopware.ExtensionAPI.handle('contextModuleInformation', (_, additionalInformation) => {
+        const extension = Object.values(Shopware.Store.get('extensions').extensionsState).find((ext) =>
             ext.baseUrl.startsWith(additionalInformation._event_.origin),
         );
 
@@ -53,7 +55,7 @@ export default function initializeContext(): void {
         }
 
         // eslint-disable-next-line max-len,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-        const modules = Cicada.State.getters['extensionSdkModules/getRegisteredModuleInformation'](
+        const modules = Shopware.Store.get('extensionSdkModules').getRegisteredModuleInformation(
             extension.baseUrl,
         ) as Array<{
             displaySearchBar: boolean;
@@ -67,9 +69,9 @@ export default function initializeContext(): void {
         };
     });
 
-    Cicada.ExtensionAPI.handle('contextUserInformation', (_, { _event_ }) => {
+    Shopware.ExtensionAPI.handle('contextUserInformation', (_, { _event_ }) => {
         const appOrigin = _event_.origin;
-        const extension = Object.entries(Cicada.State.get('extensions')).find((ext) => {
+        const extension = Object.entries(Shopware.Store.get('extensions').extensionsState).find((ext) => {
             return ext[1].baseUrl.startsWith(appOrigin);
         });
 
@@ -77,37 +79,37 @@ export default function initializeContext(): void {
             return Promise.reject(new Error(`Could not find a extension with the given event origin "${_event_.origin}"`));
         }
 
-        if (!extension[1]?.permissions?.read?.includes('user')) {
+        if (!(extension[1]?.permissions?.read as string[])?.includes('user')) {
             return Promise.reject(new Error(`Extension "${extension[0]}" does not have the permission to read users`));
         }
 
-        const currentUser = Cicada.State.get('session').currentUser;
+        const currentUser = Shopware.Store.get('session').currentUser;
 
         return Promise.resolve({
-            aclRoles: currentUser.aclRoles as unknown as Array<{
+            aclRoles: currentUser?.aclRoles as unknown as Array<{
                 name: string;
                 type: string;
                 id: string;
                 privileges: Array<string>;
             }>,
-            active: !!currentUser.active,
-            admin: !!currentUser.admin,
-            avatarId: currentUser.avatarId ?? '',
-            email: currentUser.email ?? '',
-            name: currentUser.name ?? '',
-            id: currentUser.id ?? '',
-            localeId: currentUser.localeId ?? '',
-            title: currentUser.title ?? '',
-            phone: currentUser.phone ?? '',
+            active: !!currentUser?.active,
+            admin: !!currentUser?.admin,
+            avatarId: currentUser?.avatarId ?? '',
+            email: currentUser?.email ?? '',
+            firstName: currentUser?.firstName ?? '',
+            id: currentUser?.id ?? '',
+            lastName: currentUser?.lastName ?? '',
+            localeId: currentUser?.localeId ?? '',
+            title: currentUser?.title ?? '',
             // @ts-expect-error - type is not defined in entity directly
-            type: (currentUser.type as unknown as string) ?? '',
-            username: currentUser.username ?? '',
+            type: (currentUser?.type as unknown as string) ?? '',
+            username: currentUser?.username ?? '',
         });
     });
 
-    Cicada.ExtensionAPI.handle('contextAppInformation', (_, { _event_ }) => {
+    Shopware.ExtensionAPI.handle('contextAppInformation', (_, { _event_ }) => {
         const appOrigin = _event_.origin;
-        const extension = Object.entries(Cicada.State.get('extensions')).find((ext) => {
+        const extension = Object.entries(Shopware.Store.get('extensions').extensionsState).find((ext) => {
             return ext[1].baseUrl.startsWith(appOrigin);
         });
 
@@ -126,15 +128,17 @@ export default function initializeContext(): void {
             name: extension[0],
             type: extension[1].type,
             version: extension[1].version ?? '',
-            inAppPurchases: Cicada.InAppPurchase.getByExtension(extension[1].name),
+            inAppPurchases: Shopware.InAppPurchase.getByExtension(extension[1].name),
         };
     });
 
-    Cicada.State.watch(
-        (state) => {
+    const contextStore = Shopware.Store.get('context');
+
+    watch(
+        () => {
             return {
-                languageId: state.context.api.languageId,
-                systemLanguageId: state.context.api.systemLanguageId,
+                languageId: contextStore.api.languageId,
+                systemLanguageId: contextStore.api.systemLanguageId,
             };
         },
         ({ languageId, systemLanguageId }, { languageId: oldLanguageId, systemLanguageId: oldSystemLanguageId }) => {
@@ -149,22 +153,28 @@ export default function initializeContext(): void {
         },
     );
 
-    Cicada.State.watch(
-        (state) => {
+    watch(
+        () => {
             return {
-                fallbackLocale: state.context.app.fallbackLocale,
-                locale: state.session.currentLocale,
+                fallbackLocale: contextStore.app.fallbackLocale,
             };
         },
-        ({ fallbackLocale, locale }, { fallbackLocale: oldFallbackLocale, locale: oldLocale }) => {
-            if (fallbackLocale === oldFallbackLocale && locale === oldLocale) {
+        ({ fallbackLocale }, { fallbackLocale: oldFallbackLocale }) => {
+            if (fallbackLocale === oldFallbackLocale) {
                 return;
             }
 
             void publish('contextLocale', {
-                locale: locale ?? '',
+                locale: Shopware.Store.get('session').currentLocale ?? '',
                 fallbackLocale: fallbackLocale ?? '',
             });
         },
     );
+
+    Shopware.Vue.watch(useSession().currentLocale, (locale) => {
+        void publish('contextLocale', {
+            locale: locale ?? '',
+            fallbackLocale: contextStore.app.fallbackLocale ?? '',
+        });
+    });
 }

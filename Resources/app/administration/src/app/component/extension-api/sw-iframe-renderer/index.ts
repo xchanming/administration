@@ -1,4 +1,4 @@
-import type { Extension } from '../../../state/extensions.store';
+import type { Extension } from '../../../store/extensions.store';
 import template from './sw-iframe-renderer.html.twig';
 import './sw-iframe-renderer.scss';
 
@@ -12,10 +12,8 @@ import './sw-iframe-renderer.scss';
  * @component-example
  * <sw-iframe-renderer src="https://www.my-source.com" locationId="my-special-location" />
  */
-Cicada.Component.register('sw-iframe-renderer', {
+Shopware.Component.register('sw-iframe-renderer', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['extensionSdkService'],
 
@@ -50,13 +48,13 @@ Cicada.Component.register('sw-iframe-renderer', {
     },
 
     created() {
-        this.heightHandler = Cicada.ExtensionAPI.handle('locationUpdateHeight', ({ height, locationId }) => {
+        this.heightHandler = Shopware.ExtensionAPI.handle('locationUpdateHeight', ({ height, locationId }) => {
             if (locationId === this.locationId) {
                 this.locationHeight = Number(height) ?? null;
             }
         });
 
-        this.urlHandler = Cicada.ExtensionAPI.handle(
+        this.urlHandler = Shopware.ExtensionAPI.handle(
             'locationUpdateUrl',
             async ({ hash, pathname, searchParams, locationId }) => {
                 if (locationId !== this.locationId) {
@@ -74,7 +72,7 @@ Cicada.Component.register('sw-iframe-renderer', {
                             'sw-version',
                             'sw-context-language',
                             'sw-user-language',
-                            'cicada-shop-signature',
+                            'shopware-shop-signature',
                         ].includes(key);
                     }),
                 );
@@ -114,11 +112,11 @@ Cicada.Component.register('sw-iframe-renderer', {
         },
 
         componentName(): string | undefined {
-            return Cicada.State.get('sdkLocation').locations[this.locationId];
+            return Shopware.Store.get('sdkLocation').locations[this.locationId];
         },
 
         extension(): Extension | undefined {
-            const extensions = Cicada.State.get('extensions');
+            const extensions = Shopware.Store.get('extensions').extensionsState;
             const srcWithoutSearchParameters = new URL(this.src).origin + new URL(this.src).pathname;
 
             return Object.values(extensions).find((ext) => {

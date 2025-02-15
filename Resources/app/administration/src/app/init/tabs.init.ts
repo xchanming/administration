@@ -9,11 +9,11 @@ import type { Router, RouteRecordRaw } from 'vue-router';
  * @private
  */
 export default function initializeTabs(): void {
-    Cicada.ExtensionAPI.handle('uiTabsAddTabItem', async (componentConfig) => {
-        Cicada.State.commit('tabs/addTabItem', componentConfig);
+    Shopware.ExtensionAPI.handle('uiTabsAddTabItem', async (componentConfig) => {
+        Shopware.Store.get('tabs').addTabItem(componentConfig);
 
         // Reload current route if it does not exist
-        const router = Cicada.Application.view?.router as Router;
+        const router = Shopware.Application.view?.router as Router;
         const currentRoute = router.currentRoute.value;
 
         if (!router.hasRoute(currentRoute.name ?? '')) {
@@ -22,9 +22,9 @@ export default function initializeTabs(): void {
     });
 
     // Wait until the view is initialized
-    void Cicada.Application.viewInitialized.then(() => {
+    void Shopware.Application.viewInitialized.then(() => {
         // Catch non-matching routes, check if they exist in the tabs and create them
-        const router = Cicada.Application.view?.router as Router;
+        const router = Shopware.Application.view?.router as Router;
 
         router.beforeResolve((to) => {
             // Skip if route is already registered
@@ -33,7 +33,7 @@ export default function initializeTabs(): void {
             }
 
             // Get all tab routes
-            const tabRoutes = Object.values(Cicada.State.get('tabs').tabItems).reduce<string[]>((acc, tabItems) => {
+            const tabRoutes = Object.values(Shopware.Store.get('tabs').tabItems).reduce<string[]>((acc, tabItems) => {
                 acc = [
                     ...acc,
                     ...tabItems.map((tabItem) => tabItem.componentSectionId),
@@ -69,7 +69,7 @@ export default function initializeTabs(): void {
 
             // Get the $module information from parent and add it to the new route in meta
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-            const moduleInfo = Cicada?.Application?.$container?.container?.init?.router?.getModuleInfo?.(parentRoute) as
+            const moduleInfo = Shopware?.Application?.$container?.container?.init?.router?.getModuleInfo?.(parentRoute) as
                 | {
                       manifest: Record<string, unknown>;
                   }
@@ -78,7 +78,7 @@ export default function initializeTabs(): void {
             // Create a new route for the tab
             const newRoute: RouteRecordRaw = {
                 path: newPath,
-                component: Cicada.Application.view?.getComponent('sw-extension-component-section'),
+                component: Shopware.Application.view?.getComponent('sw-extension-component-section'),
                 children: [],
                 name: newRouteName,
                 meta: {

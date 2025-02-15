@@ -82,7 +82,7 @@ export default function cacheAdapterFactory(originalAdapter, requestCaches = {})
         // check if identical requests already exists
         const identicalRequest = requestCaches[requestHash];
         if (identicalRequest) {
-            Cicada.Utils.debug.warn(
+            Shopware.Utils.debug.warn(
                 'http.factory',
                 'Duplicated requests happening in short amount of time: ',
                 config,

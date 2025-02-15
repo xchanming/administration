@@ -1,7 +1,7 @@
 import template from './sw-admin-menu-item.html.twig';
 
-const { Component } = Cicada;
-const { createId, types } = Cicada.Utils;
+const { Component } = Shopware;
+const { createId, types } = Shopware.Utils;
 
 /**
  * @sw-package framework
@@ -10,8 +10,6 @@ const { createId, types } = Cicada.Utils;
  */
 Component.register('sw-admin-menu-item', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'acl',
@@ -152,7 +150,7 @@ Component.register('sw-admin-menu-item', {
             }
 
             const meta = this.$route.meta;
-            const adminMenuEntries = Cicada.Store.get('adminMenu').adminModuleNavigation;
+            const adminMenuEntries = Shopware.Store.get('adminMenu').adminModuleNavigation;
             let compareTo;
 
             function findRootEntry(currentPath, foundPaths = []) {

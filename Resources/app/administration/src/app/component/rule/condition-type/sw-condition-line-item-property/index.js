@@ -1,8 +1,8 @@
 import template from './sw-condition-line-item-property.html.twig';
 
-const { Component, Context } = Cicada;
+const { Component, Context } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
-const { EntityCollection, Criteria } = Cicada.Data;
+const { EntityCollection, Criteria } = Shopware.Data;
 
 /**
  * @public

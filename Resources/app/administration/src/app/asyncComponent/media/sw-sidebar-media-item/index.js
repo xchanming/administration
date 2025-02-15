@@ -1,8 +1,8 @@
 import template from './sw-sidebar-media-item.html.twig';
 import './sw-sidebar-media-item.scss';
 
-const { Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @status ready
@@ -22,8 +22,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -73,14 +71,6 @@ export default {
 
         itemsLoaded() {
             return this.mediaItems.length;
-        },
-
-        additionalEventListeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

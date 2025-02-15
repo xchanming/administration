@@ -1,16 +1,14 @@
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
 import template from './sw-bulk-edit-save-modal-success.html.twig';
 import './sw-bulk-edit-save-modal-success.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -23,7 +21,7 @@ export default {
     ],
 
     mixins: [
-        Cicada.Mixin.getByName('notification'),
+        Shopware.Mixin.getByName('notification'),
     ],
 
     data() {
@@ -52,11 +50,11 @@ export default {
         },
 
         selectedIds() {
-            return Cicada.State.get('cicadaApps').selectedIds;
+            return Shopware.Store.get('shopwareApps').selectedIds;
         },
 
         downloadOrderDocuments() {
-            return Cicada.State.get('swBulkEdit')?.orderDocuments?.download;
+            return Shopware.Store.get('swBulkEdit')?.orderDocuments?.download;
         },
 
         latestDocumentsCriteria() {
@@ -172,11 +170,7 @@ export default {
                 return Promise.resolve();
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.document[documentType], 'isDownloading', true);
-            } else {
-                this.document[documentType].isDownloading = true;
-            }
+            this.document[documentType].isDownloading = true;
             return this.orderDocumentApiService
                 .download(documentIds)
                 .then((response) => {
@@ -197,11 +191,7 @@ export default {
                     });
                 })
                 .finally(() => {
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(this.document[documentType], 'isDownloading', false);
-                    } else {
-                        this.document[documentType].isDownloading = false;
-                    }
+                    this.document[documentType].isDownloading = false;
                 });
         },
     },

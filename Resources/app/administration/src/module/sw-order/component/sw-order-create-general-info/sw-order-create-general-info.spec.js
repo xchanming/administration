@@ -22,7 +22,8 @@ const context = {
         },
     },
     customer: {
-        name: 'John',
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'john@doe.dev',
     },
     currency: {
@@ -65,7 +66,7 @@ describe('src/module/sw-order/component/sw-order-create-general-info', () => {
     it('should show correct summary header', async () => {
         const customerInfo = wrapper.find('.sw-order-create-general-info__summary-main-header');
         expect(customerInfo.exists()).toBeTruthy();
-        expect(customerInfo.text()).toBe('John (john@doe.dev)');
+        expect(customerInfo.text()).toBe('John Doe (john@doe.dev)');
 
         const totalInfo = wrapper.find('.sw-order-create-general-info__summary-main-total');
         expect(totalInfo.exists()).toBeTruthy();

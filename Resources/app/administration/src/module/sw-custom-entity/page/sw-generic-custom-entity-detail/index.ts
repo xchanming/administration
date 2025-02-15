@@ -9,7 +9,7 @@ import type Repository from 'src/core/data/repository.data';
 import template from './sw-generic-custom-entity-detail.html.twig';
 import './sw-generic-custom-entity-detail.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 type GenericCustomEntityDetailData = {
     isLoading: boolean;
@@ -22,10 +22,8 @@ type GenericCustomEntityDetailData = {
  * @private
  * @sw-package framework
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'customEntityDefinitionService',
@@ -181,7 +179,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         onChangeLanguage(languageId: string): void {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
             void this.loadData();
         },
 

@@ -1,17 +1,15 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import { POLL_BACKGROUND_INTERVAL, POLL_FOREGROUND_INTERVAL } from 'src/core/worker/worker-notification-listener';
 import template from './sw-settings-cache-index.html.twig';
 import './sw-settings-cache-index.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'cacheApiService',
@@ -148,10 +146,10 @@ export default {
         },
 
         decreaseWorkerPoll() {
-            Cicada.State.commit('notification/setWorkerProcessPollInterval', POLL_FOREGROUND_INTERVAL);
+            Shopware.Store.get('notification').workerProcessPollInterval = POLL_FOREGROUND_INTERVAL;
 
             setTimeout(() => {
-                Cicada.State.commit('notification/setWorkerProcessPollInterval', POLL_BACKGROUND_INTERVAL);
+                Shopware.Store.get('notification').workerProcessPollInterval = POLL_BACKGROUND_INTERVAL;
             }, 60000);
         },
 

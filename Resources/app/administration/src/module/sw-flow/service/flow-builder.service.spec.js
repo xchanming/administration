@@ -133,8 +133,8 @@ describe('module/sw-flow/service/flow-builder.service.js', () => {
     };
 
     it('should have the correct modal name for action name', async () => {
-        const expected = 'sw-flow-stop-flow-modal';
-        const modalName = service.getActionModalName(ACTION.STOP_FLOW);
+        const expected = 'sw-flow-generate-document-modal';
+        const modalName = service.getActionModalName(ACTION.GENERATE_DOCUMENT);
 
         expect(modalName).toEqual(expected);
     });
@@ -184,41 +184,41 @@ describe('module/sw-flow/service/flow-builder.service.js', () => {
         const actions = [
             {
                 name: 'action.add.order.tag',
-                requirements: ['Cicada\\Core\\Framework\\Event\\OrderAware'],
+                requirements: ['Shopware\\Core\\Framework\\Event\\OrderAware'],
                 extensions: [],
             },
             {
                 name: 'action.add.customer.tag',
                 requirements: [
-                    'Cicada\\Core\\Framework\\Event\\CustomerAware',
+                    'Shopware\\Core\\Framework\\Event\\CustomerAware',
                 ],
                 extensions: [],
             },
             {
                 name: 'action.remove.customer.tag',
                 requirements: [
-                    'Cicada\\Core\\Framework\\Event\\CustomerAware',
+                    'Shopware\\Core\\Framework\\Event\\CustomerAware',
                 ],
                 extensions: [],
             },
             {
                 name: 'action.remove.order.tag',
-                requirements: ['Cicada\\Core\\Framework\\Event\\OrderAware'],
+                requirements: ['Shopware\\Core\\Framework\\Event\\OrderAware'],
                 extensions: [],
             },
             {
                 name: 'action.mail.send',
-                requirements: ['Cicada\\Core\\Framework\\Event\\MailAware'],
+                requirements: ['Shopware\\Core\\Framework\\Event\\MailAware'],
                 extensions: [],
             },
             { name: 'action.stop.flow', requirements: [], extensions: [] },
         ];
 
         const allowedAware = [
-            'Cicada\\Core\\Framework\\Event\\SalesChannelAware',
-            'Cicada\\Core\\Framework\\Event\\OrderAware',
-            'Cicada\\Core\\Framework\\Event\\MailAware',
-            'Cicada\\Core\\Framework\\Event\\CustomerAware',
+            'Shopware\\Core\\Framework\\Event\\SalesChannelAware',
+            'Shopware\\Core\\Framework\\Event\\OrderAware',
+            'Shopware\\Core\\Framework\\Event\\MailAware',
+            'Shopware\\Core\\Framework\\Event\\CustomerAware',
         ];
 
         const expected = [
@@ -316,7 +316,7 @@ describe('module/sw-flow/service/flow-builder.service.js', () => {
                     '3',
                     '5',
                 ],
-                password: 'cicada',
+                password: 'shopware',
                 singleSelect: '3',
                 textEditor: 'editor',
                 textarea: 'area',
@@ -412,6 +412,21 @@ describe('module/sw-flow/service/flow-builder.service.js', () => {
             <br>sw-flow.modals.status.labelPaymentStatus: translated<br>sw-flow.modals.status.forceTransition: global.default.no`;
         const description = service.getActionDescriptions(data, sequence, translator);
         expect(description).toContain(render);
+    });
+
+    it('should be able to show generate document description', () => {
+        const sequence = {
+            actionName: 'action.generate.document',
+            config: {
+                documentTypes: [
+                    {
+                        documentType: 'mail',
+                    },
+                ],
+            },
+        };
+        const description = service.getActionDescriptions(data, sequence, translator);
+        expect(description).toBe('translated');
     });
 
     it('should be able to send mail flow description', () => {

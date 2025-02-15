@@ -1,6 +1,6 @@
 import template from './sw-settings-login-registration.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @sw-package fundamentals@framework
@@ -8,8 +8,6 @@ const { Mixin } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('notification'),

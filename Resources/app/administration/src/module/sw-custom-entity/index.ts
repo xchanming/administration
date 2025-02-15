@@ -4,37 +4,37 @@
  * @private
  * @sw-package framework
  */
-Cicada.Component.register('sw-generic-custom-entity-detail', () => import('./page/sw-generic-custom-entity-detail'));
+Shopware.Component.register('sw-generic-custom-entity-detail', () => import('./page/sw-generic-custom-entity-detail'));
 /**
  * @private
  * @sw-package framework
  */
-Cicada.Component.register('sw-generic-custom-entity-list', () => import('./page/sw-generic-custom-entity-list'));
+Shopware.Component.register('sw-generic-custom-entity-list', () => import('./page/sw-generic-custom-entity-list'));
 /**
  * @private
  * @sw-package framework
  */
-Cicada.Component.register('sw-custom-entity-input-field', () => import('./component/sw-custom-entity-input-field'));
+Shopware.Component.register('sw-custom-entity-input-field', () => import('./component/sw-custom-entity-input-field'));
 /**
  * @private
  * @sw-package framework
  */
-Cicada.Component.register('sw-generic-cms-page-assignment', () => import('./component/sw-generic-cms-page-assignment'));
+Shopware.Component.register('sw-generic-cms-page-assignment', () => import('./component/sw-generic-cms-page-assignment'));
 
 /**
  * @private
  * @sw-package framework
  */
-Cicada.Component.register('sw-generic-seo-general-card', () => import('./component/sw-generic-seo-general-card'));
+Shopware.Component.register('sw-generic-seo-general-card', () => import('./component/sw-generic-seo-general-card'));
 /**
  * @private
  */
-Cicada.Component.register('sw-generic-social-media-card', () => import('./component/sw-generic-social-media-card'));
+Shopware.Component.register('sw-generic-social-media-card', () => import('./component/sw-generic-social-media-card'));
 
 /**
  * @private
  */
-Cicada.Module.register('sw-custom-entity', {
+Shopware.Module.register('sw-custom-entity', {
     title: 'sw-custom-entity.general.mainMenuItemGeneral',
     type: 'plugin',
     name: 'custom-entity',
@@ -67,6 +67,6 @@ Cicada.Module.register('sw-custom-entity', {
 
 /**
  * @private
- * @sw-package content
+ * @sw-package framework
  */
 export {};

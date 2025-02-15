@@ -1,0 +1,87 @@
+{
+  "sw-settings-document": {
+    "general": {
+      "mainMenuItemGeneral": "文档",
+      "description": "设置模块的文档配置",
+      "placeholderSearchBar": "搜索所有配置 ..."
+    },
+    "list": {
+      "textHeadline": "文档",
+      "textDeleteConfirm": "你确定要删除文档 \"{name}\" 吗？",
+      "columnName": "名称",
+      "columnType": "类型",
+      "columnUsedIn": "用于",
+      "columnAssignment": "分配",
+      "buttonAddDocument": "创建文档",
+      "contextMenuEdit": "编辑",
+      "messageDeleteSuccess": "文档 \"{name}\" 已成功删除。",
+      "buttonDelete": "删除",
+      "global": "全局"
+    },
+    "detail": {
+      "textHeadline": "新建文档",
+      "configCard": "设置",
+      "companyCard": "公司设置",
+      "assignmentCard": "分配",
+      "messageSaveSuccess": "文档 \"{name}\" 已成功保存。",
+      "labelName": "名称",
+      "labelFileNamePrefix": "文件名前缀",
+      "labelFileNameSuffix": "文件名后缀",
+      "labelDisplayPrices": "显示价格",
+      "labelDisplayHeader": "显示页眉",
+      "labelDisplayLineItems": "显示订单项目",
+      "labelDisplayLineItemPosition": "编号订单项目",
+      "labelDisplayPageCount": "显示页码",
+      "labelPageOrientation": "页面方向",
+      "labelPageSize": "页面尺寸",
+      "labelItemsPerPage": "每页项目数",
+      "labelDisplayCompanyAddress": "显示公司地址",
+      "labelCompanyAddress": "公司地址",
+      "labelCompanyCity": "城市",
+      "labelCompanyCountry": "国家",
+      "labelCompanyName": "公司名称",
+      "labelCompanyEmail": "公司电子邮件",
+      "labelCompanyPhone": "公司电话",
+      "labelCompanyStreet": "街道",
+      "labelCompanyUrl": "公司网站",
+      "labelCompanyZipcode": "邮政编码",
+      "labelPaymentDueDate": "付款截止日期",
+      "labelTaxNumber": "公司税号",
+      "labelTaxOffice": "税务局",
+      "labelVatId": "公司增值税号",
+      "labelBankName": "银行",
+      "labelBankIban": "IBAN",
+      "labelBankBic": "BIC",
+      "labelType": "文档类型",
+      "labelSalesChannel": "销售渠道",
+      "labelDisplayFooter": "显示页脚",
+      "labelPlaceOfJurisdiction": "司法管辖地 / 商业登记号",
+      "labelPlaceOfFulfillment": "履行地",
+      "labelExecutiveDirector": "执行董事",
+      "labelDisplayAdditionalNoteDelivery": "显示 \"欧盟内供应\" 提示",
+      "labelDeliveryCountries": "成员国",
+      "labelDisplayCustomerVatId": "显示客户增值税号",
+      "placeholderDisplayDeliveryCountries": "搜索并添加适用于 \"欧盟内供应\" 的国家 ...",
+      "labelOptionMedia": "公司徽标",
+      "placeholderName": "输入名称 ...",
+      "buttonSave": "保存",
+      "disabledSalesChannel": "该销售渠道中已存在相同类型的文档。",
+      "disabledSalesChannelSelect": "请先选择文档类型。",
+      "disabledTypeSelect": "全局文档的文档类型无法更改。",
+      "labelDisplayDocumentInCustomerAccount": "在 \"我的账户\" 区域显示文档",
+      "labelDisplayDivergentDeliveryAddress": "显示不同的送货地址",
+      "helpTextDisplayDocumentInCustomerAccount": "该文档将在客户账户的订单中显示。只有发送给客户的文档才会显示在客户账户中。",
+      "helpTextDisplayDeliveryCountries": "所有选中的国家将在发票文档上收到 \"欧盟内供应\" 的提示。",
+      "helpTextCompanyAddress": "自 Shopware 6.7 起已废弃 - 请改为在各个字段中填写地址。\\n\\n使用连字符 (\"-\") 分隔地址的各个元素，以便在页眉的不同位置同时显示地址。",
+      "helpTextPaymentDueDate": "示例：+30 days, +4 weeks, +1 week 2 days",
+      "labelFileTypes": "文件格式"
+    }
+  },
+  "sw-privileges": {
+    "permissions": {
+      "document": {
+        "label": "文档"
+      }
+    }
+  }
+}

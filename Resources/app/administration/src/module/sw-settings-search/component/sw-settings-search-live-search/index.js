@@ -5,14 +5,12 @@ import template from './sw-settings-search-live-search.html.twig';
 import './sw-settings-search-live-search.scss';
 import '../sw-settings-search-live-search-keyword';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -113,7 +111,7 @@ export default {
                     },
                     {},
                     {},
-                    { 'sw-language-id': Cicada.Context.api.languageId },
+                    { 'sw-language-id': Shopware.Context.api.languageId },
                 )
                 .then((data) => {
                     this.liveSearchResults = data.data;

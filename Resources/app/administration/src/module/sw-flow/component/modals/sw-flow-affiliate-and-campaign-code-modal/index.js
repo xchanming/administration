@@ -1,7 +1,7 @@
 import template from './sw-flow-affiliate-and-campaign-code-modal.html.twig';
 
-const { Component, Mixin } = Cicada;
-const { CicadaError } = Cicada.Classes;
+const { Component, Mixin, Store } = Shopware;
+const { ShopwareError } = Shopware.Classes;
 const { mapState } = Component.getComponentHelper();
 
 /**
@@ -10,8 +10,6 @@ const { mapState } = Component.getComponentHelper();
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['flowBuilderService'],
 
@@ -64,10 +62,13 @@ export default {
             return this.flowBuilderService.getAvailableEntities(this.action, this.triggerActions, allowedAware, properties);
         },
 
-        ...mapState('swFlowState', [
-            'triggerEvent',
-            'triggerActions',
-        ]),
+        ...mapState(
+            () => Store.get('swFlow'),
+            [
+                'triggerEvent',
+                'triggerActions',
+            ],
+        ),
     },
 
     watch: {
@@ -102,7 +103,7 @@ export default {
 
         fieldError(field) {
             if (!field || !field.length) {
-                return new CicadaError({
+                return new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
             }

@@ -20,20 +20,19 @@ type RecommendedPlugin = {
 
 /**
  * @sw-package fundamentals@after-sales
+ *
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'cacheApiService',
         'extensionHelperService',
-        'cicadaExtensionService',
+        'shopwareExtensionService',
     ],
 
-    mixins: [Cicada.Mixin.getByName('sw-extension-error')],
+    mixins: [Shopware.Mixin.getByName('sw-extension-error')],
 
     props: {
         plugin: {
@@ -61,7 +60,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         truncateFilter() {
-            return Cicada.Filter.getByName('truncate');
+            return Shopware.Filter.getByName('truncate');
         },
     },
 
@@ -91,7 +90,7 @@ export default Cicada.Component.wrapComponentConfig({
                     this.cacheApiService.clear();
                 }
 
-                await this.cicadaExtensionService.updateExtensionData();
+                await this.shopwareExtensionService.updateExtensionData();
 
                 this.$emit('on-plugin-installed', this.plugin.name);
             }

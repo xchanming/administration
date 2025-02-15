@@ -1,9 +1,9 @@
 import template from './sw-many-to-many-assignment-card.html.twig';
 import './sw-many-to-many-assignment-card.scss';
 
-const { Component } = Cicada;
-const { debounce, get } = Cicada.Utils;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Component } = Shopware;
+const { debounce, get } = Shopware.Utils;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 /**
  * @sw-package framework
@@ -21,8 +21,6 @@ const { Criteria, EntityCollection } = Cicada.Data;
  */
 Component.register('sw-many-to-many-assignment-card', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inheritAttrs: false,
 
@@ -89,7 +87,7 @@ Component.register('sw-many-to-many-assignment-card', {
             type: String,
             required: false,
             default() {
-                return Cicada.Snippet.tc('global.entity-components.placeholderToManyAssociationCard');
+                return Shopware.Snippet.tc('global.entity-components.placeholderToManyAssociationCard');
             },
         },
 
@@ -168,15 +166,6 @@ Component.register('sw-many-to-many-assignment-card', {
 
         originalFilters() {
             return this.criteria.filters;
-        },
-
-        listeners() {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
         },
     },
 

@@ -3,16 +3,13 @@
  */
 import template from './sw-bulk-edit-product-media.html.twig';
 
-const { Context, Utils, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapState } = Cicada.Component.getComponentHelper();
+const { Context, Utils, Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 const { isEmpty } = Utils.types;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -36,9 +33,9 @@ export default {
     },
 
     computed: {
-        ...mapState('swProductDetail', [
-            'product',
-        ]),
+        product() {
+            return Shopware.Store.get('swProductDetail').product;
+        },
 
         productMediaRepository() {
             return this.repositoryFactory.create('product_media');
@@ -98,7 +95,7 @@ export default {
             media.forEach((item) => {
                 this.addMedia(item).catch(({ fileName }) => {
                     this.createNotificationError({
-                        message: this.$tc('sw-product.mediaForm.errorMediaItemDuplicated', 0, { fileName }),
+                        message: this.$tc('sw-product.mediaForm.errorMediaItemDuplicated', { fileName }, 0),
                     });
                 });
             });
@@ -109,7 +106,7 @@ export default {
                 return Promise.reject(media);
             }
 
-            const newMedia = this.productMediaRepository.create(Cicada.Context.api);
+            const newMedia = this.productMediaRepository.create(Shopware.Context.api);
             newMedia.mediaId = media.id;
             newMedia.media = {
                 url: media.url,

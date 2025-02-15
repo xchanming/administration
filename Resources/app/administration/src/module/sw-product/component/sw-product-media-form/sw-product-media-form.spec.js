@@ -3,32 +3,16 @@
  */
 
 import { mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import EntityCollection from 'src/core/data/entity-collection.data';
 
 async function createWrapper() {
-    const store = createStore({
-        modules: {
-            swProductDetail: {
-                namespaced: true,
-                getters: {
-                    isLoading: () => false,
-                },
-            },
-        },
-    });
-
     return mount(await wrapTestComponent('sw-product-media-form', { sync: true }), {
         attachTo: document.body,
         global: {
-            plugins: [store],
             directives: {
                 draggable: {},
                 droppable: {},
                 popover: {},
-            },
-            mocks: {
-                $store: store,
             },
             provide: {
                 repositoryFactory: {
@@ -47,7 +31,7 @@ async function createWrapper() {
                             if (entity === 'media') {
                                 return Promise.resolve({
                                     id: 'media1',
-                                    url: 'http://cicada.test/media1-new-url.jpg',
+                                    url: 'http://shopware.test/media1-new-url.jpg',
                                 });
                             }
 
@@ -101,7 +85,7 @@ const media = [
 ];
 
 function getMediaCollection(collection = []) {
-    return new EntityCollection('/media', 'media', null, { isCicadaContext: true }, collection, collection.length, null);
+    return new EntityCollection('/media', 'media', null, { isShopwareContext: true }, collection, collection.length, null);
 }
 
 describe('module/sw-product/component/sw-product-media-form', () => {
@@ -120,12 +104,7 @@ describe('module/sw-product/component/sw-product-media-form', () => {
         };
         product.getEntityName = () => 'T-Shirt';
 
-        Cicada.State.registerModule('swProductDetail', {
-            namespaced: true,
-            state: {
-                product: product,
-            },
-        });
+        Shopware.Store.get('swProductDetail').product = product;
     });
 
     it('should be a Vue.JS component', async () => {
@@ -252,6 +231,6 @@ describe('module/sw-product/component/sw-product-media-form', () => {
         expect(wrapper.vm.product.media).toHaveLength(2);
         expect(wrapper.vm.product.media[1].mediaId).toBe('media1');
         // Check if new mediaItem has new url
-        expect(wrapper.vm.product.media[1].media.url).toBe('http://cicada.test/media1-new-url.jpg');
+        expect(wrapper.vm.product.media[1].media.url).toBe('http://shopware.test/media1-new-url.jpg');
     });
 });

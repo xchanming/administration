@@ -3,7 +3,7 @@
  */
 
 import { mount } from '@vue/test-utils';
-import CicadaError from 'src/core/data/CicadaError';
+import ShopwareError from 'src/core/data/ShopwareError';
 
 async function createWrapper(additionalOptions = {}) {
     return mount(
@@ -87,10 +87,10 @@ describe('components/form/sw-form-field-renderer', () => {
                     config: { label: 'field2Label' },
                 },
                 value: 'data value',
-                error: new CicadaError({ code: 'dummyCode' }),
+                error: new ShopwareError({ code: 'dummyCode' }),
             },
         });
 
-        expect(wrapper.props().error).toBeInstanceOf(CicadaError);
+        expect(wrapper.props().error).toBeInstanceOf(ShopwareError);
     });
 });

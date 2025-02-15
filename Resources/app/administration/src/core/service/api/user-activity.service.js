@@ -3,7 +3,7 @@ import ApiService from '../api.service';
 /**
  * @class
  * @extends ApiService
- * @sw-package fundamentals@after-sales
+ * @sw-package fundamentals@framework
  */
 class UserActivityApiService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = 'increment/user_activity') {

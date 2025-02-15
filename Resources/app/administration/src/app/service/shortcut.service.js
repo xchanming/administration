@@ -4,7 +4,7 @@
  * @module app/service/shortcut
  */
 
-const { Application } = Cicada;
+const { Application } = Shopware;
 
 /**
  * @private
@@ -63,7 +63,7 @@ export default function createShortcutService(shortcutFactory, keystrokeDelay = 
         const combination = buffer.join('');
         const path = shortcutFactory.getPathByCombination(combination);
 
-        const acl = Cicada.Service('acl');
+        const acl = Shopware.Service('acl');
 
         if (!path || !acl.hasAccessToRoute(path)) {
             return false;

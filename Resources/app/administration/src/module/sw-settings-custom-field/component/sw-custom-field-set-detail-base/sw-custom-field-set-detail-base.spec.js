@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import { mount } from '@vue/test-utils';
 

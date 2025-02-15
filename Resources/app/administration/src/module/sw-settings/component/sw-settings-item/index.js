@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-settings-item.html.twig';
 import './sw-settings-item.scss';
@@ -7,8 +7,6 @@ import './sw-settings-item.scss';
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         label: {

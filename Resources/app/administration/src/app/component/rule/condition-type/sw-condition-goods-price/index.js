@@ -1,7 +1,7 @@
 import template from './sw-condition-goods-price.html.twig';
 import './sw-condition-goods-price.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**

@@ -1,8 +1,8 @@
 import template from './sw-product-deliverability-downloadable-form.html.twig';
 import './sw-product-deliverability-downloadable-form.scss';
 
-const { Mixin } = Cicada;
-const { mapState, mapPropertyErrors, mapGetters } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 /*
  * @sw-package inventory
@@ -10,8 +10,6 @@ const { mapState, mapPropertyErrors, mapGetters } = Cicada.Component.getComponen
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     mixins: [
         Mixin.getByName('placeholder'),
@@ -32,15 +30,17 @@ export default {
     },
 
     computed: {
-        ...mapState('swProductDetail', [
-            'product',
-            'parentProduct',
-            'loading',
-        ]),
+        product() {
+            return Shopware.Store.get('swProductDetail').product;
+        },
 
-        ...mapGetters('swProductDetail', [
-            'showModeSetting',
-        ]),
+        parentProduct() {
+            return Shopware.Store.get('swProductDetail').parentProduct;
+        },
+
+        showModeSetting() {
+            return Shopware.Store.get('swProductDetail').showModeSetting;
+        },
 
         ...mapPropertyErrors('product', [
             'stock',

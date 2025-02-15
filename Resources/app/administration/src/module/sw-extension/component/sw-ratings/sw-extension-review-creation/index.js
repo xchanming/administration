@@ -1,7 +1,7 @@
 import template from './sw-extension-review-creation.html.twig';
 import './sw-extension-review-creation.scss';
 
-const { CicadaError } = Cicada.Classes;
+const { ShopwareError } = Shopware.Classes;
 
 /**
  * @sw-package checkout
@@ -9,8 +9,6 @@ const { CicadaError } = Cicada.Classes;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['extensionStoreActionService'],
 
@@ -42,7 +40,7 @@ export default {
 
     computed: {
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         userName() {
@@ -50,11 +48,11 @@ export default {
                 return '';
             }
 
-            return `${this.currentUser.name} ${this.currentUser.lastName}`.trim();
+            return `${this.currentUser.firstName} ${this.currentUser.lastName}`.trim();
         },
 
         installedVersion() {
-            const installedExtension = Cicada.State.get('cicadaExtensions').myExtensions.data.find(
+            const installedExtension = Shopware.Store.get('shopwareExtensions').myExtensions.data.find(
                 (extension) => extension.name === this.extension.name,
             );
 
@@ -120,7 +118,7 @@ export default {
 
         validateHeadline() {
             if (this.headline === null || this.headline === '') {
-                this.errors.headlineError = new CicadaError({
+                this.errors.headlineError = new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
 
@@ -132,7 +130,7 @@ export default {
 
         validateRating() {
             if (this.rating === null || this.rating === 0) {
-                this.errors.ratingError = new CicadaError({
+                this.errors.ratingError = new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
 

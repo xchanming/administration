@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@after-sales
+ * @sw-package framework
  */
 import MockAdapter from 'axios-mock-adapter';
 import SystemConfigService from 'src/core/service/api/system-config.api.service';
@@ -13,7 +13,7 @@ function getApiServiceAndMockAdapter() {
     const client = createHTTPClient();
     const mockAdapter = new MockAdapter(client);
 
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
 
     const apiService = new SystemConfigService(client, loginService);
 

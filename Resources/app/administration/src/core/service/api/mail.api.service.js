@@ -4,12 +4,30 @@ import ApiService from '../api.service';
  * Gateway for the API end point "mail"
  * @class
  * @extends ApiService
- * @sw-package fundamentals@after-sales
+ * @sw-package framework
  */
 class MailApiService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = 'mail-template') {
         super(httpClient, loginService, apiEndpoint);
         this.name = 'mailService';
+    }
+
+    getBasicHeaders(additionalHeaders) {
+        const apiContext = {
+            ...Shopware.Context.api,
+            ...additionalHeaders,
+        };
+
+        let languageIdHeader = {};
+
+        // eslint-disable-next-line no-restricted-globals
+        if (self?.Shopware && typeof apiContext.languageId === 'string') {
+            languageIdHeader = {
+                'sw-language-id': apiContext.languageId,
+            };
+        }
+
+        return super.getBasicHeaders(languageIdHeader);
     }
 
     sendMailTemplate(
@@ -19,9 +37,11 @@ class MailApiService extends ApiService {
         mailTemplateMedia,
         salesChannelId,
         testMode = false,
+        documentIds = [],
         templateData = null,
         mailTemplateTypeId = null,
         mailTemplateId = null,
+        additionalHeaders = {},
     ) {
         const apiRoute = `/_action/${this.getApiBasePath()}/send`;
 
@@ -38,12 +58,13 @@ class MailApiService extends ApiService {
                     subject: mailTemplate.subject ?? mailTemplate.translated?.subject,
                     senderMail: mailTemplate.senderMail,
                     senderName: mailTemplate.senderName ?? mailTemplate.translated?.senderName,
+                    documentIds,
                     testMode,
                     mailTemplateTypeId,
                     mailTemplateId,
                 },
                 {
-                    headers: this.getBasicHeaders(),
+                    headers: this.getBasicHeaders(additionalHeaders),
                 },
             )
             .then((response) => {
@@ -58,6 +79,7 @@ class MailApiService extends ApiService {
         salesChannelId,
         mailTemplateTypeId,
         mailTemplateId,
+        documentIds = [],
     ) {
         return this.sendMailTemplate(
             recipient,
@@ -66,6 +88,7 @@ class MailApiService extends ApiService {
             mailTemplateMedia,
             salesChannelId,
             true,
+            documentIds,
             null,
             mailTemplateTypeId,
             mailTemplateId,

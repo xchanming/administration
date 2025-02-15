@@ -41,8 +41,8 @@ async function createWrapper(privileges = []) {
                                         return Promise.resolve({
                                             localeId: '7dc07b43229843d387bb5f59233c2d66',
                                             username: 'admin',
-                                            name: 'admin',
-                                            phone: '18000000000',
+                                            firstName: '',
+                                            lastName: 'admin',
                                             email: 'info@xchanming.com',
                                         });
                                     },
@@ -50,8 +50,8 @@ async function createWrapper(privileges = []) {
                                         return {
                                             localeId: '',
                                             username: '',
-                                            name: '',
-                                            phone: '',
+                                            firstName: '',
+                                            lastName: '',
                                             email: '',
                                             password: '',
                                         };
@@ -62,7 +62,7 @@ async function createWrapper(privileges = []) {
                             if (entityName === 'language') {
                                 return {
                                     search: () =>
-                                        Promise.resolve(new EntityCollection('', '', Cicada.Context.api, null, [], 0)),
+                                        Promise.resolve(new EntityCollection('', '', Shopware.Context.api, null, [], 0)),
                                     get: () => Promise.resolve(),
                                 };
                             }
@@ -115,19 +115,19 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-create', (
     let wrapper;
 
     beforeAll(() => {
-        Cicada.Service().register('timezoneService', () => {
+        Shopware.Service().register('timezoneService', () => {
             return new TimezoneService();
         });
     });
 
     beforeEach(async () => {
-        Cicada.State.get('session').languageId = '123456789';
+        Shopware.Store.get('session').languageId = '123456789';
         wrapper = await createWrapper();
         await flushPromises();
     });
 
     afterEach(() => {
-        Cicada.State.get('session').languageId = '';
+        Shopware.Store.get('session').languageId = '';
     });
 
     it('should be a Vue.js component', async () => {
@@ -139,8 +139,8 @@ describe('modules/sw-users-permissions/page/sw-users-permissions-user-create', (
             admin: false,
             localeId: '',
             username: '',
-            name: '',
-            phone: '',
+            firstName: '',
+            lastName: '',
             email: '',
             password: '',
         });

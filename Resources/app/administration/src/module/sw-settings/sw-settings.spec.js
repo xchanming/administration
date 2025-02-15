@@ -1,10 +1,10 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
-const { Module } = Cicada;
+const { Module } = Shopware;
 const ModuleFactory = Module;
 const register = ModuleFactory.register;
-const { hasOwnProperty } = Cicada.Utils.object;
+const { hasOwnProperty } = Shopware.Utils.object;
 
 describe('src/module/sw-settings', () => {
     let settingsIndex;
@@ -13,7 +13,7 @@ describe('src/module/sw-settings', () => {
         const modules = ModuleFactory.getModuleRegistry();
         modules.clear();
 
-        Cicada.State.get('settingsItems').settingsGroups = {};
+        Shopware.Store.get('settingsItems').settingsGroups = {};
 
         settingsIndex = {
             type: 'core',
@@ -32,7 +32,7 @@ describe('src/module/sw-settings', () => {
     it('should not contain any registered settings items', async () => {
         register('sw-settings-foo', settingsIndex);
 
-        const settingsGroups = Cicada.State.get('settingsItems').settingsGroups;
+        const settingsGroups = Shopware.Store.get('settingsItems').settingsGroups;
 
         expect(settingsGroups).toEqual({});
     });
@@ -47,7 +47,7 @@ describe('src/module/sw-settings', () => {
         ];
         register('sw-settings-foo', settingsIndex);
 
-        const settingsGroups = Cicada.State.get('settingsItems').settingsGroups;
+        const settingsGroups = Shopware.Store.get('settingsItems').settingsGroups;
 
         expect(hasOwnProperty(settingsGroups, 'shop')).toBe(true);
     });
@@ -81,7 +81,7 @@ describe('src/module/sw-settings', () => {
         ];
         register('sw-settings-foo', settingsIndex);
 
-        const settingsGroups = Cicada.State.get('settingsItems').settingsGroups;
+        const settingsGroups = Shopware.Store.get('settingsItems').settingsGroups;
 
         expect(settingsGroups.shop).toHaveLength(2);
         expect(settingsGroups.system).toHaveLength(1);
@@ -105,7 +105,7 @@ describe('src/module/sw-settings', () => {
         ];
         register('sw-settings-foo', settingsIndex);
 
-        const settingsGroups = Cicada.State.get('settingsItems').settingsGroups;
+        const settingsGroups = Shopware.Store.get('settingsItems').settingsGroups;
 
         expect(settingsGroups.shop).toHaveLength(1);
     });
@@ -127,7 +127,7 @@ describe('src/module/sw-settings', () => {
         ];
         register('sw-settings-foo', settingsIndex);
 
-        const settingsGroups = Cicada.State.get('settingsItems').settingsGroups;
+        const settingsGroups = Shopware.Store.get('settingsItems').settingsGroups;
 
         expect(settingsGroups.shop).toHaveLength(1);
         expect(settingsGroups.shop[0].name).toBe('foo');

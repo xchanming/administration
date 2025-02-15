@@ -1,18 +1,16 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-custom-field-list.html.twig';
 import './sw-custom-field-list.scss';
 
-const { Criteria } = Cicada.Data;
-const { Mixin } = Cicada;
-const types = Cicada.Utils.types;
+const { Criteria } = Shopware.Data;
+const { Mixin } = Shopware;
+const types = Shopware.Utils.types;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -122,6 +120,7 @@ export default {
 
         onAddCustomField() {
             const customField = this.customFieldRepository.create();
+            customField.storeApiAware = true;
             this.onCustomFieldEdit(customField);
         },
 
@@ -180,11 +179,7 @@ export default {
                 }
 
                 if ((types.isEmpty(config[property]) || config[property] === undefined) && config[property !== null]) {
-                    if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                        this.$delete(config, property);
-                    } else {
-                        delete config[property];
-                    }
+                    delete config[property];
                 }
             });
         },
@@ -219,7 +214,7 @@ export default {
                 toBeDeletedCustomFields.push(this.deleteCustomField.id);
             }
 
-            return this.globalCustomFieldRepository.syncDeleted(toBeDeletedCustomFields, Cicada.Context.api).then(() => {
+            return this.globalCustomFieldRepository.syncDeleted(toBeDeletedCustomFields, Shopware.Context.api).then(() => {
                 this.deleteButtonDisabled = true;
                 this.deleteCustomField = null;
 

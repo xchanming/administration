@@ -5,7 +5,7 @@
 import template from './sw-step-item.html.twig';
 import './sw-step-item.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 /**
  * @private
  * @description Renders a step and must be used in the slot of the sw-step-display component.
@@ -19,8 +19,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-step-item', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'feature',

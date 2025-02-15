@@ -1,7 +1,7 @@
 import './sw-inactivity-login.scss';
 import template from './sw-inactivity-login.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -9,8 +9,6 @@ const { Component } = Cicada;
  */
 Component.register('sw-inactivity-login', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'loginService',
@@ -45,7 +43,7 @@ Component.register('sw-inactivity-login', {
     computed: {
         title(): string {
             const moduleName = this.$tc('sw-inactivity-login.general.mainMenuItemIndex');
-            const adminName = this.$tc('global.sw-admin-menu.textCicadaAdmin');
+            const adminName = this.$tc('global.sw-admin-menu.textShopwareAdmin');
 
             return `${moduleName} | ${adminName}`;
         },
@@ -72,7 +70,7 @@ Component.register('sw-inactivity-login', {
         this.sessionChannel.postMessage({ inactive: true });
         this.sessionChannel.onmessage = (event) => {
             const data = event.data as { inactive?: boolean };
-            if (!data || !Cicada.Utils.object.hasOwnProperty(data, 'inactive')) {
+            if (!data || !Shopware.Utils.object.hasOwnProperty(data, 'inactive')) {
                 return;
             }
 

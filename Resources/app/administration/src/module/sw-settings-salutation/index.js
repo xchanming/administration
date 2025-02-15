@@ -4,11 +4,11 @@
 import './acl';
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-settings-salutation-list', () => import('./page/sw-settings-salutation-list'));
-Cicada.Component.register('sw-settings-salutation-detail', () => import('./page/sw-settings-salutation-detail'));
+Shopware.Component.register('sw-settings-salutation-list', () => import('./page/sw-settings-salutation-list'));
+Shopware.Component.register('sw-settings-salutation-detail', () => import('./page/sw-settings-salutation-detail'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Module.register('sw-settings-salutation', {
@@ -57,10 +57,10 @@ Module.register('sw-settings-salutation', {
         },
     },
 
-    // settingsItem: {
-    //     group: 'shop',
-    //     to: 'sw.settings.salutation.index',
-    //     icon: 'regular-comments',
-    //     privilege: 'salutation.viewer',
-    // },
+    settingsItem: {
+        group: 'customer',
+        to: 'sw.settings.salutation.index',
+        icon: 'regular-comments',
+        privilege: 'salutation.viewer',
+    },
 });

@@ -1,7 +1,7 @@
 import template from './sw-cms-el-image-slider.html.twig';
 import './sw-cms-el-image-slider.scss';
 
-const { Mixin, Filter } = Cicada;
+const { Mixin, Filter } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Mixin, Filter } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

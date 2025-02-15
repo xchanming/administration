@@ -6,13 +6,13 @@ import MockAdapter from 'axios-mock-adapter';
 function createUserActivityApiService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
     const userActivityApiService = new UserActivityApiService(client, loginService);
     return { userActivityApiService, clientMock };
 }
 
 /**
- * @sw-package fundamentals@after-sales
+ * @sw-package fundamentals@framework
  */
 describe('userActivityApiService', () => {
     it('is registered correctly', async () => {

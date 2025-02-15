@@ -58,7 +58,7 @@ async function createWrapper() {
             },
             global: {
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
             },
         },
@@ -70,7 +70,7 @@ describe('module/sw-cms/elements/manufacturer-logo/component', () => {
         await setupCmsEnvironment();
         await import('src/module/sw-cms/elements/manufacturer-logo');
 
-        Cicada.Store.get('cmsPage').setCurrentPage({
+        Shopware.Store.get('cmsPage').setCurrentPage({
             type: 'product_detail',
         });
     });

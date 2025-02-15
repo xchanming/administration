@@ -2,25 +2,25 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-product-box', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-product-box', () => import('./preview'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-product-box', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-product-box', () => import('./config'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-product-box', () => import('./component'));
+Shopware.Component.register('sw-cms-el-product-box', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'product-box',
     label: 'sw-cms.elements.productBox.label',
     component: 'sw-cms-el-product-box',
@@ -33,7 +33,7 @@ Cicada.Service('cmsService').registerCmsElement({
             required: true,
             entity: {
                 name: 'product',
-                criteria: new Cicada.Data.Criteria(1, 25).addAssociation('cover'),
+                criteria: new Shopware.Data.Criteria(1, 25).addAssociation('cover'),
             },
         },
         boxLayout: {
@@ -53,5 +53,5 @@ Cicada.Service('cmsService').registerCmsElement({
         boxLayout: 'standard',
         product: null,
     },
-    collect: Cicada.Service('cmsService').getCollectFunction(),
+    collect: Shopware.Service('cmsService').getCollectFunction(),
 });

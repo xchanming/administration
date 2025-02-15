@@ -1,6 +1,6 @@
 import { mount, config } from '@vue/test-utils';
 import { createRouter, createWebHashHistory } from 'vue-router';
-import CicadaService from 'src/module/sw-extension/service/cicada-extension.service';
+import ShopwareService from 'src/module/sw-extension/service/shopware-extension.service';
 
 const routes = [
     {
@@ -17,8 +17,8 @@ const routes = [
     },
 ];
 
-const cicadaService = new CicadaService({}, {}, {}, {});
-cicadaService.updateExtensionData = jest.fn();
+const shopwareService = new ShopwareService({}, {}, {}, {});
+shopwareService.updateExtensionData = jest.fn();
 
 async function createWrapper() {
     delete config.global.mocks.$router;
@@ -87,7 +87,7 @@ async function createWrapper() {
                             return {};
                         },
                     },
-                    cicadaExtensionService: cicadaService,
+                    shopwareExtensionService: shopwareService,
                 },
             },
             attachTo: document.body,
@@ -100,36 +100,15 @@ async function createWrapper() {
  */
 describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () => {
     beforeAll(() => {
-        if (Cicada.State.get('cicadaExtensions')) {
-            Cicada.State.unregisterModule('cicadaExtensions');
+        Shopware.Store.get('shopwareExtensions').setMyExtensions([{ name: 'Test', installedAt: null }]);
+
+        if (Shopware.Store.get('context')) {
+            Shopware.Store.unregister('context');
         }
 
-        Cicada.State.registerModule('cicadaExtensions', {
-            namespaced: true,
-            state: {
-                myExtensions: {
-                    data: [
-                        {
-                            name: 'Test',
-                            installedAt: null,
-                        },
-                    ],
-                },
-            },
-            mutations: {
-                setExtensions(state, extensions) {
-                    state.myExtensions.data = extensions;
-                },
-            },
-        });
-
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
-        }
-
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
+        Shopware.Store.register({
+            id: 'context',
+            state: () => ({
                 app: {
                     config: {
                         settings: {
@@ -140,12 +119,12 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
                 api: {
                     assetsPath: '/',
                 },
-            },
+            }),
         });
     });
 
     beforeEach(async () => {
-        Cicada.State.commit('cicadaExtensions/setExtensions', [
+        Shopware.Store.get('shopwareExtensions').setMyExtensions([
             {
                 name: 'Test',
                 installedAt: null,
@@ -154,7 +133,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
     });
 
     it('runtime management disabled should be there', async () => {
-        Cicada.State.get('context').app.config.settings.disableExtensionManagement = true;
+        Shopware.Store.get('context').app.config.settings.disableExtensionManagement = true;
         const wrapper = await createWrapper();
 
         const runtimeManagement = wrapper.find('.sw-extension-my-extensions-listing__runtime-extension-warning');
@@ -190,7 +169,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
 
         wrapper.vm.updateList();
 
-        expect(cicadaService.updateExtensionData).toHaveBeenCalled();
+        expect(shopwareService.updateExtensionData).toHaveBeenCalled();
     });
 
     it('extensionList default has a app', async () => {
@@ -218,7 +197,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
 
         await wrapper.vm.$router.push(routes[1]);
 
-        Cicada.State.commit('cicadaExtensions/setExtensions', [
+        Shopware.Store.get('shopwareExtensions').setMyExtensions([
             {
                 name: 'Test',
                 installedAt: 'some date',
@@ -262,7 +241,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
                 };
             });
 
-        Cicada.State.commit('cicadaExtensions/setExtensions', extensions);
+        Shopware.Store.get('shopwareExtensions').setMyExtensions(extensions);
 
         await wrapper.vm.$nextTick();
 
@@ -301,7 +280,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
                 };
             });
 
-        Cicada.State.commit('cicadaExtensions/setExtensions', extensions);
+        Shopware.Store.get('shopwareExtensions').setMyExtensions(extensions);
 
         await wrapper.vm.$nextTick();
 
@@ -353,7 +332,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
                 };
             });
 
-        Cicada.State.commit('cicadaExtensions/setExtensions', [
+        Shopware.Store.get('shopwareExtensions').setMyExtensions([
             ...activeExtensions,
             ...inactiveExtensions,
         ]);
@@ -388,7 +367,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
             };
         });
 
-        Cicada.State.commit('cicadaExtensions/setExtensions', extensions);
+        Shopware.Store.get('shopwareExtensions').setMyExtensions(extensions);
 
         await wrapper.vm.$nextTick();
 
@@ -428,7 +407,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
             };
         });
 
-        Cicada.State.commit('cicadaExtensions/setExtensions', extensions);
+        Shopware.Store.get('shopwareExtensions').setMyExtensions(extensions);
 
         await wrapper.vm.$nextTick();
 
@@ -470,7 +449,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
             };
         });
 
-        Cicada.State.commit('cicadaExtensions/setExtensions', extensions);
+        Shopware.Store.get('shopwareExtensions').setMyExtensions(extensions);
 
         await wrapper.vm.$nextTick();
 
@@ -500,7 +479,7 @@ describe('src/module/sw-extension/page/sw-extension-my-extensions-listing', () =
     it('should show a warning if the APP_URL is not setup correctly', async () => {
         const wrapper = await createWrapper();
 
-        Cicada.State.get('context').app.config.settings.appUrlReachable = false;
+        Shopware.Store.get('context').app.config.settings.appUrlReachable = false;
 
         await wrapper.vm.$nextTick();
 

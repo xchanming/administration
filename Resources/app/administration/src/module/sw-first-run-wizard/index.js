@@ -1,35 +1,42 @@
-const { Module } = Cicada;
+const { Module } = Shopware;
 
 /* eslint-disable max-len, sw-deprecation-rules/private-feature-declarations */
-Cicada.Component.register('sw-first-run-wizard-modal', () => import('./component/sw-first-run-wizard-modal'));
-Cicada.Component.register('sw-plugin-card', () => import('./component/sw-plugin-card'));
-Cicada.Component.register('sw-first-run-wizard', () => import('./page/index'));
-Cicada.Component.register('sw-first-run-wizard-welcome', () => import('./view/sw-first-run-wizard-welcome'));
-Cicada.Component.register('sw-first-run-wizard-data-import', () => import('./view/sw-first-run-wizard-data-import'));
-Cicada.Component.register('sw-first-run-wizard-mailer-base', () => import('./view/sw-first-run-wizard-mailer-base'));
-Cicada.Component.register(
+Shopware.Component.register('sw-first-run-wizard-modal', () => import('./component/sw-first-run-wizard-modal'));
+Shopware.Component.register('sw-plugin-card', () => import('./component/sw-plugin-card'));
+Shopware.Component.register('sw-first-run-wizard', () => import('./page/index'));
+Shopware.Component.register('sw-first-run-wizard-welcome', () => import('./view/sw-first-run-wizard-welcome'));
+Shopware.Component.register('sw-first-run-wizard-data-import', () => import('./view/sw-first-run-wizard-data-import'));
+Shopware.Component.register('sw-first-run-wizard-mailer-base', () => import('./view/sw-first-run-wizard-mailer-base'));
+Shopware.Component.register(
     'sw-first-run-wizard-mailer-selection',
     () => import('./view/sw-first-run-wizard-mailer-selection'),
 );
-Cicada.Component.register('sw-first-run-wizard-mailer-smtp', () => import('./view/sw-first-run-wizard-mailer-smtp'));
-Cicada.Component.register('sw-first-run-wizard-mailer-local', () => import('./view/sw-first-run-wizard-mailer-local'));
-Cicada.Component.register('sw-first-run-wizard-paypal-base', () => import('./view/sw-first-run-wizard-paypal-base'));
-Cicada.Component.register('sw-first-run-wizard-paypal-info', () => import('./view/sw-first-run-wizard-paypal-info'));
-Cicada.Component.register(
+Shopware.Component.register('sw-first-run-wizard-mailer-smtp', () => import('./view/sw-first-run-wizard-mailer-smtp'));
+Shopware.Component.register('sw-first-run-wizard-mailer-local', () => import('./view/sw-first-run-wizard-mailer-local'));
+Shopware.Component.register('sw-first-run-wizard-paypal-base', () => import('./view/sw-first-run-wizard-paypal-base'));
+Shopware.Component.register('sw-first-run-wizard-paypal-info', () => import('./view/sw-first-run-wizard-paypal-info'));
+Shopware.Component.register(
     'sw-first-run-wizard-paypal-credentials',
     () => import('./view/sw-first-run-wizard-paypal-credentials'),
 );
-Cicada.Component.register('sw-first-run-wizard-plugins', () => import('./view/sw-first-run-wizard-plugins'));
-Cicada.Component.register('sw-first-run-wizard-cicada-base', () => import('./view/sw-first-run-wizard-cicada-base'));
-Cicada.Component.register('sw-first-run-wizard-cicada-account', () => import('./view/sw-first-run-wizard-cicada-account'));
-Cicada.Component.register('sw-first-run-wizard-cicada-domain', () => import('./view/sw-first-run-wizard-cicada-domain'));
-Cicada.Component.register('sw-first-run-wizard-defaults', () => import('./view/sw-first-run-wizard-defaults'));
-Cicada.Component.register('sw-first-run-wizard-store', () => import('./view/sw-first-run-wizard-store'));
-Cicada.Component.register('sw-first-run-wizard-finish', () => import('./view/sw-first-run-wizard-finish'));
+Shopware.Component.register('sw-first-run-wizard-plugins', () => import('./view/sw-first-run-wizard-plugins'));
+Shopware.Component.register('sw-first-run-wizard-shopware-base', () => import('./view/sw-first-run-wizard-shopware-base'));
+Shopware.Component.register(
+    'sw-first-run-wizard-shopware-account',
+    () => import('./view/sw-first-run-wizard-shopware-account'),
+);
+Shopware.Component.register(
+    'sw-first-run-wizard-shopware-domain',
+    () => import('./view/sw-first-run-wizard-shopware-domain'),
+);
+Shopware.Component.register('sw-first-run-wizard-defaults', () => import('./view/sw-first-run-wizard-defaults'));
+Shopware.Component.register('sw-first-run-wizard-store', () => import('./view/sw-first-run-wizard-store'));
+Shopware.Component.register('sw-first-run-wizard-finish', () => import('./view/sw-first-run-wizard-finish'));
 /* eslint-enable max-len, sw-deprecation-rules/private-feature-declarations */
 
 /**
  * @sw-package fundamentals@after-sales
+ *
  * @private
  */
 Module.register('sw-first-run-wizard', {
@@ -133,19 +140,19 @@ Module.register('sw-first-run-wizard', {
                         privilege: 'admin',
                     },
                 },
-                cicada: {
-                    component: 'sw-first-run-wizard-cicada-base',
-                    path: 'cicada',
+                shopware: {
+                    component: 'sw-first-run-wizard-shopware-base',
+                    path: 'shopware',
                     children: {
                         account: {
-                            component: 'sw-first-run-wizard-cicada-account',
+                            component: 'sw-first-run-wizard-shopware-account',
                             path: 'account',
                             meta: {
                                 privilege: 'admin',
                             },
                         },
                         domain: {
-                            component: 'sw-first-run-wizard-cicada-domain',
+                            component: 'sw-first-run-wizard-shopware-domain',
                             path: 'domain',
                             meta: {
                                 privilege: 'admin',

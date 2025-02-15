@@ -114,7 +114,7 @@ async function createWrapper(privileges = []) {
     });
 }
 
-Cicada.Service().register('filterService', () => {
+Shopware.Service().register('filterService', () => {
     return {
         mergeWithStoredFilters: (storeKey, criteria) => criteria,
     };

@@ -6,15 +6,13 @@ import CUSTOMER from '../../../sw-customer/constant/sw-customer.constant';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapPageErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPageErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -45,7 +43,8 @@ export default {
         ...mapPageErrors({
             'sw.order.new.customer.detail': {
                 customer: [
-                    'name',
+                    'firstName',
+                    'lastName',
                     'email',
                     'salesChannelId',
                     'customerNumber',
@@ -55,7 +54,8 @@ export default {
 
             'sw.order.new.customer.address': {
                 customer_address: [
-                    'name',
+                    'firstName',
+                    'lastName',
                     'street',
                     'city',
                     'countryId',
@@ -93,6 +93,10 @@ export default {
             },
 
             set(newValue) {
+                if (newValue === this.isSameBilling) {
+                    return;
+                }
+
                 if (newValue === true) {
                     this.customer.defaultShippingAddressId = this.customer.defaultBillingAddressId;
 
@@ -166,9 +170,7 @@ export default {
                 return;
             }
 
-            Cicada.State.dispatch('error/removeApiError', {
-                expression: `customer_address.${this.billingAddress?.id}.company`,
-            });
+            Shopware.Store.get('error').removeApiError(`customer_address.${this.billingAddress?.id}.company`);
         },
     },
 
@@ -239,7 +241,7 @@ export default {
         async saveCustomer() {
             const languageId = await this.languageId;
 
-            const context = { ...Cicada.Context.api, ...{ languageId } };
+            const context = { ...Shopware.Context.api, ...{ languageId } };
 
             return this.customerRepository
                 .save(this.customer, context)
@@ -272,9 +274,9 @@ export default {
         },
 
         createErrorMessageForCompanyField() {
-            Cicada.State.dispatch('error/addApiError', {
+            Shopware.Store.get('error').addApiError({
                 expression: `customer_address.${this.billingAddress.id}.company`,
-                error: new Cicada.Classes.CicadaError({
+                error: new Shopware.Classes.ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 }),
             });
@@ -301,7 +303,7 @@ export default {
                         return;
                     }
 
-                    Cicada.State.dispatch('error/addApiError', {
+                    Shopware.Store.get('error').addApiError({
                         expression: `customer.${this.customer.id}.email`,
                         error: exception?.response?.data?.errors[0],
                     });
@@ -309,7 +311,7 @@ export default {
         },
 
         async loadLanguage(salesChannelId) {
-            const languageId = Cicada.Context.api.languageId;
+            const languageId = Shopware.Context.api.languageId;
 
             if (!salesChannelId) {
                 return languageId;

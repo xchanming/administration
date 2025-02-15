@@ -1,13 +1,11 @@
 /**
- * @sw-package inventory
+ * @sw-package framework
  */
 import template from './sw-bulk-edit-save-modal-error.html.twig';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'title-set',

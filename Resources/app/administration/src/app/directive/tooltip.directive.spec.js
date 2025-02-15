@@ -43,7 +43,7 @@ const createWrapper = async (
         global: {
             components,
             directives: {
-                tooltip: Cicada.Directive.getByName('tooltip'),
+                tooltip: Shopware.Directive.getByName('tooltip'),
             },
         },
     });

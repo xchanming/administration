@@ -1,3 +1,4 @@
+import 'src/app/store/notification.store';
 /**
  * @sw-package framework
  *
@@ -5,15 +6,17 @@
  */
 export default function initializeNotifications(): void {
     // Handle incoming notifications from the ExtensionAPI
-    Cicada.ExtensionAPI.handle('notificationDispatch', async (notificationOptions) => {
-        const message = notificationOptions.message ?? Cicada.Snippet.tc('global.notification.noMessage');
-        const title = notificationOptions.title ?? Cicada.Snippet.tc('global.notification.noTitle');
+    Shopware.ExtensionAPI.handle('notificationDispatch', (notificationOptions) => {
+        // @ts-expect-error - t is callable
+        const message = notificationOptions.message ?? Shopware.Snippet.tc('global.notification.noMessage');
+        // @ts-expect-error - tc is callable
+        const title = notificationOptions.title ?? Shopware.Snippet.tc('global.notification.noTitle');
         const actions = notificationOptions.actions ?? [];
         const appearance = notificationOptions.appearance ?? 'notification';
         const growl = notificationOptions.growl ?? true;
         const variant = notificationOptions.variant ?? 'info';
 
-        await Cicada.State.dispatch('notification/createNotification', {
+        Shopware.Store.get('notification').createNotification({
             variant: variant,
             title: title,
             message: message,

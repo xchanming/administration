@@ -6,7 +6,7 @@ import MockAdapter from 'axios-mock-adapter';
 function createCartStoreServiceService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
     const cartStoreService = new CartStoreService(client, loginService);
     return { cartStoreService, clientMock };
 }

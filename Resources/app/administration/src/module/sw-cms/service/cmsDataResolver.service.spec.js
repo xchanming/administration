@@ -267,7 +267,7 @@ const cmsElements = {
                 };
             }
 
-            const Criteria = Cicada.Data.Criteria;
+            const Criteria = Shopware.Data.Criteria;
             if (slot.config.categories?.entity) {
                 const debugProperty = slot.config.categories.entity?.debugProperty || 'associations';
                 const searchCriteria = new Criteria();
@@ -328,7 +328,7 @@ const cmsElements = {
     },
 };
 
-Cicada.Service().register('cmsService', () => {
+Shopware.Service().register('cmsService', () => {
     return {
         getCmsElementRegistry() {
             return cmsElements;
@@ -413,7 +413,7 @@ responses.addResponse({
 });
 
 function getService() {
-    return Cicada.Service().get('cmsDataResolverService');
+    return Shopware.Service().get('cmsDataResolverService');
 }
 
 let service;

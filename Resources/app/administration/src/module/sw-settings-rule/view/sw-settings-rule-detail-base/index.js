@@ -7,8 +7,6 @@ import template from './sw-settings-rule-detail-base.html.twig';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'ruleConditionDataProviderService',
         'acl',

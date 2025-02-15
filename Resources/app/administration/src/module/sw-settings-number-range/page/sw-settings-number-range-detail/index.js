@@ -8,14 +8,12 @@ const {
     Component,
     Mixin,
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'numberRangeService',
@@ -210,7 +208,7 @@ export default {
         async loadEntityData() {
             this.numberRange = await this.numberRangeRepository.get(
                 this.numberRangeId,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 this.numberRangeCriteria,
             );
 
@@ -315,7 +313,7 @@ export default {
                 .catch((exception) => {
                     this.isLoading = false;
                     this.createNotificationError({
-                        message: this.$tc('sw-settings-number-range.detail.messageSaveError', 0, { name: numberRangeName }),
+                        message: this.$tc('sw-settings-number-range.detail.messageSaveError', { name: numberRangeName }, 0),
                     });
                     throw exception;
                 })

@@ -5,14 +5,12 @@
 import template from './sw-sales-channel-modal-grid.html.twig';
 import './sw-sales-channel-modal-grid.scss';
 
-const { Defaults } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Defaults } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -63,8 +61,8 @@ export default {
         createdComponent() {
             this.isLoading = true;
             const context = {
-                ...Cicada.Context.api,
-                languageId: Cicada.State.get('session').languageId,
+                ...Shopware.Context.api,
+                languageId: Shopware.Store.get('session').languageId,
             };
             this.salesChannelTypeRepository.search(new Criteria(1, 500), context).then((response) => {
                 this.total = response.total;

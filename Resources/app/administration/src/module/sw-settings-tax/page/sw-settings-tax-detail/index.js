@@ -5,21 +5,18 @@ import './sw-settings-tax-detail.scss';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
         'acl',
         'customFieldDataProviderService',
         'systemConfigApiService',
-        'feature',
     ],
 
     mixins: [
@@ -103,12 +100,12 @@ export default {
             };
         },
 
-        isCicadaDefaultTax() {
+        isShopwareDefaultTax() {
             return this.$te(`global.tax-rates.${this.tax.name}`, 'en-GB');
         },
 
         label() {
-            return this.isCicadaDefaultTax ? this.$tc(`global.tax-rates.${this.tax.name}`) : this.tax.name;
+            return this.isShopwareDefaultTax ? this.$tc(`global.tax-rates.${this.tax.name}`) : this.tax.name;
         },
 
         showCustomFields() {
@@ -211,7 +208,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').api.languageId = languageId;
             this.createdComponent();
         },
 

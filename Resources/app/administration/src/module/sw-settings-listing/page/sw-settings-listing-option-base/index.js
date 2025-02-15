@@ -4,15 +4,13 @@
 import template from './sw-settings-listing-option-base.html.twig';
 import './sw-settings-listing-option-base.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { CicadaError } = Cicada.Classes;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { ShopwareError } = Shopware.Classes;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -92,7 +90,7 @@ export default {
             const productSortingEntityId = this.getProductSortingEntityId();
 
             this.productSortingRepository
-                .get(productSortingEntityId, Cicada.Context.api, this.productSortingEntityCriteria)
+                .get(productSortingEntityId, Shopware.Context.api, this.productSortingEntityCriteria)
                 .then((response) => {
                     if (!Array.isArray(response.fields)) {
                         response.fields = [];
@@ -120,19 +118,19 @@ export default {
 
         async isValidSortingOption() {
             if (!this.productSortingEntity.key) {
-                this.sortingOptionTechnicalNameError = new CicadaError({
+                this.sortingOptionTechnicalNameError = new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
             }
 
             if (await this.searchForAlreadyExistingKey(this.productSortingEntity.key)) {
-                this.sortingOptionTechnicalNameError = new CicadaError({
+                this.sortingOptionTechnicalNameError = new ShopwareError({
                     code: 'DUPLICATED_NAME',
                 });
             }
 
             if (!this.productSortingEntity.label) {
-                this.sortingOptionLabelError = new CicadaError({
+                this.sortingOptionLabelError = new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
             }

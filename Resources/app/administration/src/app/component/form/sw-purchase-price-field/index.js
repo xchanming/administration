@@ -4,15 +4,13 @@
 
 import template from './sw-purchase-price-field.html.twig';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-purchase-price-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['update:value'],
 

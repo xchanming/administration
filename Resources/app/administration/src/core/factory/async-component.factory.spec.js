@@ -754,7 +754,7 @@ describe('core/factory/async-component.factory.ts', () => {
         });
     });
 
-    describe('should ignore overrides if block does not exists', () => {
+    describe('should ignore overrides if block does not exist', () => {
         createComponentMatrix({
             A: () => ({
                 template: '{% block name %}<div>This is a template override.</div>{% endblock %}',
@@ -2836,17 +2836,17 @@ describe('core/factory/async-component.factory.ts', () => {
         [1],
         [3],
     ])('should call whole super chain with %i empty override', async (numberOfEmptyOverrides) => {
-        const { Criteria } = Cicada.Data;
+        const { Criteria } = Shopware.Data;
 
         // Register sw-order-list with reactive computed orderCriteria changes triggered via template button interactions, similar to the real component
         ComponentFactory.register('sw-order-list', () =>
             Promise.resolve({
                 template: `
-                    <div class="sw-order-list">
-                        <button id="next" @click="page++">Next Page</button>
-                        <button id="previous" @click="page--">Previous Page</button>
-                    </div>
-                `,
+                <div class="sw-order-list">
+                    <button id="next" @click="page++">Next Page</button>
+                    <button id="previous" @click="page--">Previous Page</button>
+                </div>
+            `,
                 data() {
                     return {
                         page: 1,

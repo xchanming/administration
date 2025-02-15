@@ -8,8 +8,6 @@ import './sw-category-view.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['acl'],
 
     mixins: [
@@ -31,7 +29,11 @@ export default {
 
     computed: {
         category() {
-            return Cicada.State.get('swCategoryDetail').category;
+            return Shopware.Store.get('swCategoryDetail').category;
+        },
+
+        isCategoryColumn() {
+            return Shopware.Store.get('swCategoryDetail').isCategoryColumn;
         },
 
         cmsPage() {
@@ -39,7 +41,7 @@ export default {
                 return false;
             }
 
-            return Cicada.Store.get('cmsPage').currentPage;
+            return Shopware.Store.get('cmsPage').currentPage;
         },
 
         isPage() {

@@ -4,16 +4,13 @@ import template from './sw-order-detail-general.html.twig';
  * @sw-package checkout
  */
 
-const { Utils, Mixin } = Cicada;
+const { Utils, Mixin, Store } = Shopware;
 const { format, array } = Utils;
-const { mapGetters, mapState } = Cicada.Component.getComponentHelper();
-const { cloneDeep } = Cicada.Utils.object;
+const { cloneDeep } = Shopware.Utils.object;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: {
         swOrderDetailOnSaveAndReload: {
@@ -67,14 +64,11 @@ export default {
     },
 
     computed: {
-        ...mapGetters('swOrderDetail', [
-            'isLoading',
-        ]),
+        isLoading: () => Store.get('swOrderDetail').isLoading,
 
-        ...mapState('swOrderDetail', [
-            'order',
-            'versionContext',
-        ]),
+        order: () => Store.get('swOrderDetail').order,
+
+        versionContext: () => Store.get('swOrderDetail').versionContext,
 
         delivery() {
             return this.order.deliveries[0];
@@ -89,10 +83,14 @@ export default {
             const formattedTaxes = `${calcTaxes
                 .map(
                     (calcTax) =>
-                        `${this.$tc('sw-order.detailBase.shippingCostsTax', 0, {
-                            taxRate: calcTax.taxRate,
-                            tax: format.currency(calcTax.tax, this.order.currency.isoCode),
-                        })}`,
+                        `${this.$tc(
+                            'sw-order.detailBase.shippingCostsTax',
+                            {
+                                taxRate: calcTax.taxRate,
+                                tax: format.currency(calcTax.tax, this.order.currency.isoCode),
+                            },
+                            0,
+                        )}`,
                 )
                 .join('<br>')}`;
 
@@ -127,7 +125,7 @@ export default {
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
     },
 

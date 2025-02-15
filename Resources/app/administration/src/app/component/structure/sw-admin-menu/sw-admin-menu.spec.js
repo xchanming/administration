@@ -11,13 +11,13 @@ import catalogues from './_sw-admin-menu-item/catalogues';
 import adminModules from '../../../service/_mocks/adminModules.json';
 import testApps from '../../../service/_mocks/testApps.json';
 
-const menuService = createMenuService(Cicada.Module);
-Cicada.Service().register('menuService', () => menuService);
+const menuService = createMenuService(Shopware.Module);
+Shopware.Service().register('menuService', () => menuService);
 
 async function createWrapper(options = {}) {
     const router = createRouter({
         routes: [
-            ...Cicada.Module.getModuleRoutes(),
+            ...Shopware.Module.getModuleRoutes(),
             {
                 path: '/sw/custom/entity/index',
                 name: 'sw.custom.entity.index',
@@ -104,26 +104,12 @@ describe('src/app/component/structure/sw-admin-menu', () => {
     let wrapper;
 
     beforeAll(() => {
-        Cicada.State.get('session').currentLocale = 'en-GB';
-        Cicada.Context.app.fallbackLocale = 'en-GB';
+        Shopware.Store.get('session').currentLocale = 'en-GB';
+        Shopware.Context.app.fallbackLocale = 'en-GB';
 
-        if (Cicada.State.get('settingsItems')) {
-            Cicada.State.unregisterModule('settingsItems');
-        }
-
-        Cicada.State.registerModule('settingsItems', {
-            namespaced: true,
-            state: {
-                settingsGroups: {
-                    shop: [],
-                    system: [],
-                },
-            },
-        });
-
-        Cicada.Module.getModuleRegistry().clear();
+        Shopware.Module.getModuleRegistry().clear();
         adminModules.forEach((adminModule) => {
-            Cicada.Module.register(adminModule.name, adminModule);
+            Shopware.Module.register(adminModule.name, adminModule);
         });
     });
 
@@ -133,13 +119,13 @@ describe('src/app/component/structure/sw-admin-menu', () => {
             transition: false,
         };
 
-        jest.spyOn(Cicada.Utils.debug, 'error').mockImplementation(() => true);
+        jest.spyOn(Shopware.Utils.debug, 'error').mockImplementation(() => true);
 
-        Cicada.State.commit('setCurrentUser', null);
-        Cicada.State.get('settingsItems').settingsGroups.shop = [];
-        Cicada.State.get('settingsItems').settingsGroups.system = [];
+        Shopware.Store.get('session').setCurrentUser(null);
+        Shopware.Store.get('settingsItems').settingsGroups.shop = [];
+        Shopware.Store.get('settingsItems').settingsGroups.system = [];
 
-        Cicada.State.commit('cicadaApps/setApps', []);
+        Shopware.Store.get('shopwareApps').apps = [];
 
         wrapper = await createWrapper();
         await flushPromises();
@@ -150,7 +136,7 @@ describe('src/app/component/structure/sw-admin-menu', () => {
     });
 
     it('should show the snippet for the admin title', async () => {
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             admin: true,
             title: 'Master of something',
             aclRoles: [],
@@ -164,7 +150,7 @@ describe('src/app/component/structure/sw-admin-menu', () => {
     });
 
     it('should show the user title for the non admin user', async () => {
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             admin: false,
             title: 'Master of something',
             aclRoles: [],
@@ -177,7 +163,7 @@ describe('src/app/component/structure/sw-admin-menu', () => {
     });
 
     it('should show no title when user has no title and no aclRoles defined', async () => {
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             admin: false,
             title: null,
             aclRoles: [],
@@ -190,7 +176,7 @@ describe('src/app/component/structure/sw-admin-menu', () => {
     });
 
     it('should use the name of the first acl role as a title when user has no title defined', async () => {
-        Cicada.State.commit('setCurrentUser', {
+        Shopware.Store.get('session').setCurrentUser({
             admin: false,
             title: null,
             aclRoles: [
@@ -332,13 +318,13 @@ describe('src/app/component/structure/sw-admin-menu', () => {
         expect(fifthLevelEntries).toHaveLength(0);
 
         // Console error gets thrown for both levels
-        expect(Cicada.Utils.debug.error.mock.calls[0][0]).toBeInstanceOf(Error);
-        expect(Cicada.Utils.debug.error.mock.calls[0][0].toString()).toBe(
+        expect(Shopware.Utils.debug.error.mock.calls[0][0]).toBeInstanceOf(Error);
+        expect(Shopware.Utils.debug.error.mock.calls[0][0].toString()).toBe(
             'Error: The navigation entry "sw.fourth.level.first" is nested on level 4 or higher.The admin menu only supports up to three levels of nesting.',
         );
 
-        expect(Cicada.Utils.debug.error.mock.calls[1][0]).toBeInstanceOf(Error);
-        expect(Cicada.Utils.debug.error.mock.calls[1][0].toString()).toBe(
+        expect(Shopware.Utils.debug.error.mock.calls[1][0]).toBeInstanceOf(Error);
+        expect(Shopware.Utils.debug.error.mock.calls[1][0].toString()).toBe(
             'Error: The navigation entry "sw.fifth.level.first" is nested on level 4 or higher.The admin menu only supports up to three levels of nesting.',
         );
     });
@@ -360,7 +346,7 @@ describe('src/app/component/structure/sw-admin-menu', () => {
 
     describe('app menu entries', () => {
         it('renders apps under there parent navigation entry', async () => {
-            Cicada.State.commit('cicadaApps/setApps', testApps);
+            Shopware.Store.get('shopwareApps').apps = testApps;
             await flushPromises();
 
             const topLevelEntries = wrapper.findAll('.navigation-list-item__level-1');
@@ -380,7 +366,7 @@ describe('src/app/component/structure/sw-admin-menu', () => {
         });
 
         it('renders app structure elements and their children', async () => {
-            Cicada.State.commit('cicadaApps/setApps', testApps);
+            Shopware.Store.get('shopwareApps').apps = testApps;
             await flushPromises();
 
             const topLevelEntries = wrapper.findAll('.navigation-list-item__level-1');

@@ -6,15 +6,13 @@ import './sw-customer-detail-addresses.scss';
  * @sw-package checkout
  */
 
-const { CicadaError } = Cicada.Classes;
-const { Mixin, EntityDefinition } = Cicada;
-const { Criteria } = Cicada.Data;
+const { ShopwareError } = Shopware.Classes;
+const { Mixin, EntityDefinition } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -164,8 +162,12 @@ export default {
                     iconTooltip: this.$tc('sw-customer.detailAddresses.columnDefaultBillingAddress'),
                 },
                 {
-                    property: 'name',
-                    label: this.$tc('sw-customer.detailAddresses.columnName'),
+                    property: 'lastName',
+                    label: this.$tc('sw-customer.detailAddresses.columnLastName'),
+                },
+                {
+                    property: 'firstName',
+                    label: this.$tc('sw-customer.detailAddresses.columnFirstName'),
                 },
                 {
                     property: 'company',
@@ -223,7 +225,7 @@ export default {
             let address = this.activeCustomer.addresses.get(this.currentAddress.id);
 
             if (typeof address === 'undefined' || address === null) {
-                address = this.addressRepository.create(Cicada.Context.api, this.currentAddress.id);
+                address = this.addressRepository.create(Shopware.Context.api, this.currentAddress.id);
             }
 
             Object.assign(address, this.currentAddress);
@@ -249,9 +251,9 @@ export default {
 
                 isValid = false;
 
-                Cicada.State.dispatch('error/addApiError', {
+                Shopware.Store.get('error').addApiError({
                     expression: `customer_address.${this.currentAddress.id}.${field}`,
-                    error: new CicadaError({
+                    error: new ShopwareError({
                         code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                     }),
                 });
@@ -277,7 +279,7 @@ export default {
         },
 
         onEditAddress(id) {
-            const currentAddress = this.addressRepository.create(Cicada.Context.api, id);
+            const currentAddress = this.addressRepository.create(Shopware.Context.api, id);
 
             // assign values and id to new address
             Object.assign(currentAddress, this.activeCustomer.addresses.get(id));

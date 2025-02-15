@@ -5,16 +5,17 @@
 import template from './sw-mail-header-footer-detail.html.twig';
 import './sw-mail-header-footer-detail.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
-const { warn } = Cicada.Utils.debug;
-const { mapPropertyErrors } = Cicada.Component.getComponentHelper();
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
+const { warn } = Shopware.Utils.debug;
+const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
+/**
+ * @sw-package after-sales
+ */
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'entityMappingService',
@@ -155,7 +156,7 @@ export default {
 
             this.mailHeaderFooter = await this.mailHeaderFooterRepository.get(
                 this.mailHeaderFooterId,
-                Cicada.Context.api,
+                Shopware.Context.api,
                 this.mailHeaderFooterCriteria,
             );
 

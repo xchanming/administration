@@ -2,7 +2,7 @@
  * @sw-package after-sales
  */
 
-Cicada.Service('privileges').addPrivilegeMappingEntry({
+Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'marketing',
     key: 'newsletter_recipient',
@@ -24,7 +24,7 @@ Cicada.Service('privileges').addPrivilegeMappingEntry({
         editor: {
             privileges: [
                 'newsletter_recipient:update',
-                Cicada.Service('privileges').getPrivileges('media.creator'),
+                Shopware.Service('privileges').getPrivileges('media.creator'),
             ],
             dependencies: [
                 'newsletter_recipient.viewer',

@@ -5,7 +5,7 @@ import 'src/module/sw-inactivity-login/index';
 
 describe('src/module/sw-inactivity-login/page/index.ts', () => {
     it('should register module', () => {
-        const module = Cicada.Module.getModuleRegistry().get('sw-inactivity-login');
+        const module = Shopware.Module.getModuleRegistry().get('sw-inactivity-login');
 
         expect(module !== undefined).toBe(true);
         expect(module.manifest.type).toBe('core');

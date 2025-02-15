@@ -5,17 +5,15 @@
 import template from './sw-category-tree-field.html.twig';
 import './sw-category-tree-field.scss';
 
-const { Component } = Cicada;
-const utils = Cicada.Utils;
-const { Criteria } = Cicada.Data;
+const { Component } = Shopware;
+const utils = Shopware.Utils;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
 Component.register('sw-category-tree-field', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -126,14 +124,6 @@ Component.register('sw-category-tree-field', {
             }, []);
         },
 
-        listeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
-
         pageCategoryCriteria() {
             const categoryCriteria = new Criteria();
 
@@ -240,7 +230,7 @@ Component.register('sw-category-tree-field', {
             criteria.addFilter(Criteria.equals('parentId', parentId));
 
             // search for categories
-            return this.globalCategoryRepository.search(criteria, Cicada.Context.api).then((searchResult) => {
+            return this.globalCategoryRepository.search(criteria, Shopware.Context.api).then((searchResult) => {
                 // when requesting root categories, replace the data
                 if (parentId === null) {
                     this.categories = searchResult;
@@ -328,7 +318,7 @@ Component.register('sw-category-tree-field', {
             categorySearchCriteria.setTerm(term);
 
             // search for categories
-            return this.globalCategoryRepository.search(categorySearchCriteria, Cicada.Context.api);
+            return this.globalCategoryRepository.search(categorySearchCriteria, Shopware.Context.api);
         },
 
         isSearchItemChecked(itemId) {
@@ -513,7 +503,7 @@ Component.register('sw-category-tree-field', {
                             // update the selected item
                             this.selectedTreeItem = newSelection;
                         } else {
-                            // when sibling does not exists, go to next parent sibling
+                            // when sibling does not exist, go to next parent sibling
                             const parent = this.findTreeItemVNodeById(actualSelection.item.parentId);
                             const nextParent = this.getSibling(true, parent.item);
                             if (nextParent) {

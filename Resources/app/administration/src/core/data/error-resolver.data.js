@@ -5,13 +5,13 @@
  */
 export default class ErrorResolver {
     constructor() {
-        this.EntityDefinition = Cicada.EntityDefinition;
-        this.CicadaError = Cicada.Classes.CicadaError;
-        this.merge = Cicada.Utils.object.merge;
+        this.EntityDefinition = Shopware.EntityDefinition;
+        this.ShopwareError = Shopware.Classes.ShopwareError;
+        this.merge = Shopware.Utils.object.merge;
     }
 
     resetApiErrors() {
-        return Cicada.State.dispatch('error/resetApiErrors');
+        return Shopware.Store.get('error').resetApiErrors();
     }
 
     /**
@@ -32,14 +32,14 @@ export default class ErrorResolver {
 
     handleDeleteError(errors) {
         errors.forEach(({ error, entityName, id }) => {
-            const cicadaError = new this.CicadaError(error);
-            Cicada.State.dispatch('error/addSystemError', {
-                error: cicadaError,
+            const shopwareError = new this.ShopwareError(error);
+            Shopware.Store.get('error').addSystemError({
+                error: shopwareError,
             });
 
-            Cicada.State.dispatch('error/addApiError', {
+            Shopware.Store.get('error').addApiError({
                 expression: `${entityName}.${id}`,
-                error: cicadaError,
+                error: shopwareError,
             });
         });
     }
@@ -51,7 +51,7 @@ export default class ErrorResolver {
 
         errors.forEach((current) => {
             if (!current.source || !current.source.pointer) {
-                writeErrors.system.push(new this.CicadaError(current));
+                writeErrors.system.push(new this.ShopwareError(current));
                 return;
             }
 
@@ -72,7 +72,7 @@ export default class ErrorResolver {
                 }
 
                 if (index === lastIndex) {
-                    pointer[segment] = new this.CicadaError(current);
+                    pointer[segment] = new this.ShopwareError(current);
                 } else {
                     pointer[segment] = {};
                 }
@@ -92,7 +92,7 @@ export default class ErrorResolver {
      */
     addSystemErrors(systemErrors) {
         systemErrors.forEach((error) => {
-            Cicada.State.dispatch('error/addSystemError', error);
+            Shopware.Store.get('error').addSystemError(error);
         });
     }
 
@@ -149,21 +149,21 @@ export default class ErrorResolver {
             return;
         }
 
-        if (!(error instanceof this.CicadaError)) {
-            error = new this.CicadaError(error);
+        if (!(error instanceof this.ShopwareError)) {
+            error = new this.ShopwareError(error);
         }
 
-        Cicada.State.dispatch('error/addApiError', {
+        Shopware.Store.get('error').addApiError({
             expression: this.getErrorPath(entity, fieldName),
             error: error,
         });
     }
 
     buildAssociationChangeset(entity, changeset, error, associationName) {
-        if (!changeset || !Cicada.Utils.object.hasOwnProperty(changeset, associationName)) {
-            Cicada.State.dispatch('error/addApiError', {
+        if (!changeset || !Shopware.Utils.object.hasOwnProperty(changeset, associationName)) {
+            Shopware.Store.get('error').addApiError({
                 expression: this.getErrorPath(entity, associationName),
-                error: new this.CicadaError(error),
+                error: new this.ShopwareError(error),
             });
             return [];
         }
@@ -181,8 +181,8 @@ export default class ErrorResolver {
         Object.keys(error).forEach((fieldName) => {
             const path = `${basePath}.${fieldName}`;
 
-            if (error[fieldName] instanceof this.CicadaError) {
-                Cicada.State.dispatch('error/addApiError', {
+            if (error[fieldName] instanceof this.ShopwareError) {
+                Shopware.Store.get('error').addApiError({
                     expression: path,
                     error: error[fieldName],
                 });
@@ -197,8 +197,8 @@ export default class ErrorResolver {
         Object.keys(error).forEach((fieldName) => {
             const path = `${basePath}.${fieldName}`;
 
-            if (error[fieldName] instanceof this.CicadaError) {
-                Cicada.State.dispatch('error/addApiError', {
+            if (error[fieldName] instanceof this.ShopwareError) {
+                Shopware.Store.get('error').addApiError({
                     expression: path,
                     error: error[fieldName],
                 });

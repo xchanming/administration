@@ -4,8 +4,8 @@ import type Repository from 'src/core/data/repository.data';
 
 import template from './sw-generic-custom-entity-list.html.twig';
 
-const { Criteria } = Cicada.Data;
-const types = Cicada.Utils.types;
+const { Criteria } = Shopware.Data;
+const types = Shopware.Utils.types;
 
 interface EntityListingColumnConfig {
     label: string;
@@ -43,10 +43,8 @@ interface RouteParseOptions {
  * @private
  * @sw-package framework
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'customEntityDefinitionService',
@@ -152,7 +150,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -196,7 +194,7 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         onChangeLanguage(languageId: string): void {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
             void this.getList();
         },
 

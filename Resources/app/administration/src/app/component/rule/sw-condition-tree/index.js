@@ -1,8 +1,8 @@
 import template from './sw-condition-tree.html.twig';
 import './sw-condition-tree.scss';
 
-const { Component } = Cicada;
-const { EntityCollection } = Cicada.Data;
+const { Component } = Shopware;
+const { EntityCollection } = Shopware.Data;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { EntityCollection } = Cicada.Data;
  */
 Component.register('sw-condition-tree', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'feature',

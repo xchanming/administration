@@ -40,14 +40,14 @@ async function createWrapper({ props = {}, privileges = [] } = {}) {
         return privileges.includes(privilege);
     };
 
-    const aclService = new AclService(Cicada.State);
+    const aclService = new AclService();
 
     return mount(await wrapTestComponent('sw-admin-menu-item', { sync: true }), {
         props,
         global: {
             stubs: {
                 'sw-icon': true,
-                'sw-admin-menu-item': await Cicada.Component.build('sw-admin-menu-item'),
+                'sw-admin-menu-item': await Shopware.Component.build('sw-admin-menu-item'),
                 'router-link': {
                     template: '<a class="router-link"></a>',
                     props: ['to'],
@@ -81,25 +81,9 @@ async function createWrapper({ props = {}, privileges = [] } = {}) {
 }
 
 describe('src/app/component/structure/sw-admin-menu-item', () => {
-    beforeAll(() => {
-        if (Cicada.State.get('settingsItems')) {
-            Cicada.State.unregisterModule('settingsItems');
-        }
-
-        Cicada.State.registerModule('settingsItems', {
-            namespaced: true,
-            state: {
-                settingsGroups: {
-                    shop: [],
-                    system: [],
-                },
-            },
-        });
-    });
-
     beforeEach(async () => {
-        Cicada.State.get('settingsItems').settingsGroups.shop = [];
-        Cicada.State.get('settingsItems').settingsGroups.system = [];
+        Shopware.Store.get('settingsItems').settingsGroups.shop = [];
+        Shopware.Store.get('settingsItems').settingsGroups.system = [];
     });
 
     it('should be a Vue.js component', async () => {
@@ -494,7 +478,7 @@ describe('src/app/component/structure/sw-admin-menu-item', () => {
     });
 
     it('should hide settings menu if no item is visible', async () => {
-        Cicada.State.get('settingsItems').settingsGroups.shop = [
+        Shopware.Store.get('settingsItems').settingsGroups.shop = [
             { privilege: 'no-set', path: 'it' },
         ];
 
@@ -518,7 +502,7 @@ describe('src/app/component/structure/sw-admin-menu-item', () => {
     });
 
     it('settings should be shown if all item is visible', async () => {
-        Cicada.State.get('settingsItems').settingsGroups.shop = [
+        Shopware.Store.get('settingsItems').settingsGroups.shop = [
             { privilege: 'priv-1' },
             { privilege: 'priv-2' },
         ];
@@ -547,7 +531,7 @@ describe('src/app/component/structure/sw-admin-menu-item', () => {
     });
 
     it('settings should be shown if one item is visible', async () => {
-        Cicada.State.get('settingsItems').settingsGroups.shop = [
+        Shopware.Store.get('settingsItems').settingsGroups.shop = [
             { privilege: 'priv-1' },
             { privilege: 'priv-2' },
         ];
@@ -619,7 +603,7 @@ describe('src/app/component/structure/sw-admin-menu-item', () => {
             level: 1,
         });
 
-        Cicada.Store.get('adminMenu').adminModuleNavigation = entries;
+        Shopware.Store.get('adminMenu').adminModuleNavigation = entries;
 
         const wrapper = await createWrapper({
             privileges: [],

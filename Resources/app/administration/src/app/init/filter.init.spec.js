@@ -22,7 +22,7 @@ describe('src/app/init/filter.init.js', () => {
         'unicodeUri',
     ].forEach((filterName) => {
         it(`should register filter "${filterName}"`, () => {
-            expect(Cicada.Filter.getByName(filterName)).toBeInstanceOf(Function);
+            expect(Shopware.Filter.getByName(filterName)).toBeInstanceOf(Function);
         });
     });
 });

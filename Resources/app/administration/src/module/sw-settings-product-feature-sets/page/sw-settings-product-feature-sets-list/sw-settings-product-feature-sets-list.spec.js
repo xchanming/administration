@@ -6,7 +6,7 @@ import Criteria from 'src/core/data/criteria.data';
  * @sw-package inventory
  */
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 const text = {
     columnLabelTemplate: 'sw-settings-product-feature-sets.list.columnTemplate',
@@ -78,7 +78,9 @@ async function createWrapper(additionalOptions = {}, privileges = []) {
                     repositoryFactory: {
                         create: () => ({
                             search: () =>
-                                Promise.resolve(new EntityCollection('', '', Cicada.Context.api, new Criteria(1, 1), [], 0)),
+                                Promise.resolve(
+                                    new EntityCollection('', '', Shopware.Context.api, new Criteria(1, 1), [], 0),
+                                ),
                         }),
                     },
                     validationService: {},
@@ -96,7 +98,7 @@ async function createWrapper(additionalOptions = {}, privileges = []) {
         productFeatureSets: new EntityCollection(
             null,
             'product_feature_set',
-            Cicada.Context.api,
+            Shopware.Context.api,
             {
                 page: {},
             },
@@ -317,7 +319,7 @@ describe('src/module/sw-settings-product-feature-sets/page/sw-settings-product-f
             productFeatureSets: new EntityCollection(
                 null,
                 'product_feature_set',
-                Cicada.Context.api,
+                Shopware.Context.api,
                 {
                     page: {},
                 },

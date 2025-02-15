@@ -1,7 +1,7 @@
-const { Application } = Cicada;
-const { cloneDeep, merge } = Cicada.Utils.object;
-const Criteria = Cicada.Data.Criteria;
-const { warn } = Cicada.Utils.debug;
+const { Application } = Shopware;
+const { cloneDeep, merge } = Shopware.Utils.object;
+const Criteria = Shopware.Data.Criteria;
+const { warn } = Shopware.Utils.debug;
 
 Application.addServiceProvider('cmsDataResolverService', () => {
     return {
@@ -20,9 +20,9 @@ async function resolve(page) {
     const loadedData = [];
     const slotEntityList = {};
 
-    contextService = Cicada.Context.api;
-    repoFactory = Cicada.Service('repositoryFactory');
-    cmsService = Cicada.Service('cmsService');
+    contextService = Shopware.Context.api;
+    repoFactory = Shopware.Service('repositoryFactory');
+    cmsService = Shopware.Service('cmsService');
     cmsElements = cmsService.getCmsElementRegistry();
 
     page.sections.forEach((section) => {

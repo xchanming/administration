@@ -4,18 +4,18 @@ import CMS from '../../../constant/sw-cms.constant';
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-preview-image-highlight-row', () => import('./preview'));
+Shopware.Component.register('sw-cms-preview-image-highlight-row', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-block-image-highlight-row', () => import('./component'));
+Shopware.Component.register('sw-cms-block-image-highlight-row', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsBlock({
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'image-highlight-row',
     label: 'sw-cms.blocks.image.imageHighlightRow.label',
     category: 'image',

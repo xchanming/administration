@@ -4,7 +4,7 @@
 
 import template from './sw-sales-channel-create.html.twig';
 
-const utils = Cicada.Utils;
+const utils = Shopware.Utils;
 
 const insertIdIntoRoute = (to, from, next) => {
     if (to.name.includes('sw.sales.channel.create') && !to.params.id) {
@@ -17,8 +17,6 @@ const insertIdIntoRoute = (to, from, next) => {
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     beforeRouteEnter: insertIdIntoRoute,
 
@@ -36,8 +34,8 @@ export default {
                 return;
             }
 
-            if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                Cicada.State.commit('context/resetLanguageToDefault');
+            if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                Shopware.Store.get('context').resetLanguageToDefault();
             }
 
             this.salesChannel = this.salesChannelRepository.create();

@@ -15,7 +15,7 @@ import 'src/app/component/context-menu/sw-context-menu';
 import 'src/app/component/context-menu/sw-context-menu-item';
 import 'src/app/component/utils/sw-popover';
 
-Cicada.Component.register('sw-extension-icon', SwExtensionIcon);
+Shopware.Component.register('sw-extension-icon', SwExtensionIcon);
 
 describe('sw-app-actions', () => {
     let wrapper = null;
@@ -28,7 +28,7 @@ describe('sw-app-actions', () => {
         delete config.global.mocks.$router;
         delete config.global.mocks.$route;
 
-        return mount(await Cicada.Component.build('sw-app-actions'), {
+        return mount(await Shopware.Component.build('sw-app-actions'), {
             global: {
                 stubs,
                 directives: {
@@ -78,22 +78,22 @@ describe('sw-app-actions', () => {
 
     beforeAll(async () => {
         stubs = {
-            'sw-app-action-button': await Cicada.Component.build('sw-app-action-button'),
-            'sw-icon': await Cicada.Component.build('sw-icon'),
-            'sw-context-button': await Cicada.Component.build('sw-context-button'),
-            'sw-context-menu': await Cicada.Component.build('sw-context-menu'),
-            'sw-context-menu-item': await Cicada.Component.build('sw-context-menu-item'),
-            'sw-button': await Cicada.Component.build('sw-button'),
+            'sw-app-action-button': await Shopware.Component.build('sw-app-action-button'),
+            'sw-icon': await Shopware.Component.build('sw-icon'),
+            'sw-context-button': await Shopware.Component.build('sw-context-button'),
+            'sw-context-menu': await Shopware.Component.build('sw-context-menu'),
+            'sw-context-menu-item': await Shopware.Component.build('sw-context-menu-item'),
+            'sw-button': await Shopware.Component.build('sw-button'),
             'icons-solid-ellipsis-h-s': {
                 template: '<span class="sw-icon sw-icon--solid-ellipsis-h-s"></span>',
             },
-            'sw-popover': await Cicada.Component.build('sw-popover'),
+            'sw-popover': await Shopware.Component.build('sw-popover'),
             'sw-popover-deprecated': await wrapTestComponent('sw-popover-deprecated', { sync: true }),
             'sw-modal': true,
             'icons-regular-times-s': {
                 template: '<span class="sw-icon sw-icon--regular-times-s"></span>',
             },
-            'sw-extension-icon': await Cicada.Component.build('sw-extension-icon'),
+            'sw-extension-icon': await Shopware.Component.build('sw-extension-icon'),
             'sw-checkbox-field': true,
             'mt-button': true,
             'sw-button-deprecated': true,
@@ -104,9 +104,9 @@ describe('sw-app-actions', () => {
     });
 
     beforeEach(async () => {
-        Cicada.State.commit('cicadaApps/setSelectedIds', [
-            Cicada.Utils.createId(),
-        ]);
+        Shopware.Store.get('shopwareApps').selectedIds = [
+            Shopware.Utils.createId(),
+        ];
     });
 
     afterEach(() => {
@@ -132,9 +132,11 @@ describe('sw-app-actions', () => {
 
     it('creates an sw-app-action-button per action', async () => {
         wrapper = await createWrapper(router);
-        Cicada.State.commit('cicadaApps/setSelectedIds', [
-            Cicada.Utils.createId(),
-        ]);
+
+        Shopware.Store.get('shopwareApps').selectedIds = [
+            Shopware.Utils.createId(),
+        ];
+
         router.push({ name: 'sw.product.detail' });
         await flushPromises();
 
@@ -147,6 +149,32 @@ describe('sw-app-actions', () => {
         expect(actionButtons).toHaveLength(2);
         expect(actionButtons.at(0).props('action')).toEqual(actionButtonData[0]);
         expect(actionButtons.at(1).props('action')).toEqual(actionButtonData[1]);
+    });
+
+    it('should reset the selectedIds on creation when entity exists', async () => {
+        expect(Shopware.Store.get('shopwareApps').selectedIds).toEqual([
+            expect.any(String),
+        ]);
+
+        router.push({ name: 'sw.product.detail' });
+        await flushPromises();
+
+        wrapper = await createWrapper(router);
+
+        expect(Shopware.Store.get('shopwareApps').selectedIds).toEqual([]);
+    });
+
+    it('should not reset the selectedIds on creation when entity exists', async () => {
+        expect(Shopware.Store.get('shopwareApps').selectedIds).toEqual([
+            expect.any(String),
+        ]);
+
+        wrapper = await createWrapper(router);
+        await flushPromises();
+
+        expect(Shopware.Store.get('shopwareApps').selectedIds).toEqual([
+            expect.any(String),
+        ]);
     });
 
     it('is not rendered if action buttons is empty', async () => {
@@ -193,6 +221,10 @@ describe('sw-app-actions', () => {
     it('calls appActionButtonService.runAction if triggered by context menu button', async () => {
         wrapper = await createWrapper(router);
 
+        Shopware.Store.get('shopwareApps').selectedIds = [
+            Shopware.Utils.createId(),
+        ];
+
         router.push({ name: 'sw.product.detail' });
         await flushPromises();
 
@@ -217,18 +249,22 @@ describe('sw-app-actions', () => {
         expect(runActionsMock.mock.calls).toHaveLength(2);
         expect(runActionsMock.mock.calls[0]).toEqual([
             actionButtonData[0].id,
-            { ids: Cicada.State.get('cicadaApps').selectedIds },
+            { ids: Shopware.Store.get('shopwareApps').selectedIds },
         ]);
 
         expect(runActionsMock.mock.calls[1]).toEqual([
             actionButtonData[1].id,
-            { ids: Cicada.State.get('cicadaApps').selectedIds },
+            { ids: Shopware.Store.get('shopwareApps').selectedIds },
         ]);
     });
 
     it('calls appActionButtonService.runAction with correct response', async () => {
         wrapper = await createWrapper(router);
         wrapper.vm.createNotification = jest.fn();
+
+        Shopware.Store.get('shopwareApps').selectedIds = [
+            Shopware.Utils.createId(),
+        ];
 
         router.push({ name: 'sw.product.detail' });
         await flushPromises();
@@ -239,7 +275,7 @@ describe('sw-app-actions', () => {
         const swAppActions = wrapper.findAllComponents(stubs['sw-app-action-button']);
         await swAppActions.at(0).trigger('click');
 
-        const actionButtonId = Cicada.Utils.createId();
+        const actionButtonId = Shopware.Utils.createId();
         await wrapper.vm.appActionButtonService.runAction(actionButtonId);
 
         const notificationMock = wrapper.vm.createNotification;
@@ -261,6 +297,10 @@ describe('sw-app-actions', () => {
         };
         wrapper = await createWrapper(router, openModalResponseData);
 
+        Shopware.Store.get('shopwareApps').selectedIds = [
+            Shopware.Utils.createId(),
+        ];
+
         router.push({ name: 'sw.product.detail' });
         await flushPromises();
 
@@ -272,7 +312,7 @@ describe('sw-app-actions', () => {
         const swAppActions = wrapper.findAllComponents(stubs['sw-app-action-button']);
         await swAppActions.at(0).trigger('click');
 
-        const actionButtonId = Cicada.Utils.createId();
+        const actionButtonId = Shopware.Utils.createId();
         await wrapper.vm.appActionButtonService.runAction(actionButtonId);
 
         expect(wrapper.find('.sw-modal-app-action-button').exists()).toBe(true);

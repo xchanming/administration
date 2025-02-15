@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 export default function getTreeItems() {
     return [
         {
@@ -278,6 +279,7 @@ export default function getTreeItems() {
                     newsletterRecipients: [],
                     numberRangeSalesChannels: [],
                     promotionSalesChannels: [],
+                    documentBaseConfigSalesChannels: [],
                     productReviews: [],
                     seoUrls: [],
                     seoUrlTemplates: [],
@@ -360,6 +362,7 @@ export default function getTreeItems() {
                     newsletterRecipients: [],
                     numberRangeSalesChannels: [],
                     promotionSalesChannels: [],
+                    documentBaseConfigSalesChannels: [],
                     productReviews: [],
                     seoUrls: [],
                     seoUrlTemplates: [],

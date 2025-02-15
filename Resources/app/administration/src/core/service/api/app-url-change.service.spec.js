@@ -9,21 +9,21 @@ import MockAdapter from 'axios-mock-adapter';
 function createAppUrlChangeService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
     const appUrlChangeService = new AppUrlChangeService(client, loginService);
     return { appUrlChangeService, clientMock };
 }
 
 describe('appUrlChangeService', () => {
     it('is registered correctly', async () => {
-        // Cicada.Service('appUrlChangeService')
+        // Shopware.Service('appUrlChangeService')
         const { appUrlChangeService } = createAppUrlChangeService();
 
         expect(appUrlChangeService).toBeInstanceOf(AppUrlChangeService);
     });
 
     it('fetches strategies correctly', async () => {
-        // Cicada.Service('appUrlChangeService')
+        // Shopware.Service('appUrlChangeService')
         const { appUrlChangeService, clientMock } = createAppUrlChangeService();
 
         clientMock.onGet('/app-system/app-url-change/strategies').reply(200, {
@@ -51,7 +51,7 @@ describe('appUrlChangeService', () => {
     });
 
     it('sends name of selected strategy', async () => {
-        // Cicada.Service('appUrlChangeService')
+        // Shopware.Service('appUrlChangeService')
         const { appUrlChangeService, clientMock } = createAppUrlChangeService();
 
         clientMock
@@ -70,7 +70,7 @@ describe('appUrlChangeService', () => {
     });
 
     it('returns old and new url', async () => {
-        // Cicada.Service('appUrlChangeService')
+        // Shopware.Service('appUrlChangeService')
         const { appUrlChangeService, clientMock } = createAppUrlChangeService();
 
         clientMock.onGet('app-system/app-url-change/url-difference').reply(200, {
@@ -87,7 +87,7 @@ describe('appUrlChangeService', () => {
     });
 
     it('returns null if getUrlDiff has no content', async () => {
-        // Cicada.Service('appUrlChangeService')
+        // Shopware.Service('appUrlChangeService')
         const { appUrlChangeService, clientMock } = createAppUrlChangeService();
 
         clientMock.onGet('app-system/app-url-change/url-difference').reply(204);

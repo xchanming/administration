@@ -1,8 +1,8 @@
 import template from './sw-media-modal-folder-settings.html.twig';
 import './sw-media-modal-folder-settings.scss';
 
-const { Component, Mixin, Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Mixin, Context } = Shopware;
+const { Criteria } = Shopware.Data;
 const { mapPropertyErrors } = Component.getComponentHelper();
 
 /**
@@ -11,8 +11,6 @@ const { mapPropertyErrors } = Component.getComponentHelper();
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -91,7 +89,7 @@ export default {
         labelToggleButton() {},
 
         thumbnailSizeFilter() {
-            return Cicada.Filter.getByName('thumbnailSize');
+            return Shopware.Filter.getByName('thumbnailSize');
         },
 
         ...mapPropertyErrors('mediaFolder', ['name']),

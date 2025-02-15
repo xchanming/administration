@@ -4,8 +4,8 @@
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-const { Context } = Cicada;
-const { EntityCollection } = Cicada.Data;
+const { Context } = Shopware;
+const { EntityCollection } = Shopware.Data;
 
 const mockData = [
     {
@@ -115,7 +115,7 @@ async function createWrapper() {
 
 describe('module/sw-settings-search/page/sw-settings-search', () => {
     beforeEach(async () => {
-        Cicada.Application.view.deleteReactive = () => {};
+        Shopware.Application.view.deleteReactive = () => {};
         global.activeAclRoles = [];
     });
 

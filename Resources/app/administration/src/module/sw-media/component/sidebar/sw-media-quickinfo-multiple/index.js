@@ -1,7 +1,7 @@
 import template from './sw-media-quickinfo-multiple.html.twig';
 import './sw-media-quickinfo-multiple.scss';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @sw-package discovery
@@ -9,8 +9,6 @@ const { Mixin } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: ['media-item-selection-remove'],
 
@@ -41,7 +39,7 @@ export default {
                 return value + (items.fileSize || 0);
             }, 0);
 
-            return Cicada.Utils.format.fileSize(sizeInByte);
+            return Shopware.Utils.format.fileSize(sizeInByte);
         },
 
         getFileSizeLabel() {

@@ -1,19 +1,20 @@
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
 import { config, mount } from '@vue/test-utils';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Criteria from 'src/core/data/criteria.data';
 
-const selectedOrderId = Cicada.Utils.createId();
+const selectedOrderId = Shopware.Utils.createId();
 
 function createEntityCollection(entities = []) {
-    return new Cicada.Data.EntityCollection('collection', 'collection', {}, null, entities);
+    return new Shopware.Data.EntityCollection('collection', 'collection', {}, null, entities);
 }
 
 describe('src/module/sw-bulk-edit/page/sw-bulk-edit-order', () => {
     let wrapper;
     let routes;
+    const searchIdsSpy = jest.fn();
 
     async function createWrapper(isResponseError = false) {
         // delete global $router and $routes mocks
@@ -143,7 +144,7 @@ describe('src/module/sw-bulk-edit/page/sw-bulk-edit-order', () => {
 
                             if (entity === 'state_machine_state') {
                                 return {
-                                    searchIds: jest.fn(),
+                                    searchIds: searchIdsSpy,
                                 };
                             }
 
@@ -326,9 +327,9 @@ describe('src/module/sw-bulk-edit/page/sw-bulk-edit-order', () => {
             response: {
                 data: [
                     {
-                        id: Cicada.Utils.createId(),
+                        id: Shopware.Utils.createId(),
                         attributes: {
-                            id: Cicada.Utils.createId(),
+                            id: Shopware.Utils.createId(),
                         },
                     },
                 ],
@@ -344,7 +345,8 @@ describe('src/module/sw-bulk-edit/page/sw-bulk-edit-order', () => {
             },
         });
 
-        Cicada.State.commit('cicadaApps/setSelectedIds', [selectedOrderId]);
+        Shopware.Store.get('shopwareApps').selectedIds = [selectedOrderId];
+        Shopware.Store.get('swBulkEdit').$reset();
     });
 
     it('should show all form fields', async () => {
@@ -528,7 +530,7 @@ describe('src/module/sw-bulk-edit/page/sw-bulk-edit-order', () => {
     it('should show empty state', async () => {
         wrapper = await createWrapper();
 
-        Cicada.State.commit('cicadaApps/setSelectedIds', []);
+        Shopware.Store.get('shopwareApps').selectedIds = [];
         await wrapper.setData({
             isLoading: false,
         });
@@ -669,9 +671,9 @@ describe('src/module/sw-bulk-edit/page/sw-bulk-edit-order', () => {
         expect(fetchStatusOptionsSpy).toHaveBeenNthCalledWith(3, 'orderDeliveries.orderId');
 
         const orderStateCriteria = new Criteria(1, null);
-        const { liveVersionId } = Cicada.Context.api;
+        const { liveVersionId } = Shopware.Context.api;
 
-        expect(wrapper.vm.stateMachineStateRepository.searchIds).toHaveBeenCalledTimes(6);
+        expect(searchIdsSpy).toHaveBeenCalledTimes(6);
 
         orderStateCriteria.addFilter(
             Criteria.multi('AND', [

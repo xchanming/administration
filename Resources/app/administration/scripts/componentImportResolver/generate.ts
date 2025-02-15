@@ -32,7 +32,7 @@ function isComponentCall(call: CallExpression<ts.CallExpression>, functionString
     }
 
     return [
-        `Cicada.Component.${functionString}`,
+        `Shopware.Component.${functionString}`,
         `Component.${functionString}`
     ].includes(expression.getText());
 }
@@ -62,7 +62,7 @@ function buildRelativePathForSourceFile(sourceFile: SourceFile): string {
 
 function buildAliasPathForArrowFunctionImport(arrowFunction: ArrowFunction, sourceFile: SourceFile): string {
     // Get the import path inside the ArrowFunction
-    // Cicada.Component.register('sw-xyz', () => import('src/app/xyz'));
+    // Shopware.Component.register('sw-xyz', () => import('src/app/xyz'));
     const importPath = arrowFunction
         .getDescendantsOfKind(ts.SyntaxKind.StringLiteral)[0]
         .getText()
@@ -199,7 +199,7 @@ const pb = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 pb.start(sourceFiles.length, 0);
 
 for (const sourceFile of sourceFiles) {
-    // collect all "Cicada.Component.register" or "Cicada.Component.extend" calls inside the file
+    // collect all "Shopware.Component.register" or "Shopware.Component.extend" calls inside the file
     sourceFile.getDescendantsOfKind(
         ts.SyntaxKind.CallExpression,
     ).forEach(call => {

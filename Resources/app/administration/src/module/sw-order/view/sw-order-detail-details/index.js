@@ -5,15 +5,13 @@ import './sw-order-detail-details.scss';
  * @sw-package checkout
  */
 
-const { Component, State } = Cicada;
-const { Criteria } = Cicada.Data;
-const { mapGetters, mapState, mapPropertyErrors } = Component.getComponentHelper();
+const { Component, Store } = Shopware;
+const { Criteria } = Shopware.Data;
+const { mapPropertyErrors } = Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: {
         swOrderDetailOnSaveAndReload: {
@@ -79,15 +77,13 @@ export default {
     },
 
     computed: {
-        ...mapGetters('swOrderDetail', [
-            'isLoading',
-        ]),
+        isLoading: () => Store.get('swOrderDetail').isLoading,
 
-        ...mapState('swOrderDetail', [
-            'order',
-            'versionContext',
-            'orderAddressIds',
-        ]),
+        order: () => Store.get('swOrderDetail').order,
+
+        versionContext: () => Store.get('swOrderDetail').versionContext,
+
+        orderAddressIds: () => Store.get('swOrderDetail').orderAddressIds,
 
         ...mapPropertyErrors('order', ['orderCustomer.email']),
 
@@ -154,12 +150,12 @@ export default {
 
         selectedBillingAddressId() {
             const currentAddress = this.orderAddressIds.find((item) => item.type === 'billing');
-            return currentAddress?.customerAddressId || this.billingAddress?.id;
+            return currentAddress?.customerAddressId || this.billingAddress.id;
         },
 
         selectedShippingAddressId() {
             const currentAddress = this.orderAddressIds.find((item) => item.type === 'shipping');
-            return currentAddress?.customerAddressId || this.shippingAddress?.id;
+            return currentAddress?.customerAddressId || this.shippingAddress.id;
         },
 
         shippingCosts: {
@@ -235,7 +231,7 @@ export default {
         },
 
         updateLoading(loadingValue) {
-            State.commit('swOrderDetail/setLoading', [
+            Store.get('swOrderDetail').setLoading([
                 'order',
                 loadingValue,
             ]);
@@ -253,7 +249,7 @@ export default {
         },
 
         onChangeOrderAddress(value) {
-            State.commit('swOrderDetail/setOrderAddressIds', value);
+            Store.get('swOrderDetail').setOrderAddressIds(value);
         },
     },
 };

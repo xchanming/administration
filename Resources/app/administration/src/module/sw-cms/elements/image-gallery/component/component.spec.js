@@ -39,7 +39,7 @@ async function createWrapper(propsOverride) {
             global: {
                 renderStubDefaultSlot: true,
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
                 stubs: {
                     'sw-cms-el-image-slider': true,
@@ -103,11 +103,11 @@ describe('src/module/sw-cms/elements/image-gallery/component', () => {
     });
 
     beforeEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('should map to product media if the component is in a product page', async () => {
-        Cicada.Store.get('cmsPage').setCurrentPage({
+        Shopware.Store.get('cmsPage').setCurrentPage({
             type: 'product_detail',
         });
 

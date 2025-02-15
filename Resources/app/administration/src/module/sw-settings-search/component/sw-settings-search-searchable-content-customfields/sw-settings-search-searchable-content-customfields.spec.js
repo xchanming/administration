@@ -94,7 +94,7 @@ async function createWrapper() {
 
 describe('module/sw-settings-search/component/sw-settings-search-searchable-content-customfields', () => {
     beforeEach(async () => {
-        Cicada.Application.view.deleteReactive = () => {};
+        Shopware.Application.view.deleteReactive = () => {};
         global.activeAclRoles = [];
     });
 

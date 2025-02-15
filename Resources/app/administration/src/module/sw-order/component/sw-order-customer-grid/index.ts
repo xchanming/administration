@@ -10,8 +10,8 @@ import type { Cart } from '../../order.types';
  * @sw-package checkout
  */
 
-const { Component, State, Mixin, Context } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Store, Mixin, Context } = Shopware;
+const { Criteria } = Shopware.Data;
 
 interface GridColumn {
     property: string;
@@ -24,11 +24,8 @@ interface GridColumn {
 export default Component.wrapComponentConfig({
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: [
         'repositoryFactory',
-        'feature',
     ],
 
     mixins: [
@@ -64,7 +61,7 @@ export default Component.wrapComponentConfig({
 
     computed: {
         customerData(): Entity<'customer'> | null {
-            return State.get('swOrder').customer;
+            return Store.get('swOrder').customer;
         },
 
         customerRepository(): RepositoryType<'customer'> {
@@ -102,6 +99,7 @@ export default Component.wrapComponentConfig({
                 .addAssociation('defaultShippingAddress.salutation')
                 .addAssociation('tags')
                 .addAssociation('boundSalesChannel');
+
             return criteria;
         },
 
@@ -112,8 +110,8 @@ export default Component.wrapComponentConfig({
                     label: '',
                 },
                 {
-                    property: 'name',
-                    dataIndex: 'name',
+                    property: 'firstName',
+                    dataIndex: 'lastName,firstName',
                     label: this.$tc('sw-order.initialModal.customerGrid.columnCustomerName'),
                     primary: true,
                 },
@@ -142,15 +140,15 @@ export default Component.wrapComponentConfig({
             }
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            return this.$tc('sw-order.initialModal.customerGrid.textEmptySearch', 0, { name: this.term });
+            return this.$t('sw-order.initialModal.customerGrid.textEmptySearch', { name: this.term }, 0);
         },
 
         cart(): Cart {
-            return State.get('swOrder').cart;
+            return Store.get('swOrder').cart;
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         salesChannelRepository(): RepositoryType<'sales_channel'> {
@@ -230,12 +228,12 @@ export default Component.wrapComponentConfig({
             );
 
             if (!isExists && this.customer?.salesChannel?.languageId) {
-                State.commit('context/setLanguageId', this.customer.salesChannel.languageId);
+                Store.get('context').api.languageId = this.customer.salesChannel.languageId;
             }
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            if (isExists && !State.getters['context/isSystemDefaultLanguage']) {
-                State.commit('context/resetLanguageToDefault');
+            if (isExists && !Store.get('context').isSystemDefaultLanguage) {
+                Store.get('context').resetLanguageToDefault();
             }
 
             // If the customer belongs to a sales channel not in the allowed list and has no bound sales channel.
@@ -261,11 +259,11 @@ export default Component.wrapComponentConfig({
 
         createCart(salesChannelId: string): Promise<void> {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return State.dispatch('swOrder/createCart', { salesChannelId });
+            return Store.get('swOrder').createCart({ salesChannelId });
         },
 
         setCustomer(customer: Entity<'customer'> | null): void {
-            void State.dispatch('swOrder/selectExistingCustomer', { customer });
+            void Store.get('swOrder').selectExistingCustomer({ customer });
         },
 
         async handleSelectCustomer(): Promise<void> {
@@ -301,24 +299,29 @@ export default Component.wrapComponentConfig({
             this.term = '';
         },
 
-        updateCustomerContext(): Promise<void> {
-            return State.dispatch('swOrder/updateCustomerContext', {
-                customerId: this.customer?.id,
-                salesChannelId: this.customer?.salesChannelId,
-                contextToken: this.cart.token,
-            }).then((response) => {
-                // Update cart after customer context is updated
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                if (response.status === 200) {
-                    void this.getCart();
-                }
-            });
+        async updateCustomerContext(): Promise<void> {
+            if (!this.customer) return;
+
+            await Store.get('swOrder')
+                .updateCustomerContext({
+                    customerId: this.customer.id,
+                    salesChannelId: this.customer.salesChannelId,
+                    contextToken: this.cart.token,
+                })
+                .then((response) => {
+                    // Update cart after customer context is updated
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    if (response.status === 200) {
+                        void this.getCart();
+                    }
+                });
         },
 
-        getCart(): Promise<void> {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return State.dispatch('swOrder/getCart', {
-                salesChannelId: this.customer?.salesChannelId,
+        async getCart(): Promise<void> {
+            if (!this.customer) return;
+
+            await Store.get('swOrder').getCart({
+                salesChannelId: this.customer.salesChannelId,
                 contextToken: this.cart.token,
             });
         },
@@ -364,7 +367,6 @@ export default Component.wrapComponentConfig({
 
         async onChangeCustomer() {
             this.isLoading = true;
-
             try {
                 await this.handleSelectCustomer();
             } finally {

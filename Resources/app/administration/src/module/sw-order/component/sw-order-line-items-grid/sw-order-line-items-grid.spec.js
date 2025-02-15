@@ -153,6 +153,7 @@ const mockMultipleTaxesItem = {
         ],
     },
 };
+
 const mockNestedItem = {
     ...mockItems[0],
     children: [
@@ -178,6 +179,7 @@ const mockNestedItem = {
         },
     ],
 };
+
 const deleteEndpoint = jest.fn(() => Promise.resolve());
 
 async function createWrapper() {
@@ -210,7 +212,7 @@ async function createWrapper() {
                         create: () => {
                             return {
                                 isNew: () => true,
-                                id: Cicada.Utils.createId(),
+                                id: Shopware.Utils.createId(),
                             };
                         },
                         delete: deleteEndpoint,
@@ -295,7 +297,7 @@ async function createWrapper() {
                 'sw-provide': { template: '<slot/>', inheritAttrs: false },
             },
             mocks: {
-                $tc: (t, count, value) => {
+                $tc: (t, value) => {
                     if (t === 'sw-order.detailBase.taxDetail') {
                         return `${value.taxRate}%: ${value.tax}`;
                     }
@@ -322,7 +324,7 @@ async function createWrapper() {
 
 describe('src/module/sw-order/component/sw-order-line-items-grid', () => {
     beforeAll(() => {
-        Cicada.Service().register('cartStoreService', () => {
+        Shopware.Service().register('cartStoreService', () => {
             return {
                 getLineItemTypes: () => {
                     return Object.freeze({

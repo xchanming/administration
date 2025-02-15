@@ -1,18 +1,17 @@
 /**
  * @sw-package checkout
  */
+
 import ApiService from 'src/core/service/api.service';
 import template from './sw-customer-imitate-customer-modal.html.twig';
 import './sw-customer-imitate-customer-modal.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -41,13 +40,15 @@ export default {
     computed: {
         modalTitle() {
             return this.$tc('sw-customer.imitateCustomerModal.modalTitle', {
-                name: this.customer.name,
+                firstname: this.customer.firstName,
+                lastname: this.customer.lastName,
             });
         },
 
         modalDescription() {
             return this.$tc('sw-customer.imitateCustomerModal.modalDescription', {
-                name: this.customer.name,
+                firstname: this.customer.firstName,
+                lastname: this.customer.lastName,
             });
         },
 
@@ -56,13 +57,13 @@ export default {
         },
 
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         salesChannelDomainCriteria() {
             const criteria = new Criteria();
             criteria.addAssociation('salesChannel');
-            criteria.addFilter(Criteria.equals('salesChannel.typeId', Cicada.Defaults.storefrontSalesChannelTypeId));
+            criteria.addFilter(Criteria.equals('salesChannel.typeId', Shopware.Defaults.storefrontSalesChannelTypeId));
             criteria.addSorting(Criteria.sort('salesChannel.name', 'ASC'));
             criteria.addSorting(Criteria.sort('languageId', 'DESC'));
 
@@ -109,7 +110,7 @@ export default {
 
         fetchSalesChannelDomains() {
             this.salesChannelDomainRepository
-                .search(this.salesChannelDomainCriteria, Cicada.Context.api)
+                .search(this.salesChannelDomainCriteria, Shopware.Context.api)
                 .then((loadedDomains) => {
                     this.salesChannelDomains = loadedDomains;
                 });

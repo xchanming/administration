@@ -14,7 +14,7 @@ async function createWrapper() {
     delete config.global.mocks.$router;
     delete config.global.$route;
 
-    return mount(await Cicada.Component.build('sw-login-recovery'), {
+    return mount(await Shopware.Component.build('sw-login-recovery'), {
         global: {
             mocks: {
                 $tc: (...args) => JSON.stringify([...args]),
@@ -64,8 +64,8 @@ async function createWrapper() {
                 },
                 'sw-contextual-field': true,
                 'router-link': true,
-                'sw-button': await Cicada.Component.build('sw-button'),
-                'sw-alert': await Cicada.Component.build('sw-alert'),
+                'sw-button': await Shopware.Component.build('sw-button'),
+                'sw-alert': await Shopware.Component.build('sw-alert'),
                 'sw-icon': true,
                 'sw-button-deprecated': true,
             },

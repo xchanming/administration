@@ -2,23 +2,23 @@
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-preview-form', () => import('./preview'));
+Shopware.Component.register('sw-cms-el-preview-form', () => import('./preview'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-config-form', () => import('./config'));
+Shopware.Component.register('sw-cms-el-config-form', () => import('./config'));
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Component.register('sw-cms-el-form', () => import('./component'));
+Shopware.Component.register('sw-cms-el-form', () => import('./component'));
 
 /**
  * @private
  * @sw-package discovery
  */
-Cicada.Service('cmsService').registerCmsElement({
+Shopware.Service('cmsService').registerCmsElement({
     name: 'form',
     label: 'sw-cms.elements.form.label',
     component: 'sw-cms-el-form',

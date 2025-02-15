@@ -1,6 +1,7 @@
 /**
  * @sw-package framework
  */
+
 import mitt from 'mitt';
 
 /**

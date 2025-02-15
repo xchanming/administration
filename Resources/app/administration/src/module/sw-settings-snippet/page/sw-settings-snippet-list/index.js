@@ -8,13 +8,11 @@ import './sw-settings-snippet-list.scss';
 const {
     Mixin,
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'snippetSetService',
@@ -662,11 +660,7 @@ export default {
             this.appliedAuthors = [];
 
             Object.keys(this.filterSettings).forEach((key) => {
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(this.filterSettings, key, false);
-                } else {
-                    this.filterSettings[key] = false;
-                }
+                this.filterSettings[key] = false;
             });
 
             this.initializeSnippetSet({});

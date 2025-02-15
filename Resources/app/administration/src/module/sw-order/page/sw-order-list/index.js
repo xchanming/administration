@@ -5,14 +5,12 @@ import './sw-order-list.scss';
  * @sw-package checkout
  */
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -34,18 +32,6 @@ export default {
             isLoading: false,
             filterLoading: false,
             showDeleteModal: false,
-            /**
-             * @deprecated tag:v6.7.0 - will be removed without replacement
-             */
-            availableAffiliateCodes: [],
-            /**
-             * @deprecated tag:v6.7.0 - will be removed without replacement
-             */
-            availableCampaignCodes: [],
-            /**
-             * @deprecated tag:v6.7.0 - will be removed without replacement
-             */
-            availablePromotionCodes: [],
             filterCriteria: [],
             defaultFilters: [
                 'order-number-filter',
@@ -53,6 +39,7 @@ export default {
                 'affiliate-code-filter',
                 'campaign-code-filter',
                 'promotion-code-filter',
+                'document-filter',
                 'order-date-filter',
                 'order-value-filter',
                 'status-filter',
@@ -108,6 +95,7 @@ export default {
             criteria.addAssociation('salesChannel');
             criteria.addAssociation('orderCustomer');
             criteria.addAssociation('currency');
+            criteria.addAssociation('documents');
 
             criteria.addAssociation('stateMachineState');
 
@@ -208,7 +196,6 @@ export default {
                     placeholder: this.$tc('sw-order.filters.affiliateCodeFilter.placeholder'),
                     valueProperty: 'key',
                     labelProperty: 'key',
-                    options: this.availableAffiliateCodes,
                 },
                 'campaign-code-filter': {
                     property: 'campaignCode',
@@ -217,7 +204,6 @@ export default {
                     placeholder: this.$tc('sw-order.filters.campaignCodeFilter.placeholder'),
                     valueProperty: 'key',
                     labelProperty: 'key',
-                    options: this.availableCampaignCodes,
                 },
                 'promotion-code-filter': {
                     property: 'lineItems.payload.code',
@@ -226,7 +212,13 @@ export default {
                     placeholder: this.$tc('sw-order.filters.promotionCodeFilter.placeholder'),
                     valueProperty: 'key',
                     labelProperty: 'key',
-                    options: this.availablePromotionCodes,
+                },
+                'document-filter': {
+                    property: 'documents',
+                    label: this.$tc('sw-order.filters.documentFilter.label'),
+                    placeholder: this.$tc('sw-order.filters.documentFilter.placeholder'),
+                    optionHasCriteria: this.$tc('sw-order.filters.documentFilter.textHasCriteria'),
+                    optionNoCriteria: this.$tc('sw-order.filters.documentFilter.textNoCriteria'),
                 },
                 'payment-method-filter': {
                     property: 'transactions.paymentMethod',
@@ -275,15 +267,15 @@ export default {
         },
 
         currencyFilter() {
-            return Cicada.Filter.getByName('currency');
+            return Shopware.Filter.getByName('currency');
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
     },
 
@@ -335,7 +327,7 @@ export default {
         async getList() {
             this.isLoading = true;
 
-            let criteria = await Cicada.Service('filterService').mergeWithStoredFilters(this.storeKey, this.orderCriteria);
+            let criteria = await Shopware.Service('filterService').mergeWithStoredFilters(this.storeKey, this.orderCriteria);
 
             criteria = await this.addQueryScores(this.term, criteria);
 
@@ -369,8 +361,12 @@ export default {
             });
         },
 
-        disableDeletion() {
-            return !this.acl.can('order.deleter');
+        disableDeletion(order) {
+            if (!this.acl.can('order.deleter')) {
+                return true;
+            }
+
+            return order.documents.length > 0;
         },
 
         getOrderColumns() {
@@ -386,11 +382,11 @@ export default {
                     property: 'salesChannel.name',
                     label: 'sw-order.list.columnSalesChannel',
                     allowResize: true,
-                    visible: true,
+                    visible: false,
                 },
                 {
-                    property: 'orderCustomer.name',
-                    dataIndex: 'orderCustomer.lastName,orderCustomer.name',
+                    property: 'orderCustomer.firstName',
+                    dataIndex: 'orderCustomer.lastName,orderCustomer.firstName',
                     label: 'sw-order.list.columnCustomerName',
                     allowResize: true,
                 },
@@ -413,7 +409,6 @@ export default {
                     dataIndex: 'deliveries.shippingOrderAddress.street',
                     label: 'sw-order.list.columnDeliveryAddress',
                     allowResize: true,
-                    visible: false,
                 },
                 {
                     property: 'amountTotal',
@@ -437,7 +432,6 @@ export default {
                     dataIndex: 'deliveries.stateMachineState.name',
                     label: 'sw-order.list.columnDeliveryState',
                     allowResize: true,
-                    visible: false,
                 },
                 {
                     property: 'orderDateTime',
@@ -494,30 +488,6 @@ export default {
             );
 
             return style.colorCode;
-        },
-
-        /**
-         * @deprecated tag:v6.7.0 - will be removed without replacement
-         */
-        loadFilterValues() {
-            this.filterLoading = true;
-
-            return this.orderRepository
-                .search(this.filterSelectCriteria)
-                .then(({ aggregations }) => {
-                    const { affiliateCodes, campaignCodes, promotionCodes } = aggregations;
-
-                    this.availableAffiliateCodes = affiliateCodes?.buckets.filter(({ key }) => key.length > 0) ?? [];
-                    this.availableCampaignCodes = campaignCodes?.buckets.filter(({ key }) => key.length > 0) ?? [];
-                    this.availablePromotionCodes = promotionCodes?.buckets.filter(({ key }) => key.length > 0) ?? [];
-
-                    this.filterLoading = false;
-
-                    return aggregations;
-                })
-                .catch(() => {
-                    this.filterLoading = false;
-                });
         },
 
         onDelete(id) {

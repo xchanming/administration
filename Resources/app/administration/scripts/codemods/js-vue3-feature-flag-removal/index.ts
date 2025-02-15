@@ -39,7 +39,7 @@ nonTestSourceFiles.forEach((sourceFile) => {
         const condition = ifStatement.getExpression();
         const isVue3FeatureFlag = [
             'this.feature.isActive(\'VUE3\')',
-            'Cicada.Service(\'feature\').isActive(\'VUE3\')'
+            'Shopware.Service(\'feature\').isActive(\'VUE3\')'
         ].includes(condition.getText());
 
         if (isVue3FeatureFlag) {
@@ -56,7 +56,7 @@ nonTestSourceFiles.forEach((sourceFile) => {
             );
         } else if ([
             '!this.feature.isActive(\'VUE3\')',
-            '!Cicada.Service(\'feature\').isActive(\'VUE3\')'
+            '!Shopware.Service(\'feature\').isActive(\'VUE3\')'
         ].includes(condition.getText())) {
             if (ifStatement.getElseStatement()) {
                 const elseStatement = ifStatement.getElseStatement();

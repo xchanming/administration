@@ -1,7 +1,7 @@
 /**
  * @sw-package discovery
  */
-Cicada.Filter.register('thumbnailSize', (value: Entity<'media_thumbnail_size'>) => {
+Shopware.Filter.register('thumbnailSize', (value: Entity<'media_thumbnail_size'>) => {
     if (!value || !(value.getEntityName() === 'media_thumbnail_size')) {
         return '';
     }

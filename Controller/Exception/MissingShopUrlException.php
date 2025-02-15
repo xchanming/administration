@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Controller\Exception;
+namespace Shopware\Administration\Controller\Exception;
 
-use Cicada\Core\Framework\CicadaHttpException;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\ShopwareHttpException;
 
 #[Package('framework')]
-class MissingShopUrlException extends CicadaHttpException
+class MissingShopUrlException extends ShopwareHttpException
 {
     public function __construct()
     {

@@ -2,7 +2,7 @@
  * @sw-package framework
  */
 describe('src/app/filter/striphtml.filter.ts', () => {
-    const stripHtmlFilter = Cicada.Filter.getByName('striphtml');
+    const stripHtmlFilter = Shopware.Filter.getByName('striphtml');
 
     it('should contain a filter', () => {
         expect(stripHtmlFilter).toBeDefined();

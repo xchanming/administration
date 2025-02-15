@@ -25,20 +25,21 @@ describe('src/app/main.ts', () => {
         ShortcutService: undefined,
         LocaleToLanguageService: undefined,
         addPluginUpdatesListener: undefined,
-        addCicadaUpdatesListener: undefined,
+        addShopwareUpdatesListener: undefined,
         addCustomerGroupRegistrationListener: undefined,
         LocaleHelperService: undefined,
         FilterService: undefined,
         AppCmsService: undefined,
         MediaDefaultFolderService: undefined,
         AppAclService: undefined,
-        CicadaDiscountCampaignService: undefined,
+        ShopwareDiscountCampaignService: undefined,
         SearchRankingService: undefined,
         SearchPreferencesService: undefined,
         RecentlySearchService: undefined,
         UserActivityService: undefined,
         EntityValidationService: undefined,
         CustomEntityDefinitionService: undefined,
+        addUsageDataConsentListener: undefined,
         FileValidationService: undefined,
     };
 
@@ -126,8 +127,8 @@ describe('src/app/main.ts', () => {
         jest.mock('src/core/service/plugin-updates-listener.service');
         serviceMocks.PluginUpdatesListener = (await import('src/core/service/plugin-updates-listener.service')).default;
 
-        jest.mock('src/core/service/cicada-updates-listener.service');
-        serviceMocks.CicadaUpdatesListener = (await import('src/core/service/cicada-updates-listener.service')).default;
+        jest.mock('src/core/service/shopware-updates-listener.service');
+        serviceMocks.ShopwareUpdatesListener = (await import('src/core/service/shopware-updates-listener.service')).default;
 
         jest.mock('src/core/service/customer-group-registration-listener.service');
         serviceMocks.CustomerGroupRegistrationListener = (
@@ -150,7 +151,7 @@ describe('src/app/main.ts', () => {
         serviceMocks.AppAclService = (await import('src/app/service/app-acl.service')).default;
 
         jest.mock('src/app/service/discount-campaign.service');
-        serviceMocks.CicadaDiscountCampaignService = (await import('src/app/service/discount-campaign.service')).default;
+        serviceMocks.ShopwareDiscountCampaignService = (await import('src/app/service/discount-campaign.service')).default;
 
         jest.mock('src/app/service/search-ranking.service');
         serviceMocks.SearchRankingService = (await import('src/app/service/search-ranking.service')).default;
@@ -172,32 +173,39 @@ describe('src/app/main.ts', () => {
             await import('src/app/service/custom-entity-definition.service')
         ).default;
 
+        jest.mock('src/core/service/usage-data-consent-listener.service');
+        serviceMocks.addUsageDataConsentListener = (
+            await import('src/core/service/usage-data-consent-listener.service')
+        ).default;
+
         jest.mock('src/app/service/file-validation.service');
         serviceMocks.FileValidationService = (await import('src/app/service/file-validation.service')).default;
 
-        // Reset the Cicada object to make sure that the application is not already initialized
-        Cicada = undefined;
-        // Import the Cicada object
-        Cicada = (await import('src/core/cicada')).CicadaInstance;
+        // Reset the Shopware object to make sure that the application is not already initialized
+        Shopware = undefined;
+        // Import the Shopware object
+        Shopware = (await import('src/core/shopware')).ShopwareInstance;
         // Initialize the main application
         await import('src/app/main');
         // Import the VueAdapter to check if it is set in the application
         VueAdapter = (await import('src/app/adapter/view/vue.adapter')).default;
 
         // Mock services from other places
-        Cicada.Service().register('repositoryFactory', () => {
+        Shopware.Service().register('repositoryFactory', () => {
             return {
                 create: () => {},
             };
         });
+
+        jest.spyOn(Shopware, 'Context', 'get').mockReturnValue({ api: {} });
     });
 
-    it('should create the global application DI container in the Cicada object', () => {
-        expect(Cicada.Application).toBeDefined();
+    it('should create the global application DI container in the Shopware object', () => {
+        expect(Shopware.Application).toBeDefined();
     });
 
     it('should set the VueAdapter into the application', () => {
-        expect(Cicada.Application.view).toBeInstanceOf(VueAdapter);
+        expect(Shopware.Application.view).toBeInstanceOf(VueAdapter);
     });
 
     it('should add all initializer to Application', () => {
@@ -233,15 +241,16 @@ describe('src/app/main.ts', () => {
             'language',
             'userInformation',
             'worker',
+            'usageData',
             'inAppPurchaseCheckout',
             'store',
             'topbarButton',
             'teaserPopover',
         ];
 
-        const initializers = Cicada.Application.getContainer('init').$list();
-
-        expect(initializers).toHaveLength(expectedInitializers.length);
+        const initializers = Shopware.Application.getContainer('init').$list();
+        initializers.push(...Shopware.Application.getContainer('init-pre').$list());
+        initializers.push(...Shopware.Application.getContainer('init-post').$list());
 
         expectedInitializers.forEach((initializer) => {
             expect(initializers).toContain(initializer);
@@ -249,7 +258,7 @@ describe('src/app/main.ts', () => {
     });
 
     it('should add all services to Application', () => {
-        const services = Cicada.Application.getContainer('service').$list();
+        const services = Shopware.Application.getContainer('service').$list();
 
         expect(services).toContain('feature');
         expect(services).toContain('customEntityDefinitionService');
@@ -277,7 +286,7 @@ describe('src/app/main.ts', () => {
         expect(services).toContain('mediaDefaultFolderService');
         expect(services).toContain('appAclService');
         expect(services).toContain('appCmsService');
-        expect(services).toContain('cicadaDiscountCampaignService');
+        expect(services).toContain('shopwareDiscountCampaignService');
         expect(services).toContain('searchRankingService');
         expect(services).toContain('recentlySearchService');
         expect(services).toContain('searchPreferencesService');
@@ -287,134 +296,134 @@ describe('src/app/main.ts', () => {
 
     it('should create imported services on usage', () => {
         // Initialize needed initializers
-        const initializers = Cicada.Application.getContainer('init');
-        expect(initializers.state).toBeDefined();
+        const preInitializers = Shopware.Application.getContainer('init-pre');
+        expect(preInitializers.state).toBeDefined();
 
         // Check if all services get executed correctly
         expect(serviceMocks.FeatureService).not.toHaveBeenCalled();
-        Cicada.Service('feature');
+        Shopware.Service('feature');
         expect(serviceMocks.FeatureService).toHaveBeenCalled();
 
         expect(serviceMocks.CustomEntityDefinitionService).not.toHaveBeenCalled();
-        Cicada.Service('customEntityDefinitionService');
+        Shopware.Service('customEntityDefinitionService');
         expect(serviceMocks.CustomEntityDefinitionService).toHaveBeenCalled();
 
         expect(serviceMocks.MenuService).not.toHaveBeenCalled();
-        Cicada.Service('menuService');
+        Shopware.Service('menuService');
         expect(serviceMocks.MenuService).toHaveBeenCalled();
 
         expect(serviceMocks.PrivilegesService).not.toHaveBeenCalled();
-        Cicada.Service('privileges');
+        Shopware.Service('privileges');
         expect(serviceMocks.PrivilegesService).toHaveBeenCalled();
 
         expect(serviceMocks.AclService).not.toHaveBeenCalled();
-        Cicada.Service('acl');
+        Shopware.Service('acl');
         expect(serviceMocks.AclService).toHaveBeenCalled();
 
         expect(serviceMocks.LoginService).not.toHaveBeenCalled();
-        Cicada.Service('loginService');
+        Shopware.Service('loginService');
         expect(serviceMocks.LoginService).toHaveBeenCalled();
 
         expect(serviceMocks.JsonApiParser).not.toHaveBeenCalled();
-        const jsonApiParserService = Cicada.Service('jsonApiParserService');
+        const jsonApiParserService = Shopware.Service('jsonApiParserService');
         expect(jsonApiParserService).toBe(serviceMocks.JsonApiParser);
 
-        const validationService = Cicada.Service('validationService');
+        const validationService = Shopware.Service('validationService');
         expect(validationService).toEqual(serviceMocks.ValidationService);
 
         expect(serviceMocks.EntityValidationService).not.toHaveBeenCalled();
-        Cicada.Service('entityValidationService');
+        Shopware.Service('entityValidationService');
         expect(serviceMocks.EntityValidationService).toHaveBeenCalled();
 
         expect(serviceMocks.TimezoneService).not.toHaveBeenCalled();
-        Cicada.Service('timezoneService');
+        Shopware.Service('timezoneService');
         expect(serviceMocks.TimezoneService).toHaveBeenCalled();
 
         expect(serviceMocks.RuleConditionService).not.toHaveBeenCalled();
-        Cicada.Service('ruleConditionDataProviderService');
+        Shopware.Service('ruleConditionDataProviderService');
         expect(serviceMocks.RuleConditionService).toHaveBeenCalled();
 
         expect(serviceMocks.ProductStreamConditionService).not.toHaveBeenCalled();
-        Cicada.Service('productStreamConditionService');
+        Shopware.Service('productStreamConditionService');
         expect(serviceMocks.ProductStreamConditionService).toHaveBeenCalled();
 
         expect(serviceMocks.CustomFieldService).not.toHaveBeenCalled();
-        Cicada.Service('customFieldDataProviderService');
+        Shopware.Service('customFieldDataProviderService');
         expect(serviceMocks.CustomFieldService).toHaveBeenCalled();
 
         expect(serviceMocks.ExtensionHelperService).not.toHaveBeenCalled();
-        Cicada.Service('extensionHelperService');
+        Shopware.Service('extensionHelperService');
         expect(serviceMocks.ExtensionHelperService).toHaveBeenCalled();
 
         expect(serviceMocks.LanguageAutoFetchingService).not.toHaveBeenCalled();
-        Cicada.Service('languageAutoFetchingService');
+        Shopware.Service('languageAutoFetchingService');
         expect(serviceMocks.LanguageAutoFetchingService).toHaveBeenCalled();
 
         expect(serviceMocks.StateStyleService).not.toHaveBeenCalled();
-        Cicada.Service('stateStyleDataProviderService');
+        Shopware.Service('stateStyleDataProviderService');
         expect(serviceMocks.StateStyleService).toHaveBeenCalled();
 
         expect(serviceMocks.SearchTypeService).not.toHaveBeenCalled();
-        Cicada.Service('searchTypeService');
+        Shopware.Service('searchTypeService');
         expect(serviceMocks.SearchTypeService).toHaveBeenCalled();
 
         expect(serviceMocks.LocaleToLanguageService).not.toHaveBeenCalled();
-        Cicada.Service('localeToLanguageService');
+        Shopware.Service('localeToLanguageService');
         expect(serviceMocks.LocaleToLanguageService).toHaveBeenCalled();
 
-        const entityMappingService = Cicada.Service('entityMappingService');
+        const entityMappingService = Shopware.Service('entityMappingService');
         expect(entityMappingService).toEqual(serviceMocks.EntityMappingService);
 
         expect(serviceMocks.ShortcutService).not.toHaveBeenCalled();
-        Cicada.Service('shortcutService');
+        Shopware.Service('shortcutService');
         expect(serviceMocks.ShortcutService).toHaveBeenCalled();
 
         expect(serviceMocks.LicenseViolationsService).not.toHaveBeenCalled();
-        Cicada.Service('licenseViolationService');
+        Shopware.Service('licenseViolationService');
         expect(serviceMocks.LicenseViolationsService).toHaveBeenCalled();
 
         expect(serviceMocks.LocaleHelperService).not.toHaveBeenCalled();
-        Cicada.Service('localeHelper');
+        Shopware.Service('localeHelper');
         expect(serviceMocks.LocaleHelperService).toHaveBeenCalled();
 
         expect(serviceMocks.FilterService).not.toHaveBeenCalled();
-        Cicada.Service('filterService');
+        Shopware.Service('filterService');
         expect(serviceMocks.FilterService).toHaveBeenCalled();
 
         expect(serviceMocks.MediaDefaultFolderService).not.toHaveBeenCalled();
-        Cicada.Service('mediaDefaultFolderService');
+        Shopware.Service('mediaDefaultFolderService');
         expect(serviceMocks.MediaDefaultFolderService).toHaveBeenCalled();
 
         expect(serviceMocks.AppAclService).not.toHaveBeenCalled();
-        Cicada.Service('appAclService');
+        Shopware.Service('appAclService');
         expect(serviceMocks.AppAclService).toHaveBeenCalled();
 
         expect(serviceMocks.AppCmsService).not.toHaveBeenCalled();
-        Cicada.Service('appCmsService');
+        Shopware.Service('appCmsService');
         expect(serviceMocks.AppCmsService).toHaveBeenCalled();
 
-        expect(serviceMocks.CicadaDiscountCampaignService).not.toHaveBeenCalled();
-        Cicada.Service('cicadaDiscountCampaignService');
-        expect(serviceMocks.CicadaDiscountCampaignService).toHaveBeenCalled();
+        expect(serviceMocks.ShopwareDiscountCampaignService).not.toHaveBeenCalled();
+        Shopware.Service('shopwareDiscountCampaignService');
+        expect(serviceMocks.ShopwareDiscountCampaignService).toHaveBeenCalled();
 
         expect(serviceMocks.SearchRankingService).not.toHaveBeenCalled();
-        Cicada.Service('searchRankingService');
+        Shopware.Service('searchRankingService');
         expect(serviceMocks.SearchRankingService).toHaveBeenCalled();
 
         expect(serviceMocks.RecentlySearchService).not.toHaveBeenCalled();
-        Cicada.Service('recentlySearchService');
+        Shopware.Service('recentlySearchService');
         expect(serviceMocks.RecentlySearchService).toHaveBeenCalled();
 
         expect(serviceMocks.SearchPreferencesService).not.toHaveBeenCalled();
-        Cicada.Service('searchPreferencesService');
+        Shopware.Service('searchPreferencesService');
         expect(serviceMocks.SearchPreferencesService).toHaveBeenCalled();
 
         expect(serviceMocks.UserActivityService).not.toHaveBeenCalled();
-        Cicada.Service('userActivityService');
+        Shopware.Service('userActivityService');
         expect(serviceMocks.UserActivityService).toHaveBeenCalled();
 
         expect(serviceMocks.FileValidationService).not.toHaveBeenCalled();
-        Cicada.Service('fileValidationService');
+        Shopware.Service('fileValidationService');
         expect(serviceMocks.FileValidationService).toHaveBeenCalled();
     });
 });

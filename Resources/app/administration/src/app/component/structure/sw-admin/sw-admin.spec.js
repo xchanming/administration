@@ -4,7 +4,7 @@
 import 'src/app/component/structure/sw-admin';
 import { mount } from '@vue/test-utils';
 import { BroadcastChannel } from 'worker_threads';
-import { toast } from '@cicada-ag/meteor-admin-sdk';
+import { toast } from '@shopware-ag/meteor-admin-sdk';
 
 async function createWrapper(isLoggedIn, forwardLogout = () => {}, route = 'sw.wofoo.index') {
     return mount(await wrapTestComponent('sw-admin', { sync: true }), {

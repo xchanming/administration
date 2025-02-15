@@ -1,5 +1,5 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import { mount } from '@vue/test-utils';
 import 'src/module/sw-settings/mixin/sw-settings-list.mixin';
@@ -31,7 +31,7 @@ function mockCustomFieldSetData() {
 }
 
 async function createWrapper(privileges = []) {
-    const { Mixin } = Cicada;
+    const { Mixin } = Shopware;
 
     return mount(
         await wrapTestComponent('sw-settings-custom-field-set-list', {

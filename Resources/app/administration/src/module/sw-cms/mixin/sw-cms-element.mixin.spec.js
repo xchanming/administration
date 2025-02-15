@@ -22,10 +22,10 @@ async function createWrapper(element = defaultElement) {
         },
         global: {
             provide: {
-                cmsService: Cicada.Service('cmsService'),
+                cmsService: Shopware.Service('cmsService'),
             },
             stubs: {
-                'sw-text-editor': true,
+                'mt-text-editor': true,
             },
         },
     });
@@ -37,53 +37,48 @@ describe('module/sw-cms/mixin/sw-cms-element.mixin.ts', () => {
         await import('src/module/sw-cms/elements/text');
     });
 
+    beforeEach(() => {
+        Shopware.Store.get('swCategoryDetail').$reset();
+    });
+
     afterEach(() => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('initElementConfig is properly merging configs from various sources', async () => {
-        try {
-            Cicada.State.registerModule('swCategoryDetail', {
-                namespaced: true,
-                state: {
-                    category: {
-                        id: '12345',
-                        translations: [
-                            {
-                                languageId: Cicada.Context.api.systemLanguageId,
-                                name: 'Category name B',
-                                slotConfig: {
-                                    'sw-cms-el-text-1234': {
-                                        overrideFromCategory: 'bar',
-                                    },
-                                },
-                            },
-                        ],
+        Shopware.Store.get('swCategoryDetail').category = {
+            id: '12345',
+            translations: [
+                {
+                    languageId: Shopware.Context.api.systemLanguageId,
+                    name: 'Category name B',
+                    slotConfig: {
+                        'sw-cms-el-text-1234': {
+                            overrideFromCategory: 'bar',
+                        },
                     },
                 },
-            });
+            ],
+        };
 
-            // Config structure is derived from the default config -> module/sw-cms/elements/text/index.js
-            const expectedElementConfig = {
-                content: {
-                    source: 'static',
-                    value: expect.any(String),
-                },
-                verticalAlign: {
-                    source: 'static',
-                    value: null,
-                },
-                overrideFromProp: 'foo',
-                overrideFromCategory: 'bar',
-            };
+        // Config structure is derived from the default config -> module/sw-cms/elements/text/index.js
+        const expectedElementConfig = {
+            content: {
+                source: 'static',
+                value: expect.any(String),
+            },
+            verticalAlign: {
+                source: 'static',
+                value: null,
+            },
+            overrideFromProp: 'foo',
+            overrideFromCategory: 'bar',
+        };
 
-            const wrapper = await createWrapper();
-            wrapper.vm.initElementConfig('text');
+        const wrapper = await createWrapper();
+        wrapper.vm.initElementConfig('text');
 
-            expect(wrapper.vm.element.config).toEqual(expectedElementConfig);
-        } finally {
-            Cicada.State.unregisterModule('swCategoryDetail');
-        }
+        expect(wrapper.vm.element.config).toEqual(expectedElementConfig);
     });
 
     it('initElementData is using the provided element.data as config', async () => {
@@ -103,7 +98,7 @@ describe('module/sw-cms/mixin/sw-cms-element.mixin.ts', () => {
         const wrapper = await createWrapper({
             ...defaultElement,
         });
-        const registry = Cicada.Service('cmsService').getCmsElementRegistry();
+        const registry = Shopware.Service('cmsService').getCmsElementRegistry();
         registry.text.defaultData = {
             defaultProperty: 'foo-bar',
         };
@@ -116,13 +111,13 @@ describe('module/sw-cms/mixin/sw-cms-element.mixin.ts', () => {
 
     it('getDemoValue is invoking cmsService.getPropertyByMappingPath', async () => {
         const wrapper = await createWrapper();
-        const store = Cicada.Store.get('cmsPage');
+        const store = Shopware.Store.get('cmsPage');
 
         store.currentDemoEntity = {
             id: '12345',
             translations: [
                 {
-                    languageId: Cicada.Context.api.systemLanguageId,
+                    languageId: Shopware.Context.api.systemLanguageId,
                     name: 'Category name B',
                     slotConfig: {
                         'sw-cms-el-text-1234': {

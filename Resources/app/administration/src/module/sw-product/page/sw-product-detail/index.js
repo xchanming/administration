@@ -4,21 +4,19 @@
 
 import EntityValidationService from 'src/app/service/entity-validation.service';
 import template from './sw-product-detail.html.twig';
-import swProductDetailState from './state';
 import errorConfiguration from './error.cfg.json';
 import './sw-product-detail.scss';
+import '../../page/sw-product-detail/store';
 
-const { Context, Mixin } = Cicada;
-const { Criteria, ChangesetGenerator } = Cicada.Data;
-const { cloneDeep } = Cicada.Utils.object;
-const { mapPageErrors, mapState, mapGetters } = Cicada.Component.getComponentHelper();
-const type = Cicada.Utils.types;
+const { Context, Mixin } = Shopware;
+const { Criteria, ChangesetGenerator } = Shopware.Data;
+const { cloneDeep } = Shopware.Utils.object;
+const { mapPageErrors } = Shopware.Component.getComponentHelper();
+const type = Shopware.Utils.types;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'mediaService',
@@ -81,24 +79,53 @@ export default {
     },
 
     computed: {
-        ...mapState('swProductDetail', [
-            'product',
-            'parentProduct',
-            'localMode',
-            'advancedModeSetting',
-            'modeSettings',
-        ]),
+        product() {
+            return Shopware.Store.get('swProductDetail').product;
+        },
 
-        ...mapGetters('swProductDetail', [
-            'productRepository',
-            'isLoading',
-            'isChild',
-            'defaultCurrency',
-            'defaultFeatureSet',
-            'showModeSetting',
-            'advanceModeEnabled',
-            'productStates',
-        ]),
+        parentProduct() {
+            return Shopware.Store.get('swProductDetail').parentProduct;
+        },
+
+        localMode() {
+            return Shopware.Store.get('swProductDetail').localMode;
+        },
+
+        advancedModeSetting() {
+            return Shopware.Store.get('swProductDetail').advancedModeSetting;
+        },
+
+        modeSettings() {
+            return Shopware.Store.get('swProductDetail').modeSettings;
+        },
+
+        isLoading() {
+            return Shopware.Store.get('swProductDetail').isLoading;
+        },
+
+        isChild() {
+            return Shopware.Store.get('swProductDetail').isChild;
+        },
+
+        defaultCurrency() {
+            return Shopware.Store.get('swProductDetail').defaultCurrency;
+        },
+
+        getDefaultFeatureSet() {
+            return Shopware.Store.get('swProductDetail').getDefaultFeatureSet;
+        },
+
+        showModeSetting() {
+            return Shopware.Store.get('swProductDetail').showModeSetting;
+        },
+
+        advanceModeEnabled() {
+            return Shopware.Store.get('swProductDetail').advanceModeEnabled;
+        },
+
+        productStates() {
+            return Shopware.Store.get('swProductDetail').productStates;
+        },
 
         ...mapPageErrors(errorConfiguration),
 
@@ -162,7 +189,7 @@ export default {
         },
 
         currentUser() {
-            return Cicada.State.get('session').currentUser;
+            return Shopware.Store.get('session').currentUser;
         },
 
         userModeSettingsRepository() {
@@ -351,46 +378,33 @@ export default {
         },
 
         cmsPageState() {
-            return Cicada.Store.get('cmsPage');
+            return Shopware.Store.get('cmsPage');
         },
 
         currentPage() {
-            return Cicada.Store.get('cmsPage').currentPage;
+            return Shopware.Store.get('cmsPage').currentPage;
         },
     },
 
     watch: {
         productId() {
-            this.destroyedComponent();
             this.createdComponent();
         },
-    },
-
-    beforeCreate() {
-        Cicada.State.registerModule('swProductDetail', swProductDetailState);
     },
 
     created() {
         this.createdComponent();
     },
 
-    beforeUnmount() {
-        Cicada.State.unregisterModule('swProductDetail');
-    },
-
-    unmounted() {
-        this.destroyedComponent();
-    },
-
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-product-detail__product',
                 path: 'product',
                 scope: this,
             });
 
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-product-detail__cmsPage',
                 path: 'currentPage',
                 scope: this,
@@ -401,37 +415,19 @@ export default {
             // when create
             if (!this.productId) {
                 // set language to system language
-                if (!Cicada.State.getters['context/isSystemDefaultLanguage']) {
-                    Cicada.State.commit('context/resetLanguageToDefault');
+                if (!Shopware.Store.get('context').isSystemDefaultLanguage) {
+                    Shopware.Store.get('context').resetLanguageToDefault();
                 }
             }
 
             // initialize default state
             this.initState();
 
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                /**
-                 * @deprecated tag:v6.7.0 - Unused event will be removed.
-                 */
-                this.$root.$on('media-remove', (mediaId) => {
-                    this.removeMediaItem(mediaId);
-                });
-            }
-
             this.initAdvancedModeSettings();
         },
 
-        destroyedComponent() {
-            if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                /**
-                 * @deprecated tag:v6.7.0 - Unused event will be removed.
-                 */
-                this.$root.$off('media-remove');
-            }
-        },
-
         initState() {
-            Cicada.State.commit('swProductDetail/setApiContext', Cicada.Context.api);
+            Shopware.Store.get('swProductDetail').apiContext = Shopware.Context.api;
 
             // when product exists
             if (this.productId) {
@@ -449,7 +445,7 @@ export default {
         },
 
         initAdvancedModeSettings() {
-            Cicada.State.commit('swProductDetail/setAdvancedModeSetting', this.getAdvancedModeDefaultSetting());
+            Shopware.Store.get('swProductDetail').advancedModeSetting = this.getAdvancedModeDefaultSetting();
 
             this.getAdvancedModeSetting();
         },
@@ -492,15 +488,15 @@ export default {
                     return accumulator;
                 }, []);
 
-                Cicada.State.commit('swProductDetail/setAdvancedModeSetting', modeSettings);
-                Cicada.State.commit('swProductDetail/setModeSettings', this.changeModeSettings());
+                Shopware.Store.get('swProductDetail').advancedModeSetting = modeSettings;
+                Shopware.Store.get('swProductDetail').modeSettings = this.changeModeSettings();
 
                 await this.$nextTick();
             });
         },
 
         saveAdvancedMode() {
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'advancedMode',
                 true,
             ]);
@@ -508,7 +504,7 @@ export default {
                 .save(this.advancedModeSetting)
                 .then(() => {
                     this.getAdvancedModeSetting().then(() => {
-                        Cicada.State.commit('swProductDetail/setLoading', [
+                        Shopware.Store.get('swProductDetail').setLoading([
                             'advancedMode',
                             false,
                         ]);
@@ -522,7 +518,7 @@ export default {
         },
 
         onChangeSetting() {
-            Cicada.State.commit('swProductDetail/setAdvancedModeSetting', this.advancedModeSetting);
+            Shopware.Store.get('swProductDetail').advancedModeSetting = this.advancedModeSetting;
             this.saveAdvancedMode();
         },
 
@@ -536,16 +532,15 @@ export default {
         },
 
         onChangeSettingItem() {
-            Cicada.State.commit('swProductDetail/setModeSettings', this.changeModeSettings());
+            Shopware.Store.get('swProductDetail').modeSettings = this.changeModeSettings();
             this.saveAdvancedMode();
         },
 
         loadState() {
-            Cicada.State.commit('swProductDetail/setLocalMode', false);
-            Cicada.State.commit('swProductDetail/setProductId', this.productId);
-            Cicada.State.commit('cicadaApps/setSelectedIds', [
+            Shopware.Store.get('swProductDetail').localMode = false;
+            Shopware.Store.get('shopwareApps').selectedIds = [
                 this.productId,
-            ]);
+            ];
 
             return this.loadAll();
         },
@@ -561,20 +556,19 @@ export default {
 
         createState() {
             // set local mode
-            Cicada.State.commit('swProductDetail/setLocalMode', true);
-            Cicada.State.commit('cicadaApps/setSelectedIds', []);
+            Shopware.Store.get('swProductDetail').localMode = true;
+            Shopware.Store.get('shopwareApps').selectedIds = [];
 
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'product',
                 true,
             ]);
 
             // set product "type"
-            Cicada.State.commit('swProductDetail/setCreationStates', this.creationStates);
+            Shopware.Store.get('swProductDetail').creationStates = this.creationStates;
 
             // create empty product
-            Cicada.State.commit('swProductDetail/setProduct', this.productRepository.create());
-            Cicada.State.commit('swProductDetail/setProductId', this.product.id);
+            Shopware.Store.get('swProductDetail').product = this.productRepository.create();
 
             // fill empty data
             this.product.active = true;
@@ -639,11 +633,11 @@ export default {
                     });
                 }
 
-                if (this.defaultFeatureSet && this.defaultFeatureSet.length > 0) {
-                    this.product.featureSetId = this.defaultFeatureSet[0].id;
+                if (this.getDefaultFeatureSet?.length) {
+                    this.product.featureSetId = this.getDefaultFeatureSet?.[0].id;
                 }
 
-                Cicada.State.commit('swProductDetail/setLoading', [
+                Shopware.Store.get('swProductDetail').setLoading([
                     'product',
                     false,
                 ]);
@@ -657,13 +651,13 @@ export default {
         },
 
         loadProduct() {
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'product',
                 true,
             ]);
 
             return this.productRepository
-                .get(this.productId || this.product.id, Cicada.Context.api, this.productCriteria)
+                .get(this.productId || this.product.id, Shopware.Context.api, this.productCriteria)
                 .then(async (product) => {
                     if (!product.purchasePrices?.length > 0 && !product.parentId) {
                         if (!this.defaultCurrency?.id) {
@@ -673,15 +667,15 @@ export default {
                         product.purchasePrices = this.getDefaultPurchasePrices();
                     }
 
-                    Cicada.State.commit('swProductDetail/setProduct', product);
+                    Shopware.Store.get('swProductDetail').product = product;
 
                     if (this.product.parentId) {
                         this.loadParentProduct();
                     } else {
-                        Cicada.State.commit('swProductDetail/setParentProduct', {});
+                        Shopware.Store.get('swProductDetail').parentProduct = {};
                     }
 
-                    Cicada.State.commit('swProductDetail/setLoading', [
+                    Shopware.Store.get('swProductDetail').setLoading([
                         'product',
                         false,
                     ]);
@@ -700,18 +694,18 @@ export default {
         },
 
         loadParentProduct() {
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'parentProduct',
                 true,
             ]);
 
             return this.productRepository
-                .get(this.product.parentId, Cicada.Context.api, this.productCriteria)
+                .get(this.product.parentId, Shopware.Context.api, this.productCriteria)
                 .then((res) => {
-                    Cicada.State.commit('swProductDetail/setParentProduct', res);
+                    Shopware.Store.get('swProductDetail').parentProduct = res;
                 })
                 .then(() => {
-                    Cicada.State.commit('swProductDetail/setLoading', [
+                    Shopware.Store.get('swProductDetail').setLoading([
                         'parentProduct',
                         false,
                     ]);
@@ -719,7 +713,7 @@ export default {
         },
 
         loadCurrencies() {
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'currencies',
                 true,
             ]);
@@ -727,10 +721,10 @@ export default {
             return this.currencyRepository
                 .search(new Criteria(1, 500))
                 .then((res) => {
-                    Cicada.State.commit('swProductDetail/setCurrencies', res);
+                    Shopware.Store.get('swProductDetail').currencies = res;
                 })
-                .then(() => {
-                    Cicada.State.commit('swProductDetail/setLoading', [
+                .finally(() => {
+                    Shopware.Store.get('swProductDetail').setLoading([
                         'currencies',
                         false,
                     ]);
@@ -738,7 +732,7 @@ export default {
         },
 
         loadTaxes() {
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'taxes',
                 true,
             ]);
@@ -746,10 +740,10 @@ export default {
             return this.taxRepository
                 .search(this.taxCriteria)
                 .then((res) => {
-                    Cicada.State.commit('swProductDetail/setTaxes', res);
+                    Shopware.Store.get('swProductDetail').setTaxes(res);
                 })
-                .then(() => {
-                    Cicada.State.commit('swProductDetail/setLoading', [
+                .finally(() => {
+                    Shopware.Store.get('swProductDetail').setLoading([
                         'taxes',
                         false,
                     ]);
@@ -763,7 +757,7 @@ export default {
         },
 
         loadAttributeSet() {
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'customFieldSets',
                 true,
             ]);
@@ -771,10 +765,10 @@ export default {
             return this.customFieldSetRepository
                 .search(this.customFieldSetCriteria)
                 .then((res) => {
-                    Cicada.State.commit('swProductDetail/setAttributeSet', res);
+                    Shopware.Store.get('swProductDetail').customFieldSets = res;
                 })
                 .finally(() => {
-                    Cicada.State.commit('swProductDetail/setLoading', [
+                    Shopware.Store.get('swProductDetail').setLoading([
                         'customFieldSets',
                         false,
                     ]);
@@ -782,7 +776,7 @@ export default {
         },
 
         loadDefaultFeatureSet() {
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'defaultFeatureSet',
                 true,
             ]);
@@ -790,10 +784,10 @@ export default {
             return this.featureSetRepository
                 .search(this.defaultFeatureSetCriteria)
                 .then((res) => {
-                    Cicada.State.commit('swProductDetail/setDefaultFeatureSet', res);
+                    Shopware.Store.get('swProductDetail').setDefaultFeatureSet(res);
                 })
-                .then(() => {
-                    Cicada.State.commit('swProductDetail/setLoading', [
+                .finally(() => {
+                    Shopware.Store.get('swProductDetail').setLoading([
                         'defaultFeatureSet',
                         false,
                     ]);
@@ -844,7 +838,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').setApiLanguageId(languageId);
             this.initState();
         },
 
@@ -955,9 +949,9 @@ export default {
         onSaveFinished(response) {
             const updatePromises = [];
 
-            if (Cicada.State.list().includes('swSeoUrl')) {
-                const seoUrls = Cicada.State.getters['swSeoUrl/getNewOrModifiedUrls']();
-                const defaultSeoUrl = Cicada.State.get('swSeoUrl').defaultSeoUrl;
+            if (Shopware.Store.list().includes('swSeoUrl')) {
+                const seoUrls = Shopware.Store.get('swSeoUrl').newOrModifiedUrls;
+                const defaultSeoUrl = Shopware.Store.get('swSeoUrl').defaultSeoUrl;
 
                 if (seoUrls) {
                     seoUrls.forEach((seoUrl) => {
@@ -979,17 +973,13 @@ export default {
 
             Promise.all(updatePromises)
                 .then(() => {
-                    if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                        this.$root.$emit('seo-url-save-finish');
-                    } else {
-                        Cicada.Utils.EventBus.emit('sw-product-detail-save-finish');
-                    }
+                    Shopware.Utils.EventBus.emit('sw-product-detail-save-finish');
                 })
                 .then(() => {
                     switch (response) {
                         case 'empty': {
                             this.isSaveSuccessful = true;
-                            Cicada.State.commit('error/resetApiErrors');
+                            Shopware.Store.get('error').resetApiErrors();
                             break;
                         }
 
@@ -1039,7 +1029,7 @@ export default {
         },
 
         saveProduct() {
-            Cicada.State.commit('swProductDetail/setLoading', [
+            Shopware.Store.get('swProductDetail').setLoading([
                 'product',
                 true,
             ]);
@@ -1053,12 +1043,12 @@ export default {
             return new Promise((resolve) => {
                 // check if product exists
                 if (!this.productRepository.hasChanges(this.product)) {
-                    Cicada.State.commit('swProductDetail/setLoading', [
+                    Shopware.Store.get('swProductDetail').setLoading([
                         'product',
                         false,
                     ]);
                     resolve('empty');
-                    Cicada.State.commit('swProductDetail/setLoading', [
+                    Shopware.Store.get('swProductDetail').setLoading([
                         'product',
                         false,
                     ]);
@@ -1070,7 +1060,7 @@ export default {
                     .save(this.product)
                     .then(() => {
                         this.loadAll().then(() => {
-                            Cicada.State.commit('swProductDetail/setLoading', [
+                            Shopware.Store.get('swProductDetail').setLoading([
                                 'product',
                                 false,
                             ]);
@@ -1079,7 +1069,7 @@ export default {
                         });
                     })
                     .catch((response) => {
-                        Cicada.State.commit('swProductDetail/setLoading', [
+                        Shopware.Store.get('swProductDetail').setLoading([
                             'product',
                             false,
                         ]);

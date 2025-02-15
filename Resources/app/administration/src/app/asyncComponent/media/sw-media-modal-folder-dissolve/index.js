@@ -1,6 +1,6 @@
 import template from './sw-media-modal-folder-dissolve.html.twig';
 
-const { Mixin } = Cicada;
+const { Mixin } = Shopware;
 
 /**
  * @status ready
@@ -14,8 +14,6 @@ const { Mixin } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['mediaFolderService'],
 
@@ -53,17 +51,25 @@ export default {
 
                 this.createNotificationSuccess({
                     title: this.$root.$tc('global.default.success'),
-                    message: this.$root.$tc('global.sw-media-modal-folder-dissolve.notification.successSingle.message', 1, {
-                        folderName: item.name,
-                    }),
+                    message: this.$root.$tc(
+                        'global.sw-media-modal-folder-dissolve.notification.successSingle.message',
+                        {
+                            folderName: item.name,
+                        },
+                        1,
+                    ),
                 });
                 return item.id;
             } catch {
                 this.createNotificationError({
                     title: this.$root.$tc('global.default.error'),
-                    message: this.$root.$tc('global.sw-media-modal-folder-dissolve.notification.errorSingle.message', 1, {
-                        folderName: item.name,
-                    }),
+                    message: this.$root.$tc(
+                        'global.sw-media-modal-folder-dissolve.notification.errorSingle.message',
+                        {
+                            folderName: item.name,
+                        },
+                        1,
+                    ),
                 });
 
                 return null;

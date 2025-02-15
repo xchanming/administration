@@ -26,7 +26,7 @@ async function createWrapper() {
                     'sw-iframe-renderer': true,
                 },
                 provide: {
-                    cmsService: Cicada.Service('cmsService'),
+                    cmsService: Shopware.Service('cmsService'),
                 },
             },
         },
@@ -39,7 +39,7 @@ describe('module/sw-cms/elements/location-renderer/component', () => {
         await import('src/module/sw-cms/elements/location-renderer');
 
         jest.useFakeTimers();
-        jest.spyOn(Cicada.ExtensionAPI, 'publishData').mockImplementation(() => {});
+        jest.spyOn(Shopware.ExtensionAPI, 'publishData').mockImplementation(() => {});
     });
 
     beforeEach(() => {
@@ -57,15 +57,15 @@ describe('module/sw-cms/elements/location-renderer/component', () => {
 
         await flushPromises();
 
-        expect(Cicada.ExtensionAPI.publishData).toHaveBeenCalledTimes(2);
+        expect(Shopware.ExtensionAPI.publishData).toHaveBeenCalledTimes(2);
         // First call is just for backwards compatibility
-        expect(Cicada.ExtensionAPI.publishData).toHaveBeenNthCalledWith(1, {
+        expect(Shopware.ExtensionAPI.publishData).toHaveBeenNthCalledWith(1, {
             id: 'example_cms_element_type__config-element',
             path: 'element',
             scope: expect.anything(),
         });
 
-        expect(Cicada.ExtensionAPI.publishData).toHaveBeenNthCalledWith(2, {
+        expect(Shopware.ExtensionAPI.publishData).toHaveBeenNthCalledWith(2, {
             id: 'example_cms_element_type__config-element__123456789',
             path: 'element',
             scope: expect.anything(),
@@ -75,7 +75,7 @@ describe('module/sw-cms/elements/location-renderer/component', () => {
     it('should unpublish the old publishData when elementData changes', async () => {
         const unpublishDataMock = jest.fn();
 
-        jest.spyOn(Cicada.ExtensionAPI, 'publishData').mockImplementation(() => {
+        jest.spyOn(Shopware.ExtensionAPI, 'publishData').mockImplementation(() => {
             return () => {
                 unpublishDataMock();
             };

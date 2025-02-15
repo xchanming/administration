@@ -4,14 +4,12 @@
 
 import template from './sw-sales-channel-detail.html.twig';
 
-const { Mixin, Context, Defaults } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin, Context, Defaults } = Shopware;
+const { Criteria } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -163,7 +161,7 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-sales-channel-detail__salesChannel',
                 path: 'salesChannel',
                 scope: this,
@@ -321,19 +319,19 @@ export default {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
 
-                if (this.isCompatEnabled('INSTANCE_EVENT_EMITTER')) {
-                    this.$root.$emit('sales-channel-change');
-                } else {
-                    Cicada.Utils.EventBus.emit('sw-sales-channel-detail-sales-channel-change');
-                }
+                Shopware.Utils.EventBus.emit('sw-sales-channel-detail-sales-channel-change');
                 this.loadEntityData();
             } catch (error) {
                 this.isLoading = false;
 
                 this.createNotificationError({
-                    message: this.$tc('sw-sales-channel.detail.messageSaveError', 0, {
-                        name: this.salesChannel.name || this.placeholder(this.salesChannel, 'name'),
-                    }),
+                    message: this.$tc(
+                        'sw-sales-channel.detail.messageSaveError',
+                        {
+                            name: this.salesChannel.name || this.placeholder(this.salesChannel, 'name'),
+                        },
+                        0,
+                    ),
                 });
             }
         },

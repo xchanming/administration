@@ -7,10 +7,8 @@ import type CmsVisibility from '../../shared/CmsVisibility';
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         visibility: {

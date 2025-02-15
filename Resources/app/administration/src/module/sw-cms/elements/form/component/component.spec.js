@@ -27,7 +27,7 @@ async function createWrapper(formType = null) {
         },
         global: {
             provide: {
-                cmsService: Cicada.Service('cmsService'),
+                cmsService: Shopware.Service('cmsService'),
             },
         },
     });

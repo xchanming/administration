@@ -1,19 +1,17 @@
 /**
- * @sw-package inventory
+ * @sw-package checkout
  */
-const { State } = Cicada;
+const { Store } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
-    compatConfig: Cicada.compatConfig,
-
     computed: {
         generateData: {
             get() {
-                return State.get('swBulkEdit')?.orderDocuments?.credit_note?.value;
+                return Store.get('swBulkEdit')?.orderDocuments?.credit_note?.value;
             },
             set(generateData) {
-                State.commit('swBulkEdit/setOrderDocumentsValue', {
+                Store.get('swBulkEdit').setOrderDocumentsValue({
                     type: 'credit_note',
                     value: generateData,
                 });

@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Controller;
+namespace Shopware\Administration\Controller;
 
-use Cicada\Core\Content\Product\Aggregate\ProductVisibility\ProductVisibilityDefinition;
-use Cicada\Core\Content\Product\ProductCollection;
-use Cicada\Core\Content\Product\ProductDefinition;
-use Cicada\Core\Content\Product\SalesChannel\ProductAvailableFilter;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\RequestCriteriaBuilder;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Util\Random;
-use Cicada\Core\PlatformRequest;
-use Cicada\Core\System\SalesChannel\Context\SalesChannelContextServiceInterface;
-use Cicada\Core\System\SalesChannel\Context\SalesChannelContextServiceParameters;
-use Cicada\Core\System\SalesChannel\Entity\SalesChannelRepository;
+use Shopware\Core\Content\Product\Aggregate\ProductVisibility\ProductVisibilityDefinition;
+use Shopware\Core\Content\Product\ProductCollection;
+use Shopware\Core\Content\Product\ProductDefinition;
+use Shopware\Core\Content\Product\SalesChannel\ProductAvailableFilter;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\RequestCriteriaBuilder;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Util\Random;
+use Shopware\Core\PlatformRequest;
+use Shopware\Core\System\SalesChannel\Context\SalesChannelContextServiceInterface;
+use Shopware\Core\System\SalesChannel\Context\SalesChannelContextServiceParameters;
+use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

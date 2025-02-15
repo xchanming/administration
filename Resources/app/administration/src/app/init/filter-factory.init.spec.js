@@ -10,6 +10,6 @@ describe('src/app/init/filter-factory.init.ts', () => {
     });
 
     it('should register the filter Factory', () => {
-        expect(Cicada.Service('filterFactory')).toBeInstanceOf(FilterFactory);
+        expect(Shopware.Service('filterFactory')).toBeInstanceOf(FilterFactory);
     });
 });

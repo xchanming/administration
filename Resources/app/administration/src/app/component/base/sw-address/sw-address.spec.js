@@ -11,8 +11,9 @@ async function createWrapper() {
             address: {
                 salutation: 'Mr',
                 title: 'Dr.',
-                name: 'John',
-                company: 'Cicada AG',
+                firstName: 'John',
+                lastName: 'Doe',
+                company: 'Shopware AG',
                 street: 'Main Street',
                 additionalAddressLine1: 'Floor 23',
                 additionalAddressLine2: 'Secret room 1337',

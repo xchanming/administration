@@ -4,7 +4,7 @@ async function createWrapper(propsData = {}, provide = {}) {
     return mount(await wrapTestComponent('sw-extension-card-base', { sync: true }), {
         global: {
             provide: {
-                cicadaExtensionService: {
+                shopwareExtensionService: {
                     getOpenLink: () => null,
                 },
                 extensionStoreActionService: {},
@@ -47,13 +47,13 @@ async function createWrapper(propsData = {}, provide = {}) {
  */
 describe('src/module/sw-extension/component/sw-extension-card-base', () => {
     beforeAll(() => {
-        if (Cicada.State.get('context')) {
-            Cicada.State.unregisterModule('context');
+        if (Shopware.Store.get('context')) {
+            Shopware.Store.unregister('context');
         }
 
-        Cicada.State.registerModule('context', {
-            namespaced: true,
-            state: {
+        Shopware.Store.register({
+            id: 'context',
+            state: () => ({
                 app: {
                     config: {
                         settings: {
@@ -67,7 +67,7 @@ describe('src/module/sw-extension/component/sw-extension-card-base', () => {
                         token: 'testToken',
                     },
                 },
-            },
+            }),
         });
     });
 
@@ -138,7 +138,7 @@ describe('src/module/sw-extension/component/sw-extension-card-base', () => {
                 },
             },
             {
-                cicadaExtensionService: {
+                shopwareExtensionService: {
                     canBeOpened: () => false,
                     getOpenLink: () => null,
                 },
@@ -160,7 +160,7 @@ describe('src/module/sw-extension/component/sw-extension-card-base', () => {
                 },
             },
             {
-                cicadaExtensionService: {
+                shopwareExtensionService: {
                     getOpenLink: () => {
                         return Promise.resolve({
                             name: 'jest',
@@ -187,7 +187,7 @@ describe('src/module/sw-extension/component/sw-extension-card-base', () => {
                 },
             },
             {
-                cicadaExtensionService: {
+                shopwareExtensionService: {
                     canBeOpened: () => true,
                     getOpenLink: () => null,
                 },
@@ -208,7 +208,7 @@ describe('src/module/sw-extension/component/sw-extension-card-base', () => {
                 },
             },
             {
-                cicadaExtensionService: {
+                shopwareExtensionService: {
                     getOpenLink: () => null,
                     updateExtension: async () => {
                         const error = new Error();

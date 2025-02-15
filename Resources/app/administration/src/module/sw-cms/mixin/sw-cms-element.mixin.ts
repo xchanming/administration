@@ -1,9 +1,10 @@
 import { defineComponent, type PropType } from 'vue';
 import { type RuntimeSlot } from '../service/cms.service';
+import '../../sw-category/page/sw-category-detail/store';
 
-const { Mixin } = Cicada;
-const { types } = Cicada.Utils;
-const { cloneDeep, merge } = Cicada.Utils.object;
+const { Mixin } = Shopware;
+const { types } = Shopware.Utils;
+const { cloneDeep, merge } = Shopware.Utils.object;
 
 interface Translation {
     languageId: string;
@@ -42,7 +43,7 @@ export default Mixin.register(
 
         computed: {
             cmsPageState() {
-                return Cicada.Store.get('cmsPage');
+                return Shopware.Store.get('cmsPage');
             },
 
             cmsElements() {
@@ -51,7 +52,7 @@ export default Mixin.register(
 
             category(): EntitySchema.Entities['category'] {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                return Cicada.State.get('swCategoryDetail')?.category as EntitySchema.Entities['category'];
+                return Shopware.Store.get('swCategoryDetail')?.category as EntitySchema.Entities['category'];
             },
         },
 
@@ -95,7 +96,7 @@ export default Mixin.register(
 
             getDefaultTranslations(entity: Entity) {
                 return entity.translations.find((translation) => {
-                    return translation.languageId === Cicada.Context.api.systemLanguageId;
+                    return translation.languageId === Shopware.Context.api.systemLanguageId;
                 });
             },
         },

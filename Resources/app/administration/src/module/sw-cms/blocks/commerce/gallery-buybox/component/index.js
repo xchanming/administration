@@ -1,7 +1,7 @@
 import template from './sw-cms-block-gallery-buybox.html.twig';
 import './sw-cms-block-gallery-buybox.scss';
 
-const { Store } = Cicada;
+const { Store } = Shopware;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Store } = Cicada;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     computed: {
         currentDeviceView() {

@@ -7,13 +7,11 @@ import './sw-settings-snippet-set-list.scss';
 const {
     Mixin,
     Data: { Criteria },
-} = Cicada;
+} = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'snippetSetService',
@@ -70,7 +68,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
@@ -262,7 +260,7 @@ export default {
 
         createInlineSuccessNote(name) {
             this.createNotificationSuccess({
-                message: this.$tc('sw-settings-snippet.setList.inlineEditSuccessMessage', 0, { name }),
+                message: this.$tc('sw-settings-snippet.setList.inlineEditSuccessMessage', { name }, 0),
             });
         },
 

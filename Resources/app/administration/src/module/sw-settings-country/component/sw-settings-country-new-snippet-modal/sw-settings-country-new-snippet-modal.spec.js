@@ -42,7 +42,7 @@ async function createWrapper(customPropsData = {}) {
                         parentId: null,
                     },
                     {
-                        id: 'address/name',
+                        id: 'address/first_name',
                         name: 'First name',
                         parentId: null,
                     },

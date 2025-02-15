@@ -1,8 +1,8 @@
 import template from './sw-settings-tax-list.html.twig';
 import './sw-settings-tax-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package checkout
@@ -11,8 +11,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -112,7 +110,7 @@ export default {
         },
 
         onChangeLanguage(languageId) {
-            Cicada.State.commit('context/setApiLanguageId', languageId);
+            Shopware.Store.get('context').api.languageId = languageId;
             this.getList();
         },
 
@@ -121,7 +119,7 @@ export default {
                 .then(() => {
                     if (this.selectedDefaultTaxRateId === this.defaultTaxRateId) {
                         this.createNotificationSuccess({
-                            message: this.$tc('sw-settings-tax.detail.messageSaveSuccess', 0, { name: tax.name }),
+                            message: this.$tc('sw-settings-tax.detail.messageSaveSuccess', { name: tax.name }, 0),
                         });
 
                         return;
@@ -135,7 +133,7 @@ export default {
                             this.defaultTaxRateId = this.selectedDefaultTaxRateId;
 
                             this.createNotificationSuccess({
-                                message: this.$tc('sw-settings-tax.detail.messageSaveSuccess', 0, { name: tax.name }),
+                                message: this.$tc('sw-settings-tax.detail.messageSaveSuccess', { name: tax.name }, 0),
                             });
                         })
                         .catch(() => {
@@ -203,12 +201,12 @@ export default {
             ];
         },
 
-        isCicadaDefaultTax(tax) {
-            return this.$te(`global.tax-rates.${tax.name}`, 'zh-CN');
+        isShopwareDefaultTax(tax) {
+            return this.$te(`global.tax-rates.${tax.name}`, 'en-GB');
         },
 
         getLabel(tax) {
-            return this.isCicadaDefaultTax(tax) ? this.$tc(`global.tax-rates.${tax.name}`) : tax.name;
+            return this.isShopwareDefaultTax(tax) ? this.$tc(`global.tax-rates.${tax.name}`) : tax.name;
         },
 
         isSelectedDefaultRate(tax) {
@@ -242,7 +240,7 @@ export default {
         onChangeTaxProviderActive(taxProvider) {
             taxProvider.active = !taxProvider.active;
 
-            this.taxProviderRepository.save(taxProvider, Cicada.Context.api).then(() => {
+            this.taxProviderRepository.save(taxProvider, Shopware.Context.api).then(() => {
                 const state = taxProvider.active ? 'active' : 'inactive';
 
                 this.createNotificationSuccess({

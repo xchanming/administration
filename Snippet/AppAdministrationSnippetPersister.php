@@ -1,18 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Snippet;
+namespace Shopware\Administration\Snippet;
 
-use Cicada\Core\Framework\Adapter\Cache\CacheInvalidator;
-use Cicada\Core\Framework\App\AppEntity;
-use Cicada\Core\Framework\Context;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
-use Cicada\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\Framework\Uuid\Uuid;
-use Cicada\Core\System\Locale\LocaleCollection;
-use Cicada\Core\System\Locale\LocaleException;
+use Shopware\Core\Framework\Adapter\Cache\CacheInvalidator;
+use Shopware\Core\Framework\App\AppEntity;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\System\Locale\LocaleCollection;
+use Shopware\Core\System\Locale\LocaleException;
 
 /**
  * @internal
@@ -50,9 +50,9 @@ class AppAdministrationSnippetPersister
             throw SnippetException::extendOrOverwriteCore($duplicatedKeys);
         }
 
-        // only throw exception if snippets are given but not en-GB
-        if (!\array_key_exists('en-GB', $snippets) && !empty($snippets)) {
-            throw SnippetException::defaultLanguageNotGiven('en-GB');
+        // only throw exception if snippets are given but not zh-CN
+        if (!\array_key_exists('zh-CN', $snippets) && !empty($snippets)) {
+            throw SnippetException::defaultLanguageNotGiven('zh-CN');
         }
 
         $criteria = new Criteria();
@@ -108,7 +108,7 @@ class AppAdministrationSnippetPersister
      */
     private function getCoreAdministrationSnippets(): array
     {
-        $path = __DIR__ . '/../Resources/app/administration/src/app/snippet/en-GB.json';
+        $path = __DIR__ . '/../Resources/app/administration/src/app/snippet/zh-CN.json';
         $snippets = file_get_contents($path);
 
         if (!$snippets) {

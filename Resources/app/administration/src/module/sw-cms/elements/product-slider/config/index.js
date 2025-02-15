@@ -1,8 +1,8 @@
 import template from './sw-cms-el-config-product-slider.html.twig';
 import './sw-cms-el-config-product-slider.scss';
 
-const { Mixin } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 /**
  * @private
@@ -10,8 +10,6 @@ const { Criteria, EntityCollection } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -60,7 +58,7 @@ export default {
         },
 
         productMultiSelectContext() {
-            const context = { ...Cicada.Context.api };
+            const context = { ...Shopware.Context.api };
             context.inheritance = true;
 
             return context;
@@ -83,7 +81,7 @@ export default {
         createdComponent() {
             this.initElementConfig('product-slider');
 
-            this.productCollection = new EntityCollection('/product', 'product', Cicada.Context.api);
+            this.productCollection = new EntityCollection('/product', 'product', Shopware.Context.api);
 
             if (this.element.config.products.value.length <= 0) {
                 return;
@@ -99,7 +97,7 @@ export default {
 
                 this.productRepository
                     .search(criteria, {
-                        ...Cicada.Context.api,
+                        ...Shopware.Context.api,
                         inheritance: true,
                     })
                     .then((result) => {
@@ -107,6 +105,7 @@ export default {
                     });
             }
         },
+
         getProductAssignmentTypes() {
             return [
                 {
@@ -160,6 +159,7 @@ export default {
                 },
             ];
         },
+
         onChangeAssignmentType(type) {
             if (type === 'product_stream') {
                 this.tempProductIds = this.element.config.products.value;
@@ -172,7 +172,7 @@ export default {
 
         loadProductStream() {
             this.productStreamRepository
-                .get(this.element.config.products.value, Cicada.Context.api, new Criteria(1, 25))
+                .get(this.element.config.products.value, Shopware.Context.api, new Criteria(1, 25))
                 .then((result) => {
                     this.productStream = result;
                 });
@@ -201,16 +201,13 @@ export default {
 
         onProductsChange() {
             this.element.config.products.value = this.productCollection.getIds();
+            this.element.translated.config.products.value = this.productCollection.getIds();
 
             if (!this.element?.data) {
                 return;
             }
 
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.element.data, 'products', this.productCollection);
-            } else {
-                this.element.data.products = this.productCollection;
-            }
+            this.element.data.products = this.productCollection;
         },
 
         isSelected(itemId) {

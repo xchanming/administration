@@ -71,7 +71,7 @@ describe('module/sw-cms/elements/product-listing/component/index', () => {
     });
 
     beforeEach(async () => {
-        Cicada.Store.get('cmsPage').resetCmsPageState();
+        Shopware.Store.get('cmsPage').resetCmsPageState();
     });
 
     it('should be a Vue.js component', async () => {
@@ -82,7 +82,7 @@ describe('module/sw-cms/elements/product-listing/component/index', () => {
 
     it('should use demo products', async () => {
         const wrapper = await createWrapper();
-        Cicada.Store.get('cmsPage').setCurrentDemoProducts(currentDemoProducts);
+        Shopware.Store.get('cmsPage').setCurrentDemoProducts(currentDemoProducts);
 
         await wrapper.vm.$nextTick();
         const productBoxes = wrapper.findAllComponents({
@@ -102,7 +102,7 @@ describe('module/sw-cms/elements/product-listing/component/index', () => {
 
     it('should use fallback to empty products', async () => {
         const wrapper = await createWrapper();
-        Cicada.Store.get('cmsPage').setCurrentDemoProducts([]);
+        Shopware.Store.get('cmsPage').setCurrentDemoProducts([]);
 
         await wrapper.vm.$nextTick();
         const productBoxes = wrapper.findAllComponents({

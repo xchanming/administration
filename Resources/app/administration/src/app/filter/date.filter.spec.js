@@ -2,12 +2,12 @@
  * @sw-package framework
  */
 describe('src/app/filter/date.filter.ts', () => {
-    const dateFilter = Cicada.Filter.getByName('date');
+    const dateFilter = Shopware.Filter.getByName('date');
 
-    Cicada.Utils.format.date = jest.fn();
+    Shopware.Utils.format.date = jest.fn();
 
     beforeEach(() => {
-        Cicada.Utils.format.date.mockClear();
+        Shopware.Utils.format.date.mockClear();
     });
 
     it('should contain a filter', () => {
@@ -23,7 +23,7 @@ describe('src/app/filter/date.filter.ts', () => {
             myDateOptions: 'foo',
         });
 
-        expect(Cicada.Utils.format.date).toHaveBeenCalledWith('01.01.1997', {
+        expect(Shopware.Utils.format.date).toHaveBeenCalledWith('01.01.1997', {
             myDateOptions: 'foo',
         });
     });

@@ -8,8 +8,6 @@ import './sw-payment-card.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['acl'],
 
     emits: ['set-payment-active'],

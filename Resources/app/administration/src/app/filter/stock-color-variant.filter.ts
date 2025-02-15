@@ -2,7 +2,7 @@
  * @sw-package inventory
  */
 
-Cicada.Filter.register('stockColorVariant', (value: number) => {
+Shopware.Filter.register('stockColorVariant', (value: number) => {
     if (typeof value !== 'number' && !value) {
         return '';
     }

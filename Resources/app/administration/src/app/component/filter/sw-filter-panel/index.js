@@ -1,18 +1,17 @@
 /**
  * @sw-package framework
  */
+
 import template from './sw-filter-panel.html.twig';
 import './sw-filter-panel.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @private
  */
 Component.register('sw-filter-panel', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['repositoryFactory'],
 
@@ -83,7 +82,7 @@ Component.register('sw-filter-panel', {
         criteria: {
             handler() {
                 if (this.filterChanged) {
-                    Cicada.Service('filterService')
+                    Shopware.Service('filterService')
                         .saveFilters(this.storeKey, this.storedFilters)
                         .then((response) => {
                             this.storedFilters = response;
@@ -106,7 +105,7 @@ Component.register('sw-filter-panel', {
 
     methods: {
         createdComponent() {
-            Cicada.Service('filterService')
+            Shopware.Service('filterService')
                 .getStoredFilters(this.storeKey)
                 .then((filters) => {
                     this.activeFilters = {};
@@ -115,11 +114,7 @@ Component.register('sw-filter-panel', {
                     this.listFilters.forEach((filter) => {
                         const criteria = filters[filter.name] ? filters[filter.name].criteria : null;
                         if (criteria) {
-                            if (this.isCompatEnabled('INSTANCE_SET')) {
-                                this.$set(this.activeFilters, filter.name, criteria);
-                            } else {
-                                this.activeFilters[filter.name] = criteria;
-                            }
+                            this.activeFilters[filter.name] = criteria;
                         }
                     });
                 });
@@ -127,21 +122,13 @@ Component.register('sw-filter-panel', {
 
         updateFilter(name, filter, value) {
             this.filterChanged = true;
-            if (this.isCompatEnabled('INSTANCE_SET')) {
-                this.$set(this.activeFilters, name, filter);
-            } else {
-                this.activeFilters[name] = filter;
-            }
+            this.activeFilters[name] = filter;
             this.storedFilters[name] = { value: value, criteria: filter };
         },
 
         resetFilter(name) {
             this.filterChanged = true;
-            if (this.isCompatEnabled('INSTANCE_DELETE')) {
-                this.$delete(this.activeFilters, name);
-            } else {
-                delete this.activeFilters[name];
-            }
+            delete this.activeFilters[name];
             this.storedFilters[name] = { value: null, criteria: null };
         },
 

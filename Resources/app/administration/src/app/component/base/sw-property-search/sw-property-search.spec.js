@@ -4,7 +4,7 @@
 
 import { mount } from '@vue/test-utils';
 
-Cicada.Utils.debounce = function debounce(fn) {
+Shopware.Utils.debounce = function debounce(fn) {
     return function execFunction(...args) {
         fn.apply(this, args);
     };

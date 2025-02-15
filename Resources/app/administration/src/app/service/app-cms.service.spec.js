@@ -41,8 +41,8 @@ describe('src/app/service/app-cms.service', () => {
     it('should be able to override the default block configuration', async () => {
         let defaultConfig = service.defaultBlockConfig;
 
-        Cicada.Locale.register('zh-CN', {});
-        Cicada.Locale.register('en-GB', {});
+        Shopware.Locale.register('de-DE', {});
+        Shopware.Locale.register('en-GB', {});
 
         expect(defaultConfig.prefix).toBe('sw-cms-block-');
         expect(defaultConfig.componentSuffix).toBe('-component');
@@ -77,7 +77,7 @@ describe('src/app/service/app-cms.service', () => {
             'pt-PT': 'MyFooBarBlock',
         });
 
-        const translations = Cicada.Locale.getByName('en-GB');
+        const translations = Shopware.Locale.getByName('en-GB');
         expect(translations).toStrictEqual({
             'sw-app-system-cms': {
                 'label-fooBar': 'MyFooBarBlock',
@@ -88,7 +88,7 @@ describe('src/app/service/app-cms.service', () => {
 
         expect(global.console.warn).toHaveBeenCalledWith(
             '[AppCmsService]',
-            'The locale "pt-PT" is not registered in Cicada.Locale.',
+            'The locale "pt-PT" is not registered in Shopware.Locale.',
         );
     });
 
@@ -96,7 +96,7 @@ describe('src/app/service/app-cms.service', () => {
         service.registerCmsBlock({
             category: 'foobar',
             label: {
-                'zh-CN': 'MyBlockLabel',
+                'de-DE': 'MyBlockLabel',
             },
         });
 

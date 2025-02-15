@@ -14,11 +14,11 @@ describe('module/sw-import-export/service/importExportProfileMapping.service.spe
                 entityName,
                 entityDefinition,
             ]) => {
-                Cicada.EntityDefinition.add(entityName, entityDefinition);
+                Shopware.EntityDefinition.add(entityName, entityDefinition);
             },
         );
 
-        importExportUpdateByMappingService = new ImportExportUpdateByMappingService(Cicada.EntityDefinition);
+        importExportUpdateByMappingService = new ImportExportUpdateByMappingService(Shopware.EntityDefinition);
     });
 
     it('should return entity, path, relation by source entity and path', async () => {

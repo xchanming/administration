@@ -3,12 +3,11 @@ import './sw-first-run-wizard-modal.scss';
 
 /**
  * @sw-package fundamentals@after-sales
+ *
  * @private
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['firstRunWizardService'],
 
@@ -94,15 +93,15 @@ export default {
         },
 
         extensionManagementDisabled() {
-            return Cicada.State.get('context').app.config.settings.disableExtensionManagement;
+            return Shopware.Store.get('context').app.config.settings.disableExtensionManagement;
         },
 
         isClosable() {
-            return !Cicada.Context.app.firstRunWizard;
+            return !Shopware.Context.app.firstRunWizard;
         },
 
         stepper() {
-            if (Cicada.State.get('context').app.config.settings.disableExtensionManagement) {
+            if (Shopware.Store.get('context').app.config.settings.disableExtensionManagement) {
                 return {
                     welcome: {
                         name: 'sw.first.run.wizard.index.welcome',
@@ -129,13 +128,13 @@ export default {
                         variant: 'large',
                         navigationIndex: 2,
                     },
-                    'cicada.account': {
-                        name: 'sw.first.run.wizard.index.cicada.account',
+                    'shopware.account': {
+                        name: 'sw.first.run.wizard.index.shopware.account',
                         variant: 'large',
                         navigationIndex: 3,
                     },
-                    'cicada.domain': {
-                        name: 'sw.first.run.wizard.index.cicada.domain',
+                    'shopware.domain': {
+                        name: 'sw.first.run.wizard.index.shopware.domain',
                         variant: 'large',
                         navigationIndex: 3,
                     },
@@ -193,13 +192,13 @@ export default {
                     variant: 'large',
                     navigationIndex: 5,
                 },
-                'cicada.account': {
-                    name: 'sw.first.run.wizard.index.cicada.account',
+                'shopware.account': {
+                    name: 'sw.first.run.wizard.index.shopware.account',
                     variant: 'large',
                     navigationIndex: 6,
                 },
-                'cicada.domain': {
-                    name: 'sw.first.run.wizard.index.cicada.domain',
+                'shopware.domain': {
+                    name: 'sw.first.run.wizard.index.shopware.domain',
                     variant: 'large',
                     navigationIndex: 6,
                 },

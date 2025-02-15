@@ -120,7 +120,7 @@ async function createWrapper() {
     });
 }
 
-Cicada.Service().register('filterService', () => {
+Shopware.Service().register('filterService', () => {
     return {
         mergeWithStoredFilters: (storeKey, criteria) => criteria,
     };
@@ -184,7 +184,8 @@ describe('src/module/sw-order/page/sw-order-list', () => {
                     ...mockItem,
                     orderCustomer: {
                         customerId: '1',
-                        name: 'foo',
+                        firstName: 'foo',
+                        lastName: 'bar',
                     },
                 },
                 {
@@ -197,13 +198,13 @@ describe('src/module/sw-order/page/sw-order-list', () => {
         const firstRow = wrapper.find('.sw-data-grid__row--0');
         const secondRow = wrapper.find('.sw-data-grid__row--1');
 
-        expect(warningSpy).toHaveBeenCalledWith('[[sw-data-grid] Can not resolve accessor: orderCustomer.name]');
+        expect(warningSpy).toHaveBeenCalledWith('[[sw-data-grid] Can not resolve accessor: orderCustomer.firstName]');
 
-        expect(firstRow.find('.sw-data-grid__cell--orderCustomer-name').exists()).toBeTruthy();
-        expect(firstRow.find('.sw-data-grid__cell--orderCustomer-name').text()).toBe('foo');
+        expect(firstRow.find('.sw-data-grid__cell--orderCustomer-firstName').exists()).toBeTruthy();
+        expect(firstRow.find('.sw-data-grid__cell--orderCustomer-firstName').text()).toBe('bar, foo');
 
-        expect(secondRow.find('.sw-data-grid__cell--orderCustomer-name').exists()).toBeTruthy();
-        expect(secondRow.find('.sw-data-grid__cell--orderCustomer-name').text()).toBe('');
+        expect(secondRow.find('.sw-data-grid__cell--orderCustomer-firstName').exists()).toBeTruthy();
+        expect(secondRow.find('.sw-data-grid__cell--orderCustomer-firstName').text()).toBe('');
     });
 
     it('should add query score to the criteria', async () => {
@@ -373,6 +374,7 @@ describe('src/module/sw-order/page/sw-order-list', () => {
             'salesChannel',
             'orderCustomer',
             'currency',
+            'documents',
             'deliveries',
             'transactions',
         ].forEach((association) => expect(criteria.hasAssociation(association)).toBe(true));
@@ -400,7 +402,6 @@ describe('src/module/sw-order/page/sw-order-list', () => {
                     placeholder: 'sw-order.filters.affiliateCodeFilter.placeholder',
                     valueProperty: 'key',
                     labelProperty: 'key',
-                    options: expect.any(Array),
                 }),
                 'campaign-code-filter': expect.objectContaining({
                     property: 'campaignCode',
@@ -409,7 +410,6 @@ describe('src/module/sw-order/page/sw-order-list', () => {
                     placeholder: 'sw-order.filters.campaignCodeFilter.placeholder',
                     valueProperty: 'key',
                     labelProperty: 'key',
-                    options: expect.any(Array),
                 }),
                 'promotion-code-filter': expect.objectContaining({
                     property: 'lineItems.payload.code',
@@ -418,7 +418,6 @@ describe('src/module/sw-order/page/sw-order-list', () => {
                     placeholder: 'sw-order.filters.promotionCodeFilter.placeholder',
                     valueProperty: 'key',
                     labelProperty: 'key',
-                    options: expect.any(Array),
                 }),
             }),
         );

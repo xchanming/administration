@@ -5,15 +5,12 @@
 import template from './sw-product-properties.html.twig';
 import './sw-product-properties.scss';
 
-const { Component, Context } = Cicada;
-const { Criteria, EntityCollection } = Cicada.Data;
-const { mapState, mapGetters } = Component.getComponentHelper();
+const { Context } = Shopware;
+const { Criteria, EntityCollection } = Shopware.Data;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -95,15 +92,21 @@ export default {
             ];
         },
 
-        ...mapState('swProductDetail', [
-            'product',
-            'parentProduct',
-        ]),
+        product() {
+            return Shopware.Store.get('swProductDetail').product;
+        },
 
-        ...mapGetters('swProductDetail', [
-            'isLoading',
-            'isChild',
-        ]),
+        parentProduct() {
+            return Shopware.Store.get('swProductDetail').parentProduct;
+        },
+
+        isLoading() {
+            return Shopware.Store.get('swProductDetail').isLoading;
+        },
+
+        isChild() {
+            return Shopware.Store.get('swProductDetail').isChild;
+        },
 
         productProperties() {
             return this.isChild && this.product?.properties?.length <= 0
@@ -112,7 +115,7 @@ export default {
         },
 
         assetFilter() {
-            return Cicada.Filter.getByName('asset');
+            return Shopware.Filter.getByName('asset');
         },
 
         productHasProperties() {

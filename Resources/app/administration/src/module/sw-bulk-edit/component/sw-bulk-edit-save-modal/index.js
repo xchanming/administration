@@ -1,5 +1,5 @@
 /**
- * @sw-package inventory
+ * @sw-package framework
  */
 import template from './sw-bulk-edit-save-modal.html.twig';
 import './sw-bulk-edit-save-modal.scss';
@@ -7,8 +7,6 @@ import './sw-bulk-edit-save-modal.scss';
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'modal-close',

@@ -1,10 +1,10 @@
-import VueApexCharts from 'vue-apexcharts';
+import VueApexCharts from 'vue3-apexcharts';
 import apexLocales from './locales';
 import template from './sw-chart.html.twig';
 import './sw-chart.scss';
 
-const { object } = Cicada.Utils;
-const { warn } = Cicada.Utils.debug;
+const { object } = Shopware.Utils;
+const { warn } = Shopware.Utils.debug;
 
 /**
  * @sw-package framework
@@ -85,8 +85,6 @@ const { warn } = Cicada.Utils.debug;
 export default {
     template,
     inheritAttrs: false,
-
-    compatConfig: Cicada.compatConfig,
 
     components: {
         apexchart: VueApexCharts,
@@ -239,7 +237,7 @@ export default {
         },
 
         defaultLocale() {
-            const adminLocaleLanguage = Cicada.State.getters.adminLocaleLanguage;
+            const adminLocaleLanguage = Shopware.Store.get('session').adminLocaleLanguage;
 
             if (Object.keys(apexLocales).includes(adminLocaleLanguage)) {
                 return adminLocaleLanguage;
@@ -316,19 +314,6 @@ export default {
                     },
                 },
             };
-        },
-
-        /**
-         * @deprecated tag:v6.7.0 - Can be removed. Event listerns will be in $attrs.
-         */
-        listeners() {
-            let listeners = {};
-
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                listeners = this.$listeners;
-            }
-
-            return listeners;
         },
     },
 
@@ -419,7 +404,7 @@ export default {
             }
 
             // get timestamps for start date
-            const fromDate = Cicada.Utils.format.dateWithUserTimezone();
+            const fromDate = Shopware.Utils.format.dateWithUserTimezone();
             fromDate.setTime(this.options.xaxis.min);
             this.setDateTime(fromDate);
             const fromDateTimestamp = fromDate.getTime();
@@ -431,7 +416,7 @@ export default {
                 toDateTimestamp = this.options.xaxis.max;
             } else {
                 // get actual day
-                const toDate = Cicada.Utils.format.dateWithUserTimezone();
+                const toDate = Shopware.Utils.format.dateWithUserTimezone();
                 this.setDateTime(toDate);
                 toDate.getTime();
                 toDateTimestamp = toDate.getTime();

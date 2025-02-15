@@ -10,7 +10,7 @@ import MockAdapter from 'axios-mock-adapter';
 function createCustomSnippetApiService() {
     const client = createHTTPClient();
     const clientMock = new MockAdapter(client);
-    const loginService = createLoginService(client, Cicada.Context.api);
+    const loginService = createLoginService(client, Shopware.Context.api);
     const customSnippetApiService = new CustomSnippetApiService(client, loginService);
     return { customSnippetApiService, clientMock };
 }
@@ -44,10 +44,11 @@ describe('addressFormattingApiService', () => {
                 'Christa Stracke<br/> \\n \\n Philip Inlet<br/> \\n \\n \\n \\n 22005-3637 New Marilyneside<br/> \\n \\n Moldova (Republic of)<br/><br/>',
         });
 
-        const { rendered } = await customSnippetApiService.render({ name: 'Y' }, [
+        const { rendered } = await customSnippetApiService.render({ firstName: 'Y', lastName: 'Tran' }, [
             [
-                { value: 'address/name', type: 'snippet' },
+                { value: 'address/first_name', type: 'snippet' },
                 { value: '-', type: 'plain' },
+                { value: 'address/last_name', type: 'snippet' },
             ],
         ]);
 

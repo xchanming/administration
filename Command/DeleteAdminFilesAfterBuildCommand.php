@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Command;
+namespace Shopware\Administration\Command;
 
-use Cicada\Administration\Administration;
-use Cicada\Core\Framework\Log\Package;
+use Shopware\Administration\Administration;
+use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;

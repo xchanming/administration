@@ -1,7 +1,7 @@
 /**
  * @sw-package framework
  */
-const utils = Cicada.Utils;
+const utils = Shopware.Utils;
 
 type Placements = 'top' | 'right' | 'bottom' | 'left';
 
@@ -510,7 +510,7 @@ function createOrUpdateTooltip(
  *
  * *Note that the position variable has a higher priority as the modifier
  */
-Cicada.Directive.register('tooltip', {
+Shopware.Directive.register('tooltip', {
     beforeMount: (el: HTMLElement, binding) => {
         createOrUpdateTooltip(el, binding);
     },
@@ -520,6 +520,7 @@ Cicada.Directive.register('tooltip', {
             const tooltip = tooltipRegistry.get(el.getAttribute('tooltip-id')!);
             tooltip!.hideTooltip();
         }
+
         // Remove the tooltip from the registry
         tooltipRegistry.delete(el.getAttribute('tooltip-id')!);
     },

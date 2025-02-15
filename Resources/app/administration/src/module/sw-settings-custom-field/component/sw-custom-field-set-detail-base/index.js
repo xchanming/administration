@@ -1,13 +1,11 @@
 /**
- * @sw-package fundamentals@framework
+ * @sw-package framework
  */
 import template from './sw-custom-field-set-detail-base.html.twig';
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'customFieldDataProviderService',
@@ -53,7 +51,7 @@ export default {
                 return undefined;
             }
 
-            return Cicada.Service('repositoryFactory').create(this.set.relations.entity, this.set.relations.source);
+            return Shopware.Service('repositoryFactory').create(this.set.relations.entity, this.set.relations.source);
         },
 
         selectedRelationEntityNames() {
@@ -75,22 +73,14 @@ export default {
                 const relation = this.customFieldSetRelationRepository.create();
                 relation.entityName = entityName;
 
-                if (this.isCompatEnabled('INSTANCE_SET')) {
-                    this.$set(relation, 'searchField', {});
-                } else {
-                    relation.searchField = {};
-                }
+                relation.searchField = {};
 
                 Object.keys(this.$root.$i18n.messages).forEach((locale) => {
                     if (!this.$te(`global.entities.${entityName}`)) {
                         return;
                     }
 
-                    if (this.isCompatEnabled('INSTANCE_SET')) {
-                        this.$set(relation.searchField, locale, this.$tc(`global.entities.${entityName}`, 2, locale));
-                    } else {
-                        relation.searchField[locale] = this.$tc(`global.entities.${entityName}`, 2, locale);
-                    }
+                    relation.searchField[locale] = this.$tc(`global.entities.${entityName}`, 2, locale);
                 });
 
                 return relation;

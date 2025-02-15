@@ -8,8 +8,6 @@ import './sw-users-permissions-permissions-grid.scss';
 export default {
     template,
 
-    compatConfig: Cicada.compatConfig,
-
     inject: ['privileges'],
 
     props: {

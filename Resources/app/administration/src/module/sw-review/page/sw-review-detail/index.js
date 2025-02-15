@@ -1,7 +1,7 @@
 import template from './sw-review-detail.html.twig';
 import './sw-review-detail.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package inventory
@@ -9,8 +9,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -104,11 +102,11 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
 
         emailIdnFilter() {
-            return Cicada.Filter.getByName('decode-idn-email');
+            return Shopware.Filter.getByName('decode-idn-email');
         },
     },
 
@@ -124,7 +122,7 @@ export default {
 
     methods: {
         createdComponent() {
-            Cicada.ExtensionAPI.publishData({
+            Shopware.ExtensionAPI.publishData({
                 id: 'sw-review-detail__review',
                 path: 'review',
                 scope: this,
@@ -144,7 +142,7 @@ export default {
             criteria.addAssociation('salesChannel');
             criteria.addAssociation('product');
 
-            const context = { ...Cicada.Context.api, inheritance: true };
+            const context = { ...Shopware.Context.api, inheritance: true };
 
             this.repository.get(this.reviewId, context, criteria).then((review) => {
                 this.review = review;

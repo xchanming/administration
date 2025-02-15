@@ -19,7 +19,7 @@ export default class AppActionButtonService extends ApiService {
     getBasicHeaders() {
         return {
             ...super.getBasicHeaders(),
-            'sw-language-id': Cicada.Context.api.languageId,
+            'sw-language-id': Shopware.Context.api.languageId,
         };
     }
 

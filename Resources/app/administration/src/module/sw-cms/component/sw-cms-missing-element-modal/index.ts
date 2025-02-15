@@ -6,10 +6,8 @@ import './sw-cms-missing-element-modal.scss';
  * @private
  * @sw-package discovery
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'modal-close',
@@ -37,9 +35,9 @@ export default Cicada.Component.wrapComponentConfig({
         },
 
         title() {
-            return this.$tc('sw-cms.components.cmsMissingElementModal.title', this.missingElements.length, {
+            return this.$tc('sw-cms.components.cmsMissingElementModal.title', {
                 element: this.element,
-            });
+            }, this.missingElements.length);
         },
     },
 

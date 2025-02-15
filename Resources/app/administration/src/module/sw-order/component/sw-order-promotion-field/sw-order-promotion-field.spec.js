@@ -52,31 +52,8 @@ const successResponseForNotification = {
 };
 
 const createStateMapper = (customOrder = {}) => {
-    if (Cicada.State.list().includes('swOrderDetail')) {
-        Cicada.State.unregisterModule('swOrderDetail');
-    }
-
-    const newModule = {
-        state: {
-            order: {
-                ...orderFixture,
-                ...customOrder,
-            },
-        },
-    };
-
-    Cicada.State.registerModule('swOrderDetail', {
-        ...{
-            namespaced: true,
-            state: {
-                isLoading: false,
-                isSavedSuccessful: false,
-                versionContext: {},
-                order: orderFixture,
-            },
-        },
-        ...newModule,
-    });
+    Shopware.Store.get('swOrderDetail').$reset();
+    Shopware.Store.get('swOrderDetail').order = { ...orderFixture, ...customOrder };
 };
 
 async function createWrapper(privileges = []) {

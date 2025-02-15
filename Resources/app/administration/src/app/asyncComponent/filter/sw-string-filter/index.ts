@@ -1,18 +1,17 @@
 /**
  * @sw-package framework
  */
+
 import type { PropType } from 'vue';
 import template from './sw-string-filter.html.twig';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         filter: {

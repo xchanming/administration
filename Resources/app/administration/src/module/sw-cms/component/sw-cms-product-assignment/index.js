@@ -1,7 +1,7 @@
 import template from './sw-cms-product-assignment.html.twig';
 import './sw-cms-product-assignment.scss';
 
-const { Criteria } = Cicada.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private
@@ -9,8 +9,6 @@ const { Criteria } = Cicada.Data;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     emits: [
         'change',
@@ -23,15 +21,7 @@ export default {
         };
     },
 
-    computed: {
-        listeners() {
-            if (this.isCompatEnabled('INSTANCE_LISTENERS')) {
-                return this.$listeners;
-            }
-
-            return {};
-        },
-    },
+    computed: {},
 
     watch: {
         criteria: {

@@ -1,7 +1,5 @@
-<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_newsletter_recipient_detail %}
 <sw-page class="sw-newsletter-recipient-detail">
-    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
     {% block sw_newsletter_recipient_detail_header %}
     <template #smart-bar-header>
         <h2 v-if="newsletterRecipient">
@@ -10,10 +8,8 @@
     </template>
     {% endblock %}
 
-    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
     {% block sw_newsletter_recipient_detail_actions %}
     <template #smart-bar-actions>
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_newsletter_recipient_detail_actions_edit %}
         <sw-button
             class="sw-newsletter-recipient-detail__open-edit-mode-action"
@@ -27,7 +23,6 @@
     </template>
     {% endblock %}
 
-    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
     {% block sw_newsletter_recipient_detail_content %}
     <template #content>
         <sw-card-view>
@@ -41,14 +36,12 @@
                 position-identifier="sw-newsletter-recipient-detail"
                 :title="$tc('sw-newsletter-recipient.general.information')"
             >
-                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                 {% block sw_newsletter_recipient_detail_form %}
 
                 <sw-container
                     columns="1fr 1fr"
                     gap="10px"
                 >
-                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                     {% block sw_newsletter_recipient_detail_form_salutation %}
                     <sw-entity-single-select
                         v-model:value="newsletterRecipient.salutationId"
@@ -60,7 +53,6 @@
                     />
                     {% endblock %}
 
-                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                     {% block sw_newsletter_recipient_detail_form_title %}
                     <sw-text-field
                         v-model:value="newsletterRecipient.title"
@@ -74,18 +66,23 @@
                     columns="1fr 1fr"
                     gap="10px"
                 >
-                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                    {% block sw_newsletter_recipient_detail_form_name %}
+                    {% block sw_newsletter_recipient_detail_form_first_name %}
                     <sw-text-field
-                        v-model:value="newsletterRecipient.name"
-                        :label="$tc('sw-newsletter-recipient.list.name')"
+                        v-model:value="newsletterRecipient.firstName"
+                        :label="$tc('sw-newsletter-recipient.list.firstName')"
                         :disabled="!acl.can('newsletter_recipient.editor')"
                     />
                     {% endblock %}
 
+                    {% block sw_newsletter_recipient_detail_form_last_name %}
+                    <sw-text-field
+                        v-model:value="newsletterRecipient.lastName"
+                        :label="$tc('sw-newsletter-recipient.list.lastName')"
+                        :disabled="!acl.can('newsletter_recipient.editor')"
+                    />
+                    {% endblock %}
                 </sw-container>
 
-                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                 {% block sw_newsletter_recipient_detail_form_email %}
                 <sw-text-field
                     v-model:value="newsletterRecipient.email"
@@ -94,7 +91,6 @@
                 />
                 {% endblock %}
 
-                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                 {% block sw_newsletter_recipient_detail_form_street %}
                 <sw-text-field
                     v-model:value="newsletterRecipient.street"
@@ -107,7 +103,6 @@
                     columns="1fr 1fr"
                     gap="10px"
                 >
-                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                     {% block sw_newsletter_recipient_detail_form_zip_code %}
                     <sw-text-field
                         v-model:value="newsletterRecipient.zipCode"
@@ -116,7 +111,6 @@
                     />
                     {% endblock %}
 
-                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                     {% block sw_newsletter_recipient_detail_form_city %}
                     <sw-text-field
                         v-model:value="newsletterRecipient.city"
@@ -126,7 +120,6 @@
                     {% endblock %}
                 </sw-container>
 
-                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                 {% block sw_newsletter_recipient_detail_form_language %}
                 <sw-entity-single-select
                     v-model:value="newsletterRecipient.languageId"
@@ -137,7 +130,6 @@
                 />
                 {% endblock %}
 
-                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                 {% block sw_newsletter_recipient_detail_form_sales_channel %}
                 <sw-entity-single-select
                     v-model:value="newsletterRecipient.salesChannelId"
@@ -149,7 +141,6 @@
                 />
                 {% endblock %}
 
-                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                 {% block sw_newsletter_recipient_detail_form_tags %}
                 <sw-entity-tag-select
                     v-model:entity-collection="newsletterRecipient.tags"
@@ -161,7 +152,6 @@
                 {% endblock %}
             </sw-card>
 
-            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
             {% block sw_newsletter_recipient_detail_custom_fields %}
             <mt-card
                 v-if="newsletterRecipient && customFieldSets && customFieldSets.length > 0"

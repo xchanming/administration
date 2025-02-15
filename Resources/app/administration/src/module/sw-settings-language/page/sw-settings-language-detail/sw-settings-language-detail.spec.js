@@ -42,7 +42,7 @@ async function createWrapper(privileges = [], languageId = null, stubTranslation
                                         },
                                         {
                                             id: '018d36e6165371a4b145cd683bf65869',
-                                            code: 'zh-CN',
+                                            code: 'de-DE',
                                             name: 'German',
                                             territory: 'Germany',
                                         },
@@ -178,17 +178,17 @@ describe('module/sw-settings-language/page/sw-settings-language-detail', () => {
         expect(wrapper.vm.inheritanceTooltipText).toBe('sw-settings-language.detail.tooltipLanguageNotChoosable');
 
         wrapper.vm.language = {
-            id: Cicada.Context.api.systemLanguageId,
+            id: Shopware.Context.api.systemLanguageId,
         };
         expect(wrapper.vm.inheritanceTooltipText).toBe('sw-settings-language.detail.tooltipInheritanceNotPossible');
     });
 
     it('should load entity data', async () => {
-        const wrapper = await createWrapper([], Cicada.Context.api.systemLanguageId);
-        expect(wrapper.vm.languageId).toBe(Cicada.Context.api.systemLanguageId);
+        const wrapper = await createWrapper([], Shopware.Context.api.systemLanguageId);
+        expect(wrapper.vm.languageId).toBe(Shopware.Context.api.systemLanguageId);
         await flushPromises();
 
-        expect(wrapper.vm.language.id).toBe(Cicada.Context.api.systemLanguageId);
+        expect(wrapper.vm.language.id).toBe(Shopware.Context.api.systemLanguageId);
     });
 
     it('should be able to save the language', async () => {
@@ -238,7 +238,7 @@ describe('module/sw-settings-language/page/sw-settings-language-detail', () => {
     });
 
     it('should add an asterix to used iso codes', async () => {
-        const wrapper = await createWrapper(['language.editor'], Cicada.Context.api.systemLanguageId, false);
+        const wrapper = await createWrapper(['language.editor'], Shopware.Context.api.systemLanguageId, false);
         await flushPromises();
 
         const languageTranslationCodeIdField = wrapper.find('#iso-codes');

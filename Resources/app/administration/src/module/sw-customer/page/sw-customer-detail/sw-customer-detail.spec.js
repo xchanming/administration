@@ -68,7 +68,7 @@ async function createWrapper(privileges = [], editMode = false) {
                                     Promise.resolve({
                                         id: 'test',
                                         accountType: 'private',
-                                        company: 'Cicada AG',
+                                        company: 'Shopware AG',
                                         requestedGroup: {
                                             translated: {
                                                 name: 'Test',
@@ -127,7 +127,7 @@ describe('module/sw-customer/page/sw-customer-detail', () => {
         expect(wrapper.vm).toBeTruthy();
 
         expect(wrapper.vm.$data.customer.accountType).toBe('private');
-        expect(wrapper.vm.$data.customer.company).toBe('Cicada AG');
+        expect(wrapper.vm.$data.customer.company).toBe('Shopware AG');
     });
 
     it('should not be able to edit the customer', async () => {

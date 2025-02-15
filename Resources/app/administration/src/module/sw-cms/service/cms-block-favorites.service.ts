@@ -1,10 +1,11 @@
 /**
  * @sw-package discovery
  */
+
 import { reactive } from 'vue';
 import UserConfigClass from '../../../core/service/support/user-config.class';
 
-const { Application } = Cicada;
+const { Application } = Shopware;
 
 class CmsBlockFavoritesService extends UserConfigClass {
     static USER_CONFIG_KEY = 'cms-block-favorites';

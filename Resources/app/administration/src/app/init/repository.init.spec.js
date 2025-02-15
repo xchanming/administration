@@ -124,7 +124,7 @@ describe('init/repository', () => {
     beforeEach(() => {
         customEntityDefinitionStore = [];
         cmsPageTypeDefinitionStore = [];
-        Cicada.Application = thisMock;
+        Shopware.Application = thisMock;
     });
 
     it('should register custom entities to the customEntityDefinitionService', async () => {

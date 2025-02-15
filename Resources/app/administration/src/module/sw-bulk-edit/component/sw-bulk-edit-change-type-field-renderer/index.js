@@ -1,5 +1,5 @@
 /**
- * @sw-package inventory
+ * @sw-package framework
  */
 import template from './sw-bulk-edit-change-type-field-renderer.html.twig';
 import './sw-bulk-edit-change-type-field-renderer.scss';
@@ -7,8 +7,6 @@ import './sw-bulk-edit-change-type-field-renderer.scss';
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: ['feature'],
 

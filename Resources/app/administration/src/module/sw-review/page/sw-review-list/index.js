@@ -1,8 +1,8 @@
 import template from './sw-review-list.html.twig';
 import './sw-review-list.scss';
 
-const { Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 /**
  * @sw-package inventory
@@ -10,8 +10,6 @@ const { Criteria } = Cicada.Data;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -58,7 +56,7 @@ export default {
                 },
                 {
                     property: 'user',
-                    dataIndex: 'customer.name',
+                    dataIndex: 'customer.lastName,customer.firstName',
                     label: 'sw-review.list.columnUser',
                 },
                 {
@@ -100,7 +98,7 @@ export default {
         },
 
         dateFilter() {
-            return Cicada.Filter.getByName('date');
+            return Shopware.Filter.getByName('date');
         },
     },
 
@@ -116,7 +114,7 @@ export default {
         getList() {
             this.isLoading = true;
 
-            const context = { ...Cicada.Context.api, inheritance: true };
+            const context = { ...Shopware.Context.api, inheritance: true };
             return this.repository.search(this.criteria, context).then((result) => {
                 this.total = result.total;
                 this.items = result;
@@ -129,7 +127,7 @@ export default {
 
             this.repository
                 .search(this.criteria, {
-                    ...Cicada.Context.api,
+                    ...Shopware.Context.api,
                     inheritance: true,
                 })
                 .then((result) => {

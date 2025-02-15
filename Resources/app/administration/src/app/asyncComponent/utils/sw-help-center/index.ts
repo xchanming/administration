@@ -4,22 +4,20 @@ import './sw-help-center.scss';
 /**
  * @description Displays an icon and a link to the help sidebar
  *
- * @sw-package buyers-experience
+ * @sw-package framework
  *
  * @private
  */
-export default Cicada.Component.wrapComponentConfig({
+export default Shopware.Component.wrapComponentConfig({
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     computed: {
         showHelpSidebar(): boolean {
-            return Cicada.State.get('adminHelpCenter').showHelpSidebar;
+            return Shopware.Store.get('adminHelpCenter').showHelpSidebar;
         },
 
         showShortcutModal(): boolean {
-            return Cicada.State.get('adminHelpCenter').showShortcutModal;
+            return Shopware.Store.get('adminHelpCenter').showShortcutModal;
         },
     },
 
@@ -45,15 +43,15 @@ export default Cicada.Component.wrapComponentConfig({
 
     methods: {
         openHelpSidebar(): void {
-            Cicada.State.commit('adminHelpCenter/setShowHelpSidebar', true);
+            Shopware.Store.get('adminHelpCenter').showHelpSidebar = true;
         },
 
         openShortcutModal(): void {
-            Cicada.State.commit('adminHelpCenter/setShowShortcutModal', true);
+            Shopware.Store.get('adminHelpCenter').showShortcutModal = true;
         },
 
         closeShortcutModal(): void {
-            Cicada.State.commit('adminHelpCenter/setShowShortcutModal', false);
+            Shopware.Store.get('adminHelpCenter').showShortcutModal = false;
         },
 
         setFocusToSidebar(): void {

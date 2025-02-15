@@ -67,9 +67,9 @@ class ApiService {
     getBasicHeaders(additionalHeaders = {}): BasicHeaders {
         let languageIdHeader = {};
         // eslint-disable-next-line no-restricted-globals
-        if (self?.Cicada && typeof Cicada.Context?.api?.languageId === 'string') {
+        if (self?.Shopware && typeof Shopware.Context?.api?.languageId === 'string') {
             languageIdHeader = {
-                'sw-language-id': Cicada.Context.api.languageId,
+                'sw-language-id': Shopware.Context.api.languageId,
             };
         }
 

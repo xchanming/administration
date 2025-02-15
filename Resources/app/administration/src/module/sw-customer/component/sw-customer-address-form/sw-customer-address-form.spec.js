@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CicadaError from 'src/core/data/CicadaError';
+import ShopwareError from 'src/core/data/ShopwareError';
 
 // eslint-disable-next-line import/named
 import CUSTOMER from '../../constant/sw-customer.constant';
@@ -128,7 +128,7 @@ describe('module/sw-customer/page/sw-customer-address-form', () => {
         await flushPromises();
 
         const stateSelect = wrapper.find('.sw-customer-address-form__state-select');
-        expect(stateSelect.exists()).toBeTruthy();
+        expect(stateSelect.exists()).toBeFalsy();
     });
 
     it('should show state field if country has states', async () => {
@@ -180,7 +180,7 @@ describe('module/sw-customer/page/sw-customer-address-form', () => {
         const wrapper = await createWrapper();
         await wrapper.setProps({
             customer: {
-                company: 'cicada',
+                company: 'shopware',
             },
             address: {},
         });
@@ -190,14 +190,14 @@ describe('module/sw-customer/page/sw-customer-address-form', () => {
     });
 
     it('should hide the error field when a disabled field', async () => {
-        await Cicada.State.dispatch('error/addApiError', {
-            expression: 'customer_address.1.name',
-            error: new CicadaError({
+        Shopware.Store.get('error').addApiError({
+            expression: 'customer_address.1.firstName',
+            error: new ShopwareError({
                 code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 detail: 'This value should not be blank.',
                 status: '400',
                 template: 'This value should not be blank.',
-                selfLink: 'customer_address.1.name',
+                selfLink: 'customer_address.1.firstName',
             }),
         });
 
@@ -205,24 +205,24 @@ describe('module/sw-customer/page/sw-customer-address-form', () => {
 
         await flushPromises();
 
-        const name = wrapper.findAll('.sw-field').at(3);
+        const firstName = wrapper.findAll('.sw-field').at(3);
 
         expect(wrapper.vm.disabled).toBe(false);
-        expect(name.classes()).toContain('has--error');
-        expect(name.find('.sw-field__error').text()).toBe('This value should not be blank.');
+        expect(firstName.classes()).toContain('has--error');
+        expect(firstName.find('.sw-field__error').text()).toBe('This value should not be blank.');
 
         await wrapper.setProps({ disabled: true });
         await flushPromises();
 
         expect(wrapper.vm.disabled).toBe(true);
-        expect(name.classes()).not.toContain('has--error');
-        expect(name.find('.sw-field__error').exists()).toBeFalsy();
+        expect(firstName.classes()).not.toContain('has--error');
+        expect(firstName.find('.sw-field__error').exists()).toBeFalsy();
     });
 
     it('should set required attribute based on the configuration of the country', async () => {
         const wrapper = await createWrapper();
 
-        const definition = Cicada.EntityDefinition.get('customer_address');
+        const definition = Shopware.EntityDefinition.get('customer_address');
 
         expect(definition.properties.zipcode.flags?.required).toBeUndefined();
         expect(definition.properties.countryStateId.flags?.required).toBeUndefined();
@@ -241,10 +241,9 @@ describe('module/sw-customer/page/sw-customer-address-form', () => {
     });
 
     it('should dispatch error/removeApiError based on the configuration of the country', async () => {
-        // add mock for dispatch
-        Object.defineProperty(Cicada.State, 'dispatch', {
-            value: jest.fn(),
-        });
+        // spy for the removeApiError method
+        const errorStore = Shopware.Store.get('error');
+        jest.spyOn(errorStore, 'removeApiError');
 
         const wrapper = await createWrapper();
 
@@ -257,12 +256,7 @@ describe('module/sw-customer/page/sw-customer-address-form', () => {
 
         const address = wrapper.vm.address;
 
-        expect(Cicada.State.dispatch).toHaveBeenCalledWith('error/removeApiError', {
-            expression: `${address.getEntityName()}.${address.id}.zipcode`,
-        });
-
-        expect(Cicada.State.dispatch).toHaveBeenCalledWith('error/removeApiError', {
-            expression: `${address.getEntityName()}.${address.id}.countryStateId`,
-        });
+        expect(errorStore.removeApiError).toHaveBeenCalledWith(`${address.getEntityName()}.${address.id}.zipcode`);
+        expect(errorStore.removeApiError).toHaveBeenCalledWith(`${address.getEntityName()}.${address.id}.countryStateId`);
     });
 });

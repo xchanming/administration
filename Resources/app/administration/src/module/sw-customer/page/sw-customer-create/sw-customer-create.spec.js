@@ -4,10 +4,10 @@ import { mount } from '@vue/test-utils';
  * @sw-package checkout
  */
 
-const { Context } = Cicada;
-const { EntityCollection } = Cicada.Data;
+const { Context } = Shopware;
+const { EntityCollection } = Shopware.Data;
 
-async function createWrapper() {
+async function createWrapper({ customerRepositorySaveMock, languageRepositorySearchIdsMock } = {}) {
     return mount(await wrapTestComponent('sw-customer-create', { sync: true }), {
         global: {
             stubs: {
@@ -55,16 +55,19 @@ async function createWrapper() {
                                         ),
                                     };
                                 },
+                                save: customerRepositorySaveMock,
                             };
                         }
 
                         if (entity === 'language') {
                             return {
-                                searchIds: () =>
-                                    Promise.resolve({
-                                        total: 1,
-                                        data: ['1'],
-                                    }),
+                                searchIds:
+                                    languageRepositorySearchIdsMock ??
+                                    (() =>
+                                        Promise.resolve({
+                                            total: 1,
+                                            data: ['1'],
+                                        })),
                             };
                         }
 
@@ -106,23 +109,55 @@ describe('module/sw-customer/page/sw-customer-create', () => {
         expect(response.isValid).toBe(true);
     });
 
-    it('should override context when the sales channel does not exist language compared to the API language', async () => {
+    it('should have company validation when customer type is commercial', async () => {
         const wrapper = await createWrapper();
-        wrapper.vm.validateEmail = jest.fn().mockImplementation(() => Promise.resolve({ isValid: true }));
-        wrapper.vm.customerRepository.save = jest.fn((customer, context) => Promise.resolve(context));
 
-        expect(await wrapper.vm.languageId).toEqual(Cicada.Context.api.languageId);
+        await flushPromises();
+
+        wrapper.vm.createNotificationError = jest.fn();
+        wrapper.vm.validateEmail = jest.fn().mockImplementation(() => Promise.resolve({ isValid: true }));
+        const notificationMock = wrapper.vm.createNotificationError;
 
         await wrapper.setData({
             customer: {
                 id: '1',
                 email: 'user@domain.com',
                 accountType: 'business',
-                password: '12345678',
+                password: 'shopware',
+            },
+            address: {
+                company: '',
+            },
+        });
+        const saveButton = wrapper.find('.sw-customer-create__save-action');
+        await saveButton.trigger('click');
+        await wrapper.vm.$nextTick();
+
+        expect(notificationMock).toHaveBeenCalledTimes(2);
+        expect(notificationMock).toHaveBeenCalledWith({
+            message: 'sw-customer.detail.messageSaveError',
+        });
+
+        wrapper.vm.createNotificationError.mockRestore();
+    });
+
+    it('should override context when the sales channel does not exist language compared to the API language', async () => {
+        const customerRepositorySaveMock = jest.fn((customer, context) => Promise.resolve(context));
+        const wrapper = await createWrapper({ customerRepositorySaveMock });
+        wrapper.vm.validateEmail = jest.fn().mockImplementation(() => Promise.resolve({ isValid: true }));
+
+        expect(await wrapper.vm.languageId).toEqual(Shopware.Context.api.languageId);
+
+        await wrapper.setData({
+            customer: {
+                id: '1',
+                email: 'user@domain.com',
+                accountType: 'business',
+                password: 'shopware',
                 salesChannelId: 'a7921464677a4ef591683d144beecd24',
             },
             address: {
-                company: 'Cicada',
+                company: 'Shopware',
             },
         });
 
@@ -134,37 +169,37 @@ describe('module/sw-customer/page/sw-customer-create', () => {
     });
 
     it('should keep context when sales channel exists language compared to API language', async () => {
-        const wrapper = await createWrapper();
-        wrapper.vm.validateEmail = jest.fn().mockImplementation(() => Promise.resolve({ isValid: true }));
-        wrapper.vm.customerRepository.save = jest.fn((customer, context) => Promise.resolve(context));
-
-        wrapper.vm.languageRepository.searchIds = jest.fn(() =>
+        const customerRepositorySaveMock = jest.fn((customer, context) => Promise.resolve(context));
+        const languageRepositorySearchIdsMock = jest.fn(() =>
             Promise.resolve({
                 total: 1,
-                data: [Cicada.Context.api.languageId],
+                data: [Shopware.Context.api.languageId],
             }),
         );
 
-        expect(await wrapper.vm.languageId).toEqual(Cicada.Context.api.languageId);
+        const wrapper = await createWrapper({ customerRepositorySaveMock, languageRepositorySearchIdsMock });
+        wrapper.vm.validateEmail = jest.fn().mockImplementation(() => Promise.resolve({ isValid: true }));
+
+        expect(await wrapper.vm.languageId).toEqual(Shopware.Context.api.languageId);
 
         await wrapper.setData({
             customer: {
                 id: '1',
                 email: 'user@domain.com',
                 accountType: 'business',
-                password: 'cicada',
+                password: 'shopware',
                 salesChannelId: 'a7921464677a4ef591683d144beecd24',
             },
             address: {
-                company: 'Cicada',
+                company: 'Shopware',
             },
         });
 
-        expect(await wrapper.vm.languageId).toEqual(Cicada.Context.api.languageId);
+        expect(await wrapper.vm.languageId).toEqual(Shopware.Context.api.languageId);
 
         const context = await wrapper.vm.onSave();
 
-        expect(context.languageId).toEqual(Cicada.Context.api.languageId);
+        expect(context.languageId).toEqual(Shopware.Context.api.languageId);
     });
 
     it('should get default salutation is value not specified', async () => {
@@ -172,6 +207,7 @@ describe('module/sw-customer/page/sw-customer-create', () => {
         await flushPromises();
 
         expect(wrapper.vm.customer.salutationId).toBe('salutationId');
+        expect(wrapper.vm.address.salutationId).toBe('salutationId');
     });
 
     it('should not render sw-customer-base-form and sw-customer-address-form if customer is null', async () => {
@@ -186,16 +222,7 @@ describe('module/sw-customer/page/sw-customer-create', () => {
     });
 
     it('should throw exception when the customer creation fails', async () => {
-        const wrapper = await createWrapper();
-        await wrapper.setData({
-            customer: {
-                id: '1',
-                email: 'ytn@xchanming.com',
-                boundSalesChannelId: null,
-            },
-        });
-
-        wrapper.vm.customerRepository.save = jest.fn(() =>
+        const customerRepositorySaveMock = jest.fn(() =>
             // eslint-disable-next-line prefer-promise-reject-errors
             Promise.reject({
                 response: {
@@ -212,6 +239,15 @@ describe('module/sw-customer/page/sw-customer-create', () => {
                 },
             }),
         );
+
+        const wrapper = await createWrapper({ customerRepositorySaveMock });
+        await wrapper.setData({
+            customer: {
+                id: '1',
+                email: 'ytn@xchanming.com',
+                boundSalesChannelId: null,
+            },
+        });
 
         try {
             await wrapper.vm.onSave();

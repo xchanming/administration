@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace Cicada\Administration\Snippet;
+namespace Shopware\Administration\Snippet;
 
-use Cicada\Core\Framework\App\AppDefinition;
-use Cicada\Core\Framework\DataAbstractionLayer\EntityDefinition;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\FkField;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\Flag\AllowEmptyString;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\Flag\SearchRanking;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\IdField;
-use Cicada\Core\Framework\DataAbstractionLayer\Field\LongTextField;
-use Cicada\Core\Framework\DataAbstractionLayer\FieldCollection;
-use Cicada\Core\Framework\Log\Package;
-use Cicada\Core\System\Locale\LocaleDefinition;
+use Shopware\Core\Framework\App\AppDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowEmptyString;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SearchRanking;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\System\Locale\LocaleDefinition;
 
 #[Package('discovery')]
 class AppAdministrationSnippetDefinition extends EntityDefinition

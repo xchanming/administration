@@ -1,7 +1,7 @@
 import template from './sw-color-badge.html.twig';
 import './sw-color-badge.scss';
 
-const { Component } = Cicada;
+const { Component } = Shopware;
 
 /**
  * @sw-package framework
@@ -24,8 +24,6 @@ const { Component } = Cicada;
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-color-badge', {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     props: {
         variant: {

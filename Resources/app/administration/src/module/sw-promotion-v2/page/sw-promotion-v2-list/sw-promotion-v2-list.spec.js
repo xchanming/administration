@@ -251,7 +251,7 @@ describe('src/module/sw-promotion-v2/page/sw-promotion-v2-list', () => {
                     active: false,
                 },
             },
-            Cicada.Context.api,
+            Shopware.Context.api,
         );
 
         expect(wrapper.vm.$router.push).toHaveBeenCalledWith({

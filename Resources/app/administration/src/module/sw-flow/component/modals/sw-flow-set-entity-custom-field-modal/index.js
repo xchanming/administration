@@ -1,10 +1,10 @@
 import template from './sw-flow-set-entity-custom-field-modal.html.twig';
 import './sw-flow-set-entity-custom-field-modal.scss';
 
-const { Component, Mixin } = Cicada;
-const { Criteria } = Cicada.Data;
+const { Component, Mixin, Store } = Shopware;
+const { Criteria } = Shopware.Data;
 const { mapState } = Component.getComponentHelper();
-const { CicadaError } = Cicada.Classes;
+const { ShopwareError } = Shopware.Classes;
 
 /**
  * @private
@@ -12,8 +12,6 @@ const { CicadaError } = Cicada.Classes;
  */
 export default {
     template,
-
-    compatConfig: Cicada.compatConfig,
 
     inject: [
         'repositoryFactory',
@@ -123,15 +121,18 @@ export default {
         },
 
         labelProperty() {
-            return `config.label.${Cicada.State.get('session').currentLocale}`;
+            return `config.label.${Shopware.Store.get('session').currentLocale}`;
         },
 
-        ...mapState('swFlowState', [
-            'triggerEvent',
-            'customFieldSets',
-            'customFields',
-            'triggerActions',
-        ]),
+        ...mapState(
+            () => Store.get('swFlow'),
+            [
+                'triggerEvent',
+                'customFieldSets',
+                'customFields',
+                'triggerActions',
+            ],
+        ),
     },
 
     watch: {
@@ -210,10 +211,10 @@ export default {
             if (!customFieldSet) {
                 return;
             }
-            Cicada.State.commit('swFlowState/setCustomFieldSets', [
+            Shopware.Store.get('swFlow').customFieldSets = [
                 ...this.customFieldSets,
                 customFieldSet,
-            ]);
+            ];
             this.customFieldId = null;
             this.customFieldValue = null;
             this.renderedFieldConfig = {};
@@ -225,10 +226,10 @@ export default {
             }
             this.customField = customField;
 
-            Cicada.State.commit('swFlowState/setCustomFields', [
+            Shopware.Store.get('swFlow').customFields = [
                 ...this.customFields,
                 customField,
-            ]);
+            ];
             this.customFieldValue = null;
             this.renderedFieldConfig = this.validateOptionSelectFieldLabel(customField.config);
             if (this.renderedFieldConfig.componentName === 'sw-entity-multi-id-select') {
@@ -281,7 +282,7 @@ export default {
 
         fieldError(field) {
             if (!field || !field.length) {
-                return new CicadaError({
+                return new ShopwareError({
                     code: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 });
             }
