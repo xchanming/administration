@@ -213,7 +213,7 @@ export default {
         },
 
         userTimeZone() {
-            return Shopware?.Store?.get('session')?.currentUser?.timeZone ?? 'UTC';
+            return Shopware?.Store?.get('session')?.currentUser?.timeZone ?? 'Asia/Shanghai';
         },
 
         timezoneFormattedValue: {
@@ -271,7 +271,7 @@ export default {
                 return this.userTimeZone;
             }
 
-            return 'UTC';
+            return 'Asia/Shanghai';
         },
 
         is24HourFormat() {

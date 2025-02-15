@@ -30,7 +30,7 @@ describe('src/app/component/form/sw-datepicker', () => {
     const currentUser = Shopware.Store.get('session').currentUser;
 
     beforeEach(async () => {
-        Shopware.Store.get('session').setCurrentUser({ timeZone: 'UTC' });
+        Shopware.Store.get('session').setCurrentUser({ timeZone: 'Asia/Shanghai' });
     });
 
     afterAll(() => {
@@ -122,19 +122,19 @@ describe('src/app/component/form/sw-datepicker', () => {
     });
 
     it.each([
-        { dateType: 'date', timeZone: 'UTC', expectedTimeZone: 'UTC' },
+        { dateType: 'date', timeZone: 'Asia/Shanghai', expectedTimeZone: 'Asia/Shanghai' },
         {
             dateType: 'date',
             timeZone: 'Europe/Berlin',
-            expectedTimeZone: 'UTC',
+            expectedTimeZone: 'Asia/Shanghai',
         },
-        { dateType: 'time', timeZone: 'UTC', expectedTimeZone: 'UTC' },
+        { dateType: 'time', timeZone: 'Asia/Shanghai', expectedTimeZone: 'Asia/Shanghai' },
         {
             dateType: 'time',
             timeZone: 'Europe/Berlin',
-            expectedTimeZone: 'UTC',
+            expectedTimeZone: 'Asia/Shanghai',
         },
-        { dateType: 'datetime', timeZone: 'UTC', expectedTimeZone: 'UTC' },
+        { dateType: 'datetime', timeZone: 'Asia/Shanghai', expectedTimeZone: 'Asia/Shanghai' },
         {
             dateType: 'datetime',
             timeZone: 'Europe/Berlin',
@@ -162,11 +162,11 @@ describe('src/app/component/form/sw-datepicker', () => {
     );
 
     it.each([
-        { dateType: 'date', timeZone: 'UTC' },
+        { dateType: 'date', timeZone: 'Asia/Shanghai' },
         { dateType: 'date', timeZone: 'Europe/Berlin' },
-        { dateType: 'time', timeZone: 'UTC' },
+        { dateType: 'time', timeZone: 'Asia/Shanghai' },
         { dateType: 'time', timeZone: 'Europe/Berlin' },
-        { dateType: 'datetime', timeZone: 'UTC' },
+        { dateType: 'datetime', timeZone: 'Asia/Shanghai' },
         { dateType: 'datetime', timeZone: 'Europe/Berlin' },
     ])(
         'should show no timezone as a hint when the $timeZone timezone was selected and dateType is $dateType and hideHint is true',

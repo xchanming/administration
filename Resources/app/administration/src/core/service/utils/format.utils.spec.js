@@ -25,7 +25,7 @@ describe('src/core/service/utils/format.utils.js', () => {
 
         beforeEach(async () => {
             setLocale('en-GB');
-            setTimeZone('UTC');
+            setTimeZone('Asia/Shanghai');
         });
 
         it('should return empty string for null value', async () => {
@@ -34,21 +34,21 @@ describe('src/core/service/utils/format.utils.js', () => {
 
         it('should convert the date correctly with timezone UTC in en-GB', async () => {
             setLocale('en-GB');
-            setTimeZone('UTC');
+            setTimeZone('Asia/Shanghai');
 
             expect(date('2000-06-18T08:30:00.000+00:00')).toBe('18 June 2000 at 08:30');
         });
 
         it('should convert the date correctly with timezone UTC in en-US', async () => {
             setLocale('en-US');
-            setTimeZone('UTC');
+            setTimeZone('Asia/Shanghai');
 
             expect(date('2000-06-18T08:30:00.000+00:00')).toBe('June 18, 2000 at 8:30 AM');
         });
 
         it('should convert the date correctly with timezone UTC in de-DE', async () => {
             setLocale('de-DE');
-            setTimeZone('UTC');
+            setTimeZone('Asia/Shanghai');
 
             expect(date('2000-06-18T08:30:00.000+00:00')).toBe('18. Juni 2000 um 08:30');
         });
@@ -96,7 +96,7 @@ describe('src/core/service/utils/format.utils.js', () => {
 
         beforeEach(async () => {
             setLocale('en-GB');
-            setTimeZone('UTC');
+            setTimeZone('Asia/Shanghai');
         });
 
         it('should convert the date correctly with timezone Pacific/Pago_Pago', async () => {

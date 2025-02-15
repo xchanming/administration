@@ -40,7 +40,7 @@ export default function initializeContext(): void {
     });
 
     Shopware.ExtensionAPI.handle('contextUserTimezone', () => {
-        return Shopware.Store.get('session').currentUser?.timeZone ?? 'UTC';
+        return Shopware.Store.get('session').currentUser?.timeZone ?? 'Asia/Shanghai';
     });
 
     Shopware.ExtensionAPI.handle('contextModuleInformation', (_, additionalInformation) => {

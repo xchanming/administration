@@ -31,8 +31,8 @@ export default class TimezoneService {
 
         return [
             {
-                label: 'UTC',
-                value: 'UTC',
+                label: 'Asia/Shanghai',
+                value: 'Asia/Shanghai',
             },
             ...items,
         ];
