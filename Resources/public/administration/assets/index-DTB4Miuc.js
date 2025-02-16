@@ -1,1 +1,0 @@
-import{K as a}from"./channel-Cvr-E4M4.js";const d={functional:!0,render(i,e){const t=a("dt",{class:[e.data.class,{"sw-media-quickinfo-metadata-item__term":!0}]},`${e.props.labelName}:`),r=a("dd",{class:[e.data.class,{"sw-media-quickinfo-metadata-item__description":!0}]},e.children.default());return[t,r]},props:{labelName:{required:!0,type:String}}};export{d as default};
