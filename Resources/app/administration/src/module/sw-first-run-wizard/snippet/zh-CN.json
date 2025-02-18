@@ -1,0 +1,152 @@
+{
+  "sw-first-run-wizard": {
+    "general": {
+      "mainMenuItemGeneral": "首次运行向导",
+      "buttonNext": "下一步",
+      "buttonSkip": "跳过",
+      "buttonNextPayPalInfo": "配置",
+      "buttonBack": "返回",
+      "buttonInstall": "安装",
+      "buttonActivate": "激活",
+      "buttonFinish": "完成",
+      "buttonConfigureLater": "稍后配置",
+      "pluginInstalled": "已安装"
+    },
+    "welcome": {
+      "modalTitle": "欢迎",
+      "headlineWelcome": "欢迎来到蝉鸣数字化营销管理后台",
+      "messageWelcome": "此向导将引导您完成设置，并帮助您进行最重要的设置。<br>您想用不同的语言使用您的商城并吸引其他国家的客户吗？那么请在这里安装所需的语言包。",
+      "headlineChangeLanguage": "安装其他语言",
+      "switchLanguageModalTitle": "选择界面语言",
+      "confirmLanguageSwitch": "更改语言",
+      "switchLanguageMessage": "\"{pluginName}\" 已成功安装。是否要更改界面语言？",
+      "pluginsInstalled": "插件已安装",
+      "pluginsInstalledMessage": "语言插件已安装：| 这些语言插件已安装：",
+      "pluginNotFoundMessage": "找不到语言插件 {languageName}。",
+      "pluginInstallationFailedMessage": "插件无法安装：",
+      "pluginActivationFailedMessage": "插件无法激活：",
+      "tryAgainLater": "请稍后再试。",
+      "noConnectionMessage": "似乎有连接问题，语言无法安装。"
+    },
+    "dataImport": {
+      "modalTitle": "开始使用蝉鸣平台",
+      "headlineDemoData": "使用演示数据",
+      "messageDemoData": "通过添加一组演示数据开始探索蝉鸣数字化营销平台。演示数据给人以一个完全正常工作的商城的印象，但应仅用于测试目的。",
+      "buttonInstallDemoData": "安装演示数据",
+      "headlineMigration": "迁移您的商城数据",
+      "messageMigration": "迁移助手帮助您连接并将数据从以前的商城系统转移到您的新蝉鸣数字化营销平台环境中。",
+      "buttonInstallMigration": "安装迁移助手",
+      "loadingMessage": "正在安装插件<br>这可能需要一段时间..."
+    },
+    "mailerSelection": {
+      "headline": "建立电子邮件通信",
+      "modalTitle": "邮件配置",
+      "description": "与客户的沟通是日常电子商务的关键因素。因此，应尽快完成邮件方案的设置。",
+      "chooseSubline": "选择您的首选电子邮件代理。",
+      "localOption": "使用本地电子邮件代理",
+      "localOptionHelptext": "此选项使用您系统的默认邮件程序（Sendmail）。请确保 Sendmail 在您的托管环境中正常工作并可用。",
+      "localOptionSubline": "（Sendmail）",
+      "smtpOption": "配置自己的 SMTP 服务器",
+      "configurationNote": "邮件配置可以稍后编辑。",
+      "buttonConfigure": "配置"
+    },
+    "mailerSmtp": {
+      "headline": "SMTP 服务器"
+    },
+    "mailerLocal": {
+      "headline": "本地电子邮件代理"
+    },
+    "paypalInfo": {
+      "modalTitle": "设置 PayPal",
+      "headline": "现在在 Cicada 中预集成，最受欢迎的支付方式*激活更快更简单",
+      "paymethod": {
+        "paypal": "PayPal",
+        "debit": "借记",
+        "creditcard": "信用卡",
+        "invoice": "发票"
+      },
+      "disclaimerLineOne": "* ECC Cologne: ECC-Payment-Study Vol. 20, Cologne, 2016",
+      "disclaimerLineTwo": "** 需通过 PayPal 的风险评估"
+    },
+    "paypalInstall": {
+      "loadingMessage": "正在配置 PayPal<br>这可能需要一段时间..."
+    },
+    "recommendedPlugins": {
+      "headline": "我们的推荐",
+      "modalTitle": "插件",
+      "message": "这里是一些对您的商城有用的插件。首先选择一个与您相关的区域。然后您可以浏览不同的类别。",
+      "availableInRegion": "可用地区",
+      "category": "类别",
+      "topRecommendations": "全球推荐",
+      "otherRecommendations": "地区推荐"
+    },
+    "cicadaAccount": {
+      "headline": "蝉鸣平台官方账号 - 登录",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "输入您的密码...",
+      "emailAddressLabel": "邮箱地址",
+      "emailAddressPlaceholder": "输入您的邮箱地址...",
+      "modalTitle": "官方账号",
+      "message": "官方账号是您与所有蝉鸣营销平台服务互动的主要中心。",
+      "registerAccountText": "还没有账号？在这里注册",
+      "registerAccountHere": "这里",
+      "registerAccountUrl": "https://account.xchanming.com/register?lang=en",
+      "forgotPasswordText": "忘记密码了吗？",
+      "forgotPasswordUrl": "https://account.xchanming.com/recovery?lang=en"
+    },
+    "error": {
+      "messageLoginDataInvalid": "登录凭据不正确，请重试。"
+    },
+    "cicadaDomain": {
+      "headline": "验证您的域名",
+      "message": "您想将此商城链接到哪个域名？选择一个有效的域名或创建一个新域名。",
+      "labelCreateDomain": "创建一个新商城域名",
+      "testEnvironment": "测试环境"
+    },
+    "store": {
+      "modalTitle": "插件商城",
+      "loadStatusCollect": "正在收集商城信息...",
+      "takeMinutes": "这可能需要几分钟。",
+      "alreadyActivated": "商城已成功激活。",
+      "enablingStore": "正在启用蝉鸣平台商城...",
+      "activationErrorTitle": "激活时出错",
+      "activationErrorDescription": "请向管理员寻求帮助。",
+      "headingOne": "方便快捷购买插件 -",
+      "headingTwo": "直接在您的蝉鸣平台商城中。",
+      "description": "激活全新的蝉鸣平台商城，访问大量有用的插件和现代主题，这些插件和主题可以无缝集成到您的商城中 - 无需任何编程技能。"
+    },
+    "defaults": {
+      "modalTitle": "设置默认值"
+    },
+    "finish": {
+      "headlineAllDone": "全部完成！",
+      "message": "您的蝉鸣营销平台{edition} 现已验证。",
+      "messageNotLicensed": "您的蝉鸣营销平台现已准备就绪。",
+      "headlineUsefulLinks": "有用的链接",
+      "loadingMessage": "正在重新启动应用<br>这可能需要一段时间...",
+      "documentationLabel": "文档",
+      "documentationUrl": "https://docs.xchanming.com/en",
+      "forumLabel": "论坛",
+      "forumUrl": "https://forum.xchanming.com/",
+      "roadmapLabel": "路线图",
+      "roadmapUrl": "https://www.xchanming.com/en/roadmap/",
+      "modalTitle": "完成"
+    },
+    "stepItemTitle": {
+      "dataImport": "数据导入",
+      "mailer": "邮件配置",
+      "setupPaypal": "设置微信支付",
+      "plugins": "插件",
+      "cicada": "官方账号",
+      "store": "官方商城",
+      "defaults": "默认值"
+    }
+  },
+  "sw-privileges": {
+    "additional_permissions": {
+      "system": {
+        "frw": "首次运行向导"
+      }
+    }
+  }
+}
