@@ -1,1 +1,0 @@
-import{K as r,J as t}from"./channel-Cvr-E4M4.js";import{p as n}from"./parents-injection-key-DnJmY2uO.js";Shopware.Component.register("sw-block-parent",{setup(){var e;return{parent:(e=t(n,null))==null?void 0:e.value.pop()}},render(){return r(()=>this.parent)}});
